@@ -1,0 +1,42 @@
+<Project name="MonoClient" fileversion="2.0" Description="An audio stream ripper for Last.fm.&#xA;TheLastRipper can save Last.fm streams to mp3's, while downloading &#xA;album cover, appending ID3v1 tags and organizing you music after &#xA;Artist/Album/Track. TheLastRipper will also help you generate playlists &#xA;from the data available from you Last.fm account. &#xA;TheLastRipper requires a Last.fm login, you can regsiter for free &#xA; at http://last.fm/&#xA;Please note that recordings of radio streams, may NOT be legal, &#xA;we recommend that you investegate you local laws, before using &#xA;TheLastRipper.&#xA;&#xA;(This is the MonoClient/frontend for TheLastRipper)" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="TheLastRipper" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="TheLastRipper" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./gtk-gui/gui.stetic" subtype="Code" buildaction="Exclude" />
+    <File name="./gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
+    <File name="./MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="../logo.svg" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./About.cs" subtype="Code" buildaction="Compile" />
+    <File name="../aboutlogo.svg" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Preferences.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Settings.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="LibLastRip" />
+    <ProjectReference type="Gac" localcopy="True" refto="rsvg-sharp, Version=2.16.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </References>
+  <GtkDesignInfo>
+    <ExportedWidgets />
+  </GtkDesignInfo>
+</Project>

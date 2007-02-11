@@ -1,0 +1,22 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+pkglibdir=${exec_prefix}/lib/thelastripper
+Libraries=  ${pkglibdir}/@MONOCLIENT_DEBUG_LIB@@MONOCLIENT_RELEASE_LIB@
+
+Name: TheLastRipper.MonoClient
+Description: An audio stream ripper for Last.fm.
+TheLastRipper can save Last.fm streams to mp3's, while downloading 
+album cover, appending ID3v1 tags and organizing you music after 
+Artist/Album/Track. TheLastRipper will also help you generate playlists 
+from the data available from you Last.fm account. 
+TheLastRipper requires a Last.fm login, you can regsiter for free 
+ at http://last.fm/
+Please note that recordings of radio streams, may NOT be legal, 
+we recommend that you investegate you local laws, before using 
+TheLastRipper.
+
+(This is the MonoClient/frontend for TheLastRipper)
+Version: 0.1.2
+
+Requires:  glade-sharp-2.0 rsvg-sharp-2.0 gtk-sharp-2.0 glib-sharp-2.0 TheLastRipper.LibLastRip
+Libs:  -r:${pkglibdir}/@MONOCLIENT_DEBUG_LIB@@MONOCLIENT_RELEASE_LIB@
