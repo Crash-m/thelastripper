@@ -1,0 +1,10 @@
+bin\Debug\WinFormsClient.exe
+bin\Debug\WinFormsClient.pdb
+bin\Debug\LibLastRip.dll
+bin\Debug\LibLastRip.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\WinFormsClient.exe
+obj\Debug\WinFormsClient.pdb
+obj\Debug\WinFormsClient.MainForm.resources
+obj\Debug\WinFormsClient.csproj.GenerateResource.Cache
+obj\Debug\WinFormsClient.Preferences.resources
