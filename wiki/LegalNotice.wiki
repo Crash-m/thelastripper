@@ -10,9 +10,9 @@ All use of TheLastRipper is on your own responsibility. The TheLastRipper team d
 The danish law is very unclear on this subject and therefore this is our interpretation of the copyright law. This means that this does not have to be completly correct and is only consultive.
 In denmark the law is, that it is not illegal to record music from the radio, but it needs to be for your own use only, you are not allowed to copy the music you rip or to give it to any of your friends. Only your household are allowed to use this music.
 
-* http://147.29.40.91/_LINK_0/0&ACCN/A20060076329 (The law about copyright in Denmark)
-* http://www.infokiosk.dk/sw10272.asp (Love omkring ripping af Radio)
-* http://www.infokiosk.dk/sw10376.asp (Love omkring brydning af kopispærring) 
+  * http://147.29.40.91/_LINK_0/0&ACCN/A20060076329 (The law about copyright in Denmark)
+  * http://www.infokiosk.dk/sw10272.asp (Love omkring ripping af Radio)
+  * http://www.infokiosk.dk/sw10376.asp (Love omkring brydning af kopispærring) 
 
 === Contribute ===
 
