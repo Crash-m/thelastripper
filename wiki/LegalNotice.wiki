@@ -7,13 +7,8 @@ All use of TheLastRipper is on your own responsibility. The TheLastRipper team d
 
 = Danish Law =
 
-
+The danish law is very unclear on this subject, as on any other.
 
 = Contribute =
 
-If anyone, knows anything about copyright law in any national juristriction, we would like to hear from you. It would help us and other users of this client a lot. If we think your info is relevant to the project, we will post your info at this site.
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+If anyone, knows anything about copyright law in any national juristriction, we would like to hear from you. It would help us and other users of this client a lot. If we think your info is relevant to the project, we will post your info at this site. And please be kind to write in english or danish.
