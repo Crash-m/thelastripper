@@ -1,4 +1,5 @@
 #summary Help regarding use of TheLastRipper on OS X.
+#labels help,osx
 
 = Contents =
   * OSXInstallation
