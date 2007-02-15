@@ -1,7 +1,9 @@
-#Help, regarding use of TheLastRipper.
+#summary Help, regarding use of TheLastRipper.
+#labels help,Featured
 
-  * HelpLinux
-  * HelpWindows
-  * HelpOSX
-
+= Contents =
+  * [HelpLinux]
+  * [HelpWindows]
+  * [HelpOSX]
+  * [LegalNotice]
 
