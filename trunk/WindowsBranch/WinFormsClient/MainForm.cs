@@ -69,13 +69,20 @@ namespace WinFormsClient
 		{
 			if(Info.Streaming)
 			{
-				this.StatusLabel.Text = Info.ToString(); //TODO: better formatting
+				System.String StrT = "";
+				StrT += "Track: " + Info.Track;
+				StrT += "\nArtist: " + Info.Artist;
+				StrT += "\nAlbum: " + Info.Album;
+				StrT += "\nDuration: " + Info.Trackduration + " sec.";
+				this.StatusLabel.Text = StrT;
 				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 				{
-					//TODO: Port to mono
 					try
 					{
-						//this.StatuspictureBox.Load(Info.AlbumcoverSmall);
+						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Info.AlbumcoverSmall);
+						System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
+						System.IO.Stream ResponseStream = hRes.GetResponseStream();
+						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
 					}
 					catch
 					{}
@@ -132,8 +139,10 @@ namespace WinFormsClient
 		
 		void TuneInButtonClick(object sender, EventArgs e)
 		{
+			this.TuneInButton.Enabled = false;
 			if(this.Manager.ChangeStation(this.RadioStation.Text))
 			{
+				this.TuneInButton.Enabled = true;
 				this.LoveButton.Enabled = true;
 				this.HateButton.Enabled = true;
 				this.SkipButton.Enabled = true;
