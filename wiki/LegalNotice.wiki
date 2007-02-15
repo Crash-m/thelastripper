@@ -3,7 +3,7 @@
 
 === Preface ===
 
-All use of TheLastRipper is on your own responsibility. The TheLastRipper team disclaims any responsibility for the use or abuse of the client, or any changes that it may cause to your system.
+All use of TheLastRipper is on your own responsibility. The TheLastRipperTeam disclaims any responsibility for the use or abuse of the client, or any changes that it may cause to your system.
 
 === Danish Law ===
 
