@@ -1,8 +1,10 @@
-#summary How is TheLastRipper developer team.
+#summary Who is TheLastRipper developer team.
 
 === Jonas F. Jensen ===
 Role: Primary developer and debian/ubuntu packager.
+
 Website: [http://jopsen.dk/en]
+
 Blog: [http://jopsen.dk/blog/category/thelastripper]
 
 === Mike F. Jensen ===
@@ -10,4 +12,5 @@ Role: Documentor and alpha tester.
 
 === Rene A.S. Josefsen ===
 Role: Webmaster and alpha tester.
+
 Blog: [http://renejosefsen.dk]
