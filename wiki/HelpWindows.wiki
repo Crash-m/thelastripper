@@ -1,0 +1,8 @@
+#labels help,windows
+#Help regarding use of TheLastRipper on windows.
+
+= Contents =
+  * WindowsInstallation
+  * WindowsSettings
+  * WindowsRipping
+  * WindowsKnownIssues
