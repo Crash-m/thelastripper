@@ -36,6 +36,7 @@ namespace WinFormsClient
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.HateButton = new System.Windows.Forms.Button();
 			this.LoveButton = new System.Windows.Forms.Button();
@@ -283,6 +284,7 @@ namespace WinFormsClient
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.MainMenu);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MainMenu;
 			this.MinimumSize = new System.Drawing.Size(370, 350);
 			this.Name = "MainForm";
