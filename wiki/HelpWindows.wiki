@@ -1,5 +1,5 @@
+#summary Help regarding use of TheLastRipper on windows.
 #labels help,windows
-#Help regarding use of TheLastRipper on windows.
 
 = Contents =
   * WindowsInstallation
