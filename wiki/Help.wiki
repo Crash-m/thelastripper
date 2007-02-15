@@ -1,7 +1,7 @@
 #Help, regarding use of TheLastRipper.
 
-  * Linux
-  * Windows
-  * OS_X
+  * HelpLinux
+  * HelpWindows
+  * HelpOSX
 
 
