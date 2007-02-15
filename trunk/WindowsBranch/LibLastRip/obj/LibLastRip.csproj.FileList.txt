@@ -1,5 +1,3 @@
 bin\Debug\LibLastRip.dll
-bin\Debug\LibLastRip.pdb
 obj\Debug\ResolveAssemblyReference.cache
 obj\Debug\LibLastRip.dll
-obj\Debug\LibLastRip.pdb
