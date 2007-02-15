@@ -29,10 +29,8 @@ namespace WinFormsClient
 		
 		protected LibLastRip.LastManager Manager;
 		protected Settings settings;
-		protected System.Int32 TrackDuration = 0;
 		protected const System.Int32 UpdateInterval = 6000;
-		public System.Timers.Timer Timer = new System.Timers.Timer(MainForm.UpdateInterval);
-		
+		public System.Windows.Forms.Timer Timer;
 		public MainForm()
 		{
 			//
@@ -51,16 +49,20 @@ namespace WinFormsClient
 				this.RadioStation.Enabled = true;
 				this.TuneInButton.Enabled = true;
 			}
+			this.Timer = new System.Windows.Forms.Timer();
+			this.Timer.Interval = MainForm.UpdateInterval;
+			
 			this.Manager.OnNewSong += new EventHandler(this.OnNewSong);
-			this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.Manager.UpdateMetaInfo);
-			this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
+			//this.Timer.Tick  += new System.Timers.ElapsedEventHandler(this.Manager.UpdateMetaInfo);
+			this.Timer.Tick  += new System.EventHandler(this.UpdateProgress);
+			this.Timer.Enabled = false;
 		}
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 		{
+			System.Windows.Forms.MessageBox.Show("New song!");
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 			this.SetStatus(Info);
-			this.TrackDuration = 0;
 			this.StatusBar.Value = 0;
 			this.StatusBar.Maximum = System.Convert.ToInt32(Info.Trackduration);
 		}
@@ -72,10 +74,10 @@ namespace WinFormsClient
 				this.StatusLabel.Text = Info.ToString(); //TODO: better formatting
 				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 				{
-					//TODO: Port to mono
+					//TODO: Port to mono OR patch mono
 					try
 					{
-						this.StatuspictureBox.Load(Info.AlbumcoverSmall);
+					//	this.StatuspictureBox.Load(Info.AlbumcoverSmall);
 					}
 					catch
 					{}
@@ -91,22 +93,6 @@ namespace WinFormsClient
 				this.StatusBar.Value = this.StatusBar.Maximum;
 			}else{
 				this.StatusBar.Value = Next;
-			}
-			//this.TrackDuration += MainForm.UpdateInterval/1000;
-			//this.UpdateProgress();
-		}
-	
-		protected virtual void UpdateProgress()
-		{
-			System.Int32 Max = this.TrackDuration/System.Convert.ToInt32(this.Manager.CurrentSong.Trackduration)*100;
-			System.Windows.Forms.MessageBox.Show("Max: " + Max.ToString() + "\nMin: " + this.TrackDuration);
-			if(Max > 100)
-			{
-				//this.StatusBar.Maximum = Max;
-				this.StatusBar.Value = 100;//Max;
-			}else{
-				//this.StatusBar.Maximum = Max;
-				this.StatusBar.Value = Max;//this.TrackDuration;
 			}
 		}
 		
@@ -148,13 +134,15 @@ namespace WinFormsClient
 		
 		void TuneInButtonClick(object sender, EventArgs e)
 		{
+			this.TuneInButton.Enabled = false;
 			if(this.Manager.ChangeStation(this.RadioStation.Text))
 			{
 				this.LoveButton.Enabled = true;
 				this.HateButton.Enabled = true;
 				this.SkipButton.Enabled = true;
-				this.Timer.Start();
+				this.Timer.Enabled = true;
 			}
+			this.TuneInButton.Enabled = true;
 		}
 		
 		void SkipButtonClick(object sender, EventArgs e)
