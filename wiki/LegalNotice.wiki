@@ -1,0 +1,13 @@
+#summary This is the legal notice for TheLastRipper.
+#labels Law,Legal
+
+= Introduction =
+
+All use of TheLastRipper is on your own responsibility. The TheLastRipper team disclaims any responsibility for the use or abuse of the client, or any changes that it may cause your system.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
