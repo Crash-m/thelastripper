@@ -1,3 +1,7 @@
 #summary This helps you configure TheLastRipper under Linux
 
-= Introduction =
+= Logging in =
+
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsLogin.png
+
+The first
