@@ -147,7 +147,6 @@ namespace LibLastRip
 								this.Status = ConnectionStatus.Recording;
 								this.StartRecording();
 							}
-							System.Threading.Thread.Sleep(2000);
 							this.UpdateMetaInfo();
 						}
 					}
