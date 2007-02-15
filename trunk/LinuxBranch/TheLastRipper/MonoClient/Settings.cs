@@ -44,6 +44,7 @@ namespace MonoClient
 			this.m3u = Pref.M3Ucheckbutton.Active;
 			this.pls = Pref.PLScheckbutton.Active;
 			this.smil = Pref.SMILcheckbutton.Active;
+			this.SavePassword = Pref.SaveLogincheckbutton.Active;
 			
 			this._UserName = Pref.UserNameEntry.Text;
 			if(!Pref.HasPassword)
@@ -133,6 +134,10 @@ namespace MonoClient
 		public override void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
 		{
 			base.GetObjectData(Info, context);
+			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
+			{
+				this.SavePassword = false;
+			}
 			Info.AddValue("HasPassword",this.SavePassword);
 			if(this.SavePassword)
 			{

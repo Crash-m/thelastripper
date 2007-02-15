@@ -76,13 +76,12 @@ public class MainWindow: Gtk.Window
 		}else{
 			this.SongProgressBar.Fraction = 0;
 		}
-		if(this.GtkLabel5.Text != "Currently recording...")
+		/*if(this.GtkLabel5.Text != "Currently recording...")
 		{
 			this.GtkLabel5.Markup = "<b>" + this.GtkLabel5.Text + ".</b>";
 		}else{
 			this.GtkLabel5.Markup = "<b>Currently recording</b>";
-		}
-		
+		}*/
 	}
 	
 	protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)

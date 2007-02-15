@@ -1,17 +1,20 @@
 <?xml version="1.0"?>
-<UserCombinePreferences filename="/home/jopsen/development/TheLastRipperProject/TheLastRipper/TheLastRipper.mds">
+<UserCombinePreferences filename="/home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/TheLastRipper.mds">
   <Files>
     <File filename="Welcome" />
-    <File filename="./MonoClient/About.cs" />
-    <File filename="./MonoClient/AssemblyInfo.cs" />
-    <File filename="./MonoClient/Main.cs" />
-    <File filename="./MonoClient/Settings.cs" />
     <File filename="./MonoClient/MainWindow.cs" />
+    <File filename="./MonoClient/Preferences.cs" />
+    <File filename="./MonoClient/Settings.cs" />
+    <File filename="./LibLastRip/PlatformSettings.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
+          <Node name="LibLastRip" expanded="True">
+            <Node name="LastManager" expanded="True" />
+            <Node name="PlayList" expanded="True" />
+          </Node>
           <Node name="MonoClient" expanded="True">
             <Node name="MainWindow.cs" expanded="False" selected="True" />
           </Node>
@@ -23,11 +26,6 @@
         <Node expanded="True" />
       </TreeView>
     </ViewMemento>
-    <ViewMemento Id="MonoDevelop.NUnit.TestPad">
-      <TreeView>
-        <Node expanded="False" />
-      </TreeView>
-    </ViewMemento>
     <ViewMemento Id="MonoQuery.DatabasePad">
       <TreeView>
         <Node expanded="False" />
@@ -37,7 +35,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/jopsen/development/TheLastRipperProject/TheLastRipper/MonoClient/MainWindow.cs" />
+      <Property key="ActiveWindow" value="Welcome" />
     </Properties>
   </Properties>
 </UserCombinePreferences>
