@@ -1,11 +1,17 @@
 #summary This is the legal notice for TheLastRipper.
 #labels Law,Legal
 
-= Introduction =
+= Preface =
 
 All use of TheLastRipper is on your own responsibility. The TheLastRipper team disclaims any responsibility for the use or abuse of the client, or any changes that it may cause your system.
 
-= Details =
+= Danish Law =
+
+
+
+= Contribute =
+
+If anyone, knows anything about copyright law in any national juristriction.
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
