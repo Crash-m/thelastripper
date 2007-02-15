@@ -4,4 +4,4 @@
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsLogin.png
 
-The first box that will be shown, is the box above. It shows the login menu, before you get started you need to have a Last.fm account, which is available at https://www.last.fm/join/. If you already have an account you are ready to proceed. 
+The first box that will be shown, is the box above. It shows the login menu, before you get started you need to have a Last.fm account, which is available at https://www.last.fm/join/ . If you already have an account you are ready to proceed. Next you gotta type in your accountname and password in the textboxes. When you have this all settled, you push the login button and you are ready to begin recording.
