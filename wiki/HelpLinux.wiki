@@ -1,7 +1,7 @@
 #summary Help regarding use of TheLastRipper on linux.
 #labels help,linux
 
-= Contents =
+== Contents ==
   * LinuxInstallation
   * LinuxSettings
   * LinuxRipping
