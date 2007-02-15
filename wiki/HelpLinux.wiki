@@ -1,5 +1,6 @@
 #labels help,linux
-#Help regarding use of TheLastRipper on linux.
+#help regarding use of TheLastRipper on linux.
+
 
   * LinuxInstallation
   * LinuxSettings
