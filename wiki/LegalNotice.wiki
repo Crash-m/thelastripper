@@ -3,7 +3,7 @@
 
 = Preface =
 
-All use of TheLastRipper is on your own responsibility. The TheLastRipper team disclaims any responsibility for the use or abuse of the client, or any changes that it may cause your system.
+All use of TheLastRipper is on your own responsibility. The TheLastRipper team disclaims any responsibility for the use or abuse of the client, or any changes that it may cause to your system.
 
 = Danish Law =
 
@@ -11,7 +11,7 @@ All use of TheLastRipper is on your own responsibility. The TheLastRipper team d
 
 = Contribute =
 
-If anyone, knows anything about copyright law in any national juristriction.
+If anyone, knows anything about copyright law in any national juristriction, we would like to hear from you. It would help us and other users of this client a lot. If we think your info is relevant to the project, we will post your info at this site.
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
