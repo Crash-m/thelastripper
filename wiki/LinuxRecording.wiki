@@ -5,7 +5,7 @@
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/RippingSelectStation.png
 
-At first the recorder is not tuned in to any station, so before you press the "Tune in" button you need to choose a station to record from. If you press the arrow facing downwards to the left of the textbox, you will be shown the 10 most played globaltags. But you can also copy and paste in URL's to your own stations. All you need to know is the Last.fm URL.
+At first the recorder is not tuned in to any station, so before you press the "Tune in" button you need to choose a station to record from. If you press the arrow facing downwards to the right of the textbox, you will be shown the 10 most played globaltags. But you can also copy and paste in URL's to your own stations. All you need to know is the Last.fm URL.
 
 = You are recording =
 
