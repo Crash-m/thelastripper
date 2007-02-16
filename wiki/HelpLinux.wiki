@@ -4,5 +4,5 @@
 == Contents ==
   * LinuxInstallation
   * LinuxSettings
-  * LinuxRipping
+  * LinuxRecording
   * LinuxKnownIssues
