@@ -13,5 +13,4 @@ obj\Release\WinFormsClient.Preferences.resources
 obj\Release\WinFormsClient.csproj.GenerateResource.Cache
 obj\Release\WinFormsClient.exe
 obj\Debug\WinFormsClient.About.resources
-bin\Debug\WinFormsClient.pdb
-obj\Debug\WinFormsClient.pdb
+obj\Release\WinFormsClient.About.resources
