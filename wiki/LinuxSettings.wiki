@@ -10,4 +10,8 @@ The first box that will be shown, is the box above. It shows the login menu, bef
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsMusicPath.png
 
-Before you get the box shown above, you gotta select it from the tabs, in the top of the program window. When you have it opened, you will see a path selector like in any other program. The default path is set to ~/Music. But in this menu, you can change this by setting the 
+Before you get the box shown above, you gotta select it from the tabs, in the top of the program window. When you have it opened, you will see a path selector like you know from a lot of other places in ubuntu. The default path is set to ~/Music. But in this menu, you can change this by selecting another folder to save in.
+
+= Setting playlist information =
+
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsPlaylist.png
