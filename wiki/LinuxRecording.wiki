@@ -1,13 +1,14 @@
 #summary Helps you start recording under linux.
 #labels Linux,Recording,Help
-= Introduction =
 
-Add your content here.
+= Selecting station =
 
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/RippingSelectStation.png
 
-= Details =
+At first the recorder is not tuned in to any station, so before you press the "Tune in" button you need to choose a station to record from. If you press the arrow facing downwards to the left of the textbox, you will be shown the 10 most played globaltags. But you can also copy and paste in URL's to your own stations. All you need to know is the Last.fm URL.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= You are recording =
+
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/Ripping.png
+
+When you are recording, there are some small functions you can use. For example there are functions, like you know from your normal Last.fm player. You can skip, love or ban the song your hearing. And besides that, you can also choose another station and tune into it, at any time you want to. Information about the progress of the song and about the song, is also displayed, so you can always see which song you are recording at the time.
