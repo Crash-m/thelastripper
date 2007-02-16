@@ -8,12 +8,12 @@ using System.Runtime.InteropServices;
 // change them to the information which is associated with the assembly
 // you compile.
 
-[assembly: AssemblyTitle("WinFormsClient")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TheLastRipper")]
+[assembly: AssemblyDescription("An audio stream ripper for Last.fm")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WinFormsClient")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("TheLastRipper")]
+[assembly: AssemblyCopyright("TheLastRipper developer team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

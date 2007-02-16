@@ -29,5 +29,10 @@ namespace WinFormsClient
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+		
+		void OkButtonClick(object sender, EventArgs e)
+		{
+			this.Close();
+		}
 	}
 }

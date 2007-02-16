@@ -123,12 +123,14 @@ namespace WinFormsClient
 		
 		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			//TODO: Open website
+			//TODO: Fix to run on mono
+			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/LegalNotice");
 		}
 		
 		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			//TODO: open website
+			//TODO: Fix to run on mono
+			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/HelpWindows");
 		}
 		
 		void AboutToolStripMenuItemClick(object sender, EventArgs e)

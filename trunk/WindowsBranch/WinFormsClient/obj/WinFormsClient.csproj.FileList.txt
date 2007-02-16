@@ -5,3 +5,13 @@ obj\Debug\WinFormsClient.exe
 obj\Debug\WinFormsClient.MainForm.resources
 obj\Debug\WinFormsClient.csproj.GenerateResource.Cache
 obj\Debug\WinFormsClient.Preferences.resources
+bin\Release\WinFormsClient.exe
+bin\Release\LibLastRip.dll
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\WinFormsClient.MainForm.resources
+obj\Release\WinFormsClient.Preferences.resources
+obj\Release\WinFormsClient.csproj.GenerateResource.Cache
+obj\Release\WinFormsClient.exe
+obj\Debug\WinFormsClient.About.resources
+bin\Debug\WinFormsClient.pdb
+obj\Debug\WinFormsClient.pdb
