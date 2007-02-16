@@ -1,5 +1,5 @@
 #summary This is the legal notice for TheLastRipper.
-#labels Law,Legal
+#labels Law,Legal,Featured
 
 === Preface ===
 
