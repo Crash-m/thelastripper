@@ -4,5 +4,5 @@
 = Contents =
   * WindowsInstallation
   * WindowsSettings
-  * WindowsRipping
+  * WindowsRecording
   * WindowsKnownIssues
