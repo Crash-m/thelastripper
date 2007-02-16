@@ -1,5 +1,5 @@
 #summary Help regarding use of TheLastRipper on linux.
-#labels help,linux
+#labels Help,Linux
 
 == Contents ==
   * LinuxInstallation
