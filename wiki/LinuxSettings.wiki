@@ -10,4 +10,4 @@ The first box that will be shown, is the box above. It shows the login menu, bef
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsMusicPath.png
 
-Before you get the site shown above, you gotta select it from the tabs, in the top of the program window. When you have it opened, you will see a path selector like in any other program
+Before you get the box shown above, you gotta select it from the tabs, in the top of the program window. When you have it opened, you will see a path selector like in any other program. The default path is set to ∼/Music
