@@ -5,4 +5,4 @@
   * LinuxInstallation
   * LinuxSettings
   * LinuxRipping
-  * LinuxKnowIssues
+  * LinuxKnownIssues
