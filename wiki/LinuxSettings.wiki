@@ -1,4 +1,5 @@
 #summary This helps you configure TheLastRipper under Linux
+#labels Linux,Configure
 
 = Logging in =
 
