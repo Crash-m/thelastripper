@@ -15,3 +15,5 @@ Before you get the box shown above, you gotta select it from the tabs, in the to
 = Setting playlist information =
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpLinux/SettingsPlaylist.png
+
+To enter this box, you will have to 
