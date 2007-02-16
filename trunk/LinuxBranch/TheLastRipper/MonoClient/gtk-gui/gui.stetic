@@ -1,124 +1,335 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stetic-interface>
-  <widget class="Gtk.Dialog" id="MonoClient.About" design-size="499 523">
-    <property name="Title" translatable="yes">About TheLastRipper</property>
-    <property name="Buttons">1</property>
-    <property name="HelpButton">False</property>
-    <property name="Icon">stock:gtk-about Menu</property>
+  <widget class="Gtk.Window" id="MainWindow" design-size="272 185">
+    <action-group name="Default">
+      <action id="File">
+        <property name="ShortLabel">File</property>
+        <property name="Label">_File</property>
+        <property name="Type">Action</property>
+      </action>
+      <action id="Preferences">
+        <property name="ShortLabel">Preferences</property>
+        <property name="Label">_Preferences</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gtk-preferences</property>
+        <signal name="Activated" handler="OnPreferencesActivated" />
+      </action>
+      <action id="Exit">
+        <property name="ShortLabel">Exit</property>
+        <property name="Label">Exit</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gtk-quit</property>
+        <signal name="Activated" handler="OnExitActivated" />
+      </action>
+      <action id="GeneratePlaylist">
+        <property name="Accelerator">&lt;Control&gt;&lt;Mod2&gt;s</property>
+        <property name="ShortLabel">Generate playlist</property>
+        <property name="Label">Generate playli_st</property>
+        <property name="Tooltip">Saves playlist as defined in perferences</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gtk-refresh</property>
+      </action>
+      <action id="Help">
+        <property name="ShortLabel">Help</property>
+        <property name="Label">_Help</property>
+        <property name="Tooltip" />
+        <property name="Type">Action</property>
+      </action>
+      <action id="OnlineHelp">
+        <property name="Accelerator">&lt;Mod2&gt;F11</property>
+        <property name="ShortLabel">Online help</property>
+        <property name="Label">Online _help</property>
+        <property name="Tooltip">Find help online</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gtk-help</property>
+        <signal name="Activated" handler="OnOnlineHelpActivated" />
+      </action>
+      <action id="About">
+        <property name="ShortLabel">About</property>
+        <property name="Label">_About</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gtk-about</property>
+        <signal name="Activated" handler="OnAboutActivated" />
+      </action>
+      <action id="LegalNotice">
+        <property name="ShortLabel">Legal notice</property>
+        <property name="Label">_Legal notice</property>
+        <property name="Type">Action</property>
+        <property name="StockId">gnome-stock-attach</property>
+        <signal name="Activated" handler="OnLegalNoticeActivated" />
+      </action>
+    </action-group>
+    <property name="Title" translatable="yes">TheLastRipper</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Modal">True</property>
-    <property name="HasSeparator">False</property>
-    <property name="Events">ButtonPressMask</property>
+    <property name="Events">0</property>
     <property name="MemberName" />
-    <child internal-child="VBox">
-      <widget class="Gtk.VBox" id="dialog_VBox">
-        <property name="BorderWidth">2</property>
-        <property name="Events">ButtonPressMask</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.VBox" id="vbox4">
+        <property name="Events">0</property>
         <property name="MemberName" />
         <child>
-          <widget class="Gtk.HBox" id="hbox3">
+          <widget class="Gtk.MenuBar" id="menubar4">
             <property name="Events">0</property>
             <property name="MemberName" />
-            <child>
-              <widget class="Gtk.Image" id="IconBox">
-                <property name="Pixbuf">resource:aboutlogo.svg</property>
-                <property name="Events">0</property>
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Frame" id="frame1">
-                <property name="LabelXalign">0</property>
-                <property name="Events">0</property>
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Alignment" id="GtkAlignment1">
-                    <property name="Xalign">0</property>
-                    <property name="Yalign">0</property>
-                    <property name="LeftPadding">12</property>
-                    <property name="Events">0</property>
-                    <property name="MemberName" />
-                    <child>
-                      <widget class="Gtk.Label" id="label2">
-                        <property name="LabelProp">Copyright © 2007 Jop... (Jonas F. Jensen).</property>
-                        <property name="UseMarkup">True</property>
-                        <property name="Events">0</property>
-                        <property name="MemberName" />
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="GtkLabel1">
-                    <property name="LabelProp">&lt;b&gt;Copyright&lt;/b&gt;</property>
-                    <property name="UseMarkup">True</property>
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="MemberName" />
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
+            <node name="menubar4" type="Menubar">
+              <node type="Menu" action="File">
+                <node type="Menuitem" action="Preferences" />
+                <node type="Menuitem" action="GeneratePlaylist" />
+                <node type="Separator" />
+                <node type="Menuitem" action="Exit" />
+              </node>
+              <node type="Menu" action="Help">
+                <node type="Menuitem" action="LegalNotice" />
+                <node type="Menuitem" action="OnlineHelp" />
+                <node type="Separator" />
+                <node type="Menuitem" action="About" />
+              </node>
+            </node>
           </widget>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="label1">
-            <property name="LabelProp">
-&lt;i&gt;"One day men will look back and say I gave birth to the Twentieth Century."&lt;/i&gt;
- - Jack the Ripper, 1888</property>
-            <property name="UseMarkup">True</property>
+          <widget class="Gtk.Frame" id="frame5">
+            <property name="ShadowType">None</property>
+            <property name="LabelXalign">0</property>
             <property name="Events">0</property>
             <property name="MemberName" />
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment1">
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">12</property>
+                <property name="Events">0</property>
+                <property name="MemberName" />
+                <child>
+                  <widget class="Gtk.VBox" id="vbox6">
+                    <property name="Events">0</property>
+                    <property name="MemberName" />
+                    <child>
+                      <widget class="Gtk.ComboBoxEntry" id="LastFMStationEntry">
+                        <property name="IsTextCombo">True</property>
+                        <property name="Items">lastfm://globaltags/rock
+lastfm://globaltags/indie
+lastfm://globaltags/alternative
+lastfm://globaltags/seen%20live
+lastfm://globaltags/metal
+lastfm://globaltags/electronic
+lastfm://globaltags/pop
+lastfm://globaltags/punk
+lastfm://globaltags/indie%20rock
+lastfm://globaltags/classic%20rock</property>
+                        <property name="Events">0</property>
+                        <property name="MemberName" />
+                        <property name="Sensitive">False</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox1">
+                        <property name="Events">0</property>
+                        <property name="MemberName" />
+                        <child>
+                          <widget class="Gtk.Button" id="ConnectButton">
+                            <property name="Type">TextAndIcon</property>
+                            <property name="Icon">stock:stock_media-play Menu</property>
+                            <property name="Label">Tune in</property>
+                            <property name="IsDialogButton">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <signal name="Clicked" handler="OnConnectButtonClicked" />
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="SkipButton">
+                            <property name="Type">TextAndIcon</property>
+                            <property name="Icon">stock:stock_media-next Menu</property>
+                            <property name="Label">Skip</property>
+                            <property name="UseUnderline">True</property>
+                            <property name="IsDialogButton">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <signal name="Clicked" handler="OnSkipButtonClicked" />
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="LoveButton">
+                            <property name="Type">TextAndIcon</property>
+                            <property name="Icon">stock:stock_3d-favourites Menu</property>
+                            <property name="Label">Love</property>
+                            <property name="IsDialogButton">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <signal name="Clicked" handler="OnLoveButtonClicked" />
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="BanButton">
+                            <property name="Type">TextAndIcon</property>
+                            <property name="Icon">stock:gtk-remove Menu</property>
+                            <property name="Label">Ban</property>
+                            <property name="IsDialogButton">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <signal name="Clicked" handler="OnBanButtonClicked" />
+                          </widget>
+                          <packing>
+                            <property name="Position">3</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="PackType">End</property>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabel6">
+                <property name="LabelProp">&lt;b&gt;Last.FM Station&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+                <property name="Events">ButtonPressMask</property>
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
             <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
-      </widget>
-    </child>
-    <child internal-child="ActionArea">
-      <widget class="Gtk.HButtonBox" id="MonoClient.About_ActionArea">
-        <property name="Size">1</property>
-        <property name="LayoutStyle">End</property>
-        <property name="Spacing">6</property>
-        <property name="BorderWidth">5</property>
-        <property name="Events">ButtonPressMask</property>
-        <property name="MemberName" />
         <child>
-          <widget class="Gtk.Button" id="CloseButton">
-            <property name="Type">TextAndIcon</property>
-            <property name="Icon">stock:gtk-close Menu</property>
-            <property name="Label">Close</property>
-            <property name="IsDialogButton">True</property>
-            <property name="ResponseId">0</property>
-            <property name="CanFocus">True</property>
+          <widget class="Gtk.Frame" id="frame6">
+            <property name="ShadowType">None</property>
+            <property name="LabelXalign">0</property>
             <property name="Events">0</property>
             <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <signal name="Clicked" handler="OnCloseButtonClicked" />
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment2">
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">12</property>
+                <property name="Events">0</property>
+                <property name="MemberName" />
+                <child>
+                  <widget class="Gtk.VBox" id="vbox8">
+                    <property name="Events">0</property>
+                    <property name="MemberName" />
+                    <child>
+                      <widget class="Gtk.HBox" id="hbox5">
+                        <property name="Events">0</property>
+                        <property name="MemberName" />
+                        <child>
+                          <widget class="Gtk.Label" id="StatusLabel">
+                            <property name="LabelProp">Not Recording</property>
+                            <property name="UseMarkup">True</property>
+                            <property name="Xalign">0</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Image" id="CoverBox">
+                            <property name="Pixbuf">stock:gtk-cdrom Menu</property>
+                            <property name="Events">0</property>
+                            <property name="MemberName" />
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.ProgressBar" id="SongProgressBar">
+                        <property name="Events">0</property>
+                        <property name="MemberName" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabel5">
+                <property name="LabelProp">&lt;b&gt;Currently recording&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+                <property name="Events">ButtonPressMask</property>
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
           </widget>
           <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="Position">2</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
       </widget>
@@ -690,336 +901,60 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="MainWindow" design-size="272 185">
-    <action-group name="Default">
-      <action id="File">
-        <property name="ShortLabel">File</property>
-        <property name="Label">_File</property>
-        <property name="Type">Action</property>
-      </action>
-      <action id="Preferences">
-        <property name="ShortLabel">Preferences</property>
-        <property name="Label">_Preferences</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gtk-preferences</property>
-        <signal name="Activated" handler="OnPreferencesActivated" />
-      </action>
-      <action id="Exit">
-        <property name="ShortLabel">Exit</property>
-        <property name="Label">Exit</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gtk-quit</property>
-        <signal name="Activated" handler="OnExitActivated" />
-      </action>
-      <action id="GeneratePlaylist">
-        <property name="Accelerator">&lt;Control&gt;&lt;Mod2&gt;s</property>
-        <property name="ShortLabel">Generate playlist</property>
-        <property name="Label">Generate playli_st</property>
-        <property name="Tooltip">Saves playlist as defined in perferences</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gtk-refresh</property>
-      </action>
-      <action id="Help">
-        <property name="ShortLabel">Help</property>
-        <property name="Label">_Help</property>
-        <property name="Tooltip" />
-        <property name="Type">Action</property>
-      </action>
-      <action id="OnlineHelp">
-        <property name="Accelerator">&lt;Mod2&gt;F11</property>
-        <property name="ShortLabel">Online help</property>
-        <property name="Label">Online _help</property>
-        <property name="Tooltip">Find help online</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gtk-help</property>
-        <signal name="Activated" handler="OnOnlineHelpActivated" />
-      </action>
-      <action id="About">
-        <property name="ShortLabel">About</property>
-        <property name="Label">_About</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gtk-about</property>
-        <signal name="Activated" handler="OnAboutActivated" />
-      </action>
-      <action id="LegalNotice">
-        <property name="ShortLabel">Legal notice</property>
-        <property name="Label">_Legal notice</property>
-        <property name="Type">Action</property>
-        <property name="StockId">gnome-stock-attach</property>
-        <signal name="Activated" handler="OnLegalNoticeActivated" />
-      </action>
-    </action-group>
-    <property name="Title" translatable="yes">TheLastRipper</property>
-    <property name="Icon">resource:logo.svg</property>
+  <widget class="Gtk.Dialog" id="MonoClient.About" design-size="262 322">
+    <property name="Title" translatable="yes">About TheLastRipper</property>
+    <property name="Buttons">1</property>
+    <property name="HelpButton">False</property>
+    <property name="Icon">stock:gtk-about Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Events">0</property>
+    <property name="Modal">True</property>
+    <property name="HasSeparator">False</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
+    <property name="Events">ButtonPressMask</property>
     <property name="MemberName" />
-    <signal name="DeleteEvent" handler="OnDeleteEvent" />
-    <child>
-      <widget class="Gtk.VBox" id="vbox4">
-        <property name="Events">0</property>
+    <child internal-child="VBox">
+      <widget class="Gtk.VBox" id="dialog_VBox">
+        <property name="BorderWidth">2</property>
+        <property name="Events">ButtonPressMask</property>
         <property name="MemberName" />
         <child>
-          <widget class="Gtk.MenuBar" id="menubar4">
+          <widget class="Gtk.Image" id="image15">
+            <property name="Pixbuf">resource:AboutBoxLinux.png</property>
             <property name="Events">0</property>
             <property name="MemberName" />
-            <node name="menubar4" type="Menubar">
-              <node type="Menu" action="File">
-                <node type="Menuitem" action="Preferences" />
-                <node type="Menuitem" action="GeneratePlaylist" />
-                <node type="Separator" />
-                <node type="Menuitem" action="Exit" />
-              </node>
-              <node type="Menu" action="Help">
-                <node type="Menuitem" action="LegalNotice" />
-                <node type="Menuitem" action="OnlineHelp" />
-                <node type="Separator" />
-                <node type="Menuitem" action="About" />
-              </node>
-            </node>
           </widget>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+    <child internal-child="ActionArea">
+      <widget class="Gtk.HButtonBox" id="MonoClient.About_ActionArea">
+        <property name="Size">1</property>
+        <property name="LayoutStyle">End</property>
+        <property name="Spacing">6</property>
+        <property name="BorderWidth">5</property>
+        <property name="Events">ButtonPressMask</property>
+        <property name="MemberName" />
+        <child>
+          <widget class="Gtk.Button" id="CloseButton">
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-close Menu</property>
+            <property name="Label">Close</property>
+            <property name="IsDialogButton">True</property>
+            <property name="ResponseId">0</property>
+            <property name="CanFocus">True</property>
+            <property name="Events">0</property>
+            <property name="MemberName" />
+            <property name="CanDefault">True</property>
+            <signal name="Clicked" handler="OnCloseButtonClicked" />
+          </widget>
+          <packing>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frame5">
-            <property name="ShadowType">None</property>
-            <property name="LabelXalign">0</property>
-            <property name="Events">0</property>
-            <property name="MemberName" />
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment1">
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">12</property>
-                <property name="Events">0</property>
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.VBox" id="vbox6">
-                    <property name="Events">0</property>
-                    <property name="MemberName" />
-                    <child>
-                      <widget class="Gtk.ComboBoxEntry" id="LastFMStationEntry">
-                        <property name="IsTextCombo">True</property>
-                        <property name="Items">lastfm://globaltags/rock
-lastfm://globaltags/indie
-lastfm://globaltags/alternative
-lastfm://globaltags/seen%20live
-lastfm://globaltags/metal
-lastfm://globaltags/electronic
-lastfm://globaltags/pop
-lastfm://globaltags/punk
-lastfm://globaltags/indie%20rock
-lastfm://globaltags/classic%20rock</property>
-                        <property name="Events">0</property>
-                        <property name="MemberName" />
-                        <property name="Sensitive">False</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.HBox" id="hbox1">
-                        <property name="Events">0</property>
-                        <property name="MemberName" />
-                        <child>
-                          <widget class="Gtk.Button" id="ConnectButton">
-                            <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:stock_media-play Menu</property>
-                            <property name="Label">Tune in</property>
-                            <property name="IsDialogButton">False</property>
-                            <property name="CanFocus">True</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <signal name="Clicked" handler="OnConnectButtonClicked" />
-                          </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="SkipButton">
-                            <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:stock_media-next Menu</property>
-                            <property name="Label">Skip</property>
-                            <property name="UseUnderline">True</property>
-                            <property name="IsDialogButton">False</property>
-                            <property name="CanFocus">True</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <signal name="Clicked" handler="OnSkipButtonClicked" />
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="LoveButton">
-                            <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:stock_3d-favourites Menu</property>
-                            <property name="Label">Love</property>
-                            <property name="IsDialogButton">False</property>
-                            <property name="CanFocus">True</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <signal name="Clicked" handler="OnLoveButtonClicked" />
-                          </widget>
-                          <packing>
-                            <property name="Position">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="BanButton">
-                            <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:gtk-remove Menu</property>
-                            <property name="Label">Ban</property>
-                            <property name="IsDialogButton">False</property>
-                            <property name="CanFocus">True</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <signal name="Clicked" handler="OnBanButtonClicked" />
-                          </widget>
-                          <packing>
-                            <property name="Position">3</property>
-                            <property name="AutoSize">False</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="PackType">End</property>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabel6">
-                <property name="LabelProp">&lt;b&gt;Last.FM Station&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-                <property name="Events">ButtonPressMask</property>
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">False</property>
-            <property name="Expand">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frame6">
-            <property name="ShadowType">None</property>
-            <property name="LabelXalign">0</property>
-            <property name="Events">0</property>
-            <property name="MemberName" />
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment2">
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">12</property>
-                <property name="Events">0</property>
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.VBox" id="vbox8">
-                    <property name="Events">0</property>
-                    <property name="MemberName" />
-                    <child>
-                      <widget class="Gtk.HBox" id="hbox5">
-                        <property name="Events">0</property>
-                        <property name="MemberName" />
-                        <child>
-                          <widget class="Gtk.Label" id="StatusLabel">
-                            <property name="LabelProp">Not Recording</property>
-                            <property name="UseMarkup">True</property>
-                            <property name="Xalign">0</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                          </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="CoverBox">
-                            <property name="Pixbuf">stock:gtk-cdrom Menu</property>
-                            <property name="Events">0</property>
-                            <property name="MemberName" />
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.ProgressBar" id="SongProgressBar">
-                        <property name="Events">0</property>
-                        <property name="MemberName" />
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabel5">
-                <property name="LabelProp">&lt;b&gt;Currently recording&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-                <property name="Events">ButtonPressMask</property>
-                <property name="MemberName" />
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">2</property>
-            <property name="AutoSize">False</property>
           </packing>
         </child>
       </widget>

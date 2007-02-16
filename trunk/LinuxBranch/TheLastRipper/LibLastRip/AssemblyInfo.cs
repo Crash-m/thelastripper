@@ -9,10 +9,10 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("LibLastRip")]
 [assembly: AssemblyDescription("Library for ripping Last.FM, designed for TheLastRipper.")]
-[assembly: AssemblyConfiguration("Mono")] //Mono or Microsoft.Net, depending on PlatformSettings
+[assembly: AssemblyConfiguration("")] //Mono or Microsoft.Net, depending on PlatformSettings
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TheLastRipper")]
-[assembly: AssemblyCopyright("Jop... (Jonas F. Jensen).")]
+[assembly: AssemblyCopyright("TheLastRipper developer team.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

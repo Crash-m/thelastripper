@@ -136,8 +136,8 @@ namespace Stetic {
                 Gtk.Image w23 = new Gtk.Image();
                 w23.Pixbuf = Gtk.IconTheme.Default.LoadIcon("stock_media-play", 16, 0);
                 w23.Events = ((Gdk.EventMask)(0));
-                w23.Name = "image4";
-                bindings["image4"] = w23;
+                w23.Name = "image1";
+                bindings["image1"] = w23;
                 w22.Add(w23);
                 // Container child GtkHBox.Gtk.Container+ContainerChild
                 Gtk.Label w25 = new Gtk.Label();
@@ -176,8 +176,8 @@ namespace Stetic {
                 Gtk.Image w33 = new Gtk.Image();
                 w33.Pixbuf = Gtk.IconTheme.Default.LoadIcon("stock_media-next", 16, 0);
                 w33.Events = ((Gdk.EventMask)(0));
-                w33.Name = "image5";
-                bindings["image5"] = w33;
+                w33.Name = "image2";
+                bindings["image2"] = w33;
                 w32.Add(w33);
                 // Container child GtkHBox.Gtk.Container+ContainerChild
                 Gtk.Label w35 = new Gtk.Label();
@@ -216,8 +216,8 @@ namespace Stetic {
                 Gtk.Image w43 = new Gtk.Image();
                 w43.Pixbuf = Gtk.IconTheme.Default.LoadIcon("stock_3d-favourites", 16, 0);
                 w43.Events = ((Gdk.EventMask)(0));
-                w43.Name = "image6";
-                bindings["image6"] = w43;
+                w43.Name = "image3";
+                bindings["image3"] = w43;
                 w42.Add(w43);
                 // Container child GtkHBox.Gtk.Container+ContainerChild
                 Gtk.Label w45 = new Gtk.Label();
@@ -255,8 +255,8 @@ namespace Stetic {
                 Gtk.Image w53 = new Gtk.Image();
                 w53.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-remove", 16, 0);
                 w53.Events = ((Gdk.EventMask)(0));
-                w53.Name = "image7";
-                bindings["image7"] = w53;
+                w53.Name = "image4";
+                bindings["image4"] = w53;
                 w52.Add(w53);
                 // Container child GtkHBox.Gtk.Container+ContainerChild
                 Gtk.Label w55 = new Gtk.Label();
@@ -479,8 +479,8 @@ namespace Stetic {
                     Gtk.Image w10 = new Gtk.Image();
                     w10.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-apply", 16, 0);
                     w10.Events = ((Gdk.EventMask)(0));
-                    w10.Name = "image2";
-                    bindings["image2"] = w10;
+                    w10.Name = "image5";
+                    bindings["image5"] = w10;
                     w9.Add(w10);
                     // Container child GtkHBox.Gtk.Container+ContainerChild
                     Gtk.Label w12 = new Gtk.Label();
@@ -875,8 +875,8 @@ namespace Stetic {
                     Gtk.Image w82 = new Gtk.Image();
                     w82.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-close", 16, 0);
                     w82.Events = ((Gdk.EventMask)(0));
-                    w82.Name = "image3";
-                    bindings["image3"] = w82;
+                    w82.Name = "image6";
+                    bindings["image6"] = w82;
                     w81.Add(w82);
                     // Container child GtkHBox13.Gtk.Container+ContainerChild
                     Gtk.Label w84 = new Gtk.Label();
@@ -959,6 +959,8 @@ namespace Stetic {
                         cobj.WindowPosition = ((Gtk.WindowPosition)(4));
                         cobj.Modal = true;
                         cobj.HasSeparator = false;
+                        cobj.Resizable = false;
+                        cobj.AllowGrow = false;
                         cobj.Events = ((Gdk.EventMask)(256));
                         cobj.Name = "MonoClient.About";
                         // Internal child MonoClient.About.VBox
@@ -967,133 +969,74 @@ namespace Stetic {
                         w1.Events = ((Gdk.EventMask)(256));
                         w1.Name = "dialog_VBox";
                         // Container child dialog_VBox.Gtk.Box+BoxChild
-                        Gtk.HBox w2 = new Gtk.HBox();
+                        Gtk.Image w2 = new Gtk.Image();
+                        w2.Pixbuf = Gdk.Pixbuf.LoadFromResource("AboutBoxLinux.png");
                         w2.Events = ((Gdk.EventMask)(0));
-                        w2.Name = "hbox3";
-                        // Container child hbox3.Gtk.Box+BoxChild
-                        Gtk.Image w3 = new Gtk.Image();
-                        w3.Pixbuf = Gdk.Pixbuf.LoadFromResource("aboutlogo.svg");
-                        w3.Events = ((Gdk.EventMask)(0));
-                        w3.Name = "IconBox";
-                        bindings["IconBox"] = w3;
-                        w2.Add(w3);
-                        Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(w2[w3]));
-                        w4.Position = 0;
-                        // Container child hbox3.Gtk.Box+BoxChild
-                        Gtk.Frame w5 = new Gtk.Frame();
-                        w5.LabelXalign = 0F;
-                        w5.Events = ((Gdk.EventMask)(0));
-                        w5.Name = "frame1";
-                        // Container child frame1.Gtk.Container+ContainerChild
-                        Gtk.Alignment w6 = new Gtk.Alignment(0F, 0F, 1F, 1F);
-                        w6.LeftPadding = ((uint)(12));
-                        w6.Events = ((Gdk.EventMask)(0));
-                        w6.Name = "GtkAlignment1";
-                        // Container child GtkAlignment1.Gtk.Container+ContainerChild
-                        Gtk.Label w7 = new Gtk.Label();
-                        w7.LabelProp = "Copyright © 2007 Jop... (Jonas F. Jensen).";
-                        w7.UseMarkup = true;
-                        w7.Events = ((Gdk.EventMask)(0));
-                        w7.Name = "label2";
-                        bindings["label2"] = w7;
-                        w6.Add(w7);
-                        bindings["GtkAlignment1"] = w6;
-                        w5.Add(w6);
-                        Gtk.Label w10 = new Gtk.Label();
-                        w10.LabelProp = "<b>Copyright</b>";
-                        w10.UseMarkup = true;
-                        w10.Events = ((Gdk.EventMask)(256));
-                        w10.Name = "GtkLabel1";
-                        bindings["GtkLabel1"] = w10;
-                        w5.LabelWidget = w10;
-                        bindings["frame1"] = w5;
-                        w2.Add(w5);
-                        Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(w2[w5]));
-                        w11.Position = 1;
-                        w11.Expand = false;
-                        w11.Fill = false;
-                        bindings["hbox3"] = w2;
+                        w2.Name = "image15";
+                        bindings["image15"] = w2;
                         w1.Add(w2);
-                        Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(w1[w2]));
-                        w12.Position = 0;
-                        // Container child dialog_VBox.Gtk.Box+BoxChild
-                        Gtk.Label w13 = new Gtk.Label();
-                        w13.LabelProp = "\n<i>\"One day men will look back and say I gave birth to the Twentieth Century.\"</i>\n - Jack the Ripper, 1888";
-                        w13.UseMarkup = true;
-                        w13.Events = ((Gdk.EventMask)(0));
-                        w13.Name = "label1";
-                        bindings["label1"] = w13;
-                        w1.Add(w13);
-                        Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(w1[w13]));
-                        w14.Position = 1;
-                        w14.Expand = false;
-                        w14.Fill = false;
+                        Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(w1[w2]));
+                        w3.Position = 0;
                         bindings["dialog_VBox"] = w1;
                         // Internal child MonoClient.About.ActionArea
-                        Gtk.HButtonBox w15 = cobj.ActionArea;
-                        w15.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
-                        w15.Spacing = 6;
-                        w15.BorderWidth = ((uint)(5));
-                        w15.Events = ((Gdk.EventMask)(256));
-                        w15.Name = "MonoClient.About_ActionArea";
+                        Gtk.HButtonBox w4 = cobj.ActionArea;
+                        w4.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+                        w4.Spacing = 6;
+                        w4.BorderWidth = ((uint)(5));
+                        w4.Events = ((Gdk.EventMask)(256));
+                        w4.Name = "MonoClient.About_ActionArea";
                         // Container child MonoClient.About_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-                        Gtk.Button w16 = new Gtk.Button();
-                        w16.CanFocus = true;
-                        w16.Events = ((Gdk.EventMask)(0));
-                        w16.Name = "CloseButton";
-                        w16.CanDefault = true;
+                        Gtk.Button w5 = new Gtk.Button();
+                        w5.CanFocus = true;
+                        w5.Events = ((Gdk.EventMask)(0));
+                        w5.Name = "CloseButton";
+                        w5.CanDefault = true;
                         // Container child CloseButton.Gtk.Container+ContainerChild
-                        Gtk.Alignment w17 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-                        w17.Events = ((Gdk.EventMask)(0));
-                        w17.Name = "GtkAlignment";
+                        Gtk.Alignment w6 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+                        w6.Events = ((Gdk.EventMask)(0));
+                        w6.Name = "GtkAlignment";
                         // Container child GtkAlignment.Gtk.Container+ContainerChild
-                        Gtk.HBox w18 = new Gtk.HBox();
-                        w18.Spacing = 2;
-                        w18.Events = ((Gdk.EventMask)(0));
-                        w18.Name = "GtkHBox";
+                        Gtk.HBox w7 = new Gtk.HBox();
+                        w7.Spacing = 2;
+                        w7.Events = ((Gdk.EventMask)(0));
+                        w7.Name = "GtkHBox";
                         // Container child GtkHBox.Gtk.Container+ContainerChild
-                        Gtk.Image w19 = new Gtk.Image();
-                        w19.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-close", 16, 0);
-                        w19.Events = ((Gdk.EventMask)(0));
-                        w19.Name = "image1";
-                        bindings["image1"] = w19;
-                        w18.Add(w19);
+                        Gtk.Image w8 = new Gtk.Image();
+                        w8.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-close", 16, 0);
+                        w8.Events = ((Gdk.EventMask)(0));
+                        w8.Name = "image7";
+                        bindings["image7"] = w8;
+                        w7.Add(w8);
                         // Container child GtkHBox.Gtk.Container+ContainerChild
-                        Gtk.Label w21 = new Gtk.Label();
-                        w21.LabelProp = "Close";
-                        w21.Events = ((Gdk.EventMask)(0));
-                        w21.Name = "GtkLabel";
-                        bindings["GtkLabel"] = w21;
-                        w18.Add(w21);
-                        bindings["GtkHBox"] = w18;
-                        w17.Add(w18);
-                        bindings["GtkAlignment"] = w17;
-                        w16.Add(w17);
-                        bindings["CloseButton"] = w16;
-                        cobj.AddActionWidget(w16, 0);
-                        Gtk.ButtonBox.ButtonBoxChild w25 = ((Gtk.ButtonBox.ButtonBoxChild)(w15[w16]));
-                        w25.Expand = false;
-                        w25.Fill = false;
-                        bindings["MonoClient.About_ActionArea"] = w15;
-                        cobj.DefaultWidth = 499;
-                        cobj.DefaultHeight = 523;
+                        Gtk.Label w10 = new Gtk.Label();
+                        w10.LabelProp = "Close";
+                        w10.Events = ((Gdk.EventMask)(0));
+                        w10.Name = "GtkLabel";
+                        bindings["GtkLabel"] = w10;
+                        w7.Add(w10);
+                        bindings["GtkHBox"] = w7;
+                        w6.Add(w7);
+                        bindings["GtkAlignment"] = w6;
+                        w5.Add(w6);
+                        bindings["CloseButton"] = w5;
+                        cobj.AddActionWidget(w5, 0);
+                        Gtk.ButtonBox.ButtonBoxChild w14 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[w5]));
+                        w14.Expand = false;
+                        w14.Fill = false;
+                        bindings["MonoClient.About_ActionArea"] = w4;
+                        cobj.DefaultWidth = 262;
+                        cobj.DefaultHeight = 322;
                         bindings["MonoClient.About"] = cobj;
-                        w3.Show();
+                        w2.Show();
+                        w1.Show();
+                        w8.Show();
+                        w10.Show();
                         w7.Show();
                         w6.Show();
-                        w10.Show();
                         w5.Show();
-                        w2.Show();
-                        w13.Show();
-                        w1.Show();
-                        w19.Show();
-                        w21.Show();
-                        w18.Show();
-                        w17.Show();
-                        w16.Show();
-                        w15.Show();
+                        w4.Show();
                         cobj.Show();
-                        w16.Clicked += ((System.EventHandler)(System.Delegate.CreateDelegate(typeof(System.EventHandler), cobj, "OnCloseButtonClicked")));
+                        w5.Clicked += ((System.EventHandler)(System.Delegate.CreateDelegate(typeof(System.EventHandler), cobj, "OnCloseButtonClicked")));
                     }
                 }
             }

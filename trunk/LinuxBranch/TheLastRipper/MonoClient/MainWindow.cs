@@ -133,7 +133,7 @@ public class MainWindow: Gtk.Window
 	protected virtual void OnOnlineHelpActivated(object sender, System.EventArgs e)
 	{
 		//TODO: find correct adress once the homepage is up
-		System.Diagnostics.Process.Start("xdg-open http://jopsen.dk/en/TheLastRipper/Help");
+		System.Diagnostics.Process.Start("xdg-open http://code.google.com/p/thelastripper/wiki/HelpLinux");
 	}
 
 	protected virtual void OnExitActivated(object sender, System.EventArgs e)
@@ -159,8 +159,7 @@ public class MainWindow: Gtk.Window
 
 	protected virtual void OnLegalNoticeActivated(object sender, System.EventArgs e)
 	{
-		//TODO: find correct adress once the homepage is up
-		System.Diagnostics.Process.Start("xdg-open http://jopsen.dk/en/TheLastRipper/LegalNotice");
+		System.Diagnostics.Process.Start("xdg-open http://code.google.com/p/thelastripper/wiki/LegalNotice");
 	}
 	
 }

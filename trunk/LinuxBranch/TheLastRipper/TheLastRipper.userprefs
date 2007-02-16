@@ -6,18 +6,16 @@
     <File filename="./MonoClient/Preferences.cs" />
     <File filename="./MonoClient/Settings.cs" />
     <File filename="./LibLastRip/PlatformSettings.cs" />
+    <File filename="./MonoClient/About.cs" />
+    <File filename="./MonoClient/AssemblyInfo.cs" />
+    <File filename="./LibLastRip/AssemblyInfo.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
-          <Node name="LibLastRip" expanded="True">
-            <Node name="LastManager" expanded="True" />
-            <Node name="PlayList" expanded="True" />
-          </Node>
-          <Node name="MonoClient" expanded="True">
-            <Node name="MainWindow.cs" expanded="False" selected="True" />
-          </Node>
+          <Node name="LibLastRip" expanded="True" />
+          <Node name="MonoClient" expanded="True" selected="True" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -35,7 +33,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="Welcome" />
+      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/LibLastRip/AssemblyInfo.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>

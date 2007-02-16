@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TheLastRipper")]
-[assembly: AssemblyCopyright("Jop... (Jonas F. Jensen).")]
+[assembly: AssemblyCopyright("TheLastRipper developer team.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
