@@ -7,10 +7,16 @@ Website: [http://jopsen.dk/en]
 
 Blog: [http://jopsen.dk/blog/category/thelastripper]
 
+Platform: Ubuntu Edgy
+
 === Mike F. Jensen ===
 Role: Documentor and alpha tester.
+
+Platform: Mac OS X
 
 === Rene A.S. Josefsen ===
 Role: Webmaster and alpha tester.
 
 Blog: [http://renejosefsen.dk]
+
+Platform: Mac OS X
