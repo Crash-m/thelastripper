@@ -1,3 +1,2 @@
-#summary One-sentence summary of this page.
 
 *Dual Core Support* TheLastRipper developer team has experienced problems with running TheLastRipper under windows with a Dual Core PC, this may only be a unique incident. If you have a Dual Core PC running windows and TheLastRipper, we would like to hear from you.
