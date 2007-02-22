@@ -1,4 +1,4 @@
-#summary These are the known issues for the Linux version of TheLastRipper
+#summary These are the known issues for the Linux version of TheLastRipper.
 #labels Help,Linux,Issues
 
 *GUI Freeze* Sometimes the GUI (graphical user interface) freezes, but still the program keeps running, which means that it will still be recording music. The cause of this issue is still unknown but a bugfix is in the making. If you which to help, the source is freely available and we will happily accept your patch, if released under GNU GPL.
