@@ -1,4 +1,4 @@
-#summary Who is TheLastRipper developer team.
+#summary Who are TheLastRipper developer team.
 
 === Jonas F. Jensen ===
 Role: Primary developer and debian/ubuntu packager.
