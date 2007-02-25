@@ -38,7 +38,7 @@ namespace LibLastRip
 				return this._CurrentSong;
 			}
 		}
-		
+		static System.Object UpdateLocker = new System.Object();
 		public event System.EventHandler OnNewSong;
 		
 		///<summary>
@@ -46,43 +46,50 @@ namespace LibLastRip
 		///</summary>
 		public void UpdateMetaInfo()
 		{
-			if(this.Status == ConnectionStatus.Recording)
+			if(this.Status == ConnectionStatus.Recording && System.Threading.Monitor.TryEnter(LastManager.UpdateLocker))
 			{
-				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-				
-				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-				Stream ResponseStream = hRes.GetResponseStream();
-				
-				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
-				
-				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-				
-				MetaInfo ConcurrentSong = new MetaInfo(Encoding.UTF8.GetString(Buffer, 0, Count));
-				
-				if(this._CurrentSong == null || !this._CurrentSong.Streaming)
+				try
 				{
-					this._CurrentSong = ConcurrentSong;
-					if(this._CurrentSong.Streaming)
+					HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
+					
+					HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
+					Stream ResponseStream = hRes.GetResponseStream();
+					
+					System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
+					
+					System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
+					
+					MetaInfo ConcurrentSong = new MetaInfo(Encoding.UTF8.GetString(Buffer, 0, Count));
+					
+					if(this._CurrentSong == null || !this._CurrentSong.Streaming)
 					{
-						this.SetTimer();
-						if(this.OnNewSong != null)
+						this._CurrentSong = ConcurrentSong;
+						if(this._CurrentSong.Streaming)
 						{
-							this.OnNewSong(this,ConcurrentSong);
+							this.SetTimer();
+							if(this.OnNewSong != null)
+							{
+								this.OnNewSong(this,ConcurrentSong);
+							}
+						}else{
+							this.SetTimer(5000);
 						}
 					}else{
-						this.SetTimer(5000);
-					}
-				}else{
-					if(!MetaInfo.Equals(ConcurrentSong,this._CurrentSong))
-					{
-						this.SaveSong(this._CurrentSong);
-						this._CurrentSong = ConcurrentSong;
-						if(this.OnNewSong != null)
+						if(!MetaInfo.Equals(ConcurrentSong,this._CurrentSong))
 						{
-							this.OnNewSong(this,ConcurrentSong);
+							this.SaveSong(this._CurrentSong);
+							this._CurrentSong = ConcurrentSong;
+							if(this.OnNewSong != null)
+							{
+								this.OnNewSong(this,ConcurrentSong);
+							}
+							this.SetTimer();
 						}
-						this.SetTimer();
 					}
+				}
+				finally
+				{
+					System.Threading.Monitor.Exit(LastManager.UpdateLocker);
 				}
 			}
 		}

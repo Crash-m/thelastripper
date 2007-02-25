@@ -16,7 +16,7 @@ we recommend that you investegate you local laws, before using
 TheLastRipper.
 
 (This is the backend/library for TheLastRipper)
-Version: 0.1.2
+Version: 1.0.0
 
 Requires: 
 Libs:  -r:${pkglibdir}/LibLastRip.dll

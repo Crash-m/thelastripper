@@ -37,7 +37,7 @@ public class MainWindow: Gtk.Window
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
 		this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.LastManager.UpdateMetaInfo);
-		this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
+		//this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -133,7 +133,7 @@ public class MainWindow: Gtk.Window
 	protected virtual void OnOnlineHelpActivated(object sender, System.EventArgs e)
 	{
 		//TODO: find correct adress once the homepage is up
-		System.Diagnostics.Process.Start("xdg-open http://code.google.com/p/thelastripper/wiki/HelpLinux");
+		System.Diagnostics.Process.Start("xdg-open","http://code.google.com/p/thelastripper/wiki/HelpLinux");
 	}
 
 	protected virtual void OnExitActivated(object sender, System.EventArgs e)
@@ -159,7 +159,7 @@ public class MainWindow: Gtk.Window
 
 	protected virtual void OnLegalNoticeActivated(object sender, System.EventArgs e)
 	{
-		System.Diagnostics.Process.Start("xdg-open http://code.google.com/p/thelastripper/wiki/LegalNotice");
+		System.Diagnostics.Process.Start("xdg-open","http://code.google.com/p/thelastripper/wiki/LegalNotice");
 	}
 	
 }

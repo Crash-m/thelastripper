@@ -46,7 +46,7 @@ am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = TheLastRipper.MonoClient.pc thelastripper
+CONFIG_CLEAN_FILES = thelastripper TheLastRipper.MonoClient.pc
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
 	"$(DESTDIR)$(pkgconfigdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
@@ -63,16 +63,16 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 pkgconfigDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfig_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run aclocal-1.9
-AMTAR = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run tar
-AUTOCONF = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run automake-1.9
-AWK = gawk
+ACLOCAL = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run aclocal-1.9
+AMTAR = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run tar
+AUTOCONF = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run automake-1.9
+AWK = mawk
 CYGPATH_W = echo
 DEBUG_CONFIG_LIBRARIES = 
 DEBUG_CONFIG_LIBS = 
-DEFS = -DPACKAGE_NAME=\"TheLastRipper\" -DPACKAGE_TARNAME=\"thelastripper\" -DPACKAGE_VERSION=\"0.1.2\" -DPACKAGE_STRING=\"TheLastRipper\ 0.1.2\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"thelastripper\" -DVERSION=\"0.1.2\"
+DEFS = -DPACKAGE_NAME=\"TheLastRipper\" -DPACKAGE_TARNAME=\"thelastripper\" -DPACKAGE_VERSION=\"1.0.0\" -DPACKAGE_STRING=\"TheLastRipper\ 1.0.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"thelastripper\" -DVERSION=\"1.0.0\"
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
@@ -96,13 +96,13 @@ LIBLASTRIP_RELEASE_LIB = LibLastRip.dll
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/jopsen/development/TheLastRipper/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/missing --run makeinfo
 PACKAGE = thelastripper
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = TheLastRipper
-PACKAGE_STRING = TheLastRipper 0.1.2
+PACKAGE_STRING = TheLastRipper 1.0.0
 PACKAGE_TARNAME = thelastripper
-PACKAGE_VERSION = 0.1.2
+PACKAGE_VERSION = 1.0.0
 PATH_SEPARATOR = :
 PKG_CONFIG = /usr/bin/pkg-config
 RELEASE_CONFIG_LIBRARIES =  ${pkglibdir}/LibLastRip.dll
@@ -112,7 +112,7 @@ RSVG_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/pkgconfig/../../lib/mono/gt
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 0.1.2
+VERSION = 1.0.0
 am__leading_dot = .
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
@@ -127,7 +127,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = /home/jopsen/development/TheLastRipper/install-sh
+install_sh = /home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -175,7 +175,8 @@ FILES = \
 DATA_FILES = 
 RESOURCES = \
 	../logo.svg \
-	../aboutlogo.svg 
+	../aboutlogo.svg \
+	./AboutBoxLinux.png 
 
 EXTRAS = 
 REFERENCES = \
@@ -232,9 +233,9 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-TheLastRipper.MonoClient.pc: $(top_builddir)/config.status $(srcdir)/TheLastRipper.MonoClient.pc.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 thelastripper: $(top_builddir)/config.status $(srcdir)/thelastripper.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+TheLastRipper.MonoClient.pc: $(top_builddir)/config.status $(srcdir)/TheLastRipper.MonoClient.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)

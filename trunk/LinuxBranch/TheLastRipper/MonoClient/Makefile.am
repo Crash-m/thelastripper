@@ -40,7 +40,8 @@ DATA_FILES =
 
 RESOURCES = \
 	../logo.svg \
-	../aboutlogo.svg 
+	../aboutlogo.svg \
+	./AboutBoxLinux.png 
 
 EXTRAS = 
 
