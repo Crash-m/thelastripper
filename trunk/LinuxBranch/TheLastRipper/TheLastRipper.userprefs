@@ -4,6 +4,10 @@
     <File filename="Welcome" />
     <File filename="./LibLastRip/LastManager/LastManager.Stream.cs" />
     <File filename="./LibLastRip/LastManager/LastManager.MetaInfo.cs" />
+    <File filename="./MonoClient/MainWindow.cs" />
+    <File filename="./MonoClient/AssemblyInfo.cs" />
+    <File filename="./LibLastRip/PlatformSettings.cs" />
+    <File filename="./LibLastRip/AssemblyInfo.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
