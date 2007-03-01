@@ -4,3 +4,5 @@
 = Recording music =
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_app.png
+
+The picture above, shows the main window when you are recording with TheLastRipper. It features a field where you can choose which station you want to record from. You can either choose to use one of the stations already specified in the box, or you can go to: http://www.last.fm/listen/ to creata a playlist with one of your favourite artist.
