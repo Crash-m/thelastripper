@@ -2,7 +2,7 @@
 
 ==Setting up the recorder==
 
-http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_app.png
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_login.png
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
