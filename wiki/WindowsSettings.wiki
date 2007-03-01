@@ -1,10 +1,6 @@
-#summary One-sentence summary of this page.
+#summary We will on this page show you how to set up TheLastRipper for recording.
+#labels Windows,Help
 
 ==Setting up the recorder==
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_login.png
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
