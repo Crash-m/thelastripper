@@ -4,3 +4,5 @@
 ==Setting up the recorder==
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_login.png
+
+The first box you will we be shown, is the box shown above here. It features a login field with a box to write your Last.fm username, which is available at: https://www.last.fm/join/ . And it also features a box to write your password in. When you have obtained your Last.fm login and typed it in the boxes, you are ready to proceed, by pressing the loginbutton. When this is done you are ready to step down into the next field, where you can choose where the music will be saved.
