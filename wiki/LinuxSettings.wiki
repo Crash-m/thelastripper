@@ -1,4 +1,4 @@
-#summary This helps you configure TheLastRipper under Linux
+#summary This helps you configure TheLastRipper under Linux.
 #labels Linux,Configure,Help
 
 = Logging in =
