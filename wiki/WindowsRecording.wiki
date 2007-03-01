@@ -2,3 +2,5 @@
 #labels Help,Windows
 
 = Recording music =
+
+http://thelastripper.googlecode.com/svn/trunk/Website/HelpWindows/Windows_app.png
