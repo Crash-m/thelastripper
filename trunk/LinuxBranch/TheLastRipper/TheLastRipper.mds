@@ -10,7 +10,7 @@
     </Configuration>
   </Configurations>
   <DeployTargets>
-    <DeployTarget Handler="MonoDevelop.Autotools.Deployer" Name="TheLastRipper" TargetDirectory="/home/jopsen/development" DefaultConfiguration="Release" ctype="TarballDeployTarget" />
+    <DeployTarget Handler="MonoDevelop.Autotools.Deployer" Name="TheLastRipper" TargetDirectory="/home/jopsen/Development" DefaultConfiguration="Release" ctype="TarballDeployTarget" />
   </DeployTargets>
   <StartMode startupentry="MonoClient" single="True">
     <Execute type="None" entry="LibLastRip" />

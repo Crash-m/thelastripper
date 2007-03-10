@@ -37,7 +37,6 @@ public class MainWindow: Gtk.Window
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
 		this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.LastManager.UpdateMetaInfo);
-		//this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -46,6 +45,8 @@ public class MainWindow: Gtk.Window
 		a.RetVal = true;
 	}
 
+	protected System.Boolean IsStarted = false;
+	
 	protected virtual void OnConnectButtonClicked(object sender, System.EventArgs e)
 	{
 		this.Timer.Stop();
@@ -56,43 +57,43 @@ public class MainWindow: Gtk.Window
 			this.LoveButton.Sensitive = true;
 			this.BanButton.Sensitive = true;
 			this.SkipButton.Sensitive = true;
+			if(!this.IsStarted)
+			{
+				GLib.Timeout.Add(2000, new GLib.TimeoutHandler(this.UpdateProgressTime));
+				this.IsStarted = true;
+			}
 		}
 	}
 	
 	protected System.Int32 TrackDuration = 0;
 	
-	protected virtual void UpdateProgress(System.Object Sender, System.EventArgs Args)
+	protected virtual System.Boolean UpdateProgressTime()
 	{
-		this.TrackDuration += MainWindow.UpdateInterval/1000;
-		this.UpdateProgress();
-	}
-	
-	protected virtual void UpdateProgress()
-	{
-		System.Double Frac = (((System.Double)this.TrackDuration) / System.Convert.ToDouble(this.LastManager.CurrentSong.Trackduration));
+		this.TrackDuration += 2000/1000;
+		System.Double Frac = ((System.Double)this.TrackDuration / System.Convert.ToDouble(this.LastManager.CurrentSong.Trackduration));
 		if(Frac <= 1 && Frac >= (1/System.Double.MaxValue))
 		{
 			this.SongProgressBar.Fraction = Frac;
 		}else{
 			this.SongProgressBar.Fraction = 0;
 		}
-		/*if(this.GtkLabel5.Text != "Currently recording...")
-		{
-			this.GtkLabel5.Markup = "<b>" + this.GtkLabel5.Text + ".</b>";
-		}else{
-			this.GtkLabel5.Markup = "<b>Currently recording</b>";
-		}*/
+		
+		return true;
 	}
+	
+	protected LibLastRip.MetaInfo NewSong;
+	protected System.Boolean IsNewSong = false;
 	
 	protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 	{
 		LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 		this.SetStatus(Info);
-		this.TrackDuration = 0;
 	}
 	
 	protected virtual void SetStatus(LibLastRip.MetaInfo Info)
 	{
+		this.TrackDuration = 0;
+		
 		if(Info.Streaming)
 		{
 			System.String StrText = "";
@@ -112,6 +113,8 @@ public class MainWindow: Gtk.Window
 				catch
 				{}
 			}
+		}else{
+			//TODO: do something when we're not steaming... disable some controls etc...
 		}
 	}
 

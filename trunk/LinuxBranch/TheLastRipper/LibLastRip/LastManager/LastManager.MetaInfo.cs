@@ -67,10 +67,13 @@ namespace LibLastRip
 						if(this._CurrentSong.Streaming)
 						{
 							this.SetTimer();
-							if(this.OnNewSong != null)
+							
+							//Make the event happen on the UI thread
+							this.NewSongEvent.Set();
+							/*if(this.OnNewSong != null)
 							{
 								this.OnNewSong(this,ConcurrentSong);
-							}
+							}*/
 						}else{
 							this.SetTimer(5000);
 						}
@@ -79,10 +82,13 @@ namespace LibLastRip
 						{
 							this.SaveSong(this._CurrentSong);
 							this._CurrentSong = ConcurrentSong;
-							if(this.OnNewSong != null)
+							
+							//Make the event happen on the UI thread
+							this.NewSongEvent.Set();
+							/*if(this.OnNewSong != null)
 							{
 								this.OnNewSong(this,ConcurrentSong);
-							}
+							}*/
 							this.SetTimer();
 						}
 					}
@@ -133,6 +139,33 @@ namespace LibLastRip
 			/*
 			We're using 3 timers to make it easier to hit the right moment.
 			*/
+		}
+		
+		protected System.Threading.AutoResetEvent NewSongEvent = new System.Threading.AutoResetEvent(false);
+		protected delegate void ListenNewSongEventDelegate();
+		
+		protected void StartListenNewSongEvent()
+		{
+			ListenNewSongEventDelegate SendDelegate = new ListenNewSongEventDelegate(this.ListenNewSongEvent);
+			System.AsyncCallback CallBack = new System.AsyncCallback(this.ListenNewSongEventCallback);
+			SendDelegate.BeginInvoke(CallBack,null);
+		}
+		
+		protected void ListenNewSongEvent()
+		{
+			this.NewSongEvent.WaitOne();
+		}
+		
+		protected void ListenNewSongEventCallback(System.IAsyncResult Res)
+		{
+			ListenNewSongEventDelegate SendDelegate = (ListenNewSongEventDelegate)((System.Runtime.Remoting.Messaging.AsyncResult)Res).AsyncDelegate;
+			SendDelegate.EndInvoke(Res);
+			
+			if(this.OnNewSong != null)
+			{
+				this.OnNewSong(this,this._CurrentSong);
+			}
+			this.StartListenNewSongEvent();
 		}
 	}
 }

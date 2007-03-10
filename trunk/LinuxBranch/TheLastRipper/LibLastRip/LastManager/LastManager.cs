@@ -50,6 +50,9 @@ namespace LibLastRip
 		///</summary>
 		public LastManager(System.String UserID, System.String Password, System.String MusicPath, System.String LastFMStation)
 		{
+			//Start new song event listing
+			this.StartListenNewSongEvent();
+			
 			this.MusicPath = MusicPath;
 			
 			if(this.Handshake(UserID, Password))
@@ -63,6 +66,9 @@ namespace LibLastRip
 		///</summary>
 		public LastManager(System.String MusicPath)
 		{
+			//Start new song event listing
+			this.StartListenNewSongEvent();
+			
 			this.MusicPath = MusicPath;
 		}
 		
