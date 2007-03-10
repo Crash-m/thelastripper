@@ -32,30 +32,35 @@ namespace LibLastRip
 		///</summary>
 		protected System.Boolean SendCommand(System.String Command)
 		{
-			HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "control.php?session=" + this.SessionID + "&command=" + Command + "&debug=0");
-			
-			HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-			Stream ResponseStream = hRes.GetResponseStream();
-			
-			System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
-			
-			System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-			System.String []Data = Encoding.UTF8.GetString(Buffer, 0, Count).Split(new System.Char[] {'\n'});
-			
 			System.Boolean Status = false;
-			foreach(System.String Line in Data)
-			{
-				System.String []Opts = Line.Split(new System.Char[] {'='});
+			try{
+				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "control.php?session=" + this.SessionID + "&command=" + Command + "&debug=0");
+				hReq.Timeout = 3000;
+				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
+				Stream ResponseStream = hRes.GetResponseStream();
 				
-				if(Opts[0].ToLower() == "response")
+				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
+				
+				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
+				System.String []Data = Encoding.UTF8.GetString(Buffer, 0, Count).Split(new System.Char[] {'\n'});
+				
+				Status = false;
+				foreach(System.String Line in Data)
 				{
-					if(Opts[1].ToLower() == "ok")
+					System.String []Opts = Line.Split(new System.Char[] {'='});
+					
+					if(Opts[0].ToLower() == "response")
 					{
-						Status = true;
+						if(Opts[1].ToLower() == "ok")
+						{
+							Status = true;
+						}
 					}
 				}
 			}
-			
+			catch{
+				Status = false;
+			}
 			return Status;
 		}
 		
@@ -72,6 +77,7 @@ namespace LibLastRip
 					//Making sure we don't save half a file
 					this.SkipSave = true;
 					this.UpdateMetaInfo();
+					//new System.Threading.Thread(new System.Threading.ThreadStart(this.UpdateMetaInfo));
 				}
 				return Result;
 			}else{
@@ -120,7 +126,7 @@ namespace LibLastRip
 				return false;
 			}else{
 				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
-				
+				hReq.Timeout = 10000;
 				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
 				Stream ResponseStream = hRes.GetResponseStream();
 				
@@ -147,7 +153,9 @@ namespace LibLastRip
 								this.Status = ConnectionStatus.Recording;
 								this.StartRecording();
 							}
+							
 							this.UpdateMetaInfo();
+							//new System.Threading.Thread(new System.Threading.ThreadStart(this.UpdateMetaInfo));
 						}
 					}
 				}

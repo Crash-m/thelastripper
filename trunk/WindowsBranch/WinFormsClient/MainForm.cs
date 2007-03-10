@@ -31,7 +31,8 @@ namespace WinFormsClient
 		protected Settings settings;
 		protected System.Int32 TrackDuration = 0;
 		protected const System.Int32 UpdateInterval = 6000;
-		public System.Timers.Timer Timer = new System.Timers.Timer(MainForm.UpdateInterval);
+		//public System.Timers.Timer Timer = new System.Timers.Timer(MainForm.UpdateInterval);
+		protected System.Windows.Forms.Timer Timer;
 		
 		public MainForm()
 		{
@@ -52,17 +53,24 @@ namespace WinFormsClient
 				this.TuneInButton.Enabled = true;
 			}
 			this.Manager.OnNewSong += new EventHandler(this.OnNewSong);
-			this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.Manager.UpdateMetaInfo);
-			this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
+			
+			this.Timer = new System.Windows.Forms.Timer();
+			this.Timer.Interval = MainForm.UpdateInterval;
+			this.Timer.Tick += new EventHandler(this.Manager.UpdateMetaInfo);
+			this.Timer.Tick += new EventHandler(this.UpdateProgress);
+			//this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.Manager.UpdateMetaInfo);
+			//this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateProgress);
 		}
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 		{
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
-			this.SetStatus(Info);
-			this.TrackDuration = 0;
-			this.StatusBar.Value = 0;
-			this.StatusBar.Maximum = System.Convert.ToInt32(Info.Trackduration);
+			//this.SetStatus(Info);
+			lock(MainForm.locker)
+			{
+				this.DoUpdate = true;
+				this.UpdateTO = Info;
+			}
 		}
 		
 		protected virtual void SetStatus(LibLastRip.MetaInfo Info)
@@ -90,6 +98,10 @@ namespace WinFormsClient
 			}
 		}
 		
+		protected System.Boolean DoUpdate = false;
+		protected LibLastRip.MetaInfo UpdateTO;
+		static System.Object locker = new System.Object();
+		
 		protected virtual void UpdateProgress(System.Object Sender, System.EventArgs Args)
 		{
 			System.Int32 Next = this.StatusBar.Value + MainForm.UpdateInterval/1000;
@@ -98,6 +110,17 @@ namespace WinFormsClient
 				this.StatusBar.Value = this.StatusBar.Maximum;
 			}else{
 				this.StatusBar.Value = Next;
+			}
+			lock(MainForm.locker)
+			{
+				if(this.DoUpdate)
+				{
+					this.DoUpdate = false;
+					this.TrackDuration = 0;
+					this.StatusBar.Value = 0;
+					this.StatusBar.Maximum = System.Convert.ToInt32(this.UpdateTO.Trackduration);
+					this.SetStatus(this.UpdateTO);
+				}
 			}
 		}
 		
@@ -148,7 +171,8 @@ namespace WinFormsClient
 				this.LoveButton.Enabled = true;
 				this.HateButton.Enabled = true;
 				this.SkipButton.Enabled = true;
-				this.Timer.Start();
+				this.Timer.Enabled = true;
+				//this.Timer.Start();
 			}
 		}
 		

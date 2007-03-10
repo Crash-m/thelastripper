@@ -37,12 +37,15 @@ namespace LibLastRip
 		protected System.String BasePath;
 		protected System.Boolean Subscripter;
 		protected System.String _MusicPath;
-		protected const System.String PathSeparator = "/";
-		protected const System.Int32 ProtocolBufferSize = 4096;
+		protected const System.String PathSeparator = "\\";
+		protected const System.Int32 ProtocolBufferSize = 102400;//4096;
 		protected System.Boolean SkipSave = false;
-		protected System.Timers.Timer Timer1 = new System.Timers.Timer();
-		protected System.Timers.Timer Timer2 = new System.Timers.Timer();
-		protected System.Timers.Timer Timer3 = new System.Timers.Timer();
+		//protected System.Timers.Timer Timer1 = new System.Timers.Timer();
+		//protected System.Timers.Timer Timer2 = new System.Timers.Timer();
+		//protected System.Timers.Timer Timer3 = new System.Timers.Timer();
+		protected System.Windows.Forms.Timer Timer1 = new System.Windows.Forms.Timer();
+		protected System.Windows.Forms.Timer Timer2 = new System.Windows.Forms.Timer();
+		protected System.Windows.Forms.Timer Timer3 = new System.Windows.Forms.Timer();
 		protected ConnectionStatus Status = ConnectionStatus.Created;
 		
 		///<summary>
@@ -72,7 +75,7 @@ namespace LibLastRip
 			{
 				throw new System.Exception("UserName and password needed.");
 			}
-			HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create("http://ws.audioscrobbler.com/radio/handshake.php?version=" + "1.1.1" + "&platform=" + "linux" + "&username=" + this.UserID + "&passwordmd5=" + this.Password + "&debug=" + "0" + "&partner=");
+			HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create("http://ws.audioscrobbler.com/radio/handshake.php?version=" + "1.1.1" + "&platform=" + "windows" + "&username=" + this.UserID + "&passwordmd5=" + this.Password + "&debug=" + "0" + "&partner=");
 			
 			//TODO: Multithread this method to make it more responsive
 			HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
@@ -81,7 +84,6 @@ namespace LibLastRip
 			System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
 			
 			System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-			
 			if(this.ParseHandshake(Encoding.UTF8.GetString(Buffer, 0, Count)))
 			{
 				this.Status = ConnectionStatus.Connected;
@@ -99,6 +101,8 @@ namespace LibLastRip
 		{
 			this.UserID = UserID;
 			this.Password = Password;
+			System.IO.File.AppendAllText(PlatformSettings.TempPath + "\\" + "thelastripper.log",
+			                             "\n -Performs handshake");
 			return this.Handshake();
 		}
 		
