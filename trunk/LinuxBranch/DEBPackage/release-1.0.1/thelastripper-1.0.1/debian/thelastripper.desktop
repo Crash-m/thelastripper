@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=TheLastRipper
+Comment=A Last.fm ripper
+Exec=/usr/bin/thelastripper
+Icon=/usr/share/pixmaps/thelastripper/logo.svg
+Terminal=false
+Type=Application
+Categories=GTK;Application;AudioVideo;Audio;
