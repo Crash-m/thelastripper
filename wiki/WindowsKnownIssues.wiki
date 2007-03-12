@@ -1,6 +1,10 @@
 #summary These are the known issues for the Linux version of TheLastRipper.
 #labels Help,Windows,Issues
 
+===TheLastRipper Version 1.0.1===
+*Skip function* it's known that the skip function doesn't always work, but it shouldn't take down the application anymore. All other bugs should be fixed.
+
+===TheLastRipper Version 1.0.0===
 *Dual Core Support* TheLastRipper developer team has experienced problems with running TheLastRipper under windows with a Dual Core PC, this may only be a unique incident. If you have a Dual Core PC running windows and TheLastRipper, we would like to hear from you.
 
 *Skip function* The skip function in the windows version is not working properly, but we are working on a bugfix.
