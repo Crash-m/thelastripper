@@ -1,5 +1,5 @@
 #summary This is the guide that shows you how to record in the OSX version of TheLastRipper.
-#labels HelpOSX
+#labels Help,OSX
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpOSX/OSXRecording.png
 
