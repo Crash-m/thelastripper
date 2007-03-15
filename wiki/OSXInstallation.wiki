@@ -1,0 +1,10 @@
+#summary This is the guide on how to instal the last ripper on OSX.
+#labels Help,OSX
+
+= Mono =
+
+TheLastRipper for OSX requires Mono to run. Mono can be obtained at: http://www.mono-project.com/Downloads. When you have downloaded it to your computer you have to install it.
+
+= X11 =
+
+X11 can be found on your Mac OSX install disc, and on most mac's it is installed from the factory.
