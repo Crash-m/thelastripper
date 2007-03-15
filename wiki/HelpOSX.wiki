@@ -2,7 +2,7 @@
 #labels help,osx
 
 = Contents =
-  * OSXInstallation
+  * [OSXInstallation]
   * OSXSettings
   * OSXRecording
   * OSXKnownIssues
