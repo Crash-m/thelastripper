@@ -1,0 +1,37 @@
+#summary Howto install TheLastRipper under Linux
+#labels Help,Linux
+_There's two ways of installing TheLastRipper depending on you distro, if your distro is Debian based the first one is recommended._
+
+===Installation under Ubuntu/Debian===
+_Follow these instructions if your distro is based of Debian or Ubuntu._
+
+   # Download the latest deb package from our downloads listing.
+   # Right click it and choose "install" or "open with gdebi"
+
+You can also install it with following commands:
+{{{
+$ wget http://thelastripper.googlecode.com/files/thelastripper_1.0.1-1_all.deb
+$ sudo dpkg -i thelastripper_1.0.1-1_all.deb
+}}}
+
+===Installation from source===
+_Follow these instructions if you cannot install deb packages under your distribution of choice_
+
+*Note:* This installation method does NOT install man pages, desktop files (or any other menu entry for that matter), the only method to launch the application after install is by command: thelastripper.
+
+   # Install requirements through the package manager of you distro:
+    * xdg-utils (optional)
+    * mono-runtime
+    * libglib2.0-cli
+    * libgtk2.0-cli
+    * libmono-corlib2.0-cli
+    * libmono-system2.0-cli
+    * If more's needed the configure script will complain.
+   # Download the latest tarball from out downloads listing.
+   # Extract the content of the tarball
+   # Run the `./configure` script
+   # Build the application with `make`
+   # Install the application with `make install`
+   # Launch the application with following command: `thelastripper`
+
+
