@@ -10,3 +10,7 @@ The first box that will be shown when you start the program, is the box above. I
 = Setting the save path =
 
 The default save path is set to your personal "Music" directory but you can easily change this by choosing another path. You can either do this by typing in the path or pres the "Browse" button, to se the directories.
+
+= Playlist settings =
+
+In the lower part of the box you will se the playlist settings. In the box there are a given a list of checkboxes to choose between. The first you will have to choose, is where the playlist will be generated from; loved tracks, top tracks or just random. You also have to choose the format of the playlist, if want a .m3u, .pls or a .smil. When you have been through these simple steps, you are ready to start recording and the only thing left is to push the OK button in the lower left corner.
