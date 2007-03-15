@@ -3,6 +3,6 @@
 
 = Contents =
   * [OSXInstallation]
-  * OSXSettings
-  * OSXRecording
-  * OSXKnownIssues
+  * [OSXSettings]
+  * [OSXRecording]
+  * [OSXKnownIssues]
