@@ -3,7 +3,7 @@
 
 = App =
 
-TheLastRipper is using the app function in OSX. When you have downloaded and mounted the .dmg image file, you will be shown the box shown below, drag TheLastRipper app onto the shortcut to the applications, and you are ready to start.
+TheLastRipper is using the app function in OSX. When you have downloaded and mounted the .dmg image file, you will be shown the box shown below, drag TheLastRipper app onto the applictions shortcut, and you are ready to start.
 
 http://thelastripper.googlecode.com/svn/trunk/Website/HelpOSX/InstallOSX.png
 
