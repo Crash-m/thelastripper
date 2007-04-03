@@ -10,7 +10,7 @@ public class PlayListGenerator : System.Runtime.Serialization.ISerializable
 =Remarks=
 To be added.
 
-*Assembly: * LibLastRip1.0.2.38050
+*Assembly: * LibLastRip 1.0.2.38050
 
 =Members=
 _List of all members,_
