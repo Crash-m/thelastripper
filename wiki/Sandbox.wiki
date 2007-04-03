@@ -5,6 +5,8 @@
 public class PlayListGenerator : System.Runtime.Serialization.ISerializable
 }}}
 
+[[#test Testing a link]]
+
 =Remarks=
 To be added.
 
@@ -59,7 +61,7 @@ _To be added._
 {{{
 public PlayListGenerator (string MusicPath, string UserName);
 }}}
-
+#test
 ====Remarks====
 To be added.
 
