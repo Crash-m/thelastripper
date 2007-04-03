@@ -13,3 +13,4 @@ _This is a list of goal for version 1.1.0._
 == Mac Version 1.x ==
 _The Mac version will stay beta until a cocoa-sharp user interface have been created._
   * Graphical user interface using Cocoa-Sharp
+  * Perhaps a GUI using wx.net instead of Cocoa-Sharp
