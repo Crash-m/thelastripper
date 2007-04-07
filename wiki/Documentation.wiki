@@ -1,6 +1,6 @@
 #summary Documentation of LibLastRip.
-#labels documentation
-''This is developer documentation of the sourcecode, generated with gmcs, monodocer and [http://jopsen.dk/blog/2007/04/howto-export-monodoc-to-googlecode-wiki monodocs2wiki]. This is aimed at developers, but I the documentation is far from done, and the libraries might need a little rewrite.''
+#labels documentation,Featured
+_This is developer documentation of the sourcecode, generated with gmcs, monodocer and [http://jopsen.dk/blog/2007/04/howto-export-monodoc-to-googlecode-wiki monodocs2wiki]. This is aimed at developers, but I the documentation is far from done, and the libraries might need a little rewrite._
 
 *Copyright: *To be added.
 
