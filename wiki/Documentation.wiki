@@ -1,5 +1,6 @@
 #summary Documentation of LibLastRip.
 #labels documentation
+''This is developer documentation of the sourcecode, generated with gmcs, monodocer and [http://jopsen.dk/blog/2007/04/howto-export-monodoc-to-googlecode-wiki monodocs2wiki]. This is aimed at developers, but I the documentation is far from done, and the libraries might need a little rewrite.''
 
 *Copyright: *To be added.
 
@@ -11,7 +12,7 @@ _List of namespaces and their content._
   * [Docs_LibLastRip_IMetaTrack IMetaTrack]
   * [Docs_LibLastRip_MetaInfo MetaInfo]
   * [Docs_LibLastRip_LastManager LastManager]
-  * [Docs_LibLastRip_LastManager+ListenNewSongEventDelegate LastManager+ListenNewSongEventDelegate]
+  * [Docs_LibLastRip_LastManager__ListenNewSongEventDelegate LastManager ListenNewSongEventDelegate]
   * [Docs_LibLastRip_MetaMusic MetaMusic]
   * [Docs_LibLastRip_MetaTrack MetaTrack]
   * [Docs_LibLastRip_PlayList PlayList]
