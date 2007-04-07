@@ -1,0 +1,255 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public class MetaInfo : System.EventArgs, LibLastRip.IMetaMusic
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+==Constructors==
+|| `public MetaInfo (string Data);`  || To be added. ||
+
+==Fields==
+|| `protected string _Station;`  || To be added. ||
+|| `protected string _Artist;`  || To be added. ||
+|| `protected string _Track;`  || To be added. ||
+|| `protected string _Album;`  || To be added. ||
+|| `protected string _AlbumcoverSmall;`  || To be added. ||
+|| `protected string _AlbumcoverMedium;`  || To be added. ||
+|| `protected string _AlbumcoverLarge;`  || To be added. ||
+|| `protected string _Trackduration;`  || To be added. ||
+|| `protected string _Trackprogress;`  || To be added. ||
+|| `protected bool _Streaming;`  || To be added. ||
+
+==Properties==
+|| `public string Station { get; };`  || To be added. ||
+|| `public string Artist { get; };`  || To be added. ||
+|| `public string Track { get; };`  || To be added. ||
+|| `public string Album { get; };`  || To be added. ||
+|| `public string AlbumcoverSmall { get; };`  || To be added. ||
+|| `public string AlbumcoverMedium { get; };`  || To be added. ||
+|| `public string AlbumcoverLarge { get; };`  || To be added. ||
+|| `public string Trackduration { get; };`  || To be added. ||
+|| `public string Trackprogress { get; };`  || To be added. ||
+|| `public bool Streaming { get; };`  || To be added. ||
+
+==Methods==
+|| `public static bool Equals (object Obj1, object Obj2);`  || To be added. ||
+|| `public void AppendID3 (System.IO.FileStream Stream);`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Constructors==
+_A detrailed description of constructors._
+
+===MetaInfo Constructor===
+_To be added._
+{{{
+public MetaInfo (string Data);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `Data`  To be added.
+
+==Fields==
+_A detailed description of fields._
+
+===_Station===
+_To be added._
+{{{
+protected string _Station;
+}}}
+====Remarks====
+To be added.
+
+===_Artist===
+_To be added._
+{{{
+protected string _Artist;
+}}}
+====Remarks====
+To be added.
+
+===_Track===
+_To be added._
+{{{
+protected string _Track;
+}}}
+====Remarks====
+To be added.
+
+===_Album===
+_To be added._
+{{{
+protected string _Album;
+}}}
+====Remarks====
+To be added.
+
+===_AlbumcoverSmall===
+_To be added._
+{{{
+protected string _AlbumcoverSmall;
+}}}
+====Remarks====
+To be added.
+
+===_AlbumcoverMedium===
+_To be added._
+{{{
+protected string _AlbumcoverMedium;
+}}}
+====Remarks====
+To be added.
+
+===_AlbumcoverLarge===
+_To be added._
+{{{
+protected string _AlbumcoverLarge;
+}}}
+====Remarks====
+To be added.
+
+===_Trackduration===
+_To be added._
+{{{
+protected string _Trackduration;
+}}}
+====Remarks====
+To be added.
+
+===_Trackprogress===
+_To be added._
+{{{
+protected string _Trackprogress;
+}}}
+====Remarks====
+To be added.
+
+===_Streaming===
+_To be added._
+{{{
+protected bool _Streaming;
+}}}
+====Remarks====
+To be added.
+==Properties==
+_A detailed description of properties._
+
+===Station===
+_To be added._
+{{{
+public string Station { get; };
+}}}
+====Value====
+To be added.
+
+===Artist===
+_To be added._
+{{{
+public string Artist { get; };
+}}}
+====Value====
+To be added.
+
+===Track===
+_To be added._
+{{{
+public string Track { get; };
+}}}
+====Value====
+To be added.
+
+===Album===
+_To be added._
+{{{
+public string Album { get; };
+}}}
+====Value====
+To be added.
+
+===AlbumcoverSmall===
+_To be added._
+{{{
+public string AlbumcoverSmall { get; };
+}}}
+====Value====
+To be added.
+
+===AlbumcoverMedium===
+_To be added._
+{{{
+public string AlbumcoverMedium { get; };
+}}}
+====Value====
+To be added.
+
+===AlbumcoverLarge===
+_To be added._
+{{{
+public string AlbumcoverLarge { get; };
+}}}
+====Value====
+To be added.
+
+===Trackduration===
+_To be added._
+{{{
+public string Trackduration { get; };
+}}}
+====Value====
+To be added.
+
+===Trackprogress===
+_To be added._
+{{{
+public string Trackprogress { get; };
+}}}
+====Value====
+To be added.
+
+===Streaming===
+_To be added._
+{{{
+public bool Streaming { get; };
+}}}
+====Value====
+To be added.
+
+==Methods==
+_A detailed description of methods._
+
+===Equals===
+_To be added._
+{{{
+public static bool Equals (object Obj1, object Obj2);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.Object `Obj1`  To be added.
+  * System.Object `Obj2`  To be added.
+
+===AppendID3===
+_To be added._
+{{{
+public void AppendID3 (System.IO.FileStream Stream);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.IO.FileStream `Stream`  To be added.

@@ -1,0 +1,51 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public enum ConnectionStatus
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+
+==Fields==
+|| `Created`  || To be added. ||
+|| `Connected`  || To be added. ||
+|| `Recording`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+
+==Fields==
+_A detailed description of fields._
+
+===Created===
+_To be added._
+{{{
+Created
+}}}
+====Remarks====
+
+
+===Connected===
+_To be added._
+{{{
+Connected
+}}}
+====Remarks====
+
+
+===Recording===
+_To be added._
+{{{
+Recording
+}}}
+====Remarks====

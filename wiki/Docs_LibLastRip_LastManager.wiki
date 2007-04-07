@@ -1,0 +1,584 @@
+#summary 
+#labels documentation
+
+{{{
+public class LastManager
+}}}
+
+=Remarks=
+
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+==Constructors==
+|| `public LastManager (string UserID, string Password, string MusicPath, string LastFMStation);`  || To be added. ||
+|| `public LastManager (string MusicPath);`  || To be added. ||
+
+==Fields==
+|| `protected const string PathSeparator;`  || To be added. ||
+|| `protected const int ProtocolBufferSize = 4096;`  || To be added. ||
+|| `protected string UserID;`  || To be added. ||
+|| `protected string _Password;`  || To be added. ||
+|| `protected string StreamURL;`  || To be added. ||
+|| `protected string SessionID;`  || To be added. ||
+|| `protected string BaseURL;`  || To be added. ||
+|| `protected string BasePath;`  || To be added. ||
+|| `protected bool Subscripter;`  || To be added. ||
+|| `protected string _MusicPath;`  || To be added. ||
+|| `protected bool SkipSave;`  || To be added. ||
+|| `protected System.Timers.Timer Timer1;`  || To be added. ||
+|| `protected System.Timers.Timer Timer2;`  || To be added. ||
+|| `protected System.Timers.Timer Timer3;`  || To be added. ||
+|| `protected LibLastRip.ConnectionStatus Status;`  || To be added. ||
+|| `protected LibLastRip.MetaInfo _CurrentSong;`  || To be added. ||
+|| `protected System.Threading.AutoResetEvent NewSongEvent;`  || To be added. ||
+|| `protected System.IO.FileStream TempFile;`  || To be added. ||
+|| `protected byte[] Buffer;`  || To be added. ||
+|| `protected IAsyncResult ReadHandle;`  || To be added. ||
+|| `protected int DeadStreamCount;`  || To be added. ||
+|| `protected bool IsKickStarted;`  || To be added. ||
+|| `protected bool IsRestarted;`  || To be added. ||
+
+==Properties==
+|| `public string Password { set; get; };`  || Gets an md5 hash of the password, or sets the password from hash. ||
+|| `public string UserName { set; get; };`  || Gets or set the UserName ||
+|| `public string MusicPath { set; get; };`  || Gets or set the UserName ||
+|| `public LibLastRip.ConnectionStatus ConnectionStatus { get; };`  || Gets current connection status ||
+|| `protected string ServiceURL { get; };`  || Gets the URL for the Last.FM server ||
+|| `public LibLastRip.MetaInfo CurrentSong { get; };`  || Gets the meta info about the current song ||
+
+==Methods==
+|| `protected bool SendCommand (string Command);`  || Sends a command to the Last.FM server ||
+|| `public bool SkipSong ();`  || Skips the current song an moves on ||
+|| `public bool LoveSong ();`  || Loves the current song ||
+|| `public bool BanSong ();`  || Bans the current song ||
+|| `public bool ChangeStation (string LastFMStation);`  || To be added. ||
+|| `public bool Handshake ();`  || To be added. ||
+|| `public bool Handshake (string UserID, string Password);`  || Gives the Last.FM server a handshake ||
+|| `protected bool ParseHandshake (string Data);`  || Parses the reponse data from a handshake ||
+|| `public static string CalculateHash (string Pass);`  || To be added. ||
+|| `public static string RemoveIllegalChars (string Str);`  || To be added. ||
+|| `public void UpdateMetaInfo ();`  || Updates the metainfo about the current song ||
+|| `public void UpdateMetaInfo (object Sender, EventArgs Args);`  || To be added. ||
+|| `protected void SetTimer ();`  || To be added. ||
+|| `protected void SetTimer (LibLastRip.MetaInfo SongInfo);`  || To be added. ||
+|| `protected void SetTimer (double Interval);`  || To be added. ||
+|| `protected void StartListenNewSongEvent ();`  || To be added. ||
+|| `protected void ListenNewSongEvent ();`  || To be added. ||
+|| `protected void ListenNewSongEventCallback (IAsyncResult Res);`  || To be added. ||
+|| `protected void StartRecording ();`  || To be added. ||
+|| `protected void TempSave (IAsyncResult Res);`  || To be added. ||
+|| `protected void SaveSong (LibLastRip.MetaInfo SongInfo);`  || To be added. ||
+
+==Events==
+|| `public event EventHandler OnNewSong;`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Constructors==
+_A detrailed description of constructors._
+
+===LastManager Constructor===
+_To be added._
+{{{
+public LastManager (string UserID, string Password, string MusicPath, string LastFMStation);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `UserID`  To be added.
+  * System.String `Password`  To be added.
+  * System.String `MusicPath`  To be added.
+  * System.String `LastFMStation`  To be added.
+===LastManager Constructor===
+_To be added._
+{{{
+public LastManager (string MusicPath);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `MusicPath`  To be added.
+
+==Fields==
+_A detailed description of fields._
+
+===PathSeparator===
+_To be added._
+{{{
+protected const string PathSeparator;
+}}}
+====Remarks====
+To be added.
+
+===ProtocolBufferSize===
+_To be added._
+{{{
+protected const int ProtocolBufferSize = 4096;
+}}}
+====Remarks====
+To be added.
+
+===UserID===
+_To be added._
+{{{
+protected string UserID;
+}}}
+====Remarks====
+To be added.
+
+===_Password===
+_To be added._
+{{{
+protected string _Password;
+}}}
+====Remarks====
+To be added.
+
+===StreamURL===
+_To be added._
+{{{
+protected string StreamURL;
+}}}
+====Remarks====
+To be added.
+
+===SessionID===
+_To be added._
+{{{
+protected string SessionID;
+}}}
+====Remarks====
+To be added.
+
+===BaseURL===
+_To be added._
+{{{
+protected string BaseURL;
+}}}
+====Remarks====
+To be added.
+
+===BasePath===
+_To be added._
+{{{
+protected string BasePath;
+}}}
+====Remarks====
+To be added.
+
+===Subscripter===
+_To be added._
+{{{
+protected bool Subscripter;
+}}}
+====Remarks====
+To be added.
+
+===_MusicPath===
+_To be added._
+{{{
+protected string _MusicPath;
+}}}
+====Remarks====
+To be added.
+
+===SkipSave===
+_To be added._
+{{{
+protected bool SkipSave;
+}}}
+====Remarks====
+To be added.
+
+===Timer1===
+_To be added._
+{{{
+protected System.Timers.Timer Timer1;
+}}}
+====Remarks====
+To be added.
+
+===Timer2===
+_To be added._
+{{{
+protected System.Timers.Timer Timer2;
+}}}
+====Remarks====
+To be added.
+
+===Timer3===
+_To be added._
+{{{
+protected System.Timers.Timer Timer3;
+}}}
+====Remarks====
+To be added.
+
+===Status===
+_To be added._
+{{{
+protected LibLastRip.ConnectionStatus Status;
+}}}
+====Remarks====
+To be added.
+
+===_CurrentSong===
+_To be added._
+{{{
+protected LibLastRip.MetaInfo _CurrentSong;
+}}}
+====Remarks====
+To be added.
+
+===NewSongEvent===
+_To be added._
+{{{
+protected System.Threading.AutoResetEvent NewSongEvent;
+}}}
+====Remarks====
+To be added.
+
+===TempFile===
+_To be added._
+{{{
+protected System.IO.FileStream TempFile;
+}}}
+====Remarks====
+To be added.
+
+===Buffer===
+_To be added._
+{{{
+protected byte[] Buffer;
+}}}
+====Remarks====
+To be added.
+
+===ReadHandle===
+_To be added._
+{{{
+protected IAsyncResult ReadHandle;
+}}}
+====Remarks====
+To be added.
+
+===DeadStreamCount===
+_To be added._
+{{{
+protected int DeadStreamCount;
+}}}
+====Remarks====
+To be added.
+
+===IsKickStarted===
+_To be added._
+{{{
+protected bool IsKickStarted;
+}}}
+====Remarks====
+To be added.
+
+===IsRestarted===
+_To be added._
+{{{
+protected bool IsRestarted;
+}}}
+====Remarks====
+To be added.
+==Properties==
+_A detailed description of properties._
+
+===Password===
+_Gets an md5 hash of the password, or sets the password from hash._
+{{{
+public string Password { set; get; };
+}}}
+====Value====
+To be added.
+
+===UserName===
+_Gets or set the UserName_
+{{{
+public string UserName { set; get; };
+}}}
+====Value====
+To be added.
+
+===MusicPath===
+_Gets or set the UserName_
+{{{
+public string MusicPath { set; get; };
+}}}
+====Value====
+To be added.
+
+===ConnectionStatus===
+_Gets current connection status_
+{{{
+public LibLastRip.ConnectionStatus ConnectionStatus { get; };
+}}}
+====Value====
+To be added.
+
+===ServiceURL===
+_Gets the URL for the Last.FM server_
+{{{
+protected string ServiceURL { get; };
+}}}
+====Value====
+To be added.
+
+===CurrentSong===
+_Gets the meta info about the current song_
+{{{
+public LibLastRip.MetaInfo CurrentSong { get; };
+}}}
+====Value====
+To be added.
+
+==Methods==
+_A detailed description of methods._
+
+===SendCommand===
+_Sends a command to the Last.FM server_
+{{{
+protected bool SendCommand (string Command);
+}}}
+====Remarks====
+
+
+====Parameters====
+  * System.String `Command`  To be added.
+
+===SkipSong===
+_Skips the current song an moves on_
+{{{
+public bool SkipSong ();
+}}}
+====Remarks====
+
+
+====Parameters====
+
+===LoveSong===
+_Loves the current song_
+{{{
+public bool LoveSong ();
+}}}
+====Remarks====
+
+
+====Parameters====
+
+===BanSong===
+_Bans the current song_
+{{{
+public bool BanSong ();
+}}}
+====Remarks====
+
+
+====Parameters====
+
+===ChangeStation===
+_To be added._
+{{{
+public bool ChangeStation (string LastFMStation);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `LastFMStation`  To be added.
+
+===Handshake===
+_To be added._
+{{{
+public bool Handshake ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===Handshake===
+_Gives the Last.FM server a handshake_
+{{{
+public bool Handshake (string UserID, string Password);
+}}}
+====Remarks====
+
+
+====Parameters====
+  * System.String `UserID`  To be added.
+  * System.String `Password`  To be added.
+
+===ParseHandshake===
+_Parses the reponse data from a handshake_
+{{{
+protected bool ParseHandshake (string Data);
+}}}
+====Remarks====
+
+
+====Parameters====
+  * System.String `Data`  To be added.
+
+===CalculateHash===
+_To be added._
+{{{
+public static string CalculateHash (string Pass);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `Pass`  To be added.
+
+===RemoveIllegalChars===
+_To be added._
+{{{
+public static string RemoveIllegalChars (string Str);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `Str`  To be added.
+
+===UpdateMetaInfo===
+_Updates the metainfo about the current song_
+{{{
+public void UpdateMetaInfo ();
+}}}
+====Remarks====
+
+
+====Parameters====
+
+===UpdateMetaInfo===
+_To be added._
+{{{
+public void UpdateMetaInfo (object Sender, EventArgs Args);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.Object `Sender`  To be added.
+  * System.EventArgs `Args`  To be added.
+
+===SetTimer===
+_To be added._
+{{{
+protected void SetTimer ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===SetTimer===
+_To be added._
+{{{
+protected void SetTimer (LibLastRip.MetaInfo SongInfo);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * LibLastRip.MetaInfo `SongInfo`  To be added.
+
+===SetTimer===
+_To be added._
+{{{
+protected void SetTimer (double Interval);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.Double `Interval`  To be added.
+
+===StartListenNewSongEvent===
+_To be added._
+{{{
+protected void StartListenNewSongEvent ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===ListenNewSongEvent===
+_To be added._
+{{{
+protected void ListenNewSongEvent ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===ListenNewSongEventCallback===
+_To be added._
+{{{
+protected void ListenNewSongEventCallback (IAsyncResult Res);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.IAsyncResult `Res`  To be added.
+
+===StartRecording===
+_To be added._
+{{{
+protected void StartRecording ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===TempSave===
+_To be added._
+{{{
+protected void TempSave (IAsyncResult Res);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.IAsyncResult `Res`  To be added.
+
+===SaveSong===
+_To be added._
+{{{
+protected void SaveSong (LibLastRip.MetaInfo SongInfo);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * LibLastRip.MetaInfo `SongInfo`  To be added.
+==Events==
+_A detailed description of events._
+
+===OnNewSong===
+_To be added._
+{{{
+public event EventHandler OnNewSong;
+}}}
+====Remarks====
+To be added.

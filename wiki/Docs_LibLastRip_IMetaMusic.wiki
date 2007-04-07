@@ -1,0 +1,42 @@
+#summary Representation of an recorded or currently playing number.
+#labels documentation
+
+{{{
+public interface IMetaMusic : LibLastRip.IMetaTrack
+}}}
+
+=Remarks=
+
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+
+==Properties==
+|| `public string Album { get; };`  || To be added. ||
+|| `public string Trackduration { get; };`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Properties==
+_A detailed description of properties._
+
+===Album===
+_To be added._
+{{{
+public string Album { get; };
+}}}
+====Value====
+To be added.
+
+===Trackduration===
+_To be added._
+{{{
+public string Trackduration { get; };
+}}}
+====Value====
+To be added.

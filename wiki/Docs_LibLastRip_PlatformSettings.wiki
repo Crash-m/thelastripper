@@ -1,0 +1,67 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public class PlatformSettings
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+==Constructors==
+|| `public PlatformSettings ();`  || To be added. ||
+
+==Fields==
+|| `public const string PathSeparator;`  || To be added. ||
+|| `public const string TempFilePath;`  || To be added. ||
+|| `public const string TempPath;`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Constructors==
+_A detrailed description of constructors._
+
+===PlatformSettings Constructor===
+_To be added._
+{{{
+public PlatformSettings ();
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+
+==Fields==
+_A detailed description of fields._
+
+===PathSeparator===
+_To be added._
+{{{
+public const string PathSeparator;
+}}}
+====Remarks====
+To be added.
+
+===TempFilePath===
+_To be added._
+{{{
+public const string TempFilePath;
+}}}
+====Remarks====
+To be added.
+
+===TempPath===
+_To be added._
+{{{
+public const string TempPath;
+}}}
+====Remarks====
+To be added.

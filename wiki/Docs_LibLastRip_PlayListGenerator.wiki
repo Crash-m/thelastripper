@@ -1,0 +1,231 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public class PlayListGenerator : System.Runtime.Serialization.ISerializable
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+==Constructors==
+|| `protected PlayListGenerator ();`  || To be added. ||
+|| `public PlayListGenerator (string MusicPath, string UserName);`  || To be added. ||
+|| `protected PlayListGenerator (System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context);`  || To be added. ||
+
+==Fields==
+|| `protected string _MusicPath;`  || To be added. ||
+|| `protected string _UserName;`  || To be added. ||
+|| `public bool TopTracks;`  || To be added. ||
+|| `public bool RecentLovedTracks;`  || To be added. ||
+|| `public bool WeeklyTrackChart;`  || To be added. ||
+|| `public bool TopTracksMixed;`  || To be added. ||
+|| `public bool RecentLovedTracksMixed;`  || To be added. ||
+|| `public bool WeeklyTrackChartMixed;`  || To be added. ||
+|| `public bool Mixed;`  || To be added. ||
+|| `public bool m3u;`  || To be added. ||
+|| `public bool pls;`  || To be added. ||
+|| `public bool smil;`  || To be added. ||
+
+==Methods==
+|| `public virtual void Generate ();`  || To be added. ||
+|| `protected virtual LibLastRip.PlayList GeneratePlayList (string Feed, bool Clean, bool Mixed, string FileName);`  || To be added. ||
+|| `protected virtual void SavePlayList (LibLastRip.PlayList List, string FileName);`  || To be added. ||
+|| `public virtual void GetObjectData (System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context);`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Constructors==
+_A detrailed description of constructors._
+
+===PlayListGenerator Constructor===
+_To be added._
+{{{
+protected PlayListGenerator ();
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+===PlayListGenerator Constructor===
+_To be added._
+{{{
+public PlayListGenerator (string MusicPath, string UserName);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `MusicPath`  To be added.
+  * System.String `UserName`  To be added.
+===PlayListGenerator Constructor===
+_To be added._
+{{{
+protected PlayListGenerator (System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.Runtime.Serialization.SerializationInfo `Info`  To be added.
+  * System.Runtime.Serialization.StreamingContext `context`  To be added.
+
+==Fields==
+_A detailed description of fields._
+
+===_MusicPath===
+_To be added._
+{{{
+protected string _MusicPath;
+}}}
+====Remarks====
+To be added.
+
+===_UserName===
+_To be added._
+{{{
+protected string _UserName;
+}}}
+====Remarks====
+To be added.
+
+===TopTracks===
+_To be added._
+{{{
+public bool TopTracks;
+}}}
+====Remarks====
+To be added.
+
+===RecentLovedTracks===
+_To be added._
+{{{
+public bool RecentLovedTracks;
+}}}
+====Remarks====
+To be added.
+
+===WeeklyTrackChart===
+_To be added._
+{{{
+public bool WeeklyTrackChart;
+}}}
+====Remarks====
+To be added.
+
+===TopTracksMixed===
+_To be added._
+{{{
+public bool TopTracksMixed;
+}}}
+====Remarks====
+To be added.
+
+===RecentLovedTracksMixed===
+_To be added._
+{{{
+public bool RecentLovedTracksMixed;
+}}}
+====Remarks====
+To be added.
+
+===WeeklyTrackChartMixed===
+_To be added._
+{{{
+public bool WeeklyTrackChartMixed;
+}}}
+====Remarks====
+To be added.
+
+===Mixed===
+_To be added._
+{{{
+public bool Mixed;
+}}}
+====Remarks====
+To be added.
+
+===m3u===
+_To be added._
+{{{
+public bool m3u;
+}}}
+====Remarks====
+To be added.
+
+===pls===
+_To be added._
+{{{
+public bool pls;
+}}}
+====Remarks====
+To be added.
+
+===smil===
+_To be added._
+{{{
+public bool smil;
+}}}
+====Remarks====
+To be added.
+
+==Methods==
+_A detailed description of methods._
+
+===Generate===
+_To be added._
+{{{
+public virtual void Generate ();
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+
+===GeneratePlayList===
+_To be added._
+{{{
+protected virtual LibLastRip.PlayList GeneratePlayList (string Feed, bool Clean, bool Mixed, string FileName);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `Feed`  To be added.
+  * System.Boolean `Clean`  To be added.
+  * System.Boolean `Mixed`  To be added.
+  * System.String `FileName`  To be added.
+
+===SavePlayList===
+_To be added._
+{{{
+protected virtual void SavePlayList (LibLastRip.PlayList List, string FileName);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * LibLastRip.PlayList `List`  To be added.
+  * System.String `FileName`  To be added.
+
+===GetObjectData===
+_To be added._
+{{{
+public virtual void GetObjectData (System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context);
+}}}
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.Runtime.Serialization.SerializationInfo `Info`  To be added.
+  * System.Runtime.Serialization.StreamingContext `context`  To be added.

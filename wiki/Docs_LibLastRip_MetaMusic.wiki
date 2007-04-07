@@ -1,0 +1,117 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public class MetaMusic : LibLastRip.IMetaMusic
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+==Constructors==
+|| `public MetaMusic (string FileURL);`  || To be added. ||
+
+==Fields==
+|| `protected string _Track;`  || To be added. ||
+|| `protected string _Artist;`  || To be added. ||
+|| `protected string _TrackDuration;`  || To be added. ||
+|| `protected string _Album;`  || To be added. ||
+
+==Properties==
+|| `public string Track { get; };`  || To be added. ||
+|| `public string Artist { get; };`  || To be added. ||
+|| `public string Trackduration { get; };`  || To be added. ||
+|| `public string Album { get; };`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Constructors==
+_A detrailed description of constructors._
+
+===MetaMusic Constructor===
+_To be added._
+{{{
+public MetaMusic (string FileURL);
+}}}
+
+====Remarks====
+To be added.
+
+====Parameters====
+  * System.String `FileURL`  To be added.
+
+==Fields==
+_A detailed description of fields._
+
+===_Track===
+_To be added._
+{{{
+protected string _Track;
+}}}
+====Remarks====
+To be added.
+
+===_Artist===
+_To be added._
+{{{
+protected string _Artist;
+}}}
+====Remarks====
+To be added.
+
+===_TrackDuration===
+_To be added._
+{{{
+protected string _TrackDuration;
+}}}
+====Remarks====
+To be added.
+
+===_Album===
+_To be added._
+{{{
+protected string _Album;
+}}}
+====Remarks====
+To be added.
+==Properties==
+_A detailed description of properties._
+
+===Track===
+_To be added._
+{{{
+public string Track { get; };
+}}}
+====Value====
+To be added.
+
+===Artist===
+_To be added._
+{{{
+public string Artist { get; };
+}}}
+====Value====
+To be added.
+
+===Trackduration===
+_To be added._
+{{{
+public string Trackduration { get; };
+}}}
+====Value====
+To be added.
+
+===Album===
+_To be added._
+{{{
+public string Album { get; };
+}}}
+====Value====
+To be added.

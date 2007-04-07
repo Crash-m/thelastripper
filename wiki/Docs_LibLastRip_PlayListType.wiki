@@ -1,0 +1,51 @@
+#summary To be added.
+#labels documentation
+
+{{{
+public enum PlayListType
+}}}
+
+=Remarks=
+To be added.
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+
+==Fields==
+|| `m3u`  || To be added. ||
+|| `pls`  || To be added. ||
+|| `smil`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+
+==Fields==
+_A detailed description of fields._
+
+===m3u===
+_To be added._
+{{{
+m3u
+}}}
+====Remarks====
+
+
+===pls===
+_To be added._
+{{{
+pls
+}}}
+====Remarks====
+
+
+===smil===
+_To be added._
+{{{
+smil
+}}}
+====Remarks====

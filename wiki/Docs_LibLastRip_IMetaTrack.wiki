@@ -1,0 +1,42 @@
+#summary Sortest possible amount of data to regonize a track.
+#labels documentation
+
+{{{
+public interface IMetaTrack
+}}}
+
+=Remarks=
+
+
+*Assembly: * LibLastRip 1.0.2.38050
+
+=Members=
+_List of all members,_
+
+
+==Properties==
+|| `public string Track { get; };`  || To be added. ||
+|| `public string Artist { get; };`  || To be added. ||
+
+
+=Member Details=
+_A detailed description of each member_
+
+==Properties==
+_A detailed description of properties._
+
+===Track===
+_To be added._
+{{{
+public string Track { get; };
+}}}
+====Value====
+To be added.
+
+===Artist===
+_To be added._
+{{{
+public string Artist { get; };
+}}}
+====Value====
+To be added.
