@@ -2,6 +2,8 @@
 #labels Help,Windows,Issues
 
 ===TheLastRipper Version 1.0.1===
+*delay between metadata and music* Sometimes the songs are getting cut too soon or too late, see this bug report for a more technical description of the issue:
+   * http://code.google.com/p/thelastripper/issues/detail?id=6
 *Skip function* it's known that the skip function doesn't always work, but it shouldn't take down the application anymore. All other bugs should be fixed.
 
 ===TheLastRipper Version 1.0.0===
