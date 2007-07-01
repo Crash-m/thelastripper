@@ -28,6 +28,7 @@
         <property name="Tooltip">Saves playlist as defined in perferences</property>
         <property name="Type">Action</property>
         <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="GeneratePlaylist" />
       </action>
       <action id="Help">
         <property name="ShortLabel">Help</property>
@@ -380,19 +381,61 @@ lastfm://globaltags/classic%20rock</property>
                             <property name="Events">0</property>
                             <property name="MemberName" />
                             <child>
-                              <widget class="Gtk.Entry" id="UserNameEntry">
-                                <property name="IsEditable">True</property>
-                                <property name="InvisibleChar">●</property>
+                              <widget class="Gtk.Button" id="LoginButton">
+                                <property name="Type">TextAndIcon</property>
+                                <property name="Icon">stock:gtk-apply Menu</property>
+                                <property name="Label">Login</property>
+                                <property name="IsDialogButton">False</property>
                                 <property name="CanFocus">True</property>
                                 <property name="Events">0</property>
                                 <property name="MemberName" />
-                                <signal name="Changed" handler="OnUserNameEntryChanged" />
+                                <signal name="Clicked" handler="OnLoginButtonClicked" />
                               </widget>
                               <packing>
-                                <property name="LeftAttach">1</property>
+                                <property name="BottomAttach">3</property>
                                 <property name="YExpand">False</property>
-                                <property name="RightAttach">2</property>
+                                <property name="AutoSize">False</property>
+                                <property name="YShrink">False</property>
+                                <property name="TopAttach">2</property>
+                                <property name="XShrink">False</property>
+                                <property name="XExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="XFill">True</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XOptions">Fill</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="label4">
+                                <property name="LabelProp">Password: </property>
+                                <property name="Xalign">0</property>
+                                <property name="Events">0</property>
+                                <property name="MemberName" />
+                              </widget>
+                              <packing>
+                                <property name="BottomAttach">2</property>
+                                <property name="YExpand">False</property>
                                 <property name="AutoSize">True</property>
+                                <property name="YShrink">False</property>
+                                <property name="TopAttach">1</property>
+                                <property name="XShrink">False</property>
+                                <property name="XExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="XFill">True</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XOptions">Fill</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="label5">
+                                <property name="LabelProp">Username: </property>
+                                <property name="Xalign">0</property>
+                                <property name="Events">0</property>
+                                <property name="MemberName" />
+                              </widget>
+                              <packing>
+                                <property name="YExpand">False</property>
+                                <property name="AutoSize">False</property>
                                 <property name="YShrink">False</property>
                                 <property name="XShrink">False</property>
                                 <property name="XExpand">False</property>
@@ -400,6 +443,30 @@ lastfm://globaltags/classic%20rock</property>
                                 <property name="XFill">True</property>
                                 <property name="YOptions">Fill</property>
                                 <property name="XOptions">Fill</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Entry" id="PasswordEntry">
+                                <property name="IsEditable">True</property>
+                                <property name="Visibility">False</property>
+                                <property name="InvisibleChar">●</property>
+                                <property name="CanFocus">True</property>
+                                <property name="Events">0</property>
+                                <property name="MemberName" />
+                              </widget>
+                              <packing>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">1</property>
+                                <property name="YExpand">False</property>
+                                <property name="RightAttach">2</property>
+                                <property name="AutoSize">False</property>
+                                <property name="YShrink">False</property>
+                                <property name="TopAttach">1</property>
+                                <property name="XShrink">False</property>
+                                <property name="XExpand">True</property>
+                                <property name="YFill">True</property>
+                                <property name="XFill">True</property>
+                                <property name="YOptions">Fill</property>
                               </packing>
                             </child>
                             <child>
@@ -443,86 +510,20 @@ lastfm://globaltags/classic%20rock</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.Entry" id="PasswordEntry">
+                              <widget class="Gtk.Entry" id="UserNameEntry">
                                 <property name="IsEditable">True</property>
-                                <property name="Visibility">False</property>
                                 <property name="InvisibleChar">●</property>
                                 <property name="CanFocus">True</property>
                                 <property name="Events">0</property>
                                 <property name="MemberName" />
+                                <signal name="Changed" handler="OnUserNameEntryChanged" />
                               </widget>
                               <packing>
-                                <property name="BottomAttach">2</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="YExpand">False</property>
                                 <property name="RightAttach">2</property>
-                                <property name="AutoSize">False</property>
-                                <property name="YShrink">False</property>
-                                <property name="TopAttach">1</property>
-                                <property name="XShrink">False</property>
-                                <property name="XExpand">True</property>
-                                <property name="YFill">True</property>
-                                <property name="XFill">True</property>
-                                <property name="YOptions">Fill</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Label" id="label5">
-                                <property name="LabelProp">Username: </property>
-                                <property name="Xalign">0</property>
-                                <property name="Events">0</property>
-                                <property name="MemberName" />
-                              </widget>
-                              <packing>
-                                <property name="YExpand">False</property>
-                                <property name="AutoSize">False</property>
-                                <property name="YShrink">False</property>
-                                <property name="XShrink">False</property>
-                                <property name="XExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="XFill">True</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XOptions">Fill</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Label" id="label4">
-                                <property name="LabelProp">Password: </property>
-                                <property name="Xalign">0</property>
-                                <property name="Events">0</property>
-                                <property name="MemberName" />
-                              </widget>
-                              <packing>
-                                <property name="BottomAttach">2</property>
-                                <property name="YExpand">False</property>
                                 <property name="AutoSize">True</property>
                                 <property name="YShrink">False</property>
-                                <property name="TopAttach">1</property>
-                                <property name="XShrink">False</property>
-                                <property name="XExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="XFill">True</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XOptions">Fill</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="Gtk.Button" id="LoginButton">
-                                <property name="Type">TextAndIcon</property>
-                                <property name="Icon">stock:gtk-apply Menu</property>
-                                <property name="Label">Login</property>
-                                <property name="IsDialogButton">False</property>
-                                <property name="CanFocus">True</property>
-                                <property name="Events">0</property>
-                                <property name="MemberName" />
-                                <signal name="Clicked" handler="OnLoginButtonClicked" />
-                              </widget>
-                              <packing>
-                                <property name="BottomAttach">3</property>
-                                <property name="YExpand">False</property>
-                                <property name="AutoSize">False</property>
-                                <property name="YShrink">False</property>
-                                <property name="TopAttach">2</property>
                                 <property name="XShrink">False</property>
                                 <property name="XExpand">False</property>
                                 <property name="YFill">True</property>

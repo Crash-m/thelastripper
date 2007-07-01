@@ -16,7 +16,7 @@ we recommend that you investegate you local laws, before using
 TheLastRipper.
 
 (This is the MonoClient/frontend for TheLastRipper)
-Version: 1.0.1
+Version: 1.0.2
 
-Requires:  rsvg-sharp-2.0 glade-sharp-2.0 gtk-sharp-2.0 glib-sharp-2.0 TheLastRipper.LibLastRip
+Requires:  glib-sharp-2.0 glade-sharp-2.0 gtk-sharp-2.0 rsvg-sharp-2.0 TheLastRipper.LibLastRip
 Libs:  -r:${pkglibdir}/@MONOCLIENT_DEBUG_LIB@@MONOCLIENT_RELEASE_LIB@

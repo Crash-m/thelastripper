@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([TheLastRipper], [1.0.1])
+AC_INIT([TheLastRipper], [1.0.2])
 AM_INIT_AUTOMAKE([foreign])
 
 dnl pkg-config
@@ -65,10 +65,10 @@ fi
 
 AC_CONFIG_FILES([
 ./LibLastRip/TheLastRipper.LibLastRip.pc
-./MonoClient/Makefile
-./Makefile
 ./MonoClient/thelastripper
+./MonoClient/Makefile
 ./LibLastRip/Makefile
+./Makefile
 ./MonoClient/TheLastRipper.MonoClient.pc
 
 ])

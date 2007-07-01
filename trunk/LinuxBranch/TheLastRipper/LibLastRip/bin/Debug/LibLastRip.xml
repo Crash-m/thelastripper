@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>/home/jopsen/Development/TheLastRipperProject/LinuxBranch/TheLastRipper/LibLastRip/bin/Debug/LibLastRip</name>
+    </assembly>
+    <members>
+        <member name="T:LibLastRip.IMetaMusic">
+            <summary>
+            Representation of an recorded or currently playing number.
+            </summary>
+        </member>
+        <member name="T:LibLastRip.IMetaTrack">
+            <summary>
+            Sortest possible amount of data to regonize a track.
+            </summary>
+        </member>
+        <member name="T:LibLastRip.LastManager">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes an instance of LastManager
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.#ctor(System.String)">
+            <summary>
+            Initializes an instance of LastManager
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.Password">
+            <summary>
+            Gets an md5 hash of the password, or sets the password from hash.
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.UserName">
+            <summary>
+            Gets or set the UserName
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.MusicPath">
+            <summary>
+            Gets or set the UserName
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.ConnectionStatus">
+            <summary>
+            Gets current connection status
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.ServiceURL">
+            <summary>
+            Gets the URL for the Last.FM server
+            </summary>
+        </member>
+        <member name="P:LibLastRip.LastManager.CurrentSong">
+            <summary>
+            Gets the meta info about the current song
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.SendCommand(System.String)">
+            <summary>
+            Sends a command to the Last.FM server
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.SkipSong">
+            <summary>
+            Skips the current song an moves on
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.LoveSong">
+            <summary>
+            Loves the current song
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.BanSong">
+            <summary>
+            Bans the current song
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.Handshake(System.String,System.String)">
+            <summary>
+            Gives the Last.FM server a handshake
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.ParseHandshake(System.String)">
+            <summary>
+            Parses the reponse data from a handshake
+            </summary>
+        </member>
+        <member name="M:LibLastRip.LastManager.UpdateMetaInfo">
+            <summary>
+            Updates the metainfo about the current song
+            </summary>
+        </member>
+        <member name="M:LibLastRip.PlayList.#ctor(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:LibLastRip.PlayList.Add(System.Object)">
+            <summary>
+            Adds an object to this collection, returns -1 if the value already exist.
+            </summary>
+        </member>
+        <member name="M:LibLastRip.PlayList.Randomize">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:LibLastRip.PlayList.FetchXML(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:LibLastRip.PlayList.IsAvailable(LibLastRip.IMetaTrack@)">
+            <summary>
+            Returns true the track is available, and the IMetaTrack would be castable to IMetaMusic
+            </summary>
+        </member>
+    </members>
+</doc>

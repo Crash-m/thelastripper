@@ -164,5 +164,10 @@ public class MainWindow: Gtk.Window
 	{
 		System.Diagnostics.Process.Start("xdg-open","http://code.google.com/p/thelastripper/wiki/LegalNotice");
 	}
+
+	protected virtual void GeneratePlaylist(object sender, System.EventArgs e)
+	{
+			this.settings.Generate();
+	}
 	
 }
