@@ -1,4 +1,4 @@
-#summary Who are TheLastRipper developer team.
+#summary People who helped develop TheLastRipper.
 
 === Jonas F. Jensen ===
 Role: Primary developer and debian/ubuntu packager.
@@ -20,3 +20,8 @@ Role: Webmaster and alpha tester.
 Blog: [http://renejosefsen.dk]
 
 Platform: Mac OS X
+
+
+== Thanks to ==
+
+*Maxim Heijndijk* for Mandriva packages.
