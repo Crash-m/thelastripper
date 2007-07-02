@@ -1,4 +1,5 @@
 #summary People who helped develop TheLastRipper.
+#labels Featured
 
 === Jonas F. Jensen ===
 Role: Primary developer and debian/ubuntu packager.
@@ -25,3 +26,6 @@ Platform: Mac OS X
 == Thanks to ==
 
 *Maxim Heijndijk* for Mandriva packages.
+
+*Joeyrs* for ArchLinux packages, available from: [http://aur.archlinux.org aur.ArchLinux.org].
+
