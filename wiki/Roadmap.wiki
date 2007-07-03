@@ -9,6 +9,7 @@ _This is a list of goal for version 1.1.0._
   * Create new path bugfix (Issue [http://code.google.com/p/thelastripper/issues/detail?id=3 3])
   * Internationalization (Issue [http://code.google.com/p/thelastripper/issues/detail?id=8 8])
   * Update notifier ???
+  * Commandline interface ???
 
 == Mac Version 1.x ==
 _The Mac version will stay beta until a cocoa-sharp user interface have been created._
