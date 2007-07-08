@@ -26,6 +26,8 @@ _Follow these instructions if you cannot install deb packages under your distrib
     * libgtk2.0-cli
     * libmono-corlib2.0-cli
     * libmono-system2.0-cli
+    * librsvg2-common
+    * gnome-icon-theme
     * If more's needed the configure script will complain.
    # Download the latest tarball from out downloads listing.
    # Extract the content of the tarball
@@ -33,5 +35,4 @@ _Follow these instructions if you cannot install deb packages under your distrib
    # Build the application with `make`
    # Install the application with `make install`
    # Launch the application with following command: `thelastripper`
-
 
