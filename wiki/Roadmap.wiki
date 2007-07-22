@@ -4,10 +4,11 @@ _This document describes the different features/bugs/issues we would like to imp
 
 == Windows/Linux Version 1.1.0 ==
 _This is a list of goal for version 1.1.0._
-  * ID3v2 support (Issue [http://code.google.com/p/thelastripper/issues/detail?id=5 5])
-  * International characters (Issue [http://code.google.com/p/thelastripper/issues/detail?id=4 4])
-  * Create new path bugfix (Issue [http://code.google.com/p/thelastripper/issues/detail?id=3 3])
-  * Internationalization (Issue [http://code.google.com/p/thelastripper/issues/detail?id=8 8])
+  * ID3v2 support (Issue 5)
+  * International characters (Issue 4)
+  * Create new path bugfix (Issue 3)
+  * Internationalization (Issue 8)
+  * Perfect clipping of songs (Issue 6)
   * Update notifier ???
   * Commandline interface ???
 
