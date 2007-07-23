@@ -9,6 +9,7 @@ _This is a list of goal for version 1.1.0._
   * Create new path bugfix (Issue 3)
   * Internationalization (Issue 8)
   * Perfect clipping of songs (Issue 6)
+  * Fix tab-index and improve UI (Issue 41)
   * Update notifier ???
   * Commandline interface ???
 
