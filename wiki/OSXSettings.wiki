@@ -1,7 +1,7 @@
 #summary This is a guide on how to setup TheLastRipper for recording on OSX.
 #labels Help,OSX
 
-http://thelastripper.googlecode.com/svn/trunk/Website/HelpOSX/OSXSetting.png
+http://thelastripper.googlecode.com/svn/website/HelpOSX/OSXSetting.png
 
 = Logging in =
 
