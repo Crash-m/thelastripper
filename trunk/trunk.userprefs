@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<UserCombinePreferences filename="/home/jopsen/Development/TheLastRipper/trunk/trunk.mds">
+  <Files>
+    <File filename="./MonoClient/Main.cs" />
+    <File filename="./MonoClient/MainWindow.cs" />
+    <File filename="./MonoClient/Preferences.cs" />
+    <File filename="./MonoClient/About.cs" />
+  </Files>
+  <Views>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
+      <TreeView>
+        <Node expanded="True">
+          <Node name="MonoClient" expanded="True">
+            <Node name="About.cs" expanded="False" selected="True" />
+          </Node>
+        </Node>
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ClassPad">
+      <TreeView>
+        <Node expanded="True" />
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoQuery.DatabasePad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.NUnit.TestPad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+  </Views>
+  <Properties>
+    <Properties>
+      <Property key="ActiveConfiguration" value="Debug" />
+      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/MonoClient/About.cs" />
+    </Properties>
+  </Properties>
+</UserCombinePreferences>

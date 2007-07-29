@@ -1,0 +1,24 @@
+ fakeroot debian/rules clean
+test -x debian/rules
+test "`id -u`" = 0
+dh_clean 
+/usr/bin/make -C . -k distclean
+make[1]: Går til katalog '/home/jopsen/Development/TheLastRipperProject/LinuxBranch/DEBPackage/release-1.0.1/thelastripper-1.0.1'
+make[1]: *** Ingen regel til at skabe mål 'distclean'.
+make[1]: Forlader katalog '/home/jopsen/Development/TheLastRipperProject/LinuxBranch/DEBPackage/release-1.0.1/thelastripper-1.0.1'
+make: [makefile-clean] Fejl 2 (ignoreret)
+rm -f debian/stamp-makefile-build
+rm -f debian/stamp-autotools-files
+ dpkg-source -b thelastripper-1.0.1
+dpkg-source: building thelastripper using existing thelastripper_1.0.1.orig.tar.gz
+dpkg-source: building thelastripper in thelastripper_1.0.1-1.diff.gz
+dpkg-source: building thelastripper in thelastripper_1.0.1-1.dsc
+ dpkg-genchanges -S
+dpkg-genchanges: including full source code in upload
+dpkg-buildpackage (debuild emulation): source only upload (original source is included)
+Now signing changes and any dsc files...
+ signfile thelastripper_1.0.1-1.dsc Jop... (Jonas F. Jensen). <Jopsen@gmail.com>
+
+ signfile thelastripper_1.0.1-1_source.changes Jop... (Jonas F. Jensen). <Jopsen@gmail.com>
+
+Successfully signed dsc and changes files
