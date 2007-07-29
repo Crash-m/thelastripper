@@ -1,5 +1,11 @@
 2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
+	* AboutBox.svg: Moving to SVG AboutBox
+	* TheLastRipper: Creating package project, pushing binary 1.1 alpha
+	  release
+
+2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
 	* libLastRip/AssemblyInfo.cs: Updating version information to 1.1.0,
 	  thereby starting development of the 1.1.x series.
 

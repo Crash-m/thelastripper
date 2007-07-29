@@ -37,7 +37,7 @@ namespace MonoClient {
             // Container child dialog_VBox.Gtk.Box+BoxChild
             this.image15 = new Gtk.Image();
             this.image15.Name = "image15";
-            this.image15.Pixbuf = Gdk.Pixbuf.LoadFromResource("AboutBoxLinux.png");
+            this.image15.Pixbuf = Gdk.Pixbuf.LoadFromResource("AboutBox.svg");
             w1.Add(this.image15);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.image15]));
             w2.Position = 0;
@@ -62,7 +62,7 @@ namespace MonoClient {
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image16";
+            w6.Name = "image30";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-close", 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
@@ -79,7 +79,7 @@ namespace MonoClient {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 262;
+            this.DefaultWidth = 264;
             this.DefaultHeight = 322;
             this.Show();
             this.CloseButton.Clicked += new System.EventHandler(this.OnCloseButtonClicked);

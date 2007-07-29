@@ -1,0 +1,20 @@
+<CombineEntry name="TheLastRipper" fileversion="2.0" ctype="PackagingProject">
+  <Packages>
+    <Package name="AutoToolsTarball">
+      <Builder rootEntry="../trunk.mds" TargetDirectory="/home/jopsen/Development/TheLastRipper/trunk/TheLastRipper" DefaultConfiguration="Release" ctype="TarballDeployTarget">
+        <ChildEntries>
+          <Entry>../MonoClient/MonoClient.mdp</Entry>
+          <Entry>../libLastRip/libLastRip.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+    <Package name="Linux Binaries">
+      <Builder rootEntry="../trunk.mds" targetFile="./TheLastRipperBinaries.tar.gz" platform="Linux" ctype="BinariesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>../libLastRip/libLastRip.mdp</Entry>
+          <Entry>../MonoClient/MonoClient.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+  </Packages>
+</CombineEntry>

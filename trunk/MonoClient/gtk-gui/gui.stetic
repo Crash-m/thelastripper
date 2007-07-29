@@ -3,7 +3,7 @@
   <configuration>
     <images-root-path>../</images-root-path>
   </configuration>
-  <widget class="Gtk.Dialog" id="MonoClient.About" design-size="262 322">
+  <widget class="Gtk.Dialog" id="MonoClient.About" design-size="264 322">
     <property name="MemberName" />
     <property name="Events">ButtonPressMask</property>
     <property name="Title" translatable="yes">About TheLastRipper</property>
@@ -23,7 +23,7 @@
         <child>
           <widget class="Gtk.Image" id="image15">
             <property name="MemberName" />
-            <property name="Pixbuf">resource:AboutBoxLinux.png</property>
+            <property name="Pixbuf">resource:AboutBox.svg</property>
           </widget>
           <packing>
             <property name="Position">0</property>
