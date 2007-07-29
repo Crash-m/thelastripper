@@ -1,5 +1,5 @@
 <Project name="MonoClient" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug" assembly="MonoClient" />
       <Build debugmode="True" target="Exe" />
@@ -7,19 +7,17 @@
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="MonoClient" />
+      <Output directory="./bin/Release" assembly="TheLastRipper" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
     <File name="./gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
     <File name="./gtk-gui/MainWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TheLastRipper.desktop" subtype="Code" buildaction="FileCopy" DeployService.TargetDirectoryId="Linux.DesktopApplications" />
     <File name="./About.cs" subtype="Code" buildaction="Compile" />
-    <File name="./AboutBoxLinux.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Main.cs" subtype="Code" buildaction="Compile" />
     <File name="./MainWindow.cs" subtype="Code" buildaction="Compile" />
@@ -28,6 +26,7 @@
     <File name="../logo.svg" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./gtk-gui/MonoClient.About.cs" subtype="Code" buildaction="Compile" />
     <File name="./gtk-gui/MonoClient.Preferences.cs" subtype="Code" buildaction="Compile" />
+    <File name="../AboutBox.svg" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
