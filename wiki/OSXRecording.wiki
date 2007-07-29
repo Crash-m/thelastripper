@@ -1,7 +1,7 @@
 #summary This is the guide that shows you how to record in the OSX version of TheLastRipper.
 #labels Help,OSX
 
-http://thelastripper.googlecode.com/svn/trunk/Website/HelpOSX/OSXRecording.png
+http://thelastripper.googlecode.com/svn/website/HelpOSX/OSXRecording.png
 
 = Choosing station =
 
