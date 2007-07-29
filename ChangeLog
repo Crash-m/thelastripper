@@ -3,7 +3,10 @@
 	* libLastRip/AssemblyInfo.cs: Updating version information to 1.1.0,
 	  thereby starting development of the 1.1.x series.
 
-2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com>
-
 	* MonoClient/AssemblyInfo.cs: Updating version number to 1.1.0, starting 1.1.x series with an alpha release.
 
+2007-07-27  Jop... (Jonas F. Jensen) <jopsen@gmail.com>
+
+	* PlayList/PlayList.cs: Download XML to memory instead of using temp file.
+
+	* LastManager/LastManager.Stream.cs: Searches for SYNC-byte order to detect songs precisely. 
