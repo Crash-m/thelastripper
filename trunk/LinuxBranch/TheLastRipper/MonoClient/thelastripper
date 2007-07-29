@@ -1,9 +1,0 @@
-#!/bin/sh
-
-prefix="/usr/local"
-exec_prefix="${prefix}"
-libdir="${exec_prefix}/lib/thelastripper"
-
-cd ${libdir}
-
-exec mono  "TheLastRipper.exe" "$@"

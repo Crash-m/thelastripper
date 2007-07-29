@@ -1,2 +1,0 @@
-?package(thelastripper):needs="X11" section="Apps/Sound"\
-  title="thelastripper" command="/usr/bin/thelastripper" icon="/usr/share/pixmaps/thelastripper/logo.svg"
