@@ -1,3 +1,18 @@
+2007-07-31  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/MetaInfo.cs: Implementing ID3v2 support using
+	  TagLib-Sharp.
+	* libLastRip/LastManager/LastManager.cs: Replacing RemoveIllegalChars()
+	  with RemoveInvalidPathChars() and RemoveInvalidFileNameChars(),
+	  fixing issue 4
+	  (http://code.google.com/p/thelastripper/issues/detail?id=4). New
+	  solution only removes chars defined by invalid by the framework
+	  (System.IO.Path.GetInvalidFileNameChars() and
+	  System.IO.Path.GetInvalidPathChars()).
+	* taglib-sharp/taglib-sharp.dll: Adding taglib-sharp as binary, source
+	  is only release through SVN, not included in build process or
+	  source releases.
+
 2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
 	* AboutBox.svg: Moving to SVG AboutBox
