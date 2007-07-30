@@ -90,12 +90,12 @@ namespace LibLastRip
 		protected virtual System.Boolean IsAvailable(ref IMetaTrack Track)
 		{
 			System.String TrackPath = "";
-			System.String ArtistDir = this.MusicPath + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveIllegalChars(Track.Artist);
+			System.String ArtistDir = this.MusicPath + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(Track.Artist);
 			if(System.IO.Directory.Exists(ArtistDir))
 			{
 				foreach(System.String Directory in System.IO.Directory.GetDirectories(ArtistDir))
 				{
-					TrackPath = Directory + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveIllegalChars(Track.Track) + ".mp3";
+					TrackPath = Directory + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidFileNameChars(Track.Track) + ".mp3";
 					if(System.IO.File.Exists(TrackPath))
 					{
 						Track = new MetaMusic(TrackPath);

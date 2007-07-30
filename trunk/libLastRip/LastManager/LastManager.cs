@@ -64,7 +64,7 @@ namespace LibLastRip
 		}
 		
 		public System.Boolean Handshake()
-		{
+		{	
 			if(this.UserID == null || this._Password == null)
 			{
 				throw new System.Exception("UserName and password needed.");
@@ -233,33 +233,45 @@ namespace LibLastRip
 				return "http://" + this.BaseURL + this.BasePath + "/";
 			}
 		}
-		
-		public static System.String RemoveIllegalChars(System.String Str)
+
+		///<summary>
+		///Remove invalid PathChars from a directory name
+		///</summary>
+		///<param name="PathName">Directory name from which invalid chars should be removed</param>
+		internal static System.String RemoveInvalidPathChars(System.String PathName)
 		{
-			if(Str == null)
-			{
-				Str = "Unknown";
-			}
-			Str = Str.Replace('\\','-');
-			Str = Str.Replace('/','-');
-			System.String []AllowedCharsArray = new System.String[]{"q","w","e","r","t","a","s","d","f","g","z","x","c","v","b","y","u","i","o","p","h","j","k","l","n","m","1","2","3","4","5","6","7","8","9","_"," ","(",")","-"};
-			System.Collections.ArrayList AllowedChars = new System.Collections.ArrayList(AllowedCharsArray);
-			System.String OutStr = "";
-			
-			foreach(System.Char TestChar in Str.ToCharArray())
-			{
-				if(AllowedChars.Contains(TestChar.ToString().ToLower()))
+			return LastManager.RemoveChars(PathName, System.IO.Path.GetInvalidPathChars());
+		}
+		
+		///<summary>
+		///Remove invalid filename chars from a filename.
+		///</summary>
+		///<param name="FileName">FileName from which invalid chars should be removed</param>
+		internal static System.String RemoveInvalidFileNameChars(System.String FileName)
+		{
+			return LastManager.RemoveChars(FileName, System.IO.Path.GetInvalidFileNameChars());
+		}
+		
+		///<summary>
+		///Remove an array of invalid chars from an input string
+		///</summary>
+		///<param name="Input">String from which InvalidChars must be removed.</param>
+		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
+		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
+		{
+			System.Boolean IsGood = true;
+			System.String Output = "";
+			foreach(System.Char TestChar in Input.ToCharArray())
+			{		
+				foreach(System.Char iChar in InvalidChars)
 				{
-					OutStr += TestChar.ToString();
+					if(iChar == TestChar)
+						IsGood = false;
 				}
+				if(IsGood)
+					Output += TestChar.ToString();
 			}
-			
-			if(OutStr == "")
-			{
-				OutStr = "Unknown";
-			}
-			
-			return OutStr;
+			return Output;
 		}
 	}
 

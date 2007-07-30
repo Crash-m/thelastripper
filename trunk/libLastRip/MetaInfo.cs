@@ -187,55 +187,53 @@ namespace LibLastRip
 			}
 			return false;
 		}
+
+		///<summary>
+		///Appends ID3tag to a file
+		///</summary>
+		///<param name="Stream">A Stream representation of the file, which ID3tags should be appended</param>
 		public void AppendID3(System.IO.FileStream Stream)
 		{
-			//Blank string, used to prevent substring from running out of index
-			System.String BlankString = "                                ";
+			StreamAbstraction SA = new StreamAbstraction(Stream);
+			this.AppendID3(SA);
+		}
+		
+		///<summary>
+		///Appends ID3tag to a file
+		///</summary>
+		///<param name="Path">Path of the file, which ID3tags should be appended</param>
+		public void AppendID3(System.String Path)
+		{
+			TagLib.File.LocalFileAbstraction FA = new TagLib.File.LocalFileAbstraction(Path);
+			this.AppendID3(FA);
+		}
+		
+		///<summary>
+		///Appends ID3tag to an IFileAbstraction
+		///</summary>
+		protected void AppendID3(TagLib.File.IFileAbstraction IFile)
+		{
+			//Create TagLib file from file abstraction 
+			TagLib.File File = TagLib.File.Create(IFile);
 			
-			//Getting values
-			System.String Title = LastManager.RemoveIllegalChars(this._Track) + BlankString;
-			System.String Artist = LastManager.RemoveIllegalChars(this._Artist) + BlankString;
-			System.String Album = LastManager.RemoveIllegalChars(this._Album) + BlankString;
-			System.String Year = "0000" + BlankString;
-			System.String Comment = "Last.FM by TheLastRipper." + BlankString;
+			//Create id3v2 tags by trying to read them, with permission to create if none existing
+			File.GetTag(TagLib.TagTypes.Id3v2, true);
+
+			//Set track title
+			File.Tag.Title = this.Track;
 			
-			//Settings max length
-			Title = Title.Substring(0,30);
-			Artist = Artist.Substring(0,30).Trim();
-			Album = Album.Substring(0,30).Trim();
-			Year = Year.Substring(0,4).Trim();
-			Comment = Comment.Substring(0,28).Trim();
+			//Set Artists
+			File.Tag.Performers =  new System.String[]{this.Artist};
+			File.Tag.AlbumArtists = new System.String[]{this.Artist};
 			
-			System.Byte []TagArray = new System.Byte[128];
-			for(int i = 0; i < TagArray.Length; i++)
-			{
-				TagArray[i] = 0;
-			}
+			//Set album
+			File.Tag.Album = this.Album;
 			
-			//Get encoder
-			System.Text.Encoding Coder = new System.Text.ASCIIEncoding();
+			//Add comment, defining from where the music was recorded.
+			File.Tag.Comment = "Recorded with TheLastRipper from " + this.Station;
 			
-			//Get the bytes
-			System.Byte []Buffer = Coder.GetBytes("TAG");
-			System.Array.Copy(Buffer, 0, TagArray, 0, Buffer.Length);
-			Buffer = Coder.GetBytes(Title);
-			System.Array.Copy(Buffer, 0, TagArray, 3, Buffer.Length);		
-			Buffer = Coder.GetBytes(Artist);
-			System.Array.Copy(Buffer, 0, TagArray, 33, Buffer.Length);		
-			Buffer = Coder.GetBytes(Album);
-			System.Array.Copy(Buffer, 0, TagArray, 63, Buffer.Length);	
-			Buffer = Coder.GetBytes(Year);
-			System.Array.Copy(Buffer, 0, TagArray, 93, Buffer.Length);	
-			Buffer = Coder.GetBytes(Comment);
-			System.Array.Copy(Buffer, 0, TagArray, 97, Buffer.Length);
-			
-			//Set Track number to 0, and genre to other
-			TagArray[126] = System.Convert.ToByte(0);
-			TagArray[127] = System.Convert.ToByte(12);
-			
-			//Write data to end of stream
-			Stream.Seek(0,System.IO.SeekOrigin.End);
-			Stream.Write(TagArray,0,128);
+			//TODO: Add picture using TagLib-Sharp
+			//TagLib.Picture.CreateFromFile()
 		}
 	}
 }

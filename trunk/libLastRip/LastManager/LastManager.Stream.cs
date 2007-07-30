@@ -126,8 +126,8 @@ namespace LibLastRip
 		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
 		{
 			//Filesystem paths
-			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveIllegalChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveIllegalChars(SongInfo.Album) + Path.DirectorySeparatorChar;
-			System.String NewFilePath = AlbumPath + LastManager.RemoveIllegalChars(SongInfo.Track) + ".mp3";
+			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
+			System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(SongInfo.Track) + ".mp3";
 			
 			//Check if file exists
 			if(File.Exists(NewFilePath))

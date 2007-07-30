@@ -86,10 +86,10 @@ public partial class MainWindow: Gtk.Window
 		{
 			System.String StrText = "";
 			StrText += "<span size='x-large'>"+ Info.Track + "</span>\n";
-			StrText += "<b>By: </b>" + LibLastRip.LastManager.RemoveIllegalChars(Info.Artist) + "\n";
-			StrText += "<b>Album: </b>"+LibLastRip.LastManager.RemoveIllegalChars(Info.Album) + "\n";
-			StrText += "<b>Length: </b>"+LibLastRip.LastManager.RemoveIllegalChars(Info.Trackduration) + " seconds\n";
-			StrText += "<i>From: " + LibLastRip.LastManager.RemoveIllegalChars(Info.Station) + "</i>";
+			StrText += "<b>By: </b>" + Info.Artist + "\n";
+			StrText += "<b>Album: </b>"+Info.Album + "\n";
+			StrText += "<b>Length: </b>"+Info.Trackduration + " seconds\n";
+			StrText += "<i>From: " + Info.Station + "</i>";
 			this.StatusLabel.Markup = StrText;
 			if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 			{
