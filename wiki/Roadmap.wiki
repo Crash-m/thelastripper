@@ -1,5 +1,5 @@
 #summary Roadmap for the development of TheLastRipper
-#labels Phase-Requirements,Development
+#labels Phase-Requirements,Development,Featured
 _This document describes the different features/bugs/issues we would like to implement in upcoming milestones._
 
 == Windows/Linux Version 1.1.0 ==
