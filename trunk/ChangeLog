@@ -1,3 +1,9 @@
+2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/LastManager/LastManager.MetaInfo.cs: Multithreading
+	  UpdateMetaInfo(), and closing connections correctly to save system
+	  resources.
+
 2007-07-31  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
 	* libLastRip/MetaInfo.cs: Implementing ID3v2 support using

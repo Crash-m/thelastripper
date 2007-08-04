@@ -63,6 +63,7 @@ namespace LibLastRip
 			this.MusicPath = MusicPath;
 		}
 		
+		//TODO: Multithread Handshake with callback event
 		public System.Boolean Handshake()
 		{	
 			if(this.UserID == null || this._Password == null)

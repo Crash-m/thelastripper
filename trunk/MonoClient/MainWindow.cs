@@ -41,7 +41,6 @@ public partial class MainWindow: Gtk.Window
 		if(this.LastManager.ChangeStation(this.LastFMStationEntry.Entry.Text))
 		{
 			this.Timer.Start();
-			this.SetStatus(this.LastManager.CurrentSong);
 			this.LoveButton.Sensitive = true;
 			this.BanButton.Sensitive = true;
 			this.SkipButton.Sensitive = true;
@@ -57,13 +56,17 @@ public partial class MainWindow: Gtk.Window
 	
 	protected virtual System.Boolean UpdateProgressTime()
 	{
-		this.TrackDuration += 2000/1000;
-		System.Double Frac = ((System.Double)this.TrackDuration / System.Convert.ToDouble(this.LastManager.CurrentSong.Trackduration));
-		if(Frac <= 1 && Frac >= (1/System.Double.MaxValue))
+		//Only if CurrentSong exists
+		if(this.LastManager.CurrentSong != null)
 		{
-			this.SongProgressBar.Fraction = Frac;
-		}else{
-			this.SongProgressBar.Fraction = 0;
+			this.TrackDuration += 2000/1000;
+			System.Double Frac = ((System.Double)this.TrackDuration / System.Convert.ToDouble(this.LastManager.CurrentSong.Trackduration));
+			if(Frac <= 1 && Frac >= (1/System.Double.MaxValue))
+			{
+				this.SongProgressBar.Fraction = Frac;
+			}else{
+				this.SongProgressBar.Fraction = 0;
+			}
 		}
 		
 		return true;
@@ -84,6 +87,7 @@ public partial class MainWindow: Gtk.Window
 		
 		if(Info.Streaming)
 		{
+			//TODO: Escape HTML chars
 			System.String StrText = "";
 			StrText += "<span size='x-large'>"+ Info.Track + "</span>\n";
 			StrText += "<b>By: </b>" + Info.Artist + "\n";

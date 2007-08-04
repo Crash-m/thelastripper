@@ -47,66 +47,77 @@ namespace LibLastRip
 		}
 		
 		///<summary>
-		///Updates the metainfo about the current song
+		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
+		///</summary>
+		protected System.Boolean IsUpdateing = false;
+		
+		///<summary>
+		///Updates metainfo, and pushes an OnNewSong event if new song is detected.
 		///</summary>
 		public void UpdateMetaInfo()
 		{
-			if(this.Status == ConnectionStatus.Recording)
+			//Do not update if we're already doing that, and don't request if we're not recording
+			if(!this.IsUpdateing && this.Status == ConnectionStatus.Recording)
 			{
-				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
+				//We've commenced downloading of metadata
+				this.IsUpdateing = true;
+
+				//Create a WebRequest
+				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
 				
-				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-				Stream ResponseStream = hRes.GetResponseStream();
-				
-				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
-				
-				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-				
-				MetaInfo ConcurrentSong = new MetaInfo(Encoding.UTF8.GetString(Buffer, 0, Count));
-				
-				//Is this a new song??
-				if(this._CurrentSong == null || !MetaInfo.Equals(ConcurrentSong,this._CurrentSong))
-				{
-					this._CurrentSong = ConcurrentSong;
-					if(this.OnNewSong != null)
-						this.OnNewSong(this, this._CurrentSong);
-				}
-				
-				/*
-				//If this is the first song
-				if(this._CurrentSong == null || !this._CurrentSong.Streaming)
-				{
-					this._CurrentSong = ConcurrentSong;
-					if(this._CurrentSong.Streaming)
-					{
-						this.SetTimer();
-						
-						//Make the event happen on the UI thread
-						this.NewSongEvent.Set();
-						if(this.OnNewSong != null)
-						{
-							this.OnNewSong(this,ConcurrentSong);
-						}
-					}else{
-						this.SetTimer(5000);
-					}
-				}else{
-					if(!MetaInfo.Equals(ConcurrentSong,this._CurrentSong))
-					{
-						this.SaveSong(this._CurrentSong);
-						this._CurrentSong = ConcurrentSong;
-						
-						//Make the event happen on the UI thread
-						if(this.OnNewSong != null)
-						{
-							this.OnNewSong(this,ConcurrentSong);
-						}
-						this.SetTimer();
-					}
-				}*/
+				//Begin to optain a response
+				Request.BeginGetResponse(new AsyncCallback(this.MetaInfoDownloaded), Request);
 			}
 		}
 		
-		
+		///<summary>
+		///Handles metadata callback from UpdateMetaInfo
+		///</summary>					
+		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
+		{
+			//We're no longer updating metadata
+			this.IsUpdateing = false;
+			
+			try
+			{
+				//Get the HttpWebRequest
+				HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
+				
+				//Get the response
+				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+				
+				//Get the stream
+				Stream Stream = Response.GetResponseStream();
+				
+				//Create a StreamReader to warp the stream
+				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+				
+				//Read all the data from the stream, notice this could be multithreaded with use of Stream.beginRead
+				//But sources on the net suggest that it's not relevant
+				System.String Data = StreamReader.ReadToEnd();
+				
+				//Close the StreamReader, Stream and Response to release system resources
+				StreamReader.Close();
+				Stream.Close();
+				Response.Close();
+				
+				//Parse the newly recived data
+				MetaInfo nSong = new MetaInfo(Data);
+				
+				//Is this a new song?
+				if(this._CurrentSong == null || ! MetaInfo.Equals(nSong,this._CurrentSong))
+				{
+					//Save metadata and raise OnNewSong event
+					this._CurrentSong = nSong;
+					if(this.OnNewSong != null)
+						this.OnNewSong(this, this._CurrentSong);
+				}
+			}
+			catch(System.Exception e)
+			{
+				//TODO: Handle exceptions better
+				throw new System.Exception("Error while downloading metadata", e);
+			}
+		}
 	}
 }

@@ -1,24 +1,21 @@
 <?xml version="1.0"?>
 <UserCombinePreferences filename="/home/jopsen/Development/TheLastRipper/trunk/trunk.mds">
   <Files>
-    <File filename="Welcome" />
-    <File filename="./MonoClient/Main.cs" />
     <File filename="./libLastRip/LastManager/LastManager.cs" />
-    <File filename="./libLastRip/MetaInfo.cs" />
-    <File filename="Dokumentation" />
+    <File filename="./libLastRip/LastManager/LastManager.MetaInfo.cs" />
+    <File filename="./MonoClient/MainWindow.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
           <Node name="libLastRip" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="LastManager" expanded="True" />
+            <Node name="LastManager" expanded="True">
+              <Node name="LastManager.MetaInfo.cs" expanded="False" selected="True" />
+            </Node>
             <Node name="PlayList" expanded="True" />
-            <Node name="MetaInfo.cs" expanded="False" selected="True" />
           </Node>
           <Node name="MonoClient" expanded="True" />
-          <Node name="TheLastRipper" expanded="True" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -40,8 +37,8 @@
   </Views>
   <Properties>
     <Properties>
-      <Property key="ActiveConfiguration" value="Release" />
-      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/libLastRip/MetaInfo.cs" />
+      <Property key="ActiveConfiguration" value="Debug" />
+      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/libLastRip/LastManager/LastManager.MetaInfo.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>
