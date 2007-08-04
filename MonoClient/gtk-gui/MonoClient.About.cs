@@ -62,7 +62,7 @@ namespace MonoClient {
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image30";
+            w6.Name = "image1";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-close", 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild

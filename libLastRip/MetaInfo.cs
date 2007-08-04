@@ -231,9 +231,12 @@ namespace LibLastRip
 			
 			//Add comment, defining from where the music was recorded.
 			File.Tag.Comment = "Recorded with TheLastRipper from " + this.Station;
-			
+			//TODO something 
 			//TODO: Add picture using TagLib-Sharp
 			//TagLib.Picture.CreateFromFile()
+			
+			//Saves the Current file
+			File.Save();
 		}
 	}
 }
