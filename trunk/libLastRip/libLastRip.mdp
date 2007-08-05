@@ -1,5 +1,5 @@
 <Project name="libLastRip" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Release">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug" assembly="libLastRip" />
       <Build debugmode="True" target="Library" />
@@ -27,7 +27,7 @@
     <File name="./PlayList/PlayList.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlayList/PlayListGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="../taglib-sharp/taglib-sharp.dll" subtype="Code" buildaction="FileCopy" />
-    <File name="./PlayList/StreamAbstraction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./StreamAbstraction.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

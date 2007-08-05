@@ -43,16 +43,13 @@ namespace LibLastRip
 		protected ConnectionStatus Status = ConnectionStatus.Created;
 		
 		///<summary>
-		///Initializes an instance of LastManager
+		///Initializes an instance of LastManager, and initiates handshake
 		///</summary>
-		public LastManager(System.String UserID, System.String Password, System.String MusicPath, System.String LastFMStation)
+		public LastManager(System.String UserID, System.String Password, System.String MusicPath)
 		{	
 			this.MusicPath = MusicPath;
 			
-			if(this.Handshake(UserID, Password))
-			{
-				this.ChangeStation(LastFMStation);
-			}
+			this.Handshake(UserID, Password);
 		}
 		
 		///<summary>
@@ -62,42 +59,61 @@ namespace LibLastRip
 		{	
 			this.MusicPath = MusicPath;
 		}
+
+		///<summary>
+		///Occurs when a handshake request has returned
+		///</summary>
+		public event System.EventHandler HandshakeReturn;
 		
-		//TODO: Multithread Handshake with callback event
-		public System.Boolean Handshake()
-		{	
+		public void Handshake()
+		{
 			if(this.UserID == null || this._Password == null)
 			{
 				throw new System.Exception("UserName and password needed.");
 			}
-			HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create("http://ws.audioscrobbler.com/radio/handshake.php?version=" + "1.1.1" + "&platform=" + "linux" + "&username=" + this.UserID + "&passwordmd5=" + this.Password + "&debug=" + "0" + "&partner=");
 			
-			//TODO: Multithread this method to make it more responsive
-			HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-			Stream ResponseStream = hRes.GetResponseStream();
+			HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("http://ws.audioscrobbler.com/radio/handshake.php?version=" + "1.1.1" + "&platform=" + "linux" + "&username=" + this.UserID + "&passwordmd5=" + this.Password + "&debug=" + "0" + "&partner=");
+			Request.BeginGetResponse(new System.AsyncCallback(this.OnHandshakeReturn), Request);
+		}
+		
+		protected void OnHandshakeReturn(System.IAsyncResult Ar)
+		{
+			//Get Response
+			HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
+			HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
 			
-			System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
+			//Get stream and create StreamReader
+			Stream Stream = Response.GetResponseStream();
+			StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
 			
-			System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
+			//Read data sync, since stream.beginRead is worth the trouble when the connections have been established
+			System.String Data = StreamReader.ReadToEnd();
 			
-			if(this.ParseHandshake(Encoding.UTF8.GetString(Buffer, 0, Count)))
+			//Closeing everything related to a connection, and releasing system resources
+			StreamReader.Close();
+			Stream.Close();
+			Response.Close();
+			
+			System.Boolean Result = this.ParseHandshake(Data);
+			if(Result)
 			{
 				this.Status = ConnectionStatus.Connected;
-				return true;
 			}else{
 				this.Status = ConnectionStatus.Created;
-				return false;
 			}
+			
+			if(this.HandshakeReturn != null)
+				this.HandshakeReturn(this, new HandshakeEventArgs(Result));
 		}
 		
 		///<summary>
 		///Gives the Last.FM server a handshake
 		///</summary>
-		public System.Boolean Handshake(System.String UserID, System.String Password)
+		public void Handshake(System.String UserID, System.String Password)
 		{
 			this.UserID = UserID;
 			this.Password = Password;
-			return this.Handshake();
+			this.Handshake();
 		}
 		
 		///<summary>
@@ -281,5 +297,27 @@ namespace LibLastRip
 		Created,	//LastManager is created
 		Connected,	//LastManager has connection and owns a SessionID
 		Recording	//LastManager is connected to stream and is recording
+	}
+	
+	///<summary>
+	///EventArgs for a HandshakeReturn event
+	///</summary>
+	public class HandshakeEventArgs : System.EventArgs
+	{
+		protected System.Boolean _Success;
+		
+		internal HandshakeEventArgs(System.Boolean Success)
+		{
+			this._Success = Success;
+		}
+		
+		///<summary>Boolean indicating if handshake was successfull</summary>
+		public System.Boolean Success
+		{
+			get
+			{
+				return this._Success;
+			}
+		}
 	}
 }

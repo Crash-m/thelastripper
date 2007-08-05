@@ -162,7 +162,7 @@ public partial class MainWindow {
         w6.Spacing = 2;
         // Container child GtkHBox1.Gtk.Container+ContainerChild
         Gtk.Image w7 = new Gtk.Image();
-        w7.Name = "image14";
+        w7.Name = "image30";
         w7.Pixbuf = Stetic.IconLoader.LoadIcon("stock_media-play", 16);
         w6.Add(w7);
         // Container child GtkHBox1.Gtk.Container+ContainerChild
@@ -192,7 +192,7 @@ public partial class MainWindow {
         w15.Spacing = 2;
         // Container child GtkHBox2.Gtk.Container+ContainerChild
         Gtk.Image w16 = new Gtk.Image();
-        w16.Name = "image15";
+        w16.Name = "image31";
         w16.Pixbuf = Stetic.IconLoader.LoadIcon("stock_media-next", 16);
         w15.Add(w16);
         // Container child GtkHBox2.Gtk.Container+ContainerChild
@@ -222,7 +222,7 @@ public partial class MainWindow {
         w24.Spacing = 2;
         // Container child GtkHBox3.Gtk.Container+ContainerChild
         Gtk.Image w25 = new Gtk.Image();
-        w25.Name = "image16";
+        w25.Name = "image32";
         w25.Pixbuf = Stetic.IconLoader.LoadIcon("stock_3d-favourites", 16);
         w24.Add(w25);
         // Container child GtkHBox3.Gtk.Container+ContainerChild
@@ -251,7 +251,7 @@ public partial class MainWindow {
         w33.Spacing = 2;
         // Container child GtkHBox4.Gtk.Container+ContainerChild
         Gtk.Image w34 = new Gtk.Image();
-        w34.Name = "image17";
+        w34.Name = "image33";
         w34.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-remove", 16);
         w33.Add(w34);
         // Container child GtkHBox4.Gtk.Container+ContainerChild
