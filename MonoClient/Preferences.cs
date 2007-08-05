@@ -25,6 +25,7 @@ namespace MonoClient
 			this.setting = setting;
 			this.Manager = Manager;
 			
+			//Load settings
 			this.TopTrackscheckbutton.Active = this.setting.TopTracks;
 			this.Lovedcheckbutton.Active = this.setting.RecentLovedTracks;
 			this.Weekcheckbutton.Active = this.setting.WeeklyTrackChart;
@@ -45,25 +46,39 @@ namespace MonoClient
 			}
 			
 			this.MusicPathChooser.SetCurrentFolder(this.setting.MusicPath);
+			
+			//Register for events
+			this.Manager.HandshakeReturn += new System.EventHandler(this.OnHandshakeReturn);
 		}
 		
 		
 		protected virtual void OnLoginButtonClicked(object sender, System.EventArgs e)
 		{
-			if(!this.HasPassword )
-			{
-				if(this.Manager.Handshake(this.UserNameEntry.Text, LibLastRip.LastManager.CalculateHash(this.PasswordEntry.Text)))
-				{
-					this.Closebutton.Sensitive = true;
-					this.LoginFrame.Sensitive = false;
-				}
-			}else{
-				if(this.Manager.Handshake(this.UserNameEntry.Text, this.setting.Password))
-				{
-					this.Closebutton.Sensitive = true;
-					this.LoginFrame.Sensitive = false;
-				}
-			}
+			//Disable login frame to insure no multiple request
+			this.LoginFrame.Sensitive = false;
+			
+			//Get the correct password
+			System.String Password;
+			if(this.HasPassword)
+				Password = this.setting.Password;
+			else
+				Password = LibLastRip.LastManager.CalculateHash(this.PasswordEntry.Text);
+			
+			//Perform a handskake
+			this.Manager.Handshake(this.UserNameEntry.Text, Password);
+		}
+		
+		///<summary>
+		///Handles result of handshake
+		///</summary>
+		protected virtual void OnHandshakeReturn(System.Object Sender, System.EventArgs Args)
+		{
+			LibLastRip.HandshakeEventArgs eArgs = (LibLastRip.HandshakeEventArgs)Args;
+			//Handle the response
+			if(eArgs.Success)
+				this.Closebutton.Sensitive = true;
+			else
+				this.LoginFrame.Sensitive = true;
 		}
 
 		protected virtual void OnUserNameEntryChanged(object sender, System.EventArgs e)

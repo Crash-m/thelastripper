@@ -1,5 +1,14 @@
 2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
+	* libLastRip/LastManager/LastManager.Commands.cs: Performing all
+	  commands asynchroniously, results are returned as events.
+	* Performing ChangeStation() asynchroniously, results are returned as
+	  events.
+	* libLastRip/LastManager/LastManager.cs: Performing handshake
+	  asynchroniously, result is returned as an event.
+
+2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
 	* libLastRip/LastManager/LastManager.MetaInfo.cs: Multithreading
 	  UpdateMetaInfo(), and closing connections correctly to save system
 	  resources.

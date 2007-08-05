@@ -62,10 +62,14 @@ namespace LibLastRip
 			}
 		}
 		
-		///<summary>Close stream</summary>
+		///<summary>Closes stream created by this class</summary>
+		///<remarks>
+		///Note: this method doesn't do anything, since all we do is to parse a referance the stream,
+		///which must be closed manually later! 
+		///</remarks>
 		public void CloseStream (System.IO.Stream Stream)
 		{
-			Stream.Close();
+			//Do nothing... (See remarks!)
 		}
 	}
 }

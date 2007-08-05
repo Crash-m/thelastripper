@@ -3,7 +3,7 @@ using Gtk;
 
 public partial class MainWindow: Gtk.Window
 {	
-	protected const System.Int32 UpdateInterval = 6000;
+	protected const System.Int32 UpdateInterval = 10000;
 	public LibLastRip.LastManager LastManager;
 	public System.Timers.Timer Timer = new System.Timers.Timer(MainWindow.UpdateInterval);
 	
@@ -25,6 +25,12 @@ public partial class MainWindow: Gtk.Window
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
 		this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.LastManager.UpdateMetaInfo);
+		
+		//Handle command return
+		this.LastManager.CommandReturn += new System.EventHandler(this.OnCommandReturn);
+		
+		//Handle station change return
+		this.LastManager.StationChanged += new System.EventHandler(this.OnStationChanged);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -37,13 +43,22 @@ public partial class MainWindow: Gtk.Window
 	
 	protected virtual void OnConnectButtonClicked(object sender, System.EventArgs e)
 	{
-		this.Timer.Stop();
-		if(this.LastManager.ChangeStation(this.LastFMStationEntry.Entry.Text))
+		this.LastManager.ChangeStation(this.LastFMStationEntry.Entry.Text);
+		
+		//Disable button
+		this.ConnectButton.Sensitive = false;
+	}
+	
+	///<summary>Handles callback from a change station command</summary>
+	protected virtual void OnStationChanged(System.Object Sender, System.EventArgs Args)
+	{
+		this.ConnectButton.Sensitive = true;
+		LibLastRip.StationChangedEventArgs sArgs = (LibLastRip.StationChangedEventArgs)Args;
+		
+		if(sArgs.Success)
 		{
 			this.Timer.Start();
-			this.LoveButton.Sensitive = true;
-			this.BanButton.Sensitive = true;
-			this.SkipButton.Sensitive = true;
+			this.EnableCommands();
 			if(!this.IsStarted)
 			{
 				GLib.Timeout.Add(2000, new GLib.TimeoutHandler(this.UpdateProgressTime));
@@ -87,14 +102,14 @@ public partial class MainWindow: Gtk.Window
 		
 		if(Info.Streaming)
 		{
-			//TODO: Escape HTML chars
 			System.String StrText = "";
-			StrText += "<span size='x-large'>"+ Info.Track + "</span>\n";
-			StrText += "<b>By: </b>" + Info.Artist + "\n";
-			StrText += "<b>Album: </b>"+Info.Album + "\n";
-			StrText += "<b>Length: </b>"+Info.Trackduration + " seconds\n";
-			StrText += "<i>From: " + Info.Station + "</i>";
+			StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track) + "</span>\n";
+			StrText += "<b>By: </b>" + GLib.Markup.EscapeText(Info.Artist) + "\n";
+			StrText += "<b>Album: </b>"+ GLib.Markup.EscapeText(Info.Album) + "\n";
+			StrText += "<b>Length: </b>"+ GLib.Markup.EscapeText(Info.Trackduration) + " seconds\n";
+			StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station) + "</i>";
 			this.StatusLabel.Markup = StrText;
+			
 			if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 			{
 				try
@@ -112,19 +127,34 @@ public partial class MainWindow: Gtk.Window
 
 	protected virtual void OnSkipButtonClicked(object sender, System.EventArgs e)
 	{
+		//Execute command and disable command buttons to prevent multiple commands
 		this.LastManager.SkipSong();
+		this.DisableCommands();
 	}
 
 	protected virtual void OnLoveButtonClicked(object sender, System.EventArgs e)
 	{
+		//Execute command and disable command buttons to prevent multiple commands
 		this.LastManager.LoveSong();
+		this.DisableCommands();
 	}
 
 	protected virtual void OnBanButtonClicked(object sender, System.EventArgs e)
 	{
+		//Execute command and disable command buttons to prevent multiple commands
 		this.LastManager.BanSong();
+		this.DisableCommands();
 	}
 
+	///<summary>
+	///Handles callbacks from executed commands
+	///</summary>
+	protected virtual void OnCommandReturn(System.Object Sender, System.EventArgs Args)
+	{
+		//Enable commands again
+		this.EnableCommands();
+	}
+	
 	protected virtual void OnOnlineHelpActivated(object sender, System.EventArgs e)
 	{
 		//TODO: find correct adress once the homepage is up
@@ -162,4 +192,23 @@ public partial class MainWindow: Gtk.Window
 			this.settings.Generate();
 	}
 	
+	///<summary>
+	///Disables all command buttons 
+	///</summary>
+	protected virtual void DisableCommands()
+	{
+		this.LoveButton.Sensitive = false;
+		this.BanButton.Sensitive = false;
+		this.SkipButton.Sensitive = false;
+	}
+	
+	///<summary>
+	///Enables all command buttons 
+	///</summary>
+	protected virtual void EnableCommands()
+	{
+		this.LoveButton.Sensitive = true;
+		this.BanButton.Sensitive = true;
+		this.SkipButton.Sensitive = true;
+	}
 }
