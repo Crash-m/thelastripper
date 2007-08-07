@@ -1,0 +1,12 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\WinFormsClient.About.resources
+obj\Debug\WinFormsClient.MainForm.resources
+obj\Debug\WinFormsClient.Preferences.resources
+obj\Debug\WinFormsClient.csproj.GenerateResource.Cache
+bin\Debug\WinFormsClient.exe
+bin\Debug\WinFormsClient.pdb
+bin\Debug\LibLastRip.dll
+bin\Debug\taglib-sharp.dll
+bin\Debug\LibLastRip.pdb
+obj\Debug\WinFormsClient.exe
+obj\Debug\WinFormsClient.pdb

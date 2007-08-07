@@ -26,141 +26,204 @@ namespace LibLastRip
 	This part of the LastManager class handles and exposes Last.FM commands.
 	*/
 	public partial class LastManager
-	{
+	{		
+		///<summary>
+		///Occurs when an command execution is return
+		///</summary>
+		public event System.EventHandler CommandReturn;
+		
 		///<summary>
 		///Sends a command to the Last.FM server
 		///</summary>
-		protected System.Boolean SendCommand(System.String Command)
+		protected void SendCommand(System.String Command)
 		{
-			System.Boolean Status = false;
-			try{
-				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "control.php?session=" + this.SessionID + "&command=" + Command + "&debug=0");
-				hReq.Timeout = 3000;
-				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-				Stream ResponseStream = hRes.GetResponseStream();
+			if(this.Status == ConnectionStatus.Recording)
+			{
+				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "control.php?session=" + this.SessionID + "&command=" + Command + "&debug=0");
+				Request.BeginGetResponse(new System.AsyncCallback(this.OnCommandReturn), new System.Object[]{Request, Command});
+			}
+		}
+		
+		protected void OnCommandReturn(System.IAsyncResult Ar)
+		{
+			try
+			{
+				System.Object[] Args = (System.Object[])Ar.AsyncState;
+				HttpWebRequest Request = (HttpWebRequest)Args[0];
+				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
 				
-				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
+				Stream Stream = Response.GetResponseStream();
+				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
 				
-				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-				System.String []Data = Encoding.UTF8.GetString(Buffer, 0, Count).Split(new System.Char[] {'\n'});
-				
-				Status = false;
+				System.String []Data = StreamReader.ReadToEnd().Split(new System.Char[] {'\n'});
+			
+				System.Boolean Result = false;
 				foreach(System.String Line in Data)
 				{
 					System.String []Opts = Line.Split(new System.Char[] {'='});
 					
-					if(Opts[0].ToLower() == "response")
+					if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
 					{
-						if(Opts[1].ToLower() == "ok")
-						{
-							Status = true;
-						}
+						Result = true;
 					}
 				}
+				
+				//Ensure that song is skipped from save if hate or skip was used
+				if((System.String)Args[1] == "hate" || (System.String)Args[1] == "skip")
+				{
+					this.SkipSave = Result;
+					this.UpdateMetaInfo();
+				}
+				
+				if(this.CommandReturn != null)
+					this.CommandReturn(this, new CommandEventArgs(Result));
 			}
-			catch{
-				Status = false;
+			catch(System.Exception e)
+			{
+				throw new System.Exception("Error while performing command", e);
 			}
-			return Status;
 		}
 		
 		///<summary>
 		///Skips the current song an moves on
 		///</summary>
-		public System.Boolean SkipSong()
+		public void SkipSong()
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				System.Boolean Result = this.SendCommand("skip");
-				if(Result)
-				{
-					//Making sure we don't save half a file
-					this.SkipSave = true;
-					this.UpdateMetaInfo();
-					//new System.Threading.Thread(new System.Threading.ThreadStart(this.UpdateMetaInfo));
-				}
-				return Result;
-			}else{
-				return false;
+				this.SendCommand("skip");
 			}
 		}
 		
 		///<summary>
 		///Loves the current song
 		///</summary>
-		public System.Boolean LoveSong()
+		public void LoveSong()
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				return this.SendCommand("love");
-			}else{
-				return false;
+				this.SendCommand("love");
 			}
 		}
 		
 		///<summary>
 		///Bans the current song
 		///</summary>
-		public System.Boolean BanSong()
+		public void BanSong()
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				System.Boolean Result = this.SendCommand("ban");
-				if(Result)
-				{
-					//Dont save a half song
-					this.SkipSave = true;
-					this.UpdateMetaInfo();
-				}
-				return Result;
-			}else{
-				return false;
+				this.SendCommand("ban");	
 			}
 		}
 		
-		public System.Boolean ChangeStation(System.String LastFMStation)
+		///<summary>Occurs when a ChangeStation is returned</summary>
+		public event System.EventHandler StationChanged;
+		
+		///<summary>Connects to a radio station and starts ripping</summary>
+		///<remarks>This method may be used to change station during recording, and to initiate recording.</remarks>
+		public void ChangeStation(System.String LastFMStation)
 		{
+			//Can't do anything if not a least connected
 			if(this.Status == ConnectionStatus.Created)
 			{
-				//We can't perform this action
-				return false;
+				if(this.StationChanged != null)
+					this.StationChanged(this, new StationChangedEventArgs(false));
 			}else{
-				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
-				hReq.Timeout = 10000;
-				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-				Stream ResponseStream = hRes.GetResponseStream();
+				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
+				Request.BeginGetResponse(new System.AsyncCallback(this.OnStationChanged), Request);
+			}
+		}
+		
+		protected void OnStationChanged(System.IAsyncResult Ar)
+		{
+			HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
+			HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+			Stream Stream = Response.GetResponseStream();
+			StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+			
+			//Read and split data
+			System.String[] Data = StreamReader.ReadToEnd().Split(new System.Char[] {'\n'});;
+			
+			//Close connections
+			StreamReader.Close();
+			Stream.Close();
+			Response.Close();
+			
+			//Create a result value
+			System.Boolean Result = false;
+			
+			//Look at the response to check for success
+			foreach(System.String Line in Data)
+			{
+				System.String []Opts = Line.Split(new System.Char[] {'='});
 				
-				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
-				
-				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-				System.String []Data = Encoding.UTF8.GetString(Buffer, 0, Count).Split(new System.Char[] {'\n'});
-				
-				System.Boolean Status = false;
-				foreach(System.String Line in Data)
+				if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
 				{
-					System.String []Opts = Line.Split(new System.Char[] {'='});
-					
-					if(Opts[0].ToLower() == "response")
+					Result = true;
+					//If we're already recording then don't save current song
+					if(this.Status == ConnectionStatus.Recording)
 					{
-						if(Opts[1].ToLower() == "ok")
-						{
-							Status = true;
-							if(this.Status == ConnectionStatus.Recording)
-							{
-								//Dont save the current song
-								this.SkipSave = true;
-							}else{
-								this.Status = ConnectionStatus.Recording;
-								this.StartRecording();
-							}
-							
-							this.UpdateMetaInfo();
-							//new System.Threading.Thread(new System.Threading.ThreadStart(this.UpdateMetaInfo));
-						}
+						//Dont save the current song
+						this.SkipSave = true;
+					}else{
+						//If not already recording, then start it and change status
+						this.Status = ConnectionStatus.Recording;
+						this.StartRecording();
 					}
+					this.UpdateMetaInfo();
 				}
-				
-				return Status;
+			}
+			
+			//Fire an event
+			if(this.StationChanged != null)
+				this.StationChanged(this, new StationChangedEventArgs(Result));
+		}
+	}
+	
+	///<summary>
+	///EventArgs for CommandReturn event
+	///</summary>
+	public class CommandEventArgs : System.EventArgs
+	{
+		protected System.Boolean _Success;
+		internal CommandEventArgs(System.Boolean Success)
+		{
+			this._Success = Success;
+		}
+		
+		///<summary>
+		///Boolean indicating whether or not the command execution was successfull
+		///</summary>
+		public virtual System.Boolean Success
+		{
+			get
+			{
+				return this._Success;
+			}
+		}
+	}
+
+	///<summary>
+	///EventArgs for StationChanged event
+	///</summary>
+	public class StationChangedEventArgs : System.EventArgs
+	{
+		protected System.Boolean _Success;
+		
+		internal StationChangedEventArgs(System.Boolean Success)
+		{
+			this._Success = Success;
+		}
+		
+		///<summary>
+		///Boolean indicating whether or not the station was changed successfully
+		///</summary>
+		public virtual System.Boolean Success
+		{
+			get
+			{
+				return this._Success;
 			}
 		}
 	}

@@ -38,160 +38,86 @@ namespace LibLastRip
 				return this._CurrentSong;
 			}
 		}
-		
 		public event System.EventHandler OnNewSong;
-		static System.Object UpdateLocker = new System.Object();
 		
-		///<summary>
-		///Updates the metainfo about the current song
-		///</summary>
-		public void UpdateMetaInfo()
-		{
-			PerformUpdateMetaInfoDelegate SendDelegate = new PerformUpdateMetaInfoDelegate(this.PerformUpdateMetaInfo);
-			System.AsyncCallback CallBack = new System.AsyncCallback(this.UpdateMetaInfoCallBack);
-			SendDelegate.BeginInvoke(CallBack,null);
-		}
-		
-		protected delegate MetaInfo PerformUpdateMetaInfoDelegate();
-		
-		protected MetaInfo PerformUpdateMetaInfo()
-		{
-			MetaInfo ConcurrentSong = this._CurrentSong;
-			if(this.Status == ConnectionStatus.Recording && System.Threading.Monitor.TryEnter(LastManager.UpdateLocker))
-			{
-				try
-				{
-					System.IO.File.AppendAllText(PlatformSettings.TempPath + "\\" + "thelastripper.log",
-			                             "\n -Start update");
-			
-				HttpWebRequest hReq = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-				hReq.Timeout = 10000;
-				System.IO.File.AppendAllText(PlatformSettings.TempPath + "\\" + "thelastripper.log",
-			                             "\n - URL :" +this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-				HttpWebResponse hRes = (HttpWebResponse)hReq.GetResponse();
-				Stream ResponseStream = hRes.GetResponseStream();
-				
-				System.Byte []Buffer = new System.Byte[LastManager.ProtocolBufferSize];
-				
-				System.Int32 Count = ResponseStream.Read(Buffer,0,Buffer.Length);
-					 
-					//WebClient Client = new WebClient();
-					//System.String data = Client.DownloadString(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-					
-					
-					ConcurrentSong = new MetaInfo(Encoding.UTF8.GetString(Buffer, 0, Count)); // data;
-					//return ConcurrentSong;
-				}
-				catch(System.Exception e){
-					System.IO.File.AppendAllText(PlatformSettings.TempPath + "\\" + "thelastripper.log",
-			                             "\n - Update timeout ERROR: " + e.Message + e.StackTrace);
-			//		System.Threading.Monitor.Exit(LastManager.UpdateLocker);
-					//System.Threading.Thread.CurrentThread.Abort();
-				}
-				finally
-				{
-					System.IO.File.AppendAllText(PlatformSettings.TempPath + "\\" + "thelastripper.log",
-			                             "\n - Update finished");
-					System.Threading.Monitor.Exit(LastManager.UpdateLocker);
-				}
-			}
-			return ConcurrentSong;
-		}
-		
-		protected void UpdateMetaInfoCallBack(System.IAsyncResult Res)
-		{
-			PerformUpdateMetaInfoDelegate SendDelegate = (PerformUpdateMetaInfoDelegate)((System.Runtime.Remoting.Messaging.AsyncResult)Res).AsyncDelegate;
-			MetaInfo ConcurrentSong = SendDelegate.EndInvoke(Res);
-			
-			if(this._CurrentSong == null || !this._CurrentSong.Streaming)
-			{
-				this._CurrentSong = ConcurrentSong;
-				if(this._CurrentSong.Streaming)
-				{
-					this.SetTimer();
-					if(this.OnNewSong != null)
-					{
-						this.OnNewSong(this,ConcurrentSong);
-					}
-				}else{
-					this.SetTimer(5000);
-				}
-			}else{
-				if(!MetaInfo.Equals(ConcurrentSong,this._CurrentSong))
-				{
-					//Perform on new thread, perhaps not needed at all... 
-						//Since all we are doing is IO work, not networking...
-					this.SaveSong(this._CurrentSong);
-					
-					this._CurrentSong = ConcurrentSong;
-					if(this.OnNewSong != null)
-					{
-						this.OnNewSong(this,ConcurrentSong);
-					}
-					this.SetTimer();
-				}
-			}
-			
-		}
-		
+		//TODO: remove this method since it cause bad multithreading!
 		public void UpdateMetaInfo(System.Object Sender, System.EventArgs Args)
 		{
 			this.UpdateMetaInfo();
 		}
 		
-		protected void SetTimer()
-		{
-			this.SetTimer(this.CurrentSong);
-		}
+		///<summary>
+		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
+		///</summary>
+		protected System.Boolean IsUpdateing = false;
 		
-		protected void SetTimer(MetaInfo SongInfo)
+		///<summary>
+		///Updates metainfo, and pushes an OnNewSong event if new song is detected.
+		///</summary>
+		public void UpdateMetaInfo()
 		{
-			this.SetTimer(System.Convert.ToDouble(SongInfo.Trackduration) * 1000 );
-		}
-		
-		protected void SetTimer(System.Double Interval)
-		{
-			if((Interval - 500) > 0)
+			//Do not update if we're already doing that, and don't request if we're not recording
+			if(!this.IsUpdateing && this.Status == ConnectionStatus.Recording)
 			{
-				//Set Timer 1
-				this.Timer1.Enabled = false;
-				this.Timer1.Interval = System.Convert.ToInt32(Interval - 500);
-				this.Timer1.Tick += new EventHandler(this.UpdateMetaInfo);
-				this.Timer1.Enabled = true;
+				//We've commenced downloading of metadata
+				this.IsUpdateing = true;
+
+				//Create a WebRequest
+				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
 				
-				//Set Timer 2
-				this.Timer2.Enabled = false;
-				this.Timer2.Interval = System.Convert.ToInt32(Interval + 100);
-				this.Timer2.Tick += new EventHandler(this.UpdateMetaInfo);
-				this.Timer2.Enabled = true;
-				
-				//Set Timer 3
-				this.Timer3.Enabled = false;
-				this.Timer3.Interval = System.Convert.ToInt32(Interval + 700);
-				this.Timer3.Tick += new EventHandler(this.UpdateMetaInfo);
-				this.Timer3.Enabled = true;
-				
-				//Set timer 1
-				/*this.Timer1.Stop();
-				this.Timer1 = new System.Timers.Timer(Interval - 500);
-				this.Timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateMetaInfo);
-				this.Timer1.Start();
-				
-				//Set timer 2
-				this.Timer2.Stop();
-				this.Timer2 = new System.Timers.Timer(Interval + 100);
-				this.Timer2.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateMetaInfo);
-				this.Timer2.Start();
-				
-				//Set timer 3
-				this.Timer3.Stop();
-				this.Timer3 = new System.Timers.Timer(Interval + 700);
-				this.Timer3.Elapsed += new System.Timers.ElapsedEventHandler(this.UpdateMetaInfo);
-				this.Timer3.Start();*/
+				//Begin to optain a response
+				Request.BeginGetResponse(new AsyncCallback(this.MetaInfoDownloaded), Request);
 			}
-			/*
-			We're using 3 timers to make it easier to hit the right moment.
-			*/
+		}
+		
+		///<summary>
+		///Handles metadata callback from UpdateMetaInfo
+		///</summary>					
+		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
+		{
+			//We're no longer updating metadata
+			this.IsUpdateing = false;
+			
+			try
+			{
+				//Get the HttpWebRequest
+				HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
+				
+				//Get the response
+				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+				
+				//Get the stream
+				Stream Stream = Response.GetResponseStream();
+				
+				//Create a StreamReader to warp the stream
+				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+				
+				//Read all the data from the stream, notice this could be multithreaded with use of Stream.beginRead
+				//But sources on the net suggest that it's not relevant
+				System.String Data = StreamReader.ReadToEnd();
+				
+				//Close the StreamReader, Stream and Response to release system resources
+				StreamReader.Close();
+				Stream.Close();
+				Response.Close();
+				
+				//Parse the newly recived data
+				MetaInfo nSong = new MetaInfo(Data);
+				
+				//Is this a new song?
+				if(this._CurrentSong == null || ! MetaInfo.Equals(nSong,this._CurrentSong))
+				{
+					//Save metadata and raise OnNewSong event
+					this._CurrentSong = nSong;
+					if(this.OnNewSong != null)
+						this.OnNewSong(this, this._CurrentSong);
+				}
+			}
+			catch(System.Exception e)
+			{
+				//TODO: Handle exceptions better
+				throw new System.Exception("Error while downloading metadata", e);
+			}
 		}
 	}
 }

@@ -58,6 +58,9 @@ namespace WinFormsClient
 			}
 			this.UserNameTextBox.Text = settings.UserName;
 			this.MusicPathTextBox.Text = settings.MusicPath;
+			
+			//Subscribe to handshake callback event
+			this.Manager.HandshakeReturn += new EventHandler(this.LoginCallback);
 		}
 		
 		void BrowseButtonClick(object sender, EventArgs e)
@@ -81,12 +84,22 @@ namespace WinFormsClient
 				}else{
 					Password = LibLastRip.LastManager.CalculateHash(this.PasswordTextBox.Text);
 				}
-				if(this.Manager.Handshake(this.UserNameTextBox.Text,Password))
-				{
-					this.LoginGroupBox.Enabled = false;
-					this.OKbutton.Enabled = true;
-				}
+				this.Manager.Handshake(this.UserNameTextBox.Text,Password);
+				//Disable login to prevent multiple logins	
+				this.LoginGroupBox.Enabled = false;
 			}
+		}
+		
+		/// <summary>
+		/// Handles LoginCallback from LoginButton
+		/// </summary>
+		void LoginCallback(System.Object Sender, System.EventArgs Args)
+		{
+			LibLastRip.HandshakeEventArgs hArgs = (LibLastRip.HandshakeEventArgs)Args;
+			if(hArgs.Success)
+				this.OKbutton.Enabled = true;
+			else
+				this.LoginGroupBox.Enabled = true;
 		}
 		
 		void UserNameTextBoxTextChanged(object sender, EventArgs e)

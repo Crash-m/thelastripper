@@ -26,168 +26,144 @@ namespace LibLastRip
 	*/
 	public partial class LastManager
 	{
-		protected FileStream TempFile;
-		protected System.Byte []Buffer = new System.Byte[4096];
-		protected System.IAsyncResult ReadHandle;
+		protected static System.Int32 BufferSize = 8192; //8 KiB
+		protected MemoryStream Song = new System.IO.MemoryStream();
+		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		
 		protected void StartRecording()
 		{
-			//Create or overwrite tempfile
-			this.TempFile = File.Create(PlatformSettings.TempFilePath);
-			
 			//Getting stream
 			WebRequest wReq = WebRequest.Create(this.StreamURL);
 			HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
 			System.IO.Stream RadioStream = hRes.GetResponseStream();
 			
 			//Start reading process
-			this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-		}
-		//TODO: Deside whether this is good or bad!
-		/*
-		Number of times the stream has been dead, it happens
-		but we might kickstart the stream with an SkipSong command if it happens
-		too much...
-		*/
-		protected System.Int32 DeadStreamCount = 0;
-		protected System.Boolean IsKickStarted = false;
-		protected System.Boolean IsRestarted = false;
-		static System.Object StreamLocker = new System.Object();
-		
-		protected void TempSave(System.IAsyncResult Res)
-		{
-			if(System.Threading.Monitor.TryEnter(LastManager.StreamLocker))
-			{
-				try
-				{
-					Stream RadioStream = (Stream)Res.AsyncState;
-					System.Int32 Count = RadioStream.EndRead(Res);
-					
-					if(Count > 0)
-					{
-						this.DeadStreamCount = 0;
-						this.IsKickStarted = false;
-						this.IsRestarted = false;
-						this.TempFile.Write(this.Buffer, 0, Count);
-						this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-					}else{
-						if(this.DeadStreamCount < 5)
-						{
-							this.DeadStreamCount += 1;
-							this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-						}else{
-							//TODO: handle a "Not enough content left..." error
-							if(this.IsKickStarted)
-							{
-								if(this.IsRestarted)
-								{
-									//Declare connection dead
-									this.Status = ConnectionStatus.Created;
-									//Give it a handshake, just to try
-									this.Handshake(this.UserID, this.Password);
-									this.IsRestarted = false;
-									this.IsKickStarted = false;
-								}else{
-									RadioStream.Close();
-									this.TempFile.Close();
-									this.StartRecording();
-									this.IsKickStarted = false;
-									this.IsRestarted = true;
-								}
-							}else{
-								this.IsKickStarted = true;
-								this.DeadStreamCount = 0;
-								this.SkipSong();
-								this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-							}
-						}
-					}
-				}
-				finally
-				{
-					System.Threading.Monitor.Exit(LastManager.StreamLocker);
-				}
-			}
+			RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
 		}
 		
-		protected void SaveSong(MetaInfo SongInfo)
+		protected void Save(System.IAsyncResult Res)
 		{
-			System.Boolean DownloadCovers = false;
-			System.String AlbumPath = "";
-			System.String NewFilePath = "";
+			Stream RadioStream = (Stream)Res.AsyncState;
+			System.Int32 Count = RadioStream.EndRead(Res);
 			
-			lock(LastManager.StreamLocker)
-			{
-				Stream RadioStream = (Stream)this.ReadHandle.AsyncState;
-				System.Int32 Count = RadioStream.EndRead(this.ReadHandle);
-				
-				if(this.SkipSave || !SongInfo.Streaming)
+			//Write data from buffer to memory
+			this.Song.Write(this.Buffer,0,Count);
+			
+			System.Byte []Buf = this.Song.GetBuffer();			
+			
+			System.Int32 Start = System.Convert.ToInt32(this.Song.Length) - Count - 14;
+			
+			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-13;
+			if(Start > 0 && End > 0)
+			{	
+				for(System.Int32 i = Start; i < End; i++)
 				{
-					//Close file
-					this.TempFile.Close();
-					
-					//Create or overwrite tempfile
-					this.TempFile = File.Create(PlatformSettings.TempFilePath);
-					
-					//Start recording agian
-					this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-					
-					//Change SkipSave
-					this.SkipSave = false;
-				}else{
-					
-					//Write last data from stream
-					this.TempFile.Write(this.Buffer, 0, Count);
-					
-					//Write metadata to stream as ID3v1
-					SongInfo.AppendID3(this.TempFile);
-					
-					//Write the file, and close it
-					this.TempFile.Flush();
-					this.TempFile.Close();
-					this.TempFile.Dispose();
-					
-					//Filesystem paths
-					AlbumPath = this.MusicPath + PlatformSettings.PathSeparator + LastManager.RemoveIllegalChars(SongInfo.Artist) + PlatformSettings.PathSeparator + LastManager.RemoveIllegalChars(SongInfo.Album) + PlatformSettings.PathSeparator;
-					NewFilePath = AlbumPath + LastManager.RemoveIllegalChars(SongInfo.Track) + ".mp3";
-					
-					//Dont overwrite file if it already exist, new rip may be bad, and we should leave it to the user to sort them manually
-					if(File.Exists(NewFilePath))
+					if(Buf[i] == 0 &&		//Hex values:
+						Buf[i+2] == 0 &&	//00
+						Buf[i+3] == 0 &&
+						Buf[i+4] == 0 &&
+						Buf[i+5] == 0 &&
+						Buf[i+6] == 0 &&
+						
+						Buf[i+7] == 83 &&	//53
+						Buf[i+8] == 89 &&	//59
+						Buf[i+9] == 78 &&	//4e
+						Buf[i+10] == 67 &&	//43
+						Buf[i+11] == 255 &&	//FF
+						Buf[i+12] == 251 &&	//FB
+						Buf[i+13] == 144	//90
+						)
 					{
-						File.Delete(PlatformSettings.TempFilePath);
-					}else
-					{
-						if(!Directory.Exists(AlbumPath))
+						//Create a new MemoryStream
+						MemoryStream NewSong = new MemoryStream();
+						
+						//Write the latest data to it
+						NewSong.Write(Buf, i, System.Convert.ToInt32(this.Song.Length) - i);
+						
+						//Should we save this song?
+						if(this.SkipSave || !this.CurrentSong.Streaming)
 						{
-							Directory.CreateDirectory(AlbumPath);
+							//If not, then don't save it
+							this.SkipSave = false;
+							this.Song.Close();
+						}else{
+							//If so, then save it but do it on another thread
+							SaveSongCall SSC = new SaveSongCall(this.SaveSong);
+							SSC.BeginInvoke(this.Song, i, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 						}
-						File.Move(PlatformSettings.TempFilePath,NewFilePath);
+						
+						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
+						this.Song = NewSong;
+						
+						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
+						break;
 					}
-					
-					//Create or overwrite tempfile
-					this.TempFile = File.Create(PlatformSettings.TempFilePath);
-					
-					//Start recording agian
-					this.ReadHandle = RadioStream.BeginRead(this.Buffer,0,this.Buffer.Length,new System.AsyncCallback(this.TempSave),RadioStream);
-					
-					//Set download covers, do this outside the lock.
-					DownloadCovers = true;
 				}
 			}
-			if(DownloadCovers)
+			
+			//Read from the radio stream again
+			RadioStream.BeginRead(this.Buffer , 0, LastManager.BufferSize, new System.AsyncCallback(this.Save),RadioStream);
+		}
+		
+		protected void SaveSongCallback(System.IAsyncResult Ar)
+		{
+			 SaveSongCall SSC = (SaveSongCall)(((System.Runtime.Remoting.Messaging.AsyncResult)Ar).AsyncDelegate);
+			 SSC.EndInvoke(Ar);
+			 
+			 //Close the old song
+			 ((MemoryStream)Ar.AsyncState).Close();
+			 
+			 //Request metadata
+			 this.UpdateMetaInfo();
+		}
+		
+		protected delegate void SaveSongCall(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo);
+		
+		///<summary>Save a song to disk</summary>
+		///<param name="Song">A MemoryStream containing the song.</param>
+		///<param name="Count">Number of bytes from MemoryStream to save.</param>
+		///<param name="SongInfo">MetaInfo about the song to be saved.</param>
+		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
+		{
+			//Filesystem paths
+			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
+			System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(SongInfo.Track) + ".mp3";
+			
+			//Check if file exists
+			if(File.Exists(NewFilePath))
 			{
-				//Download covers
-				WebClient Client = new WebClient();
-					
-				if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
-					Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
-					
-				if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
-					Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
-					
-				if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
-					Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+				//TODO: decide whether or not to delete the file!
+				File.Delete(NewFilePath);
 			}
+			
+			//Check if Album directory exists, if not create it
+			if(!Directory.Exists(AlbumPath))
+			{
+				Directory.CreateDirectory(AlbumPath);
+			}
+			
+			//Save the MemoryStream to file
+			FileStream FS = File.Create(NewFilePath);
+			FS.Write(Song.GetBuffer(), 0, Count);
+			
+			//Write metadata to stream as ID3v1
+			SongInfo.AppendID3(FS);
+
+			//Close the file			
+			FS.Flush();
+			FS.Close();
+			
+			//Download covers
+			WebClient Client = new WebClient();
+				
+			if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
+				Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
+				
+			if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
+				Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
+				
+			if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
+				Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
 		}
 	}
 }
