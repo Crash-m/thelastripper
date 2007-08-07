@@ -1,0 +1,6 @@
+bin\Debug\LibLastRip.dll
+bin\Debug\taglib-sharp.dll
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\LibLastRip.dll
+bin\Debug\LibLastRip.pdb
+obj\Debug\LibLastRip.pdb

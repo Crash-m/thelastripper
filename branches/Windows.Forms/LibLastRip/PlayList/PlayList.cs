@@ -55,25 +55,21 @@ namespace LibLastRip
 		
 		public void DownloadXML(System.String XmlURL)
 		{			
-			System.String TempFile = PlatformSettings.TempPath + "TheLastRipperData.xml";
-			if(System.IO.File.Exists(TempFile))
-			{
-				System.IO.File.Delete(TempFile);
-			}
+			//Create new webclient
 			System.Net.WebClient Client = new System.Net.WebClient();
-			Client.DownloadFile(XmlURL, TempFile);
-			this.FetchXML(TempFile);
+			this.FetchXML(Client.DownloadString(XmlURL));
 		}
 		
 		///<summary>
 		///
 		///</summary>
-		protected virtual void FetchXML(System.String XmlFile)
+		protected virtual void FetchXML(System.String XMLData)
 		{
 			System.Xml.XmlDocument XmlDoc = new System.Xml.XmlDocument();
-			XmlDoc.Load(XmlFile);
+			XmlDoc.LoadXml(XMLData);
 			this.FetchXML(XmlDoc);
 		}
+		
 		protected virtual void FetchXML(System.Xml.XmlDocument XmlDoc)
 		{
 			foreach(System.Xml.XmlNode Node in XmlDoc.DocumentElement.ChildNodes)
@@ -94,12 +90,12 @@ namespace LibLastRip
 		protected virtual System.Boolean IsAvailable(ref IMetaTrack Track)
 		{
 			System.String TrackPath = "";
-			System.String ArtistDir = this.MusicPath + PlatformSettings.PathSeparator + LastManager.RemoveIllegalChars(Track.Artist);
+			System.String ArtistDir = this.MusicPath + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(Track.Artist);
 			if(System.IO.Directory.Exists(ArtistDir))
 			{
 				foreach(System.String Directory in System.IO.Directory.GetDirectories(ArtistDir))
 				{
-					TrackPath = Directory +PlatformSettings.PathSeparator +LastManager.RemoveIllegalChars(Track.Track) + ".mp3";
+					TrackPath = Directory + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidFileNameChars(Track.Track) + ".mp3";
 					if(System.IO.File.Exists(TrackPath))
 					{
 						Track = new MetaMusic(TrackPath);
@@ -112,7 +108,7 @@ namespace LibLastRip
 		
 		public virtual void Save(System.String FileName,PlayListType FileType)
 		{
-			System.IO.FileStream File = System.IO.File.Create(this.MusicPath + PlatformSettings.PathSeparator + FileName);
+			System.IO.FileStream File = System.IO.File.Create(this.MusicPath + System.IO.Path.DirectorySeparatorChar + FileName);
 			System.Text.ASCIIEncoding Encoder = new System.Text.ASCIIEncoding();
 			System.String Content;
 			switch(FileType)
@@ -137,7 +133,7 @@ namespace LibLastRip
 			System.String PlayList = "";
 			foreach(IMetaMusic Number in this)
 			{
-				PlayList += Number.Artist + PlatformSettings.PathSeparator + Number.Album + PlatformSettings.PathSeparator + Number.Track + ".mp3\n";
+				PlayList += Number.Artist + System.IO.Path.DirectorySeparatorChar + Number.Album + System.IO.Path.DirectorySeparatorChar + Number.Track + ".mp3\n";
 			}
 			return PlayList;
 		}
@@ -148,7 +144,7 @@ namespace LibLastRip
 			System.Int32 i = 1;
 			foreach(IMetaMusic Number in this)
 			{
-				PlayList += "File"+i+"=" + Number.Artist + PlatformSettings.PathSeparator + Number.Album + PlatformSettings.PathSeparator + Number.Track + ".mp3\n";
+				PlayList += "File"+i+"=" + Number.Artist + System.IO.Path.DirectorySeparatorChar + Number.Album + System.IO.Path.DirectorySeparatorChar + Number.Track + ".mp3\n";
 				PlayList += "Title"+i+"=" + Number.ToString() + "\n";
 				PlayList += "Length"+i+"=" + Number.Trackduration + "\n";
 				i += 1;
@@ -163,7 +159,7 @@ namespace LibLastRip
 			System.String PlayList = "<smil>\n<body>\n<seq>\n";
 			foreach(IMetaMusic Number in this)
 			{
-				PlayList += "<audio src=\"" + Number.Artist + PlatformSettings.PathSeparator + Number.Album + PlatformSettings.PathSeparator + Number.Track + ".mp3\"/>\n";
+				PlayList += "<audio src=\"" + Number.Artist + System.IO.Path.DirectorySeparatorChar + Number.Album + System.IO.Path.DirectorySeparatorChar + Number.Track + ".mp3\"/>\n";
 			}
 			return PlayList + "</seq>\n</body>\n</smil>";
 		}

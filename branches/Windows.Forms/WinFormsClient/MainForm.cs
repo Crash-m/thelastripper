@@ -30,9 +30,9 @@ namespace WinFormsClient
 		protected LibLastRip.LastManager Manager;
 		protected Settings settings;
 		protected System.Int32 TrackDuration = 0;
-		protected const System.Int32 UpdateInterval = 6000;
+		protected const System.Int32 UpdateInterval = 10000;
 		protected const System.Int32 UIUpdateInterval = 6000;
-		public System.Timers.Timer SysTimer = new System.Timers.Timer(MainForm.UpdateInterval);
+		protected System.Windows.Forms.Timer MetaTimer;
 		protected System.Windows.Forms.Timer Timer;
 		
 		public MainForm()
@@ -59,7 +59,15 @@ namespace WinFormsClient
 			this.Timer.Interval = MainForm.UIUpdateInterval;
 			this.Timer.Tick += new EventHandler(this.UpdateProgress);
 			
-			this.SysTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.Manager.UpdateMetaInfo);
+			this.MetaTimer = new System.Windows.Forms.Timer();
+			this.MetaTimer.Interval = MainForm.UpdateInterval;
+			this.MetaTimer.Tick += new EventHandler(this.Manager.UpdateMetaInfo);
+			
+			//Subscribe to stations changed event
+			this.Manager.StationChanged += new EventHandler(this.TuneInCallback);
+			
+			//Subscribe to command callback
+			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);	
 		}
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
@@ -67,7 +75,7 @@ namespace WinFormsClient
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 			this.TrackDuration = 0;	
 			this.StatusBar.Value = 0;
-			this.StatusBar.Maximum = System.Convert.ToInt32(this.UpdateTO.Trackduration);
+			this.StatusBar.Maximum = System.Convert.ToInt32(System.Convert.ToInt32(Info.Trackduration));
 			this.SetStatus(Info);
 		}
 		
@@ -81,6 +89,8 @@ namespace WinFormsClient
 				StrT += "\nAlbum: " + Info.Album;
 				StrT += "\nDuration: " + Info.Trackduration + " sec.";
 				this.StatusLabel.Text = StrT;
+				
+				//TODO: reenable album cover download
 				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 				{
 					try
@@ -95,10 +105,6 @@ namespace WinFormsClient
 				}
 			}
 		}
-		
-		protected System.Boolean DoUpdate = false;
-		protected LibLastRip.MetaInfo UpdateTO;
-		static System.Object locker = new System.Object();
 		
 		protected virtual void UpdateProgress(System.Object Sender, System.EventArgs Args)
 		{
@@ -133,14 +139,15 @@ namespace WinFormsClient
 		
 		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			//TODO: Fix to run on mono
+			//TODO: Fix to run on mono for OS X using OPEN
 			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/LegalNotice");
 		}
 		
 		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			//TODO: Fix to run on mono
+			//TODO: Fix to run on mono for OS X using OPEN
 			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/HelpWindows");
+			//TODO: Have a look at issue 45, apply patch to both "online help" and "legal issue"
 		}
 		
 		void AboutToolStripMenuItemClick(object sender, EventArgs e)
@@ -152,30 +159,62 @@ namespace WinFormsClient
 		void TuneInButtonClick(object sender, EventArgs e)
 		{
 			this.TuneInButton.Enabled = false;
-			if(this.Manager.ChangeStation(this.RadioStation.Text))
-			{
-				this.TuneInButton.Enabled = true;
-				this.LoveButton.Enabled = true;
-				this.HateButton.Enabled = true;
-				this.SkipButton.Enabled = true;
+			this.Manager.ChangeStation(this.RadioStation.Text);
+		}
+		
+		void TuneInCallback(System.Object Sender, System.EventArgs e)
+		{
+			LibLastRip.StationChangedEventArgs Args = (LibLastRip.StationChangedEventArgs)e;
+			this.TuneInButton.Enabled = true;
+			if(Args.Success){
+				this.EnableCommands();
 				this.Timer.Enabled = true;
-				this.SysTimer.Start();
+				this.MetaTimer.Enabled = true;
 			}
 		}
 		
 		void SkipButtonClick(object sender, EventArgs e)
 		{
+			this.DisableCommands();
 			this.Manager.SkipSong();
 		}
 		
 		void LoveButtonClick(object sender, EventArgs e)
 		{
+			this.DisableCommands();
 			this.Manager.LoveSong();
 		}
 		
 		void HateButtonClick(object sender, EventArgs e)
 		{
+			this.DisableCommands();
 			this.Manager.BanSong();
+		}
+		
+		void CommandCallback(object Sender, EventArgs e)
+		{
+			//LibLastRip.CommandEventArgs Args = (LibLastRip.CommandEventArgs)e;
+			this.EnableCommands();
+		}
+		
+		/// <summary>
+		/// Disables all commandbuttons
+		/// </summary>
+		void DisableCommands()
+		{
+			this.LoveButton.Enabled = false;
+			this.HateButton.Enabled = false;
+			this.SkipButton.Enabled = false;
+		}	
+		
+		/// <summary>
+		/// Enables all command buttons
+		/// </summary>
+		void EnableCommands()
+		{
+			this.LoveButton.Enabled = true;
+			this.HateButton.Enabled = true;
+			this.SkipButton.Enabled = true;
 		}
 	}
 }
