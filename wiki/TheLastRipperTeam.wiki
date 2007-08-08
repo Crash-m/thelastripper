@@ -22,10 +22,11 @@ Blog: [http://renejosefsen.dk]
 
 Platform: Mac OS X
 
+=== Andreas Langmann ===
+Role: Windows.Forms developer and tester.
 
 == Thanks to ==
 
 *Maxim Heijndijk* for Mandriva packages.
 
 *Joeyrs* for ArchLinux packages, available from: [http://aur.archlinux.org aur.ArchLinux.org].
-
