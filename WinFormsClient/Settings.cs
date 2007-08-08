@@ -137,28 +137,54 @@ namespace WinFormsClient
 			{
 				return this._ProxyUsername;
 			}
-		}		public System.String ProxyPassword
+		}
+		public System.String ProxyPassword
 		{
 			get
 			{
 				return this._ProxyPassword;
 			}
 		}
-		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context)
+		
+		/// <summary>
+		/// Deserializes data from serialization object, used when restoring data saved with serialization.
+		/// </summary>
+		/// <param name="Info">Object that data must be restored from</param>
+		/// <remarks>This method calls parent method, so all fields on LibLastRip.PlayListGenerator is restored by the base class</remarks>
+		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context) //Note this executes base class and restores data saved in it.
 		{
+			
+			//Get password from serialization object if it was saved
 			if(Info.GetBoolean("HasPassword"))
 			{
 				this._Password = Info.GetString("Password");
 				this.SavePassword = true;
 			}
+			
+			//Restore any ProxySettings saved to serialization object
+			this._ProxyAdress = Info.GetString("ProxyAdress");	//Note the names used here MUST match the names used in serialization method below
+			this._ProxyUsername = Info.GetString("ProxyUsername");
+			this._ProxyPassword = Info.GetString("ProxyPassword");
+			
+			//Create LastManager from restored data
 			this.Manager = new LibLastRip.LastManager(this._MusicPath);
 			
+			//Launch preferences without saving, after close since that would give IO problems, cause this method would have returned and serialization object/stream would still be open.
 			this.LaunchPreferences(false);
 		}
 		
+		
+		/// <summary>
+		/// Serializes the settings object, used when saving settings
+		/// </summary>
+		/// <param name="Info">Object that data must be saved to</param>
+		/// <remarks>This method class parent method, so all fields on LibLastRip.PlayListGenerator is saved by the base class</remarks>
 		public override void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
 		{
+			//Add values from base class to serialization object
 			base.GetObjectData(Info, context);
+			
+			//Add password if password exists
 			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
 			{
 				this.SavePassword = false;
@@ -168,6 +194,11 @@ namespace WinFormsClient
 			{
 				Info.AddValue("Password",this._Password);
 			}
+			
+			//Adding proxy info to serialization object
+			Info.AddValue("ProxyAdress", this.ProxyAdress); //Note the names used here MUST match names used in the deserialization method above
+			Info.AddValue("ProxyUsername", this.ProxyUsername);
+			Info.AddValue("ProxyPassword", this.ProxyPassword);
 		}
 	}
 }
