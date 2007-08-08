@@ -9,6 +9,10 @@ namespace LibLastRip
 		protected System.String _MusicPath;
 		protected System.String _UserName;
 		
+		protected System.String _ProxyAdress;
+		protected System.String _ProxyUsername;
+		protected System.String _ProxyPassword;
+		
 		protected PlayListGenerator(){}
 		
 		public PlayListGenerator(System.String MusicPath, System.String UserName)
@@ -104,6 +108,10 @@ namespace LibLastRip
 			
 			this._MusicPath = (System.String)Info.GetValue("MusicPath",typeof(System.String));
 			this._UserName = (System.String)Info.GetValue("UserName",typeof(System.String));
+
+		    this._ProxyAdress = (System.String)Info.GetValue("ProxyAdress",typeof(System.String));
+			this._ProxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
+			this._ProxyPassword = (System.String)Info.GetValue("ProxyPassword",typeof(System.String));
 		}
 		
 		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
@@ -128,6 +136,10 @@ namespace LibLastRip
 			
 			Info.AddValue("MusicPath",this._MusicPath);
 			Info.AddValue("UserName",this._UserName);
+			
+			Info.AddValue("ProxyAdress", this._ProxyAdress);
+			Info.AddValue("ProxyUsername", this._ProxyUsername);
+			Info.AddValue("ProxyPassword", this._ProxyPassword);
 		}
 	}
 }
