@@ -55,6 +55,10 @@ namespace WinFormsClient
 				this._Password = LibLastRip.LastManager.CalculateHash(Pref.PasswordTextBox.Text);
 			}
 			
+			this._ProxyAdress = Pref.ProxyAdressTextBox.Text;
+			this._ProxyPassword = Pref.ProxyPasswordTextBox.Text;
+			this._ProxyUsername = Pref.ProxyUsernameTextBox.Text;
+			
 			if(SaveSettings)
 			{
 				this.SaveSettings();
@@ -66,21 +70,21 @@ namespace WinFormsClient
 			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
 			if(System.IO.File.Exists(AppData + "\\TheLastRipper.xml"))
 			{
-					Settings Obj;
-					System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-					System.IO.FileStream Stream = System.IO.File.OpenRead(AppData + "\\TheLastRipper.xml");
+				Settings Obj;
+				System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+				System.IO.FileStream Stream = System.IO.File.OpenRead(AppData + "\\TheLastRipper.xml");
 				
-					try
-					{
-						Obj = (Settings)Formatter.Deserialize(Stream);
-						Stream.Close();
-						Obj.SaveSettings();
-					}
-					catch
-					{
-						Stream.Close();
-						Obj = new Settings();
-					}
+				try
+				{
+					Obj = (Settings)Formatter.Deserialize(Stream);
+					Stream.Close();
+					Obj.SaveSettings();
+				}
+				catch
+				{
+					Stream.Close();
+					Obj = new Settings();
+				}
 				return Obj;
 			}else{
 				return new Settings();
@@ -88,7 +92,7 @@ namespace WinFormsClient
 		}
 		public virtual void SaveSettings()
 		{
-			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);		
+			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);    
 			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 			
 			System.IO.FileStream Stream = System.IO.File.Create(AppData + "\\TheLastRipper.xml");
@@ -120,7 +124,26 @@ namespace WinFormsClient
 				return this._MusicPath;
 			}
 		}
-		
+		public System.String ProxyAdress
+		{
+			get
+			{
+				return this._ProxyAdress;
+			}
+		}
+		public System.String ProxyUsername
+		{
+			get
+			{
+				return this._ProxyUsername;
+			}
+		}		public System.String ProxyPassword
+		{
+			get
+			{
+				return this._ProxyPassword;
+			}
+		}
 		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context)
 		{
 			if(Info.GetBoolean("HasPassword"))

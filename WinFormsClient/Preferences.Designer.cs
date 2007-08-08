@@ -38,6 +38,7 @@ namespace WinFormsClient
 		{
 			this.FolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.LoginGroupBox = new System.Windows.Forms.GroupBox();
+			this.PasswordTextBox = new System.Windows.Forms.TextBox();
 			this.SavePasswordCheckBox = new System.Windows.Forms.CheckBox();
 			this.LoginButton = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
@@ -59,11 +60,28 @@ namespace WinFormsClient
 			this.PLSCheckBox = new System.Windows.Forms.CheckBox();
 			this.M3UCheckBox = new System.Windows.Forms.CheckBox();
 			this.OKbutton = new System.Windows.Forms.Button();
-			this.PasswordTextBox = new System.Windows.Forms.TextBox();
+			this.NetworkGroupBox = new System.Windows.Forms.GroupBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.ProxyAdressTextBox = new System.Windows.Forms.TextBox();
+			this.ProxyPasswordTextBox = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.ProxyUsernameTextBox = new System.Windows.Forms.TextBox();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.LoginGroupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
+			this.NetworkGroupBox.SuspendLayout();
+			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FolderBrowserDialog
@@ -77,17 +95,24 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.LoginGroupBox.Controls.Add(this.PasswordTextBox);
 			this.LoginGroupBox.Controls.Add(this.SavePasswordCheckBox);
-			this.LoginGroupBox.Controls.Add(this.LoginButton);
 			this.LoginGroupBox.Controls.Add(this.label2);
 			this.LoginGroupBox.Controls.Add(this.label1);
 			this.LoginGroupBox.Controls.Add(this.UserNameTextBox);
 			this.LoginGroupBox.Enabled = false;
-			this.LoginGroupBox.Location = new System.Drawing.Point(12, 12);
+			this.LoginGroupBox.Location = new System.Drawing.Point(0, 0);
 			this.LoginGroupBox.Name = "LoginGroupBox";
-			this.LoginGroupBox.Size = new System.Drawing.Size(414, 107);
+			this.LoginGroupBox.Size = new System.Drawing.Size(419, 107);
 			this.LoginGroupBox.TabIndex = 0;
 			this.LoginGroupBox.TabStop = false;
 			this.LoginGroupBox.Text = "Login";
+			// 
+			// PasswordTextBox
+			// 
+			this.PasswordTextBox.Location = new System.Drawing.Point(112, 45);
+			this.PasswordTextBox.Name = "PasswordTextBox";
+			this.PasswordTextBox.PasswordChar = '*';
+			this.PasswordTextBox.Size = new System.Drawing.Size(296, 20);
+			this.PasswordTextBox.TabIndex = 6;
 			// 
 			// SavePasswordCheckBox
 			// 
@@ -102,9 +127,9 @@ namespace WinFormsClient
 			// 
 			// LoginButton
 			// 
-			this.LoginButton.Location = new System.Drawing.Point(6, 74);
+			this.LoginButton.Location = new System.Drawing.Point(12, 205);
 			this.LoginButton.Name = "LoginButton";
-			this.LoginButton.Size = new System.Drawing.Size(100, 23);
+			this.LoginButton.Size = new System.Drawing.Size(75, 23);
 			this.LoginButton.TabIndex = 4;
 			this.LoginButton.Text = "&Login";
 			this.LoginButton.UseVisualStyleBackColor = true;
@@ -138,9 +163,9 @@ namespace WinFormsClient
 			// 
 			this.groupBox2.Controls.Add(this.MusicPathTextBox);
 			this.groupBox2.Controls.Add(this.BrowseButton);
-			this.groupBox2.Location = new System.Drawing.Point(12, 125);
+			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(414, 54);
+			this.groupBox2.Size = new System.Drawing.Size(419, 54);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Music directory";
@@ -172,7 +197,7 @@ namespace WinFormsClient
 			this.groupBox3.Controls.Add(this.RecentlyLovedCheckBox);
 			this.groupBox3.Controls.Add(this.TopTracksCheckBox);
 			this.groupBox3.Controls.Add(this.groupBox4);
-			this.groupBox3.Location = new System.Drawing.Point(12, 185);
+			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(414, 142);
 			this.groupBox3.TabIndex = 2;
@@ -304,31 +329,139 @@ namespace WinFormsClient
 			// OKbutton
 			// 
 			this.OKbutton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.OKbutton.Location = new System.Drawing.Point(12, 334);
+			this.OKbutton.Location = new System.Drawing.Point(93, 205);
 			this.OKbutton.Name = "OKbutton";
 			this.OKbutton.Size = new System.Drawing.Size(75, 23);
 			this.OKbutton.TabIndex = 4;
 			this.OKbutton.Text = "&Ok";
 			this.OKbutton.UseVisualStyleBackColor = true;
 			// 
-			// PasswordTextBox
+			// NetworkGroupBox
 			// 
-			this.PasswordTextBox.Location = new System.Drawing.Point(112, 45);
-			this.PasswordTextBox.Name = "PasswordTextBox";
-			this.PasswordTextBox.PasswordChar = '*';
-			this.PasswordTextBox.Size = new System.Drawing.Size(296, 20);
-			this.PasswordTextBox.TabIndex = 6;
+			this.NetworkGroupBox.Controls.Add(this.label5);
+			this.NetworkGroupBox.Controls.Add(this.ProxyAdressTextBox);
+			this.NetworkGroupBox.Controls.Add(this.ProxyPasswordTextBox);
+			this.NetworkGroupBox.Controls.Add(this.label3);
+			this.NetworkGroupBox.Controls.Add(this.label4);
+			this.NetworkGroupBox.Controls.Add(this.ProxyUsernameTextBox);
+			this.NetworkGroupBox.Location = new System.Drawing.Point(0, 0);
+			this.NetworkGroupBox.Name = "NetworkGroupBox";
+			this.NetworkGroupBox.Size = new System.Drawing.Size(419, 88);
+			this.NetworkGroupBox.TabIndex = 5;
+			this.NetworkGroupBox.TabStop = false;
+			this.NetworkGroupBox.Text = "Proxy Settings";
+			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(6, 16);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(100, 23);
+			this.label5.TabIndex = 12;
+			this.label5.Text = "Proxy Adress:";
+			// 
+			// ProxyAdressTextBox
+			// 
+			this.ProxyAdressTextBox.Location = new System.Drawing.Point(112, 13);
+			this.ProxyAdressTextBox.Name = "ProxyAdressTextBox";
+			this.ProxyAdressTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyAdressTextBox.TabIndex = 11;
+			// 
+			// ProxyPasswordTextBox
+			// 
+			this.ProxyPasswordTextBox.Location = new System.Drawing.Point(112, 59);
+			this.ProxyPasswordTextBox.Name = "ProxyPasswordTextBox";
+			this.ProxyPasswordTextBox.PasswordChar = '*';
+			this.ProxyPasswordTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyPasswordTextBox.TabIndex = 10;
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(6, 62);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(100, 23);
+			this.label3.TabIndex = 9;
+			this.label3.Text = "Password:";
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(6, 39);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(100, 23);
+			this.label4.TabIndex = 8;
+			this.label4.Text = "Username:";
+			// 
+			// ProxyUsernameTextBox
+			// 
+			this.ProxyUsernameTextBox.Location = new System.Drawing.Point(112, 36);
+			this.ProxyUsernameTextBox.Name = "ProxyUsernameTextBox";
+			this.ProxyUsernameTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyUsernameTextBox.TabIndex = 7;
+			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Location = new System.Drawing.Point(12, 12);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(430, 187);
+			this.tabControl1.TabIndex = 6;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.LoginGroupBox);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(422, 161);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "Login";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.Add(this.NetworkGroupBox);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(422, 161);
+			this.tabPage2.TabIndex = 1;
+			this.tabPage2.Text = "Network";
+			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.groupBox2);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(422, 161);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Storage";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.groupBox3);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(422, 161);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "Playlist";
+			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
 			// Preferences
 			// 
 			this.AcceptButton = this.OKbutton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(438, 369);
+			this.ClientSize = new System.Drawing.Size(454, 237);
+			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.OKbutton);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.LoginGroupBox);
+			this.Controls.Add(this.LoginButton);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -340,8 +473,27 @@ namespace WinFormsClient
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
+			this.NetworkGroupBox.ResumeLayout(false);
+			this.NetworkGroupBox.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage4.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.GroupBox NetworkGroupBox;
+		public System.Windows.Forms.TextBox ProxyUsernameTextBox;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		public System.Windows.Forms.TextBox ProxyPasswordTextBox;
+		public System.Windows.Forms.TextBox ProxyAdressTextBox;
+		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.GroupBox LoginGroupBox;
 		public System.Windows.Forms.TextBox PasswordTextBox;
 		public System.Windows.Forms.TextBox UserNameTextBox;

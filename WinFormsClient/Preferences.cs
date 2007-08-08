@@ -10,6 +10,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Net;
 
 namespace WinFormsClient
 {
@@ -35,6 +36,7 @@ namespace WinFormsClient
 			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
 			{
 				this.LoginGroupBox.Enabled = true;
+				this.NetworkGroupBox.Enabled = true;
 				this.OKbutton.Enabled = false;
 			}
 			
@@ -59,6 +61,10 @@ namespace WinFormsClient
 			this.UserNameTextBox.Text = settings.UserName;
 			this.MusicPathTextBox.Text = settings.MusicPath;
 			
+			this.ProxyAdressTextBox.Text = settings.ProxyAdress;
+			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
+			this.ProxyPasswordTextBox.Text = settings.ProxyPassword;
+			
 			//Subscribe to handshake callback event
 			this.Manager.HandshakeReturn += new EventHandler(this.LoginCallback);
 		}
@@ -75,6 +81,17 @@ namespace WinFormsClient
 		
 		void LoginButtonClick(object sender, EventArgs e)
 		{
+			// Proxy Setting from Settings-Group
+			if (this.ProxyAdressTextBox.Text != null && this.ProxyAdressTextBox.Text.Length > 0) {
+				WebProxy iwp = new WebProxy(this.ProxyAdressTextBox.Text);
+				if (this.ProxyUsernameTextBox.Text.Length > 0 || this.ProxyPasswordTextBox.Text.Length > 0) {
+					iwp.Credentials = new NetworkCredential(this.ProxyUsernameTextBox.Text, this.ProxyPasswordTextBox.Text);
+				}
+				WebRequest.DefaultWebProxy = iwp;
+			} else {
+				WebRequest.DefaultWebProxy = GlobalProxySelection.GetEmptyWebProxy ();
+			}
+			
 			if(this.PasswordTextBox.Text != "" && this.UserNameTextBox.Text != "")
 			{
 				System.String Password;
@@ -85,9 +102,15 @@ namespace WinFormsClient
 					Password = LibLastRip.LastManager.CalculateHash(this.PasswordTextBox.Text);
 				}
 				this.Manager.Handshake(this.UserNameTextBox.Text,Password);
-				//Disable login to prevent multiple logins	
-				this.LoginGroupBox.Enabled = false;
+				//Disable login to prevent multiple logins
+				setLoginElements(false);
 			}
+		}
+		
+		void setLoginElements(bool value) {
+			this.LoginGroupBox.Enabled = value;
+			this.NetworkGroupBox.Enabled = value;
+			this.LoginButton.Enabled = value;
 		}
 		
 		/// <summary>
@@ -98,8 +121,9 @@ namespace WinFormsClient
 			LibLastRip.HandshakeEventArgs hArgs = (LibLastRip.HandshakeEventArgs)Args;
 			if(hArgs.Success)
 				this.OKbutton.Enabled = true;
-			else
-				this.LoginGroupBox.Enabled = true;
+			else {
+				setLoginElements(true);
+			}
 		}
 		
 		void UserNameTextBoxTextChanged(object sender, EventArgs e)
