@@ -28,9 +28,6 @@ namespace WinFormsClient
 			//
 			InitializeComponent();
 			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 			this.Manager = Manager;
 			
 			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
@@ -87,7 +84,7 @@ namespace WinFormsClient
 				if (this.ProxyUsernameTextBox.Text.Length > 0 || this.ProxyPasswordTextBox.Text.Length > 0) {
 					iwp.Credentials = new NetworkCredential(this.ProxyUsernameTextBox.Text, this.ProxyPasswordTextBox.Text);
 				}
-				WebRequest.DefaultWebProxy = iwp;
+				WebRequest.DefaultWebProxy = iwp;//TODO: reconsider this selections since it's obsolete in .Net 2.0
 			} else {
 				WebRequest.DefaultWebProxy = GlobalProxySelection.GetEmptyWebProxy ();
 			}

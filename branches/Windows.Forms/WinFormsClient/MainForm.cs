@@ -75,12 +75,14 @@ namespace WinFormsClient
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 			this.TrackDuration = 0;	
 			this.StatusBar.Value = 0;
-			this.StatusBar.Maximum = System.Convert.ToInt32(System.Convert.ToInt32(Info.Trackduration));
-			this.SetStatus(Info);
-		}
-		
-		protected virtual void SetStatus(LibLastRip.MetaInfo Info)
-		{
+			
+			//Get length of the track
+			System.Int32 TrackLength = System.Convert.ToInt32(System.Convert.ToInt32(Info.Trackduration));
+			if(TrackLength < 1) //If smaller then 1 set to 1, to avoid devision by zero error fixing issue 48, I think :)
+				this.StatusBar.Maximum = 1;
+			else
+				this.StatusBar.Maximum = TrackLength;
+			
 			if(Info.Streaming)
 			{
 				System.String StrT = "";
@@ -90,7 +92,7 @@ namespace WinFormsClient
 				StrT += "\nDuration: " + Info.Trackduration + " sec.";
 				this.StatusLabel.Text = StrT;
 				
-				//TODO: reenable album cover download
+				//TODO: multithread download of album cover
 				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
 				{
 					try
@@ -101,7 +103,9 @@ namespace WinFormsClient
 						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
 					}
 					catch
-					{}
+					{
+						//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
+					}
 				}
 			}
 		}
@@ -110,7 +114,7 @@ namespace WinFormsClient
 		{
 			System.Int32 Next = this.StatusBar.Value + MainForm.UIUpdateInterval/1000;
 			if(Next >= this.StatusBar.Maximum)
-			{
+			{	//If bigger than Max set it to max to avoid problems when running over
 				this.StatusBar.Value = this.StatusBar.Maximum;
 			}else{
 				this.StatusBar.Value = Next;

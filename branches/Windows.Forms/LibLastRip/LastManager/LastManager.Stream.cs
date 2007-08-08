@@ -51,6 +51,7 @@ namespace LibLastRip
 			
 			System.Byte []Buf = this.Song.GetBuffer();			
 			
+			//TODO: Figure out how far back to go, to avoid loosing SYNC strings.
 			System.Int32 Start = System.Convert.ToInt32(this.Song.Length) - Count - 14;
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-13;
