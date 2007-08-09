@@ -258,6 +258,10 @@ namespace LibLastRip
 		///<param name="PathName">Directory name from which invalid chars should be removed</param>
 		internal static System.String RemoveInvalidPathChars(System.String PathName)
 		{
+			//can't have null (this should have been prevented in the header for MetaInfo)
+			if(PathName == null || PathName == "")
+				throw new System.Exception("A directory must have a name, it can't be null");
+			
 			return LastManager.RemoveChars(PathName, System.IO.Path.GetInvalidPathChars());
 		}
 		
@@ -267,6 +271,10 @@ namespace LibLastRip
 		///<param name="FileName">FileName from which invalid chars should be removed</param>
 		internal static System.String RemoveInvalidFileNameChars(System.String FileName)
 		{
+			//can't have null
+			if(FileName == null || FileName == "")
+				throw new System.Exception("A file must have a name, it can't be null");
+			
 			return LastManager.RemoveChars(FileName, System.IO.Path.GetInvalidFileNameChars());
 		}
 		
@@ -278,9 +286,6 @@ namespace LibLastRip
 		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
 		{
 			System.String Output = "";
-			if (Input == null) {
-				return "_ERROR";
-			}
 			foreach(System.Char TestChar in Input.ToCharArray())
 			{	
 				System.Boolean IsGood = true;

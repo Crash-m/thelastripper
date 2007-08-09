@@ -75,6 +75,14 @@ namespace LibLastRip
 					break;
 				}
 			}
+			
+			//We've got to have something to write as ID3tag's, filename and directories
+			if(this._Track == null || this._Track == "")
+				this._Track = "unknown";
+			if(this._Album == null || this._Album == "")
+				this._Album = "unknown";
+			if(this._Artist == null || this._Artist == "")
+				this._Artist = "unknown";
 		}
 		
 		public System.String Station
