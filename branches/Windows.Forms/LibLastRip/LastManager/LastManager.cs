@@ -270,23 +270,30 @@ namespace LibLastRip
 		}
 		
 		///<summary>
-		///Remove an array of invalid chars from an input string
+		///Replaces chars from an array of invalid chars from an input string with an underline character
 		///</summary>
 		///<param name="Input">String from which InvalidChars must be removed.</param>
 		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
 		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
 		{
-			System.Boolean IsGood = true;
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
-			{		
+			{	
+				System.Boolean IsGood = true;
 				foreach(System.Char iChar in InvalidChars)
 				{
 					if(iChar == TestChar)
 						IsGood = false;
 				}
-				if(IsGood)
+				// filter characters for directory separation
+				if (TestChar == '/' || TestChar == '\\') {
+				    IsGood = false;
+				}
+				if(IsGood) {
 					Output += TestChar.ToString();
+				} else {
+					Output += '_';
+				}
 			}
 			return Output;
 		}
