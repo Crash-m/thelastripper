@@ -30,6 +30,7 @@ namespace LibLastRip
 		///<summary>
 		///Occurs when an command execution is return
 		///</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler CommandReturn;
 		
 		///<summary>
@@ -118,6 +119,7 @@ namespace LibLastRip
 		}
 		
 		///<summary>Occurs when a ChangeStation is returned</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler StationChanged;
 		
 		///<summary>Connects to a radio station and starts ripping</summary>

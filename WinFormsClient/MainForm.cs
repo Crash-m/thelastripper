@@ -72,6 +72,20 @@ namespace WinFormsClient
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.OnNewSong), new System.Object[]{Sender, Args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 			this.TrackDuration = 0;	
 			this.StatusBar.Value = 0;
@@ -168,6 +182,20 @@ namespace WinFormsClient
 		
 		void TuneInCallback(System.Object Sender, System.EventArgs e)
 		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.TuneInCallback), new System.Object[]{Sender, e});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			
 			LibLastRip.StationChangedEventArgs Args = (LibLastRip.StationChangedEventArgs)e;
 			this.TuneInButton.Enabled = true;
 			if(Args.Success){
@@ -197,6 +225,20 @@ namespace WinFormsClient
 		
 		void CommandCallback(object Sender, EventArgs e)
 		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.CommandCallback), new System.Object[]{Sender, e});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			
 			//LibLastRip.CommandEventArgs Args = (LibLastRip.CommandEventArgs)e;
 			this.EnableCommands();
 		}

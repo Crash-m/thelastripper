@@ -161,7 +161,7 @@ namespace WinFormsClient
 				this._Password = Info.GetString("Password");
 				this.SavePassword = true;
 			}
-						
+			
 			//Create LastManager from restored data
 			this.Manager = new LibLastRip.LastManager(this._MusicPath);
 			
@@ -190,7 +190,6 @@ namespace WinFormsClient
 			{
 				Info.AddValue("Password",this._Password);
 			}
-			
 		}
 	}
 }

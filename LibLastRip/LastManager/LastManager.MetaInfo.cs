@@ -38,6 +38,10 @@ namespace LibLastRip
 				return this._CurrentSong;
 			}
 		}
+		/// <summary>
+		/// Occurs when a new song is detected.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnNewSong;
 		
 		//TODO: remove this method since it cause bad multithreading!
