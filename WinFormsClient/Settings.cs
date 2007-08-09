@@ -152,7 +152,8 @@ namespace WinFormsClient
 		/// <param name="Info">Object that data must be restored from</param>
 		/// <remarks>This method calls parent method, so all fields on LibLastRip.PlayListGenerator is restored by the base class</remarks>
 		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context) //Note this executes base class and restores data saved in it.
-		{
+		{	
+			//Note the names used here MUST match the names used in serialization method below
 			
 			//Get password from serialization object if it was saved
 			if(Info.GetBoolean("HasPassword"))
@@ -160,12 +161,7 @@ namespace WinFormsClient
 				this._Password = Info.GetString("Password");
 				this.SavePassword = true;
 			}
-			
-			//Restore any ProxySettings saved to serialization object
-			this._ProxyAdress = Info.GetString("ProxyAdress");	//Note the names used here MUST match the names used in serialization method below
-			this._ProxyUsername = Info.GetString("ProxyUsername");
-			this._ProxyPassword = Info.GetString("ProxyPassword");
-			
+						
 			//Create LastManager from restored data
 			this.Manager = new LibLastRip.LastManager(this._MusicPath);
 			
@@ -195,10 +191,6 @@ namespace WinFormsClient
 				Info.AddValue("Password",this._Password);
 			}
 			
-			//Adding proxy info to serialization object
-			Info.AddValue("ProxyAdress", this.ProxyAdress); //Note the names used here MUST match names used in the deserialization method above
-			Info.AddValue("ProxyUsername", this.ProxyUsername);
-			Info.AddValue("ProxyPassword", this.ProxyPassword);
 		}
 	}
 }
