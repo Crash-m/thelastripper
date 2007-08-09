@@ -278,6 +278,9 @@ namespace LibLastRip
 		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
 		{
 			System.String Output = "";
+			if (Input == null) {
+				return "_ERROR";
+			}
 			foreach(System.Char TestChar in Input.ToCharArray())
 			{	
 				System.Boolean IsGood = true;
