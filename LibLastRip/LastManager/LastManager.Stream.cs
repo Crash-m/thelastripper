@@ -60,19 +60,19 @@ namespace LibLastRip
 				for(System.Int32 i = Start; i < End; i++)
 				{
 					if(Buf[i] == 0 &&		//Hex values:
-						Buf[i+2] == 0 &&	//00
+						Buf[i+1] == 0 &&	//00
+						Buf[i+2] == 0 &&
 						Buf[i+3] == 0 &&
 						Buf[i+4] == 0 &&
 						Buf[i+5] == 0 &&
-						Buf[i+6] == 0 &&
 						
-						Buf[i+7] == 83 &&	//53
-						Buf[i+8] == 89 &&	//59
-						Buf[i+9] == 78 &&	//4e
-						Buf[i+10] == 67 &&	//43
-						Buf[i+11] == 255 &&	//FF
-						Buf[i+12] == 251 &&	//FB
-						Buf[i+13] == 144	//90
+						Buf[i+6] == 83 &&	//53
+						Buf[i+7] == 89 &&	//59
+						Buf[i+8] == 78 &&	//4e
+						Buf[i+9] == 67 &&	//43
+						Buf[i+10] == 255 &&	//FF
+						Buf[i+11] == 251 &&	//FB
+						Buf[i+12] == 144	//90
 						)
 					{
 						//Create a new MemoryStream
