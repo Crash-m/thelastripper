@@ -63,6 +63,7 @@ namespace LibLastRip
 		///<summary>
 		///Occurs when a handshake request has returned
 		///</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler HandshakeReturn;
 		
 		public void Handshake()
