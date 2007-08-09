@@ -13,15 +13,14 @@
    height="250"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45"
+   inkscape:version="0.45.1"
    version="1.0"
-   sodipodi:docbase="/home/jopsen/Development/TheLastRipper/trunk"
+   sodipodi:docbase="C:\Documents and Settings\Jop\Dokumenter\TheLastRipper\trunk"
    sodipodi:docname="AboutBox.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:export-filename="/home/jopsen/Development/TheLastRipperProject/AboutBox.png"
    inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90"
-   sodipodi:modified="true">
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <linearGradient
@@ -272,9 +271,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="212.96046"
-     inkscape:cy="209.12158"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="213.60371"
+     inkscape:cy="134.07563"
      inkscape:document-units="px"
      inkscape:current-layer="g2380"
      width="250px"
@@ -283,8 +282,8 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="925"
      inkscape:window-height="626"
-     inkscape:window-x="45"
-     inkscape:window-y="45" />
+     inkscape:window-x="4"
+     inkscape:window-y="59" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -906,29 +905,37 @@
              sodipodi:role="line"
              x="995.31635"
              y="2479.2785"
-             id="tspan3343">Version 1.1 Alpha</tspan></text>
+             id="tspan3343">Version 1.1 Beta</tspan></text>
         <text
            xml:space="preserve"
-           style="font-size:1080.88439941px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           style="font-size:1080.88439941px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
            x="-9948.6387"
-           y="16187.37"
+           y="15286.633"
            id="text3345"><tspan
              sodipodi:role="line"
              x="-9948.6387"
-             y="16187.37"
+             y="15286.633"
              id="tspan3349">TheLastRipper developer team:</tspan><tspan
              sodipodi:role="line"
              x="-9948.6387"
-             y="17538.476"
+             y="16637.738"
              id="tspan3353">   Rene A.S. Josefsen.</tspan><tspan
              sodipodi:role="line"
              x="-9948.6387"
-             y="18889.581"
+             y="17988.844"
              id="tspan3355">   Mike F. Jensen.</tspan><tspan
              sodipodi:role="line"
              x="-9948.6387"
-             y="20240.687"
-             id="tspan3357">   Jonas F. Jensen.</tspan></text>
+             y="19339.949"
+             id="tspan3357">   Jonas F. Jensen.</tspan><tspan
+             sodipodi:role="line"
+             x="-9948.6387"
+             y="20691.055"
+             id="tspan2320">   Andreas Langmann.</tspan><tspan
+             sodipodi:role="line"
+             x="-9948.6387"
+             y="22042.16"
+             id="tspan2318" /></text>
         <text
            xml:space="preserve"
            style="font-size:741.54296875px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
