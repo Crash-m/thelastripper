@@ -1,0 +1,188 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08D1CF970A94344F003EF5EB /* TheLastRipper.cs in Sources */ = {isa = PBXBuildFile; fileRef = 08D1CF960A94344F003EF5EB /* TheLastRipper.cs */; };
+		08D1CF970A94347F003EF5EB /* ApplicationController.cs in Sources */ = {isa = PBXBuildFile; fileRef = 08D1CF960A94345F003EF5EB /* ApplicationController.cs */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		08D1CF8F0A943432003EF5EB /* TheLastRipper.exe */ = {isa = PBXFileReference; explicitFileType = compiled.mono.executable; includeInIndex = 0; path = TheLastRipper.exe; sourceTree = BUILT_PRODUCTS_DIR; };
+		08D1CF960A94344F003EF5EB /* TheLastRipper.cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.csharp; path = TheLastRipper.cs; sourceTree = "<group>"; };
+		08D1CF960A94345F003EF5EB /* ApplicationController.cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.csharp; path = ApplicationController.cs; sourceTree = "<group>"; };
+		08D1CF960A94346F003EF5EB /* Main.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Main.nib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		08D1CF8D0A943432003EF5EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08D1CF7C0A94341D003EF5EB = {
+			isa = PBXGroup;
+			children = (
+				08D1CF950A94343C003EF5EB /* Sources */,
+				08D1CF900A943432003EF5EB /* Products */,
+				08D1CF960A94346F003EF5EB /* Main.nib */,
+			);
+			sourceTree = "<group>";
+		};
+		08D1CF900A943432003EF5EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08D1CF8F0A943432003EF5EB /* TheLastRipper.exe */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08D1CF950A94343C003EF5EB /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				08D1CF960A94344F003EF5EB /* TheLastRipper.cs */,
+				08D1CF960A94345F003EF5EB /* ApplicationController.cs */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		08D1CF8E0A943432003EF5EB /* TheLastRipper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08D1CF920A943433003EF5EB /* Build configuration list for PBXNativeTarget "TheLastRipper" */;
+			buildPhases = (
+				08D1CF8C0A943432003EF5EB /* Sources */,
+				08D1CF8D0A943432003EF5EB /* Frameworks */,
+				9463AB0C0B50B6A700776857 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TheLastRipper;
+			productName = TheLastRipper;
+			productReference = 08D1CF8F0A943432003EF5EB /* TheLastRipper.exe */;
+			productType = "com.mono.product-type.executable";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08D1CF7E0A94341D003EF5EB /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 08D1CF7F0A94341D003EF5EB /* Build configuration list for PBXProject "TheLastRipper" */;
+			hasScannedForEncodings = 0;
+			mainGroup = 08D1CF7C0A94341D003EF5EB;
+			productRefGroup = 08D1CF900A943432003EF5EB /* Products */;
+			projectDirPath = "";
+			targets = (
+				08D1CF8E0A943432003EF5EB /* TheLastRipper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9463AB0C0B50B6A700776857 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\ncd $TARGET_BUILD_DIR\nrm -rf TheLastRipper.app\ncp -r ../../Main.nib .\nmacpack -m:2 -n:TheLastRipper -o:. -a:TheLastRipper.exe -r:/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/cocoa-sharp/cocoa-sharp.dll -r:Main.nib\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		08D1CF8C0A943432003EF5EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08D1CF970A94344F003EF5EB /* TheLastRipper.cs in Sources */,
+				08D1CF970A94347F003EF5EB /* ApplicationController.cs in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		08D1CF800A94341D003EF5EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		08D1CF810A94341D003EF5EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		08D1CF930A943433003EF5EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				CS_LIBRARIES = "/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/cocoa-sharp";
+				CS_REFERENCEDASSEMBLIES = "System;System.Data;System.Xml;cocoa-sharp;taglib-sharp;LibLastRip";
+				EXECUTABLE_EXTENSION = .exe;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = TheLastRipper;
+				TARGET_TYPE = "-target:exe";
+			};
+			name = Debug;
+		};
+		08D1CF940A943433003EF5EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				CS_LIBRARIES = "/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/cocoa-sharp";
+				CS_REFERENCEDASSEMBLIES = "System;System.Data;System.Xml;cocoa-sharp;taglib-sharp;LibLastRip";
+				EXECUTABLE_EXTENSION = .exe;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = TheLastRipper;
+				TARGET_TYPE = "-target:exe";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08D1CF7F0A94341D003EF5EB /* Build configuration list for PBXProject "TheLastRipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08D1CF800A94341D003EF5EB /* Debug */,
+				08D1CF810A94341D003EF5EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08D1CF920A943433003EF5EB /* Build configuration list for PBXNativeTarget "TheLastRipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08D1CF930A943433003EF5EB /* Debug */,
+				08D1CF940A943433003EF5EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08D1CF7E0A94341D003EF5EB /* Project object */;
+}
