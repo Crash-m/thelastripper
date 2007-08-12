@@ -1,0 +1,63 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                GeneratePlaylist = id; 
+                OnHateClick = id; 
+                OnLoginClick = id; 
+                OnLoveClick = id; 
+                OnOKClick = id; 
+                OnSkipClick = id; 
+                OnTuneInClick = id; 
+                OnUsernameEdit = id; 
+                ShowAboutBox = id; 
+                ShowSettings = id; 
+            }; 
+            CLASS = ApplicationController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                AboutBox = NSButton; 
+                AboutImage = NSImageView; 
+                AlbumImage = NSImageView; 
+                AlbumLabel = NSTextField; 
+                ArtistLabel = NSTextField; 
+                DownloadIndicator = NSProgressIndicator; 
+                DurationLabel = NSTextField; 
+                FormatM3U = NSButton; 
+                FormatPLS = NSButton; 
+                FormatSMIL = NSButton; 
+                HateButton = NSButton; 
+                LoginButton = NSButton; 
+                LoveButton = NSButton; 
+                MainWindow = NSWindow; 
+                MusicFolderField = NSTextField; 
+                OKButton = NSButton; 
+                PasswordField = NSTextField; 
+                PlaylistAllListsMixed = NSButton; 
+                PlaylistRecentlyLoved = NSButton; 
+                PlaylistRecentlyLovedMixed = NSButton; 
+                PlaylistTopTracks = NSButton; 
+                PlaylistTopTracksMixed = NSButton; 
+                PlaylistWeeklyTrackChart = NSButton; 
+                PlaylistWeeklyTrackChartMixed = NSButton; 
+                ProgressLabel = NSTextField; 
+                ProxyAddress = NSTextField; 
+                ProxyPassword = NSTextField; 
+                ProxyUsername = NSTextField; 
+                RadioField = NSTextField; 
+                SavePassword = NSButton; 
+                SettingsWindow = NSWindow; 
+                SkipButton = NSButton; 
+                StationLabel = NSTextField; 
+                TitleLabel = NSTextField; 
+                TuneInButton = NSButton; 
+                TuneInIndicator = NSProgressIndicator; 
+                UsernameField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}
