@@ -49,6 +49,10 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="FatalExceptionHandler.cs" />
+    <Compile Include="FatalExceptionHandler.Designer.cs">
+      <DependentUpon>FatalExceptionHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -60,6 +64,9 @@
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FatalExceptionHandler.resx">
+      <DependentUpon>FatalExceptionHandler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

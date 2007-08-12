@@ -22,9 +22,18 @@ namespace WinFormsClient
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			//Handle all unhandled exceptions as they must be fatal :)
+			try
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new MainForm());
+			}
+			catch(System.Exception e)
+			{
+				FatalExceptionHandler F = new FatalExceptionHandler(e);
+				F.ShowDialog();
+			}
 		}
 		
 		protected LibLastRip.LastManager Manager;
@@ -41,9 +50,7 @@ namespace WinFormsClient
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
 			//
-			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 			this.settings = Settings.Restore();
 			this.Manager = this.settings.Manager;

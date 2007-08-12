@@ -10,3 +10,4 @@ bin\Debug\taglib-sharp.dll
 bin\Debug\LibLastRip.pdb
 obj\Debug\WinFormsClient.exe
 obj\Debug\WinFormsClient.pdb
+obj\Debug\WinFormsClient.FatalExceptionHandler.resources

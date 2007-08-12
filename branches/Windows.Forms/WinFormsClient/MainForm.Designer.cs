@@ -140,9 +140,7 @@ namespace WinFormsClient
 									"lastfm://globaltags/pop",
 									"lastfm://globaltags/punk",
 									"lastfm://globaltags/indie%20rock",
-									"lastfm://globaltags/classic%20rock",
-			                        "lastfm://artist/Rammstein/similarartists",
-			                        "lastfm://user/HansMustermann/personal"});
+									"lastfm://globaltags/classic%20rock"});
 			this.RadioStation.Location = new System.Drawing.Point(6, 19);
 			this.RadioStation.Name = "RadioStation";
 			this.RadioStation.Size = new System.Drawing.Size(326, 21);
@@ -173,26 +171,26 @@ namespace WinFormsClient
 			// settingsToolStripMenuItem
 			// 
 			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
 			this.settingsToolStripMenuItem.Text = "&Settings";
 			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItemClick);
 			// 
 			// generatePlaylistsToolStripMenuItem
 			// 
 			this.generatePlaylistsToolStripMenuItem.Name = "generatePlaylistsToolStripMenuItem";
-			this.generatePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+			this.generatePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
 			this.generatePlaylistsToolStripMenuItem.Text = "&Generate playlists";
 			this.generatePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.GeneratePlaylistsToolStripMenuItemClick);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(168, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
 			this.exitToolStripMenuItem.Text = "E&xit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 			// 
@@ -210,26 +208,26 @@ namespace WinFormsClient
 			// legalIssuesToolStripMenuItem
 			// 
 			this.legalIssuesToolStripMenuItem.Name = "legalIssuesToolStripMenuItem";
-			this.legalIssuesToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.legalIssuesToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.legalIssuesToolStripMenuItem.Text = "&Legal issues";
 			this.legalIssuesToolStripMenuItem.Click += new System.EventHandler(this.LegalIssuesToolStripMenuItemClick);
 			// 
 			// onlineHelpToolStripMenuItem
 			// 
 			this.onlineHelpToolStripMenuItem.Name = "onlineHelpToolStripMenuItem";
-			this.onlineHelpToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.onlineHelpToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.onlineHelpToolStripMenuItem.Text = "Online &Help";
 			this.onlineHelpToolStripMenuItem.Click += new System.EventHandler(this.OnlineHelpToolStripMenuItemClick);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(139, 6);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
