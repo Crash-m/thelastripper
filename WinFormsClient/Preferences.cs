@@ -49,13 +49,16 @@ namespace WinFormsClient
 			this.PLSCheckBox.Checked = settings.pls;
 			this.SMILCheckBox.Checked = settings.smil;
 			
+			// to avoid password reset on change of PasswordTextBox set first the userName...
+			this.UserNameTextBox.Text = settings.UserName;
+
+			// ...and then the password
 			if(settings.Password != "")
 			{
 				this.HasPassword = true;
 				this.PasswordTextBox.Text = settings.Password;
 				this.PasswordTextBox.Enabled = false;
 			}
-			this.UserNameTextBox.Text = settings.UserName;
 			this.MusicPathTextBox.Text = settings.MusicPath;
 			
 			this.ProxyAdressTextBox.Text = settings.ProxyAdress;
