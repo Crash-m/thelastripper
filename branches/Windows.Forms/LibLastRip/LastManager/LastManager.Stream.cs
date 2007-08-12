@@ -29,6 +29,7 @@ namespace LibLastRip
 		protected static System.Int32 BufferSize = 8192; //8 KiB
 		protected MemoryStream Song = new System.IO.MemoryStream();
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
+		protected int Position = 1;
 		
 		protected void StartRecording()
 		{
@@ -51,37 +52,27 @@ namespace LibLastRip
 			
 			System.Byte []Buf = this.Song.GetBuffer();			
 			
-			//TODO: Figure out how far back to go, to avoid loosing SYNC strings.
-			System.Int32 Start = System.Convert.ToInt32(this.Song.Length) - Count - 14;
-			if(Start > 0)
-				Start = 0;
+			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
+
+			Console.Write("GOT " + this.Song.Length);
+			Console.Write(" SEARCH " + Position);
+			Console.WriteLine(":" + End);
 			
-			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-13;
 			if(End > 0)
 			{	
-				for(System.Int32 i = Start; i < End; i++)
+				for(;Position < End; Position++)
 				{
-					if(Buf[i] == 0 &&		//Hex values:
-						Buf[i+1] == 0 &&	//00
-						Buf[i+2] == 0 &&
-						Buf[i+3] == 0 &&
-						Buf[i+4] == 0 &&
-						Buf[i+5] == 0 &&
-						
-						Buf[i+6] == 83 &&	//53
-						Buf[i+7] == 89 &&	//59
-						Buf[i+8] == 78 &&	//4e
-						Buf[i+9] == 67 &&	//43
-						Buf[i+10] == 255 &&	//FF
-						Buf[i+11] == 251 &&	//FB
-						Buf[i+12] == 144	//90
+					if(Buf[Position] == 83 &&		//Hex values: 53
+						Buf[Position+1] == 89 &&	//59
+						Buf[Position+2] == 78 &&   // 4e
+						Buf[Position+3] == 67      // 43
 						)
 					{
 						//Create a new MemoryStream
 						MemoryStream NewSong = new MemoryStream();
 						
 						//Write the latest data to it
-						NewSong.Write(Buf, i, System.Convert.ToInt32(this.Song.Length) - i);
+						NewSong.Write(Buf, Position, System.Convert.ToInt32(this.Song.Length) - Position);
 						
 						//Should we save this song?
 						if(this.SkipSave || !this.CurrentSong.Streaming)
@@ -92,11 +83,12 @@ namespace LibLastRip
 						}else{
 							//If so, then save it but do it on another thread
 							SaveSongCall SSC = new SaveSongCall(this.SaveSong);
-							SSC.BeginInvoke(this.Song, i, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+							SSC.BeginInvoke(this.Song, Position, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 						}
 						
 						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
 						this.Song = NewSong;
+						this.Position = 1;
 						
 						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
 						break;
