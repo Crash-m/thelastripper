@@ -53,9 +53,11 @@ namespace LibLastRip
 			
 			//TODO: Figure out how far back to go, to avoid loosing SYNC strings.
 			System.Int32 Start = System.Convert.ToInt32(this.Song.Length) - Count - 14;
+			if(Start > 0)
+				Start = 0;
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-13;
-			if(Start > 0 && End > 0)
+			if(End > 0)
 			{	
 				for(System.Int32 i = Start; i < End; i++)
 				{
