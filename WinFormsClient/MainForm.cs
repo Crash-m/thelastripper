@@ -39,7 +39,6 @@ namespace WinFormsClient
 		protected LibLastRip.LastManager Manager;
 		protected Settings settings;
 		protected System.Int32 TrackDuration = 0;
-		protected const System.Int32 UpdateInterval = 10000;
 		protected const System.Int32 UIUpdateInterval = 6000;
 		protected System.Windows.Forms.Timer Timer;
 		
