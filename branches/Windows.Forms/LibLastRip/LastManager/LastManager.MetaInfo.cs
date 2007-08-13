@@ -117,7 +117,7 @@ namespace LibLastRip
 			}
 			catch(System.Exception)
 			{
-				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped.
+				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped
 			}
 			finally 
 			{
