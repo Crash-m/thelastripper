@@ -31,7 +31,6 @@ namespace LibLastRip
 		protected System.String _Trackduration;
 		protected System.String _Trackprogress;
 		protected System.Boolean _Streaming = true;
-		protected System.Int32 _Streamprogress;
 		
 		public MetaInfo(System.String Data)
 		{
@@ -74,9 +73,6 @@ namespace LibLastRip
 							
 						}
 					break;
-					case "streamprogress":
-					this._Streamprogress = Int32.Parse(Opts[1]);
-						break;
 				}
 			}
 			
@@ -166,19 +162,6 @@ namespace LibLastRip
 			get
 			{
 				return this._Streaming;
-			}
-		}
-		
-		public System.Int32 Streamprogress
-		{
-			get
-			{
-				return this._Streamprogress;
-			}
-			
-			set
-			{
-				this._Streamprogress = value;
 			}
 		}
 

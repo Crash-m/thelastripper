@@ -21,6 +21,22 @@ using System.Net;
 
 namespace LibLastRip
 {
+	public class ProgressParam : System.EventArgs {
+		protected System.Int32 _Streamprogress;
+
+		public ProgressParam(System.Int32 param) {
+			this._Streamprogress = param;
+		}
+		
+		public System.Int32 Streamprogress
+		{
+			get
+			{
+				return this._Streamprogress;
+			}
+		}
+	}
+	
 	/*
 	This part of the class handles all stream related matters.
 	 */
@@ -34,6 +50,7 @@ namespace LibLastRip
 		/// Bytes of the stream that have been searched for SYNC-strings
 		/// </summary>
 		protected System.Int32 Position = 1;
+		protected System.Int32 LastPosition = 1;
 		
 		protected void StartRecording()
 		{
@@ -58,17 +75,21 @@ namespace LibLastRip
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
 			
-			//Request metadata if this is 	
+			//Request metadata if needed
 			if (this.Position == 1 || this._CurrentSong == null) {
 				this.UpdateMetaInfo();
 			} else {
 				// using _CurrentSong for progress update... could be done better
 				if (this.OnProgress != null && this._CurrentSong != null) {
-					this._CurrentSong.Streamprogress = Position / 16384;
-					this.OnProgress(this, this._CurrentSong);
+					// Update Progress bar every 15 seconds.
+					if (Position < LastPosition || LastPosition + 16384*15 < Position) {
+						LastPosition = Position;
+						ProgressParam progressParam = new ProgressParam(Position / 16384);
+						this.OnProgress(this, progressParam);
+					}
 				}
 			}
-						
+			
 			if(End > 0)
 			{
 				for(;this.Position < End; this.Position++)
@@ -147,45 +168,50 @@ namespace LibLastRip
 				File.Delete(NewFilePath);
 			}
 			
-			//Check if Album directory exists, if not create it
-			if(!Directory.Exists(AlbumPath))
-			{
-				Directory.CreateDirectory(AlbumPath);
-			}
-			
-			//Save the MemoryStream to file
-			FileStream FS = File.Create(NewFilePath);
-			FS.Write(Song.GetBuffer(), 0, Count);
-			
-			//Write metadata to stream as ID3v1
-			SongInfo.AppendID3(FS);
+			try {
+				//Check if Album directory exists, if not create it
+				if(!Directory.Exists(AlbumPath))
+				{
+					Directory.CreateDirectory(AlbumPath);
+				}
+				
+				//Save the MemoryStream to file
+				FileStream FS = File.Create(NewFilePath);
+				FS.Write(Song.GetBuffer(), 0, Count);
+				
+				//Write metadata to stream as ID3v1
+				SongInfo.AppendID3(FS);
 
-			//Close the file
-			FS.Flush();
-			FS.Close();
-			
-			//Download covers - don't care for errors because some not exist
-			WebClient Client = new WebClient();
-			
-			try {
-				if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
-					Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
-			} catch (System.Net.WebException) {
-				// no small cover
-			}
-			
-			try {
-				if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
-					Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
-			} catch (System.Net.WebException) {
-				// no medium cover
-			}
-			
-			try {
-				if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
-					Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
-			} catch (System.Net.WebException) {
-				// no large cover
+				//Close the file
+				FS.Flush();
+				FS.Close();
+				
+				//Download covers - don't care for errors because some not exist
+				WebClient Client = new WebClient();
+				
+				try {
+					if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
+						Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
+				} catch (System.Net.WebException) {
+					// no small cover
+				}
+				
+				try {
+					if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
+						Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
+				} catch (System.Net.WebException) {
+					// no medium cover
+				}
+				
+				try {
+					if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
+						Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+				} catch (System.Net.WebException) {
+					// no large cover
+				}
+			} catch (Exception) {
+				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters
+				Console.WriteLine(AlbumPath + " creation error");
 			}
 		}
 	}
