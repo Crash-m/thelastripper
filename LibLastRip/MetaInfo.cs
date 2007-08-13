@@ -219,6 +219,8 @@ namespace LibLastRip
 		}
 		new public static System.Boolean Equals(System.Object Obj1, System.Object Obj2)
 		{
+			if(Obj1 == null ||Obj2 == null)
+				return false;
 			if(Obj1.GetType()==typeof(MetaInfo)&&Obj2.GetType()==typeof(MetaInfo))
 			{
 				if(((MetaInfo)Obj1).GetHashCode()==((MetaInfo)Obj2).GetHashCode())

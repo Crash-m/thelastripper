@@ -91,7 +91,7 @@ namespace LibLastRip
 						NewSong.Write(Buf, this.Position, System.Convert.ToInt32(this.Song.Length) - this.Position);
 						
 						//Should we save this song?
-						if(this.SkipSave || this.CurrentSong == null || !this.CurrentSong.Streaming)
+						if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() || !this.CurrentSong.Streaming)
 						{
 							//If not, then don't save it
 							this.SkipSave = false;
