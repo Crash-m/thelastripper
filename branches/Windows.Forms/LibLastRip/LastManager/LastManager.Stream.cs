@@ -23,7 +23,7 @@ namespace LibLastRip
 {
 	/*
 	This part of the class handles all stream related matters.
-	*/
+	 */
 	public partial class LastManager
 	{
 		protected static System.Int32 BufferSize = 8192; //8 KiB
@@ -50,7 +50,7 @@ namespace LibLastRip
 			//Write data from buffer to memory
 			this.Song.Write(this.Buffer,0,Count);
 			
-			System.Byte []Buf = this.Song.GetBuffer();			
+			System.Byte []Buf = this.Song.GetBuffer();
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
 
@@ -58,15 +58,19 @@ namespace LibLastRip
 			Console.Write(" SEARCH " + Position);
 			Console.WriteLine(":" + End);
 			
+			if (this._CurrentSong == null || Position == 1) {
+				this.UpdateMetaInfo();
+			}
+			
 			if(End > 0)
-			{	
+			{
 				for(;Position < End; Position++)
 				{
 					if(Buf[Position] == 83 &&		//Hex values: 53
-						Buf[Position+1] == 89 &&	//59
-						Buf[Position+2] == 78 &&   // 4e
-						Buf[Position+3] == 67      // 43
-						)
+					   Buf[Position+1] == 89 &&	//59
+					   Buf[Position+2] == 78 &&   // 4e
+					   Buf[Position+3] == 67      // 43
+					  )
 					{
 						//Create a new MemoryStream
 						MemoryStream NewSong = new MemoryStream();
@@ -89,6 +93,7 @@ namespace LibLastRip
 						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
 						this.Song = NewSong;
 						this.Position = 1;
+						this._CurrentSong = null;
 						
 						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
 						break;
@@ -102,14 +107,11 @@ namespace LibLastRip
 		
 		protected void SaveSongCallback(System.IAsyncResult Ar)
 		{
-			 SaveSongCall SSC = (SaveSongCall)(((System.Runtime.Remoting.Messaging.AsyncResult)Ar).AsyncDelegate);
-			 SSC.EndInvoke(Ar);
-			 
-			 //Close the old song
-			 ((MemoryStream)Ar.AsyncState).Close();
-			 
-			 //Request metadata
-			 this.UpdateMetaInfo();
+			SaveSongCall SSC = (SaveSongCall)(((System.Runtime.Remoting.Messaging.AsyncResult)Ar).AsyncDelegate);
+			SSC.EndInvoke(Ar);
+			
+			//Close the old song
+			((MemoryStream)Ar.AsyncState).Close();
 		}
 		
 		protected delegate void SaveSongCall(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo);
@@ -144,21 +146,33 @@ namespace LibLastRip
 			//Write metadata to stream as ID3v1
 			SongInfo.AppendID3(FS);
 
-			//Close the file			
+			//Close the file
 			FS.Flush();
 			FS.Close();
 			
-			//Download covers
+			//Download covers - don't care for errors because some not exist
 			WebClient Client = new WebClient();
-				
-			if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
-				Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
-				
-			if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
-				Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
-				
-			if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
-				Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+			
+			try {
+				if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
+					Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
+			} catch (System.Net.WebException) {
+				// no small cover
+			}
+			
+			try {
+				if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
+					Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
+			} catch (System.Net.WebException) {
+				// no medium cover
+			}
+			
+			try {
+				if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
+					Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+			} catch (System.Net.WebException) {
+				// no large cover
+			}
 		}
 	}
 }

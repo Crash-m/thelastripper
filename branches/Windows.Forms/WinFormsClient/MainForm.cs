@@ -41,7 +41,6 @@ namespace WinFormsClient
 		protected System.Int32 TrackDuration = 0;
 		protected const System.Int32 UpdateInterval = 10000;
 		protected const System.Int32 UIUpdateInterval = 6000;
-		protected System.Windows.Forms.Timer MetaTimer;
 		protected System.Windows.Forms.Timer Timer;
 		
 		public MainForm()
@@ -65,10 +64,6 @@ namespace WinFormsClient
 			this.Timer = new System.Windows.Forms.Timer();
 			this.Timer.Interval = MainForm.UIUpdateInterval;
 			this.Timer.Tick += new EventHandler(this.UpdateProgress);
-			
-			this.MetaTimer = new System.Windows.Forms.Timer();
-			this.MetaTimer.Interval = MainForm.UpdateInterval;
-			this.MetaTimer.Tick += new EventHandler(this.Manager.UpdateMetaInfo);
 			
 			//Subscribe to stations changed event
 			this.Manager.StationChanged += new EventHandler(this.TuneInCallback);
@@ -208,7 +203,6 @@ namespace WinFormsClient
 			if(Args.Success){
 				this.EnableCommands();
 				this.Timer.Enabled = true;
-				this.MetaTimer.Enabled = true;
 			}
 		}
 		
