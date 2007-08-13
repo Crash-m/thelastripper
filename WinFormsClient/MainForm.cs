@@ -81,11 +81,11 @@ namespace WinFormsClient
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-			LibLastRip.ProgressParam progressParam = (LibLastRip.ProgressParam)Args;
-			if (progressParam.Streamprogress > this.StatusBar.Maximum) {
+			LibLastRip.ProgressEventArgs progressArgs = (LibLastRip.ProgressEventArgs)Args;
+			if (progressArgs.Streamprogress > this.StatusBar.Maximum) {
 			  this.StatusBar.Value = this.StatusBar.Maximum;							
 			} else {
-			  this.StatusBar.Value = progressParam.Streamprogress;			
+			  this.StatusBar.Value = progressArgs.Streamprogress;			
 			}
 		}
 		

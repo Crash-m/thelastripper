@@ -41,7 +41,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp">
-      <HintPath>..\taglib-sharp\taglib-sharp.dll</HintPath>
+      <HintPath>..\..\..\trunk\taglib-sharp\taglib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
@@ -56,6 +56,7 @@
     <Compile Include="PlayList\MetaMusic.cs" />
     <Compile Include="PlayList\PlayList.cs" />
     <Compile Include="PlayList\PlayListGenerator.cs" />
+    <Compile Include="ProgressEventArgs.cs" />
     <Compile Include="StreamAbstraction.cs" />
   </ItemGroup>
   <ItemGroup>
