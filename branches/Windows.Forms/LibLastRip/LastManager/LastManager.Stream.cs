@@ -69,7 +69,7 @@ namespace LibLastRip
 					if (Position < LastPosition || LastPosition + 16384*15 < Position)
 					{		//Note: 16383 [Byte/sec]
 						LastPosition = Position;
-						this.OnProgress(this, new progressArgs(Position / 16384));
+						this.OnProgress(this, new ProgressEventArgs(Position / 16384));
 					}
 				}
 			}
