@@ -20,23 +20,7 @@ using System.IO;
 using System.Net;
 
 namespace LibLastRip
-{
-	public class ProgressParam : System.EventArgs {
-		protected System.Int32 _Streamprogress;
-
-		public ProgressParam(System.Int32 param) {
-			this._Streamprogress = param;
-		}
-		
-		public System.Int32 Streamprogress
-		{
-			get
-			{
-				return this._Streamprogress;
-			}
-		}
-	}
-	
+{	
 	/*
 	This part of the class handles all stream related matters.
 	 */
@@ -76,16 +60,16 @@ namespace LibLastRip
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
 			
 			//Request metadata if needed
-			if (this.Position == 1 || this._CurrentSong == null) {
+			if (this.Position == 1) {
 				this.UpdateMetaInfo();
 			} else {
 				// using _CurrentSong for progress update... could be done better
-				if (this.OnProgress != null && this._CurrentSong != null) {
+				if (this.OnProgress != null) {
 					// Update Progress bar every 15 seconds.
-					if (Position < LastPosition || LastPosition + 16384*15 < Position) {
+					if (Position < LastPosition || LastPosition + 16384*15 < Position)
+					{		//Note: 16383 [Byte/sec]
 						LastPosition = Position;
-						ProgressParam progressParam = new ProgressParam(Position / 16384);
-						this.OnProgress(this, progressParam);
+						this.OnProgress(this, new progressArgs(Position / 16384));
 					}
 				}
 			}
@@ -123,7 +107,6 @@ namespace LibLastRip
 						
 						//Set position to 1, see documentation of position
 						this.Position = 1;
-						this._CurrentSong = null;
 						
 						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
 						break;
