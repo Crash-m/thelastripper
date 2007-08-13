@@ -253,7 +253,7 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.StatusLabel.Location = new System.Drawing.Point(6, 19);
 			this.StatusLabel.Name = "StatusLabel";
-			this.StatusLabel.Size = new System.Drawing.Size(180, 143);
+			this.StatusLabel.Size = new System.Drawing.Size(180, 140);
 			this.StatusLabel.TabIndex = 2;
 			this.StatusLabel.Text = "Not recording...";
 			// 

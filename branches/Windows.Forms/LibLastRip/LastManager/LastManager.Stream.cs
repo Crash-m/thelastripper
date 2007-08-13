@@ -29,7 +29,11 @@ namespace LibLastRip
 		protected static System.Int32 BufferSize = 8192; //8 KiB
 		protected MemoryStream Song = new System.IO.MemoryStream();
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
-		protected int Position = 1;
+		
+		/// <summary>
+		/// Bytes of the stream that have been searched for SYNC-strings
+		/// </summary>
+		protected System.Int32 Position = 1;
 		
 		protected void StartRecording()
 		{
@@ -53,30 +57,27 @@ namespace LibLastRip
 			System.Byte []Buf = this.Song.GetBuffer();
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
-
-			Console.Write("GOT " + this.Song.Length);
-			Console.Write(" SEARCH " + Position);
-			Console.WriteLine(":" + End);
 			
-			if (this._CurrentSong == null || Position == 1) {
+			//Request metadata if this is 	
+			if (this.Position == 1) {
 				this.UpdateMetaInfo();
 			}
 			
 			if(End > 0)
 			{
-				for(;Position < End; Position++)
+				for(;this.Position < End; this.Position++)
 				{
-					if(Buf[Position] == 83 &&		//Hex values: 53
-					   Buf[Position+1] == 89 &&	//59
-					   Buf[Position+2] == 78 &&   // 4e
-					   Buf[Position+3] == 67      // 43
+					if(Buf[this.Position] == 83 &&		//Hex values: 53
+					   Buf[this.Position+1] == 89 &&	//59
+					   Buf[this.Position+2] == 78 &&   // 4e
+					   Buf[this.Position+3] == 67      // 43
 					  )
 					{
 						//Create a new MemoryStream
 						MemoryStream NewSong = new MemoryStream();
 						
 						//Write the latest data to it
-						NewSong.Write(Buf, Position, System.Convert.ToInt32(this.Song.Length) - Position);
+						NewSong.Write(Buf, this.Position, System.Convert.ToInt32(this.Song.Length) - this.Position);
 						
 						//Should we save this song?
 						if(this.SkipSave || this.CurrentSong == null || !this.CurrentSong.Streaming)
@@ -87,13 +88,14 @@ namespace LibLastRip
 						}else{
 							//If so, then save it but do it on another thread
 							SaveSongCall SSC = new SaveSongCall(this.SaveSong);
-							SSC.BeginInvoke(this.Song, Position, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+							SSC.BeginInvoke(this.Song, this.Position, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 						}
 						
 						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
 						this.Song = NewSong;
+						
+						//Set position to 1, see documentation of position
 						this.Position = 1;
-						this._CurrentSong = null;
 						
 						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
 						break;
@@ -122,6 +124,11 @@ namespace LibLastRip
 		///<param name="SongInfo">MetaInfo about the song to be saved.</param>
 		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
 		{
+			//Remove null-bytes at the end of each song.
+			System.Byte[] Buffer = Song.GetBuffer();
+			while(Buffer[Count] == 0)
+				Count--;
+			
 			//Filesystem paths
 			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
 			System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(SongInfo.Track) + ".mp3";
