@@ -31,7 +31,8 @@ namespace LibLastRip
 		protected System.String _Trackduration;
 		protected System.String _Trackprogress;
 		protected System.Boolean _Streaming = true;
-
+		protected System.Int32 _Streamprogress;
+		
 		public MetaInfo(System.String Data)
 		{
 			System.String []Lines = Data.Split(new System.Char[] {'\n'});
@@ -73,15 +74,18 @@ namespace LibLastRip
 							
 						}
 					break;
+					case "streamprogress":
+					this._Streamprogress = Int32.Parse(Opts[1]);
+						break;
 				}
 			}
 			
 			//We've got to have something to write as ID3tag's, filename and directories
-			if(this._Track == null || this._Track == "")
+			if(String.IsNullOrEmpty(this._Track))
 				this._Track = "unknown";
-			if(this._Album == null || this._Album == "")
+			if(String.IsNullOrEmpty(this._Album))
 				this._Album = "unknown";
-			if(this._Artist == null || this._Artist == "")
+			if(String.IsNullOrEmpty(this._Artist))
 				this._Artist = "unknown";
 		}
 		
@@ -165,6 +169,19 @@ namespace LibLastRip
 			}
 		}
 		
+		public System.Int32 Streamprogress
+		{
+			get
+			{
+				return this._Streamprogress;
+			}
+			
+			set
+			{
+				this._Streamprogress = value;
+			}
+		}
+
 		public override System.String ToString()
 		{
 			System.String OutStr = "";
