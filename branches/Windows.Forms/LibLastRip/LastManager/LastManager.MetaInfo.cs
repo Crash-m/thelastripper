@@ -27,7 +27,7 @@ namespace LibLastRip
 	*/
 	public partial class LastManager
 	{
-		protected MetaInfo _CurrentSong;
+		protected MetaInfo _CurrentSong = MetaInfo.GetEmptyMetaInfo();
 	
 		///<summary>
 		///Gets the meta info about the current song
@@ -107,7 +107,7 @@ namespace LibLastRip
 				MetaInfo nSong = new MetaInfo(Data);
 				
 				//Is this a new song?
-				if(this._CurrentSong == null || ! MetaInfo.Equals(nSong,this._CurrentSong))
+				if(!MetaInfo.Equals(nSong,this._CurrentSong))
 				{
 					//Save metadata and raise OnNewSong event
 					this._CurrentSong = nSong;
