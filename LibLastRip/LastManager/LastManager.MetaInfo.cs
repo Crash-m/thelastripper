@@ -80,9 +80,6 @@ namespace LibLastRip
 		///</summary>					
 		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
 		{
-			//We're no longer updating metadata
-			this.IsUpdateing = false;
-			
 			try
 			{
 				//Get the HttpWebRequest
@@ -118,10 +115,14 @@ namespace LibLastRip
 						this.OnNewSong(this, this._CurrentSong);
 				}
 			}
-			catch(System.Exception e)
+			catch(System.Exception)
 			{
-				//TODO: Handle exceptions better
-				throw new System.Exception("Error while downloading metadata", e);
+				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped.
+			}
+			finally 
+			{
+				//We're no longer updating metadata
+				this.IsUpdateing = false;			
 			}
 		}
 	}
