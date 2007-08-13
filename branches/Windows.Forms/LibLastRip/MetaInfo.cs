@@ -70,7 +70,7 @@ namespace LibLastRip
 					case "streaming":
 						if(Opts[1].ToLower()=="false")
 						{
-							
+							this._Streaming = false;
 						}
 					break;
 				}
