@@ -39,8 +39,6 @@ namespace WinFormsClient
 		protected LibLastRip.LastManager Manager;
 		protected Settings settings;
 		protected System.Int32 TrackDuration = 0;
-		protected const System.Int32 UIUpdateInterval = 6000;
-		protected System.Windows.Forms.Timer Timer;
 		
 		public MainForm()
 		{
@@ -59,16 +57,36 @@ namespace WinFormsClient
 				this.TuneInButton.Enabled = true;
 			}
 			this.Manager.OnNewSong += new EventHandler(this.OnNewSong);
-			
-			this.Timer = new System.Windows.Forms.Timer();
-			this.Timer.Interval = MainForm.UIUpdateInterval;
-			this.Timer.Tick += new EventHandler(this.UpdateProgress);
-			
+			this.Manager.OnProgress += new EventHandler(this.OnProgress);
+						
 			//Subscribe to stations changed event
 			this.Manager.StationChanged += new EventHandler(this.TuneInCallback);
 			
 			//Subscribe to command callback
 			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);	
+		}
+		
+		protected virtual void OnProgress(System.Object Sender, System.EventArgs Args)
+		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.OnProgress), new System.Object[]{Sender, Args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
+			if (Info.Streamprogress > this.StatusBar.Maximum) {
+			  this.StatusBar.Value = this.StatusBar.Maximum;							
+			} else {
+			  this.StatusBar.Value = Info.Streamprogress;			
+			}
 		}
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
@@ -122,17 +140,6 @@ namespace WinFormsClient
 						//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
 					}
 				}
-			}
-		}
-		
-		protected virtual void UpdateProgress(System.Object Sender, System.EventArgs Args)
-		{
-			System.Int32 Next = this.StatusBar.Value + MainForm.UIUpdateInterval/1000;
-			if(Next >= this.StatusBar.Maximum)
-			{	//If bigger than Max set it to max to avoid problems when running over
-				this.StatusBar.Value = this.StatusBar.Maximum;
-			}else{
-				this.StatusBar.Value = Next;
 			}
 		}
 		
@@ -201,7 +208,6 @@ namespace WinFormsClient
 			this.TuneInButton.Enabled = true;
 			if(Args.Success){
 				this.EnableCommands();
-				this.Timer.Enabled = true;
 			}
 		}
 		

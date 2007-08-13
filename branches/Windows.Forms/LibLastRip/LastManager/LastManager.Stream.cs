@@ -59,10 +59,16 @@ namespace LibLastRip
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
 			
 			//Request metadata if this is 	
-			if (this.Position == 1) {
+			if (this.Position == 1 || this._CurrentSong == null) {
 				this.UpdateMetaInfo();
+			} else {
+				// using _CurrentSong for progress update... could be done better
+				if (this.OnProgress != null && this._CurrentSong != null) {
+					this._CurrentSong.Streamprogress = Position / 16384;
+					this.OnProgress(this, this._CurrentSong);
+				}
 			}
-			
+						
 			if(End > 0)
 			{
 				for(;this.Position < End; this.Position++)
@@ -96,6 +102,7 @@ namespace LibLastRip
 						
 						//Set position to 1, see documentation of position
 						this.Position = 1;
+						this._CurrentSong = null;
 						
 						//Break, cause finding more songs in the current data would create serious filesystem errors due to threading and lack of metadata update!
 						break;

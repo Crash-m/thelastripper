@@ -28,6 +28,7 @@ namespace LibLastRip
 	public partial class LastManager
 	{
 		protected MetaInfo _CurrentSong;
+	
 		///<summary>
 		///Gets the meta info about the current song
 		///</summary>
@@ -44,6 +45,12 @@ namespace LibLastRip
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnNewSong;
 		
+		/// <summary>
+		/// Occurs when ripping make progress.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
+		public event System.EventHandler OnProgress;
+
 		///<summary>
 		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
 		///</summary>
