@@ -20,6 +20,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using System.Collections;
 
 namespace LibLastRip
 {
@@ -41,7 +42,42 @@ namespace LibLastRip
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected System.Boolean SkipSave = false;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
+	
+		protected static ArrayList invalidPathChars = getInvalidPathChars();
+		protected static ArrayList invalidFilenameChars = getInvalidFilenameChars();
 		
+		///<summary>
+		///Initializes an arraylist which contains the system invalid path chars and additional invalid chars for path creation
+		///</summary>
+		public static ArrayList getInvalidPathChars() {
+			ArrayList chars = new ArrayList();
+			chars.AddRange(System.IO.Path.GetInvalidPathChars());
+			
+			// Path separation chars - should not occur in our album path
+			chars.Add('/');
+			chars.Add('\\');
+			
+			// Special characters which are not in system list but are also invalid
+			chars.Add('?');		
+			return chars;
+		}
+
+		///<summary>
+		///Initializes an arraylist which contains the system invalid filename chars and additional invalid chars for file creation
+		///</summary>
+		public static ArrayList getInvalidFilenameChars() {
+			ArrayList chars = new ArrayList();
+			chars.AddRange(System.IO.Path.GetInvalidFileNameChars());
+
+			// Path separation chars - should not occur in our filename
+			chars.Add('/');
+			chars.Add('\\');
+
+			// Special characters which are not in system list but are also invalid
+			chars.Add('?');
+			return chars;
+		}
+					
 		///<summary>
 		///Initializes an instance of LastManager, and initiates handshake
 		///</summary>
@@ -261,8 +297,8 @@ namespace LibLastRip
 			//can't have null (this should have been prevented in the header for MetaInfo)
 			if(PathName == null || PathName == "")
 				throw new System.Exception("A directory must have a name, it can't be null");
-			
-			return LastManager.RemoveChars(PathName, System.IO.Path.GetInvalidPathChars());
+				
+			return LastManager.RemoveChars(PathName, invalidPathChars);
 		}
 		
 		///<summary>
@@ -275,7 +311,7 @@ namespace LibLastRip
 			if(FileName == null || FileName == "")
 				throw new System.Exception("A file must have a name, it can't be null");
 			
-			return LastManager.RemoveChars(FileName, System.IO.Path.GetInvalidFileNameChars());
+			return LastManager.RemoveChars(FileName, invalidFilenameChars);
 		}
 		
 		///<summary>
@@ -283,25 +319,16 @@ namespace LibLastRip
 		///</summary>
 		///<param name="Input">String from which InvalidChars must be removed.</param>
 		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
-		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
+		protected internal static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
 		{
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
 			{	
-				System.Boolean IsGood = true;
-				foreach(System.Char iChar in InvalidChars)
-				{
-					if(iChar == TestChar)
-						IsGood = false;
-				}
-				// filter characters for directory separation
-				if (TestChar == '/' || TestChar == '\\') {
-				    IsGood = false;
-				}
-				if(IsGood) {
-					Output += TestChar.ToString();
-				} else {
+				if (InvalidChars.Contains(TestChar)) {
 					Output += '_';
+				}
+				else {
+					Output += TestChar.ToString();
 				}
 			}
 			return Output;
