@@ -63,7 +63,6 @@ namespace LibLastRip
 			if (this.Position == 1) {
 				this.UpdateMetaInfo();
 			} else {
-				// using _CurrentSong for progress update... could be done better
 				if (this.OnProgress != null) {
 					// Update Progress bar every 15 seconds.
 					if (Position < LastPosition || LastPosition + 16384*15 < Position)
@@ -137,7 +136,7 @@ namespace LibLastRip
 		{
 			//Remove null-bytes at the end of each song.
 			System.Byte[] Buffer = Song.GetBuffer();
-			while(Buffer[Count] == 0)
+			while(Count > 0 && Buffer[Count] == 0)
 				Count--;
 			
 			//Filesystem paths
