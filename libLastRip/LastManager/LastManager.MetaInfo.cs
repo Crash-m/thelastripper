@@ -27,7 +27,8 @@ namespace LibLastRip
 	*/
 	public partial class LastManager
 	{
-		protected MetaInfo _CurrentSong;
+		protected MetaInfo _CurrentSong = MetaInfo.GetEmptyMetaInfo();
+	
 		///<summary>
 		///Gets the meta info about the current song
 		///</summary>
@@ -38,14 +39,18 @@ namespace LibLastRip
 				return this._CurrentSong;
 			}
 		}
+		/// <summary>
+		/// Occurs when a new song is detected.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnNewSong;
 		
-		//TODO: remove this method since it cause bad multithreading!
-		public void UpdateMetaInfo(System.Object Sender, System.EventArgs Args)
-		{
-			this.UpdateMetaInfo();
-		}
-		
+		/// <summary>
+		/// Occurs when ripping make progress.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
+		public event System.EventHandler OnProgress;
+
 		///<summary>
 		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
 		///</summary>
@@ -75,9 +80,6 @@ namespace LibLastRip
 		///</summary>					
 		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
 		{
-			//We're no longer updating metadata
-			this.IsUpdateing = false;
-			
 			try
 			{
 				//Get the HttpWebRequest
@@ -105,7 +107,7 @@ namespace LibLastRip
 				MetaInfo nSong = new MetaInfo(Data);
 				
 				//Is this a new song?
-				if(this._CurrentSong == null || ! MetaInfo.Equals(nSong,this._CurrentSong))
+				if(!MetaInfo.Equals(nSong,this._CurrentSong))
 				{
 					//Save metadata and raise OnNewSong event
 					this._CurrentSong = nSong;
@@ -113,10 +115,14 @@ namespace LibLastRip
 						this.OnNewSong(this, this._CurrentSong);
 				}
 			}
-			catch(System.Exception e)
+			catch(System.Exception)
 			{
-				//TODO: Handle exceptions better
-				throw new System.Exception("Error while downloading metadata", e);
+				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped
+			}
+			finally 
+			{
+				//We're no longer updating metadata
+				this.IsUpdateing = false;			
 			}
 		}
 	}

@@ -23,7 +23,7 @@ namespace MonoClient {
             this.Events = ((Gdk.EventMask)(256));
             this.Name = "MonoClient.About";
             this.Title = Mono.Unix.Catalog.GetString("About TheLastRipper");
-            this.Icon = Stetic.IconLoader.LoadIcon("gtk-about", 16);
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "gtk-about", Gtk.IconSize.Menu, 16);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.Resizable = false;
@@ -63,7 +63,7 @@ namespace MonoClient {
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
             w6.Name = "image1";
-            w6.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-close", 16);
+            w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w8 = new Gtk.Label();

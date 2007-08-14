@@ -3,12 +3,10 @@ using Gtk;
 
 public partial class MainWindow: Gtk.Window
 {	
-	protected const System.Int32 UpdateInterval = 10000;
 	public LibLastRip.LastManager LastManager;
-	public System.Timers.Timer Timer = new System.Timers.Timer(MainWindow.UpdateInterval);
 	
 	protected MonoClient.Settings settings;
-	
+	//TODO: Use invoke everywhere!
 	public MainWindow (): base ("")
 	{	
 		//Let Stetic generate the GUI
@@ -24,13 +22,15 @@ public partial class MainWindow: Gtk.Window
 		}
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
-		this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.LastManager.UpdateMetaInfo);
 		
 		//Handle command return
 		this.LastManager.CommandReturn += new System.EventHandler(this.OnCommandReturn);
 		
 		//Handle station change return
 		this.LastManager.StationChanged += new System.EventHandler(this.OnStationChanged);
+		
+		//Handle update progressbar
+		this.LastManager.OnProgress += new System.EventHandler(this.UpdateProgress);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -38,8 +38,6 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit ();
 		a.RetVal = true;
 	}
-
-	protected System.Boolean IsStarted = false;
 	
 	protected virtual void OnConnectButtonClicked(object sender, System.EventArgs e)
 	{
@@ -52,30 +50,28 @@ public partial class MainWindow: Gtk.Window
 	///<summary>Handles callback from a change station command</summary>
 	protected virtual void OnStationChanged(System.Object Sender, System.EventArgs Args)
 	{
+		Gtk.Application.Invoke( delegate {
 		this.ConnectButton.Sensitive = true;
 		LibLastRip.StationChangedEventArgs sArgs = (LibLastRip.StationChangedEventArgs)Args;
 		
 		if(sArgs.Success)
 		{
-			this.Timer.Start();
 			this.EnableCommands();
-			if(!this.IsStarted)
-			{
-				GLib.Timeout.Add(2000, new GLib.TimeoutHandler(this.UpdateProgressTime));
-				this.IsStarted = true;
-			}
 		}
+		});
 	}
 	
 	protected System.Int32 TrackDuration = 0;
 	
-	protected virtual System.Boolean UpdateProgressTime()
+	//TODO: Use event from LastManager
+	protected virtual void UpdateProgress(System.Object Sender, System.EventArgs e)
 	{
-		//Only if CurrentSong exists
-		if(this.LastManager.CurrentSong != null)
+		Gtk.Application.Invoke( delegate {
+		//Avoid zero-division error
+		if(this.TrackDuration > 1)
 		{
-			this.TrackDuration += 2000/1000;
-			System.Double Frac = ((System.Double)this.TrackDuration / System.Convert.ToDouble(this.LastManager.CurrentSong.Trackduration));
+			LibLastRip.ProgressEventArgs Args = (LibLastRip.ProgressEventArgs)e;
+			System.Double Frac = (System.Double) (Args.Streamprogress / this.TrackDuration);
 			if(Frac <= 1 && Frac >= (1/System.Double.MaxValue))
 			{
 				this.SongProgressBar.Fraction = Frac;
@@ -83,8 +79,7 @@ public partial class MainWindow: Gtk.Window
 				this.SongProgressBar.Fraction = 0;
 			}
 		}
-		
-		return true;
+		});
 	}
 	
 	protected LibLastRip.MetaInfo NewSong;
@@ -92,13 +87,16 @@ public partial class MainWindow: Gtk.Window
 	
 	protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 	{
+		Gtk.Application.Invoke( delegate {
 		LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
-		this.SetStatus(Info);
-	}
-	
-	protected virtual void SetStatus(LibLastRip.MetaInfo Info)
-	{
-		this.TrackDuration = 0;
+		
+		//We don't want an error is string is formatet wrong.
+		try{
+			this.TrackDuration = System.Convert.ToInt32(Info.Trackduration);
+		}
+		catch{
+			this.TrackDuration = 250; //Just a wild guess ;)
+		}
 		
 		if(Info.Streaming)
 		{
@@ -123,7 +121,9 @@ public partial class MainWindow: Gtk.Window
 		}else{
 			//TODO: do something when we're not steaming... disable some controls etc...
 		}
+		});
 	}
+	
 
 	protected virtual void OnSkipButtonClicked(object sender, System.EventArgs e)
 	{
@@ -151,8 +151,10 @@ public partial class MainWindow: Gtk.Window
 	///</summary>
 	protected virtual void OnCommandReturn(System.Object Sender, System.EventArgs Args)
 	{
+		Gtk.Application.Invoke( delegate {
 		//Enable commands again
 		this.EnableCommands();
+		});
 	}
 	
 	protected virtual void OnOnlineHelpActivated(object sender, System.EventArgs e)
