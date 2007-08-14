@@ -20,6 +20,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using System.Collections;
 
 namespace LibLastRip
 {
@@ -41,7 +42,42 @@ namespace LibLastRip
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected System.Boolean SkipSave = false;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
+	
+		protected static ArrayList invalidPathChars = getInvalidPathChars();
+		protected static ArrayList invalidFilenameChars = getInvalidFilenameChars();
 		
+		///<summary>
+		///Initializes an arraylist which contains the system invalid path chars and additional invalid chars for path creation
+		///</summary>
+		public static ArrayList getInvalidPathChars() {
+			ArrayList chars = new ArrayList();
+			chars.AddRange(System.IO.Path.GetInvalidPathChars());
+			
+			// Path separation chars - should not occur in our album path
+			chars.Add('/');
+			chars.Add('\\');
+			
+			// Special characters which are not in system list but are also invalid
+			chars.Add('?');		
+			return chars;
+		}
+
+		///<summary>
+		///Initializes an arraylist which contains the system invalid filename chars and additional invalid chars for file creation
+		///</summary>
+		public static ArrayList getInvalidFilenameChars() {
+			ArrayList chars = new ArrayList();
+			chars.AddRange(System.IO.Path.GetInvalidFileNameChars());
+
+			// Path separation chars - should not occur in our filename
+			chars.Add('/');
+			chars.Add('\\');
+
+			// Special characters which are not in system list but are also invalid
+			chars.Add('?');
+			return chars;
+		}
+					
 		///<summary>
 		///Initializes an instance of LastManager, and initiates handshake
 		///</summary>
@@ -63,6 +99,7 @@ namespace LibLastRip
 		///<summary>
 		///Occurs when a handshake request has returned
 		///</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler HandshakeReturn;
 		
 		public void Handshake()
@@ -161,7 +198,7 @@ namespace LibLastRip
 						this.BasePath = Opts[1];
 						break;
 					default:
-						Console.WriteLine("LastManager.ParseHandshake(): Unknown key: " + Opts[0]);
+						Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
 						break;
 				}
 			}
@@ -257,7 +294,11 @@ namespace LibLastRip
 		///<param name="PathName">Directory name from which invalid chars should be removed</param>
 		internal static System.String RemoveInvalidPathChars(System.String PathName)
 		{
-			return LastManager.RemoveChars(PathName, System.IO.Path.GetInvalidPathChars());
+			//can't have null (this should have been prevented in the header for MetaInfo)
+			if(PathName == null || PathName == "")
+				throw new System.Exception("A directory must have a name, it can't be null");
+				
+			return LastManager.RemoveChars(PathName, invalidPathChars);
 		}
 		
 		///<summary>
@@ -266,27 +307,29 @@ namespace LibLastRip
 		///<param name="FileName">FileName from which invalid chars should be removed</param>
 		internal static System.String RemoveInvalidFileNameChars(System.String FileName)
 		{
-			return LastManager.RemoveChars(FileName, System.IO.Path.GetInvalidFileNameChars());
+			//can't have null
+			if(FileName == null || FileName == "")
+				throw new System.Exception("A file must have a name, it can't be null");
+			
+			return LastManager.RemoveChars(FileName, invalidFilenameChars);
 		}
 		
 		///<summary>
-		///Remove an array of invalid chars from an input string
+		///Replaces chars from an array of invalid chars from an input string with an underline character
 		///</summary>
 		///<param name="Input">String from which InvalidChars must be removed.</param>
 		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
-		protected internal static System.String RemoveChars(System.String Input, System.Char[] InvalidChars)
+		protected internal static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
 		{
-			System.Boolean IsGood = true;
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
-			{		
-				foreach(System.Char iChar in InvalidChars)
-				{
-					if(iChar == TestChar)
-						IsGood = false;
+			{	
+				if (InvalidChars.Contains(TestChar)) {
+					Output += '_';
 				}
-				if(IsGood)
+				else {
 					Output += TestChar.ToString();
+				}
 			}
 			return Output;
 		}

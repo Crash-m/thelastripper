@@ -162,8 +162,8 @@ public partial class MainWindow {
         w6.Spacing = 2;
         // Container child GtkHBox1.Gtk.Container+ContainerChild
         Gtk.Image w7 = new Gtk.Image();
-        w7.Name = "image30";
-        w7.Pixbuf = Stetic.IconLoader.LoadIcon("stock_media-play", 16);
+        w7.Name = "image48";
+        w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-play", Gtk.IconSize.Menu, 16);
         w6.Add(w7);
         // Container child GtkHBox1.Gtk.Container+ContainerChild
         Gtk.Label w9 = new Gtk.Label();
@@ -192,8 +192,8 @@ public partial class MainWindow {
         w15.Spacing = 2;
         // Container child GtkHBox2.Gtk.Container+ContainerChild
         Gtk.Image w16 = new Gtk.Image();
-        w16.Name = "image31";
-        w16.Pixbuf = Stetic.IconLoader.LoadIcon("stock_media-next", 16);
+        w16.Name = "image49";
+        w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-next", Gtk.IconSize.Menu, 16);
         w15.Add(w16);
         // Container child GtkHBox2.Gtk.Container+ContainerChild
         Gtk.Label w18 = new Gtk.Label();
@@ -222,8 +222,8 @@ public partial class MainWindow {
         w24.Spacing = 2;
         // Container child GtkHBox3.Gtk.Container+ContainerChild
         Gtk.Image w25 = new Gtk.Image();
-        w25.Name = "image32";
-        w25.Pixbuf = Stetic.IconLoader.LoadIcon("stock_3d-favourites", 16);
+        w25.Name = "image50";
+        w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_3d-favourites", Gtk.IconSize.Menu, 16);
         w24.Add(w25);
         // Container child GtkHBox3.Gtk.Container+ContainerChild
         Gtk.Label w27 = new Gtk.Label();
@@ -251,8 +251,8 @@ public partial class MainWindow {
         w33.Spacing = 2;
         // Container child GtkHBox4.Gtk.Container+ContainerChild
         Gtk.Image w34 = new Gtk.Image();
-        w34.Name = "image33";
-        w34.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-remove", 16);
+        w34.Name = "image51";
+        w34.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
         w33.Add(w34);
         // Container child GtkHBox4.Gtk.Container+ContainerChild
         Gtk.Label w36 = new Gtk.Label();
@@ -309,7 +309,7 @@ public partial class MainWindow {
         // Container child hbox5.Gtk.Box+BoxChild
         this.CoverBox = new Gtk.Image();
         this.CoverBox.Name = "CoverBox";
-        this.CoverBox.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-cdrom", 16);
+        this.CoverBox.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cdrom", Gtk.IconSize.Menu, 16);
         this.hbox5.Add(this.CoverBox);
         Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.hbox5[this.CoverBox]));
         w46.Position = 1;

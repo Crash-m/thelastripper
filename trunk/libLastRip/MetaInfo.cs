@@ -31,8 +31,28 @@ namespace LibLastRip
 		protected System.String _Trackduration;
 		protected System.String _Trackprogress;
 		protected System.Boolean _Streaming = true;
-
-		public MetaInfo(System.String Data)
+		
+		/// <summary>
+        /// Get an empty instance of MetaInfo, used to represent no song.
+        /// </summary>
+        public static MetaInfo GetEmptyMetaInfo()
+        {
+            return new MetaInfo();
+        }
+       
+        /// <summary>
+        /// Creates an instance of metaInfo representing no song.
+        /// </summary>
+        protected MetaInfo()
+        {
+            this._Track = "Refreshing...";
+            this._Artist = "";
+            this._Album = "";
+            this._Trackduration = "1";
+            this._Trackprogress = "0";
+        }
+		
+		internal MetaInfo(System.String Data)
 		{
 			System.String []Lines = Data.Split(new System.Char[] {'\n'});
 			foreach(System.String Line in Lines)
@@ -70,11 +90,19 @@ namespace LibLastRip
 					case "streaming":
 						if(Opts[1].ToLower()=="false")
 						{
-							
+							this._Streaming = false;
 						}
 					break;
 				}
 			}
+			
+			//We've got to have something to write as ID3tag's, filename and directories
+			if(String.IsNullOrEmpty(this._Track))
+				this._Track = "unknown";
+			if(String.IsNullOrEmpty(this._Album))
+				this._Album = "unknown";
+			if(String.IsNullOrEmpty(this._Artist))
+				this._Artist = "unknown";
 		}
 		
 		public System.String Station
@@ -156,7 +184,7 @@ namespace LibLastRip
 				return this._Streaming;
 			}
 		}
-		
+
 		public override System.String ToString()
 		{
 			System.String OutStr = "";
@@ -172,12 +200,27 @@ namespace LibLastRip
 			return OutStr;
 		}
 		
+		public override bool Equals(object obj)
+        {
+            return MetaInfo.Equals(obj,this);
+        }
+        public static bool operator == (MetaInfo Obj1, MetaInfo Obj2)
+        {
+            return MetaInfo.Equals(Obj1,Obj2);
+        }
+        public static bool operator != (MetaInfo Obj1, MetaInfo Obj2)
+        {
+            return !(Obj1 == Obj2);
+        }
+		
 		public override System.Int32 GetHashCode()
 		{
 			return (this._Album + this._Artist + this._Track).GetHashCode();
 		}
 		new public static System.Boolean Equals(System.Object Obj1, System.Object Obj2)
 		{
+			if(Obj1 == null ||Obj2 == null)
+				return false;
 			if(Obj1.GetType()==typeof(MetaInfo)&&Obj2.GetType()==typeof(MetaInfo))
 			{
 				if(((MetaInfo)Obj1).GetHashCode()==((MetaInfo)Obj2).GetHashCode())

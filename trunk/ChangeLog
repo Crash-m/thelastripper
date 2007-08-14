@@ -1,3 +1,7 @@
+2007-08-14  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	Backport from Windows.Forms branch
+
 2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
 	* libLastRip/LastManager/LastManager.Commands.cs: Performing all

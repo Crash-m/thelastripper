@@ -30,6 +30,7 @@ namespace LibLastRip
 		///<summary>
 		///Occurs when an command execution is return
 		///</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler CommandReturn;
 		
 		///<summary>
@@ -72,7 +73,6 @@ namespace LibLastRip
 				if((System.String)Args[1] == "hate" || (System.String)Args[1] == "skip")
 				{
 					this.SkipSave = Result;
-					this.UpdateMetaInfo();
 				}
 				
 				if(this.CommandReturn != null)
@@ -118,6 +118,7 @@ namespace LibLastRip
 		}
 		
 		///<summary>Occurs when a ChangeStation is returned</summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler StationChanged;
 		
 		///<summary>Connects to a radio station and starts ripping</summary>
@@ -171,7 +172,6 @@ namespace LibLastRip
 						this.Status = ConnectionStatus.Recording;
 						this.StartRecording();
 					}
-					this.UpdateMetaInfo();
 				}
 			}
 			

@@ -95,7 +95,7 @@ namespace MonoClient {
             this.Events = ((Gdk.EventMask)(256));
             this.Name = "MonoClient.Preferences";
             this.Title = Mono.Unix.Catalog.GetString("Preferences");
-            this.Icon = Stetic.IconLoader.LoadIcon("gtk-preferences", 16);
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "gtk-preferences", Gtk.IconSize.Menu, 16);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.HasSeparator = false;
@@ -161,7 +161,7 @@ namespace MonoClient {
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
             w6.Name = "image6";
-            w6.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-apply", 16);
+            w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-apply", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w8 = new Gtk.Label();
@@ -459,7 +459,7 @@ namespace MonoClient {
             // Container child GtkHBox13.Gtk.Container+ContainerChild
             Gtk.Image w44 = new Gtk.Image();
             w44.Name = "image7";
-            w44.Pixbuf = Stetic.IconLoader.LoadIcon("gtk-close", 16);
+            w44.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
             w43.Add(w44);
             // Container child GtkHBox13.Gtk.Container+ContainerChild
             Gtk.Label w46 = new Gtk.Label();
