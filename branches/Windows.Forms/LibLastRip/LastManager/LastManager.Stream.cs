@@ -18,9 +18,10 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace LibLastRip
-{	
+{
 	/*
 	This part of the class handles all stream related matters.
 	 */
@@ -36,6 +37,8 @@ namespace LibLastRip
 		protected System.Int32 Position = 1;
 		protected System.Int32 LastPosition = 1;
 		
+		protected bool running = false;
+		
 		protected void StartRecording()
 		{
 			//Getting stream
@@ -47,32 +50,31 @@ namespace LibLastRip
 			RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
 		}
 		
-		protected void Save(System.IAsyncResult Res)
-		{
-			Stream RadioStream = (Stream)Res.AsyncState;
-			System.Int32 Count = RadioStream.EndRead(Res);
-			
+		/// <summary>
+		/// This Method saves data from buffer to song 
+		/// </summary>
+		protected void Save(System.Int32 read) {
 			//Write data from buffer to memory
-			this.Song.Write(this.Buffer,0,Count);
+			this.Song.Write(this.Buffer,0,read);
 			
 			System.Byte []Buf = this.Song.GetBuffer();
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
-			
+
 			//Request metadata if needed
 			if (this.Position == 1) {
 				this.UpdateMetaInfo();
 			} else {
 				if (this.OnProgress != null) {
-					// Update Progress bar every 10 seconds.
-					if (Position < LastPosition || LastPosition + 16384*10 < Position)
+					// Update Progress bar every 8 seconds.
+					if (Position < LastPosition || LastPosition + 16384*8 < Position)
 					{		//Note: 16383 [Byte/sec]
 						LastPosition = Position;
 						this.OnProgress(this, new ProgressEventArgs(Position / 16384));
 					}
 				}
 			}
-			
+
 			if(End > 0)
 			{
 				for(;this.Position < End; this.Position++)
@@ -112,9 +114,65 @@ namespace LibLastRip
 					}
 				}
 			}
+		}
+		
+        /// <summary>
+		/// This Method saves a stream until it ends
+		/// </summary>
+		protected void Save(System.IAsyncResult Res)
+		{
+			if (running == true) {
+				throw new UnauthorizedAccessException("Illegal call to method Save - process is already active");
+			}
 			
-			//Read from the radio stream again
-			RadioStream.BeginRead(this.Buffer , 0, LastManager.BufferSize, new System.AsyncCallback(this.Save),RadioStream);
+			running = true;
+			try {
+				Stream RadioStream = (Stream)Res.AsyncState;
+				System.Int32 Count = RadioStream.EndRead(Res);
+				
+				Save(Count);
+				
+				// we just read syncron from here - no nead for another AsyncCallback!
+				while (running) {
+					System.Int32 read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
+					Save(read);
+					running = read > 0;
+				}
+				// If this line is reached we have no more data in stream - this happens regulary if you listening "special tag-stations"
+				// TODO: raise event so client can display a message - or retry stream
+				//if (this.OnErrorEvent != null) {
+				//	this.OnErrorEvent(this, new ErrorEventArgs("Strem just finished, discarding last song. Please restart ripping.", null));
+				//}
+				
+			} catch (Exception e) {
+				// Catch all exceptions to prevent application from falling into a illegal state
+				// TODO: raise event so client can display a message
+				//if (this.OnErrorEvent != null) {
+				//	this.OnErrorEvent(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
+				//}
+			} finally {
+				running = false;
+				RestoreSettings();
+			}
+		}
+		
+		protected void RestoreSettings()
+		{
+			Song = new System.IO.MemoryStream();
+		    Buffer = new System.Byte[LastManager.BufferSize];
+		
+			Position = 1;
+			LastPosition = 1;		
+			
+			// Metainfo
+			_CurrentSong = MetaInfo.GetEmptyMetaInfo();
+			
+			// LastManager
+			Status = ConnectionStatus.Connected;
+			
+			if(this.OnNewSong != null) {
+				this.OnNewSong(this, this._CurrentSong);
+			}
 		}
 		
 		protected void SaveSongCallback(System.IAsyncResult Ar)
@@ -171,6 +229,23 @@ namespace LibLastRip
 				//Download covers - don't care for errors because some not exist
 				WebClient Client = new WebClient();
 				
+				// First download larger covers - because small cover fails more often
+				// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
+				Thread.Sleep(5000);
+				try {
+					if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
+						Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+				} catch (System.Net.WebException) {
+					// no large cover
+				}
+
+				try {
+					if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
+						Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
+				} catch (System.Net.WebException) {
+					// no medium cover
+				}
+
 				try {
 					if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
 						Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
@@ -178,22 +253,8 @@ namespace LibLastRip
 					// no small cover
 				}
 				
-				try {
-					if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
-						Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
-				} catch (System.Net.WebException) {
-					// no medium cover
-				}
-				
-				try {
-					if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
-						Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
-				} catch (System.Net.WebException) {
-					// no large cover
-				}
 			} catch (Exception) {
-				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters
-				Console.WriteLine(AlbumPath + " creation error");
+				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
 			}
 		}
 	}
