@@ -32,22 +32,38 @@ namespace LibLastRip
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		
 		/// <summary>
+		/// System.Object used to lock the stream while reading.
+		/// </summary>
+		protected static System.Object ReadStreamLock = new System.Object();
+		
+		/// <summary>
 		/// Bytes of the stream that have been searched for SYNC-strings
 		/// </summary>
 		protected System.Int32 Position = 1;
 		protected System.Int32 LastPosition = 1;
 		
-		protected bool running = false;
+		/// <summary>
+		/// Occurs when an handled error happens
+		/// </summary>
+		/// <remarks>The arguments can be casted to LibLastRip.ErrorEventArgs</remarks>
+		public event System.EventHandler OnError;
 		
 		protected void StartRecording()
 		{
-			//Getting stream
-			WebRequest wReq = WebRequest.Create(this.StreamURL);
-			HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-			System.IO.Stream RadioStream = hRes.GetResponseStream();
-			
-			//Start reading process
-			RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+			//Aquire lock for the stream
+			if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
+			{
+				//Getting stream
+				WebRequest wReq = WebRequest.Create(this.StreamURL);
+				HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+				System.IO.Stream RadioStream = hRes.GetResponseStream();
+				
+				//Release lock when starting asynchronious call, since it will be used there
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				
+				//Start reading process
+				RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+			}
 		}
 		
 		/// <summary>
@@ -100,7 +116,8 @@ namespace LibLastRip
 						}else{
 							//If so, then save it but do it on another thread
 							SaveSongCall SSC = new SaveSongCall(this.SaveSong);
-							SSC.BeginInvoke(this.Song, this.Position, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+							//Minus one since we don't want the song to end with char 83 = 'S' from SYNC
+							SSC.BeginInvoke(this.Song, this.Position - 1, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 						}
 						
 						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
@@ -121,57 +138,68 @@ namespace LibLastRip
 		/// </summary>
 		protected void Save(System.IAsyncResult Res)
 		{
-			if (running == true) {
+			//Aquire a lock for the stream, to ensure that it's not already in use
+			if(!System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock)) {
+				//If the stream is locked, throw an exception.
 				throw new UnauthorizedAccessException("Illegal call to method Save - process is already active");
 			}
-			
-			running = true;
 			try {
+				//Save data read from async read.
 				Stream RadioStream = (Stream)Res.AsyncState;
 				System.Int32 Count = RadioStream.EndRead(Res);
-				
 				Save(Count);
 				
+				System.Int32 read = 1;
 				// we just read syncron from here - no nead for another AsyncCallback!
-				while (running) {
-					System.Int32 read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
+				while (read > 0) {
+					read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
 					Save(read);
-					running = read > 0;
 				}
 				// If this line is reached we have no more data in stream - this happens regulary if you listening "special tag-stations"
-				// TODO: raise event so client can display a message - or retry stream
-				//if (this.OnErrorEvent != null) {
-				//	this.OnErrorEvent(this, new ErrorEventArgs("Strem just finished, discarding last song. Please restart ripping.", null));
-				//}
+	
+				// Raise event so client can display a message
+				if (this.OnError != null)
+					this.OnError(this, new ErrorEventArgs("Strem just finished, discarding last song. Please restart ripping.", null));
+				
 				
 			} catch (Exception e) {
 				// Catch all exceptions to prevent application from falling into a illegal state
-				// TODO: raise event so client can display a message
-				//if (this.OnErrorEvent != null) {
-				//	this.OnErrorEvent(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
-				//}
+				// Raise event so client can display a message
+				if (this.OnError != null) 
+					this.OnError(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
+				
 			} finally {
-				running = false;
-				RestoreSettings();
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				this.RestoreState();
 			}
 		}
 		
-		protected void RestoreSettings()
+		/// <summary>
+		/// Restore the default variables at the state ConnectionStatus.Connected, when a stream has ended.
+		/// </summary>
+		protected void RestoreState()
 		{
-			Song = new System.IO.MemoryStream();
-		    Buffer = new System.Byte[LastManager.BufferSize];
-		
-			Position = 1;
-			LastPosition = 1;		
+			//Aquire lock to insure Stream isn't in use
+			if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
+			{
+				Song = new System.IO.MemoryStream();
+			    Buffer = new System.Byte[LastManager.BufferSize];
 			
-			// Metainfo
-			_CurrentSong = MetaInfo.GetEmptyMetaInfo();
-			
-			// LastManager
-			Status = ConnectionStatus.Connected;
-			
-			if(this.OnNewSong != null) {
-				this.OnNewSong(this, this._CurrentSong);
+				Position = 1;
+				LastPosition = 1;		
+				
+				// Metainfo
+				_CurrentSong = MetaInfo.GetEmptyMetaInfo();
+				
+				// LastManager
+				Status = ConnectionStatus.Connected;
+				
+				//Release lock again
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				
+				if(this.OnNewSong != null) {
+					this.OnNewSong(this, this._CurrentSong);
+				}
 			}
 		}
 		
@@ -255,6 +283,7 @@ namespace LibLastRip
 				
 			} catch (Exception) {
 				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
+				// TODO: Consider launching an OnError event
 			}
 		}
 	}
