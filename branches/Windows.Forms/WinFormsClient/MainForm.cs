@@ -58,12 +58,12 @@ namespace WinFormsClient
 			}
 			this.Manager.OnNewSong += new EventHandler(this.OnNewSong);
 			this.Manager.OnProgress += new EventHandler(this.OnProgress);
-						
+			
 			//Subscribe to stations changed event
 			this.Manager.StationChanged += new EventHandler(this.TuneInCallback);
 			
 			//Subscribe to command callback
-			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);	
+			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);
 		}
 		
 		protected virtual void OnProgress(System.Object Sender, System.EventArgs Args)
@@ -83,9 +83,9 @@ namespace WinFormsClient
 			
 			LibLastRip.ProgressEventArgs progressArgs = (LibLastRip.ProgressEventArgs)Args;
 			if (progressArgs.Streamprogress > this.StatusBar.Maximum) {
-			  this.StatusBar.Value = this.StatusBar.Maximum;							
+				this.StatusBar.Value = this.StatusBar.Maximum;
 			} else {
-			  this.StatusBar.Value = progressArgs.Streamprogress;			
+				this.StatusBar.Value = progressArgs.Streamprogress;
 			}
 		}
 		
@@ -106,7 +106,7 @@ namespace WinFormsClient
 			
 			
 			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
-			this.TrackDuration = 0;	
+			this.TrackDuration = 0;
 			this.StatusBar.Value = 0;
 			
 			//Get length of the track
@@ -212,21 +212,30 @@ namespace WinFormsClient
 		}
 		
 		void SkipButtonClick(object sender, EventArgs e)
-		{
-			this.DisableCommands();
-			this.Manager.SkipSong();
+		{   
+			// only skip if there is a song to skip
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
+				this.DisableCommands();
+				this.Manager.SkipSong();
+			}
 		}
 		
 		void LoveButtonClick(object sender, EventArgs e)
 		{
-			this.DisableCommands();
-			this.Manager.LoveSong();
+			// only love if there is a song to love
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
+				this.DisableCommands();
+				this.Manager.LoveSong();
+			}
 		}
 		
 		void HateButtonClick(object sender, EventArgs e)
 		{
-			this.DisableCommands();
-			this.Manager.BanSong();
+			// only hate if there is a song to hate
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
+				this.DisableCommands();
+				this.Manager.BanSong();
+			}
 		}
 		
 		void CommandCallback(object Sender, EventArgs e)
@@ -257,7 +266,7 @@ namespace WinFormsClient
 			this.LoveButton.Enabled = false;
 			this.HateButton.Enabled = false;
 			this.SkipButton.Enabled = false;
-		}	
+		}
 		
 		/// <summary>
 		/// Enables all command buttons
