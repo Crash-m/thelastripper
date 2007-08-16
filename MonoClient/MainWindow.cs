@@ -6,7 +6,7 @@ public partial class MainWindow: Gtk.Window
 	public LibLastRip.LastManager LastManager;
 	
 	protected MonoClient.Settings settings;
-	//TODO: Use invoke everywhere!
+
 	public MainWindow (): base ("")
 	{	
 		//Let Stetic generate the GUI
@@ -31,12 +31,31 @@ public partial class MainWindow: Gtk.Window
 		
 		//Handle update progressbar
 		this.LastManager.OnProgress += new System.EventHandler(this.UpdateProgress);
+		
+		//Handle expected exceptions
+		this.LastManager.OnError += new System.EventHandler(this.OnError);
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
 		a.RetVal = true;
+	}
+	
+	protected virtual void OnError(System.Object Sender, System.EventArgs e)
+	{
+		Gtk.Application.Invoke( delegate{
+		LibLastRip.ErrorEventArgs Args = (LibLastRip.ErrorEventArgs)e;
+		Gtk.MessageDialog MD = new Gtk.MessageDialog(
+		                                            this,
+		                                            Gtk.DialogFlags.DestroyWithParent,
+		                                            Args.Exception != null ? Gtk.MessageType.Error : Gtk.MessageType.Warning,
+		                                            Gtk.ButtonsType.Ok,
+		                                            Args.Message + (Args.Exception != null ? "\nException:\n" + Args.Exception.ToString() : ""));
+		MD.UseMarkup = false;
+		MD.Run();
+		MD.Destroy();
+		});
 	}
 	
 	protected virtual void OnConnectButtonClicked(object sender, System.EventArgs e)
@@ -66,12 +85,12 @@ public partial class MainWindow: Gtk.Window
 	//TODO: Use event from LastManager
 	protected virtual void UpdateProgress(System.Object Sender, System.EventArgs e)
 	{
-		Gtk.Application.Invoke( delegate {
+		Gtk.Application.Invoke( delegate{
 		//Avoid zero-division error
 		if(this.TrackDuration > 1)
 		{
 			LibLastRip.ProgressEventArgs Args = (LibLastRip.ProgressEventArgs)e;
-			System.Double Frac = (System.Double) (Args.Streamprogress / this.TrackDuration);
+			System.Double Frac = ((System.Double) Args.Streamprogress) / ((System.Double)this.TrackDuration);
 			if(Frac <= 1 && Frac >= (1/System.Double.MaxValue))
 			{
 				this.SongProgressBar.Fraction = Frac;

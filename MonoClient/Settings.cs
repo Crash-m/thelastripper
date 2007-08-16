@@ -46,6 +46,11 @@ namespace MonoClient
 			this.smil = Pref.smil;
 			this.SavePassword = Pref.SavePassword;
 			
+			//save proxy settings:
+			this._ProxyAdress = Pref.ProxyServer;
+			this._ProxyUsername = Pref.ProxyUsername;
+			this._ProxyPassword = Pref.ProxyPassword;
+			
 			this._UserName = Pref.UserName;
 			if(!Pref.HasPassword)
 			{
@@ -118,6 +123,28 @@ namespace MonoClient
 				return this._MusicPath;
 			}
 		}
+	
+		public System.String ProxyAdress
+		{
+			get
+			{
+				return this._ProxyAdress;
+			}
+		}
+		public System.String ProxyUsername
+		{
+			get
+			{
+				return this._ProxyUsername;
+			}
+		}
+		public System.String ProxyPassword
+		{
+			get
+			{
+				return this._ProxyPassword;
+			}
+		}		
 		
 		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context)
 		{

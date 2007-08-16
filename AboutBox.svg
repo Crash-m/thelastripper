@@ -13,14 +13,15 @@
    height="250"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   inkscape:version="0.45"
    version="1.0"
-   sodipodi:docbase="C:\Documents and Settings\Jop\Dokumenter\TheLastRipper\trunk"
+   sodipodi:docbase="/home/jopsen/Development/TheLastRipper/trunk"
    sodipodi:docname="AboutBox.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:export-filename="/home/jopsen/Development/TheLastRipperProject/AboutBox.png"
    inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-ydpi="90"
+   sodipodi:modified="true">
   <defs
      id="defs4">
     <linearGradient
@@ -282,7 +283,7 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="925"
      inkscape:window-height="626"
-     inkscape:window-x="4"
+     inkscape:window-x="5"
      inkscape:window-y="59" />
   <metadata
      id="metadata7">
@@ -905,7 +906,7 @@
              sodipodi:role="line"
              x="995.31635"
              y="2479.2785"
-             id="tspan3343">Version 1.1 Beta</tspan></text>
+             id="tspan3343">Version 1.1</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:1080.88439941px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"

@@ -1,5 +1,6 @@
 
 using System;
+using System.Net;
 
 namespace MonoClient
 {
@@ -36,6 +37,9 @@ namespace MonoClient
 			this.M3Ucheckbutton.Active = this.setting.m3u;
 			this.PLScheckbutton.Active = this.setting.pls;
 			this.SMILcheckbutton.Active = this.setting.smil;
+			this.ProxyServerEntry.Text = this.setting.ProxyAdress;
+			this.ProxyUserEntry.Text = this.setting.ProxyUsername;
+			this.ProxyPassEntry.Text = this.setting.ProxyPassword;
 			
 			this.UserNameEntry.Text = this.setting.UserName;
 			if(this.setting.Password != "")
@@ -54,6 +58,19 @@ namespace MonoClient
 		
 		protected virtual void OnLoginButtonClicked(object sender, System.EventArgs e)
 		{
+			//Use proxy if needed
+			if (this.ProxyServer != null && this.ProxyServer.Length > 0) {
+				WebProxy iwp = new WebProxy(this.ProxyServer);
+				if (this.ProxyUsername.Length > 0 || this.ProxyPassword.Length > 0) {
+					iwp.Credentials = new NetworkCredential(this.ProxyUsername, this.ProxyPassword);
+				}
+				WebRequest.DefaultWebProxy = iwp;//TODO: reconsider this selections since it's obsolete in .Net 2.0
+			} else {
+				WebRequest.DefaultWebProxy = GlobalProxySelection.GetEmptyWebProxy ();
+			}
+			//Disable proxy frame
+			this.ProxyFrame.Sensitive = false;
+			
 			//Disable login frame to insure no multiple request
 			this.LoginFrame.Sensitive = false;
 			
@@ -73,12 +90,17 @@ namespace MonoClient
 		///</summary>
 		protected virtual void OnHandshakeReturn(System.Object Sender, System.EventArgs Args)
 		{
+			Gtk.Application.Invoke( delegate {
 			LibLastRip.HandshakeEventArgs eArgs = (LibLastRip.HandshakeEventArgs)Args;
 			//Handle the response
 			if(eArgs.Success)
+			{
 				this.Closebutton.Sensitive = true;
-			else
+			}else{
 				this.LoginFrame.Sensitive = true;
+				this.ProxyFrame.Sensitive = true; //reenable proxy frame
+			}
+			});
 		}
 
 		protected virtual void OnUserNameEntryChanged(object sender, System.EventArgs e)
@@ -90,6 +112,35 @@ namespace MonoClient
 			}
 		}
 
+		///<summary>
+		///Gets proxy server
+		///</summary>
+		public virtual System.String ProxyServer
+		{
+			get{
+				return this.ProxyServerEntry.Text;
+			}
+		}
+		
+		///<summary>
+		///Gets proxy username
+		///</summary>
+		public virtual System.String ProxyUsername
+		{
+			get{
+				return this.ProxyUserEntry.Text;
+			}
+		}
+		
+		///<summary>
+		///Gets proxy password
+		///</summary>
+		public virtual System.String ProxyPassword
+		{
+			get{
+				return this.ProxyPassEntry.Text;
+			}
+		}
 		
 		///<summary>
 		///Gets current music folder from text entry
