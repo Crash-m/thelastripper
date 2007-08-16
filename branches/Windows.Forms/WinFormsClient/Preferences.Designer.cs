@@ -40,10 +40,10 @@ namespace WinFormsClient
 			this.LoginGroupBox = new System.Windows.Forms.GroupBox();
 			this.PasswordTextBox = new System.Windows.Forms.TextBox();
 			this.SavePasswordCheckBox = new System.Windows.Forms.CheckBox();
-			this.LoginButton = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.UserNameTextBox = new System.Windows.Forms.TextBox();
+			this.LoginButton = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.MusicPathTextBox = new System.Windows.Forms.TextBox();
 			this.BrowseButton = new System.Windows.Forms.Button();
@@ -112,7 +112,7 @@ namespace WinFormsClient
 			this.PasswordTextBox.Name = "PasswordTextBox";
 			this.PasswordTextBox.PasswordChar = '*';
 			this.PasswordTextBox.Size = new System.Drawing.Size(296, 20);
-			this.PasswordTextBox.TabIndex = 6;
+			this.PasswordTextBox.TabIndex = 2;
 			// 
 			// SavePasswordCheckBox
 			// 
@@ -121,19 +121,9 @@ namespace WinFormsClient
 			this.SavePasswordCheckBox.Location = new System.Drawing.Point(112, 72);
 			this.SavePasswordCheckBox.Name = "SavePasswordCheckBox";
 			this.SavePasswordCheckBox.Size = new System.Drawing.Size(104, 24);
-			this.SavePasswordCheckBox.TabIndex = 5;
+			this.SavePasswordCheckBox.TabIndex = 3;
 			this.SavePasswordCheckBox.Text = "Save password";
 			this.SavePasswordCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// LoginButton
-			// 
-			this.LoginButton.Location = new System.Drawing.Point(12, 205);
-			this.LoginButton.Name = "LoginButton";
-			this.LoginButton.Size = new System.Drawing.Size(75, 23);
-			this.LoginButton.TabIndex = 4;
-			this.LoginButton.Text = "&Login";
-			this.LoginButton.UseVisualStyleBackColor = true;
-			this.LoginButton.Click += new System.EventHandler(this.LoginButtonClick);
 			// 
 			// label2
 			// 
@@ -156,8 +146,18 @@ namespace WinFormsClient
 			this.UserNameTextBox.Location = new System.Drawing.Point(112, 19);
 			this.UserNameTextBox.Name = "UserNameTextBox";
 			this.UserNameTextBox.Size = new System.Drawing.Size(296, 20);
-			this.UserNameTextBox.TabIndex = 0;
+			this.UserNameTextBox.TabIndex = 1;
 			this.UserNameTextBox.TextChanged += new System.EventHandler(this.UserNameTextBoxTextChanged);
+			// 
+			// LoginButton
+			// 
+			this.LoginButton.Location = new System.Drawing.Point(12, 205);
+			this.LoginButton.Name = "LoginButton";
+			this.LoginButton.Size = new System.Drawing.Size(75, 23);
+			this.LoginButton.TabIndex = 4;
+			this.LoginButton.Text = "&Login";
+			this.LoginButton.UseVisualStyleBackColor = true;
+			this.LoginButton.Click += new System.EventHandler(this.LoginButtonClick);
 			// 
 			// groupBox2
 			// 
@@ -182,7 +182,7 @@ namespace WinFormsClient
 			this.BrowseButton.Location = new System.Drawing.Point(333, 19);
 			this.BrowseButton.Name = "BrowseButton";
 			this.BrowseButton.Size = new System.Drawing.Size(75, 23);
-			this.BrowseButton.TabIndex = 0;
+			this.BrowseButton.TabIndex = 2;
 			this.BrowseButton.Text = "&Browse";
 			this.BrowseButton.UseVisualStyleBackColor = true;
 			this.BrowseButton.Click += new System.EventHandler(this.BrowseButtonClick);
@@ -291,7 +291,7 @@ namespace WinFormsClient
 			this.groupBox4.Size = new System.Drawing.Size(128, 107);
 			this.groupBox4.TabIndex = 0;
 			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "groupBox4";
+			this.groupBox4.Text = "Format";
 			// 
 			// SMILCheckBox
 			// 
@@ -300,7 +300,7 @@ namespace WinFormsClient
 			this.SMILCheckBox.Location = new System.Drawing.Point(6, 77);
 			this.SMILCheckBox.Name = "SMILCheckBox";
 			this.SMILCheckBox.Size = new System.Drawing.Size(104, 24);
-			this.SMILCheckBox.TabIndex = 2;
+			this.SMILCheckBox.TabIndex = 10;
 			this.SMILCheckBox.Text = ".smil";
 			this.SMILCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -311,7 +311,7 @@ namespace WinFormsClient
 			this.PLSCheckBox.Location = new System.Drawing.Point(6, 49);
 			this.PLSCheckBox.Name = "PLSCheckBox";
 			this.PLSCheckBox.Size = new System.Drawing.Size(104, 24);
-			this.PLSCheckBox.TabIndex = 1;
+			this.PLSCheckBox.TabIndex = 9;
 			this.PLSCheckBox.Text = ".pls";
 			this.PLSCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -322,7 +322,7 @@ namespace WinFormsClient
 			this.M3UCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.M3UCheckBox.Name = "M3UCheckBox";
 			this.M3UCheckBox.Size = new System.Drawing.Size(104, 24);
-			this.M3UCheckBox.TabIndex = 0;
+			this.M3UCheckBox.TabIndex = 8;
 			this.M3UCheckBox.Text = ".m3u";
 			this.M3UCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -332,7 +332,7 @@ namespace WinFormsClient
 			this.OKbutton.Location = new System.Drawing.Point(93, 205);
 			this.OKbutton.Name = "OKbutton";
 			this.OKbutton.Size = new System.Drawing.Size(75, 23);
-			this.OKbutton.TabIndex = 4;
+			this.OKbutton.TabIndex = 5;
 			this.OKbutton.Text = "&Ok";
 			this.OKbutton.UseVisualStyleBackColor = true;
 			// 
@@ -364,7 +364,7 @@ namespace WinFormsClient
 			this.ProxyAdressTextBox.Location = new System.Drawing.Point(112, 13);
 			this.ProxyAdressTextBox.Name = "ProxyAdressTextBox";
 			this.ProxyAdressTextBox.Size = new System.Drawing.Size(296, 20);
-			this.ProxyAdressTextBox.TabIndex = 11;
+			this.ProxyAdressTextBox.TabIndex = 7;
 			// 
 			// ProxyPasswordTextBox
 			// 
@@ -372,7 +372,7 @@ namespace WinFormsClient
 			this.ProxyPasswordTextBox.Name = "ProxyPasswordTextBox";
 			this.ProxyPasswordTextBox.PasswordChar = '*';
 			this.ProxyPasswordTextBox.Size = new System.Drawing.Size(296, 20);
-			this.ProxyPasswordTextBox.TabIndex = 10;
+			this.ProxyPasswordTextBox.TabIndex = 9;
 			// 
 			// label3
 			// 
@@ -395,7 +395,7 @@ namespace WinFormsClient
 			this.ProxyUsernameTextBox.Location = new System.Drawing.Point(112, 36);
 			this.ProxyUsernameTextBox.Name = "ProxyUsernameTextBox";
 			this.ProxyUsernameTextBox.Size = new System.Drawing.Size(296, 20);
-			this.ProxyUsernameTextBox.TabIndex = 7;
+			this.ProxyUsernameTextBox.TabIndex = 8;
 			// 
 			// tabControl1
 			// 

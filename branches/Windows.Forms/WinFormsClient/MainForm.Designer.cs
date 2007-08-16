@@ -55,9 +55,13 @@ namespace WinFormsClient
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.StatusLabel = new System.Windows.Forms.Label();
+			this.AlbumLabel = new System.Windows.Forms.Label();
+			this.ArtistLabel = new System.Windows.Forms.Label();
+			this.TrackLabel = new System.Windows.Forms.Label();
 			this.StatuspictureBox = new System.Windows.Forms.PictureBox();
 			this.StatusBar = new System.Windows.Forms.ProgressBar();
+			this.DurationLabel = new System.Windows.Forms.Label();
+			this.StationLabel = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.MainMenu.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -86,7 +90,7 @@ namespace WinFormsClient
 			this.HateButton.Location = new System.Drawing.Point(249, 46);
 			this.HateButton.Name = "HateButton";
 			this.HateButton.Size = new System.Drawing.Size(75, 23);
-			this.HateButton.TabIndex = 4;
+			this.HateButton.TabIndex = 0;
 			this.HateButton.Text = "H&ate";
 			this.HateButton.UseVisualStyleBackColor = true;
 			this.HateButton.Click += new System.EventHandler(this.HateButtonClick);
@@ -97,7 +101,7 @@ namespace WinFormsClient
 			this.LoveButton.Location = new System.Drawing.Point(168, 46);
 			this.LoveButton.Name = "LoveButton";
 			this.LoveButton.Size = new System.Drawing.Size(75, 23);
-			this.LoveButton.TabIndex = 3;
+			this.LoveButton.TabIndex = 0;
 			this.LoveButton.Text = "&Love";
 			this.LoveButton.UseVisualStyleBackColor = true;
 			this.LoveButton.Click += new System.EventHandler(this.LoveButtonClick);
@@ -108,7 +112,7 @@ namespace WinFormsClient
 			this.SkipButton.Location = new System.Drawing.Point(87, 46);
 			this.SkipButton.Name = "SkipButton";
 			this.SkipButton.Size = new System.Drawing.Size(75, 23);
-			this.SkipButton.TabIndex = 2;
+			this.SkipButton.TabIndex = 0;
 			this.SkipButton.Text = "&Skip";
 			this.SkipButton.UseVisualStyleBackColor = true;
 			this.SkipButton.Click += new System.EventHandler(this.SkipButtonClick);
@@ -119,7 +123,7 @@ namespace WinFormsClient
 			this.TuneInButton.Location = new System.Drawing.Point(6, 46);
 			this.TuneInButton.Name = "TuneInButton";
 			this.TuneInButton.Size = new System.Drawing.Size(75, 23);
-			this.TuneInButton.TabIndex = 1;
+			this.TuneInButton.TabIndex = 2;
 			this.TuneInButton.Text = "&Tune in";
 			this.TuneInButton.UseVisualStyleBackColor = true;
 			this.TuneInButton.Click += new System.EventHandler(this.TuneInButtonClick);
@@ -144,7 +148,7 @@ namespace WinFormsClient
 			this.RadioStation.Location = new System.Drawing.Point(6, 19);
 			this.RadioStation.Name = "RadioStation";
 			this.RadioStation.Size = new System.Drawing.Size(326, 21);
-			this.RadioStation.TabIndex = 0;
+			this.RadioStation.TabIndex = 1;
 			// 
 			// MainMenu
 			// 
@@ -236,26 +240,53 @@ namespace WinFormsClient
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Controls.Add(this.StatusLabel);
+			this.groupBox2.Controls.Add(this.StationLabel);
+			this.groupBox2.Controls.Add(this.DurationLabel);
+			this.groupBox2.Controls.Add(this.AlbumLabel);
+			this.groupBox2.Controls.Add(this.ArtistLabel);
+			this.groupBox2.Controls.Add(this.TrackLabel);
 			this.groupBox2.Controls.Add(this.StatuspictureBox);
 			this.groupBox2.Controls.Add(this.StatusBar);
 			this.groupBox2.Location = new System.Drawing.Point(12, 110);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(338, 194);
-			this.groupBox2.TabIndex = 2;
+			this.groupBox2.Size = new System.Drawing.Size(338, 193);
+			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Currently recording";
 			// 
-			// StatusLabel
+			// AlbumLabel
 			// 
-			this.StatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.AlbumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.AlbumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AlbumLabel.Location = new System.Drawing.Point(6, 89);
+			this.AlbumLabel.Name = "AlbumLabel";
+			this.AlbumLabel.Size = new System.Drawing.Size(180, 23);
+			this.AlbumLabel.TabIndex = 4;
+			this.AlbumLabel.Text = "Album: ";
+			// 
+			// ArtistLabel
+			// 
+			this.ArtistLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.ArtistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ArtistLabel.Location = new System.Drawing.Point(6, 66);
+			this.ArtistLabel.Name = "ArtistLabel";
+			this.ArtistLabel.Size = new System.Drawing.Size(180, 23);
+			this.ArtistLabel.TabIndex = 3;
+			this.ArtistLabel.Text = "Artist: ";
+			// 
+			// TrackLabel
+			// 
+			this.TrackLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusLabel.Location = new System.Drawing.Point(6, 19);
-			this.StatusLabel.Name = "StatusLabel";
-			this.StatusLabel.Size = new System.Drawing.Size(180, 140);
-			this.StatusLabel.TabIndex = 2;
-			this.StatusLabel.Text = "Not recording...";
+			this.TrackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TrackLabel.Location = new System.Drawing.Point(6, 19);
+			this.TrackLabel.Name = "TrackLabel";
+			this.TrackLabel.Size = new System.Drawing.Size(180, 30);
+			this.TrackLabel.TabIndex = 2;
+			this.TrackLabel.Text = "Not recording...";
 			// 
 			// StatuspictureBox
 			// 
@@ -263,7 +294,7 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.StatuspictureBox.Location = new System.Drawing.Point(192, 19);
 			this.StatuspictureBox.Name = "StatuspictureBox";
-			this.StatuspictureBox.Size = new System.Drawing.Size(140, 140);
+			this.StatuspictureBox.Size = new System.Drawing.Size(140, 139);
 			this.StatuspictureBox.TabIndex = 1;
 			this.StatuspictureBox.TabStop = false;
 			// 
@@ -271,16 +302,37 @@ namespace WinFormsClient
 			// 
 			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusBar.Location = new System.Drawing.Point(6, 165);
+			this.StatusBar.Location = new System.Drawing.Point(6, 164);
 			this.StatusBar.Name = "StatusBar";
 			this.StatusBar.Size = new System.Drawing.Size(326, 23);
 			this.StatusBar.TabIndex = 0;
+			// 
+			// DurationLabel
+			// 
+			this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.DurationLabel.Location = new System.Drawing.Point(6, 112);
+			this.DurationLabel.Name = "DurationLabel";
+			this.DurationLabel.Size = new System.Drawing.Size(180, 23);
+			this.DurationLabel.TabIndex = 5;
+			this.DurationLabel.Text = "Duration: ";
+			// 
+			// StationLabel
+			// 
+			this.StationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.StationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.StationLabel.Location = new System.Drawing.Point(6, 135);
+			this.StationLabel.Name = "StationLabel";
+			this.StationLabel.Size = new System.Drawing.Size(180, 23);
+			this.StationLabel.TabIndex = 6;
+			this.StationLabel.Text = "Station: ";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 323);
+			this.ClientSize = new System.Drawing.Size(362, 322);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.MainMenu);
@@ -297,13 +349,17 @@ namespace WinFormsClient
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label DurationLabel;
+		private System.Windows.Forms.Label StationLabel;
+		private System.Windows.Forms.Label TrackLabel;
+		private System.Windows.Forms.Label ArtistLabel;
+		private System.Windows.Forms.Label AlbumLabel;
 		private System.Windows.Forms.MenuStrip MainMenu;
 		private System.Windows.Forms.Button HateButton;
 		private System.Windows.Forms.Button LoveButton;
 		private System.Windows.Forms.Button SkipButton;
 		private System.Windows.Forms.Button TuneInButton;
 		private System.Windows.Forms.ComboBox RadioStation;
-		private System.Windows.Forms.Label StatusLabel;
 		private System.Windows.Forms.PictureBox StatuspictureBox;
 		private System.Windows.Forms.ProgressBar StatusBar;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
