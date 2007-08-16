@@ -123,7 +123,7 @@
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">TheLastRipper</property>
-    <property name="Icon">resource:logo.svg</property>
+    <property name="Icon">resource:logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
