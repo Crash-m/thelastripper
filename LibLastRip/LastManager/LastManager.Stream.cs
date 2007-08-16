@@ -221,9 +221,13 @@ namespace LibLastRip
 		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
 		{
 			//Remove null-bytes at the end of each song.
+			//Ensure complete last frame with the magic number of 0-bytes to remove really!
 			System.Byte[] Buffer = Song.GetBuffer();
-			while(Count > 0 && Buffer[Count] == 0)
+			System.Int32 removed = 0;
+			while(Count > 0 && Buffer[Count] == 0 && removed < 26*16) {
 				Count--;
+				removed++;
+			}
 			
 			//Filesystem paths
 			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
