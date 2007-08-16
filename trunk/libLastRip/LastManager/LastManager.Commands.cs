@@ -26,7 +26,14 @@ namespace LibLastRip
 	This part of the LastManager class handles and exposes Last.FM commands.
 	*/
 	public partial class LastManager
-	{		
+	{	
+		///<summary>
+		///Constants for commands
+		///</summary>
+		public static String commandBan = "ban";
+		public static String commandSkip = "skip";
+		public static String commandLove = "love";
+		
 		///<summary>
 		///Occurs when an command execution is return
 		///</summary>
@@ -70,7 +77,7 @@ namespace LibLastRip
 				}
 				
 				//Ensure that song is skipped from save if hate or skip was used
-				if((System.String)Args[1] == "hate" || (System.String)Args[1] == "skip")
+				if((System.String)Args[1] == commandBan || (System.String)Args[1] == commandSkip)
 				{
 					this.SkipSave = Result;
 				}
@@ -91,7 +98,7 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand("skip");
+				this.SendCommand(commandSkip);
 			}
 		}
 		
@@ -102,7 +109,7 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand("love");
+				this.SendCommand(commandLove);
 			}
 		}
 		
@@ -113,7 +120,7 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand("ban");	
+				this.SendCommand(commandBan);	
 			}
 		}
 		

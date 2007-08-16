@@ -18,9 +18,10 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 
 namespace LibLastRip
-{	
+{
 	/*
 	This part of the class handles all stream related matters.
 	 */
@@ -31,48 +32,65 @@ namespace LibLastRip
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		
 		/// <summary>
+		/// System.Object used to lock the stream while reading.
+		/// </summary>
+		protected static System.Object ReadStreamLock = new System.Object();
+		
+		/// <summary>
 		/// Bytes of the stream that have been searched for SYNC-strings
 		/// </summary>
 		protected System.Int32 Position = 1;
 		protected System.Int32 LastPosition = 1;
 		
+		/// <summary>
+		/// Occurs when an handled error happens
+		/// </summary>
+		/// <remarks>The arguments can be casted to LibLastRip.ErrorEventArgs</remarks>
+		public event System.EventHandler OnError;
+		
 		protected void StartRecording()
 		{
-			//Getting stream
-			WebRequest wReq = WebRequest.Create(this.StreamURL);
-			HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-			System.IO.Stream RadioStream = hRes.GetResponseStream();
-			
-			//Start reading process
-			RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+			//Aquire lock for the stream
+			if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
+			{
+				//Getting stream
+				WebRequest wReq = WebRequest.Create(this.StreamURL);
+				HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+				System.IO.Stream RadioStream = hRes.GetResponseStream();
+				
+				//Release lock when starting asynchronious call, since it will be used there
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				
+				//Start reading process
+				RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+			}
 		}
 		
-		protected void Save(System.IAsyncResult Res)
-		{
-			Stream RadioStream = (Stream)Res.AsyncState;
-			System.Int32 Count = RadioStream.EndRead(Res);
-			
+		/// <summary>
+		/// This Method saves data from buffer to song 
+		/// </summary>
+		protected void Save(System.Int32 read) {
 			//Write data from buffer to memory
-			this.Song.Write(this.Buffer,0,Count);
+			this.Song.Write(this.Buffer,0,read);
 			
 			System.Byte []Buf = this.Song.GetBuffer();
 			
 			System.Int32 End = System.Convert.ToInt32(this.Song.Length)-4;
-			
+
 			//Request metadata if needed
 			if (this.Position == 1) {
 				this.UpdateMetaInfo();
 			} else {
 				if (this.OnProgress != null) {
-					// Update Progress bar every 10 seconds.
-					if (Position < LastPosition || LastPosition + 16384*10 < Position)
+					// Update Progress bar every 8 seconds.
+					if (Position < LastPosition || LastPosition + 16384*8 < Position)
 					{		//Note: 16383 [Byte/sec]
 						LastPosition = Position;
 						this.OnProgress(this, new ProgressEventArgs(Position / 16384));
 					}
 				}
 			}
-			
+
 			if(End > 0)
 			{
 				for(;this.Position < End; this.Position++)
@@ -98,7 +116,8 @@ namespace LibLastRip
 						}else{
 							//If so, then save it but do it on another thread
 							SaveSongCall SSC = new SaveSongCall(this.SaveSong);
-							SSC.BeginInvoke(this.Song, this.Position, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+							//Minus one since we don't want the song to end with char 83 = 'S' from SYNC
+							SSC.BeginInvoke(this.Song, this.Position - 1, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 						}
 						
 						//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
@@ -112,9 +131,76 @@ namespace LibLastRip
 					}
 				}
 			}
+		}
+		
+        /// <summary>
+		/// This Method saves a stream until it ends
+		/// </summary>
+		protected void Save(System.IAsyncResult Res)
+		{
+			//Aquire a lock for the stream, to ensure that it's not already in use
+			if(!System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock)) {
+				//If the stream is locked, throw an exception.
+				throw new UnauthorizedAccessException("Illegal call to method Save - process is already active");
+			}
+			try {
+				//Save data read from async read.
+				Stream RadioStream = (Stream)Res.AsyncState;
+				System.Int32 Count = RadioStream.EndRead(Res);
+				Save(Count);
+
+				System.Int32 read = 1;
+				// we just read syncron from here - no nead for another AsyncCallback!
+				while (read > 0) {
+					read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
+					Save(read);
+				}
+				// If this line is reached we have no more data in stream - this happens regulary if you listening "special tag-stations"
+	
+				// Raise event so client can display a message
+				if (this.OnError != null)
+					this.OnError(this, new ErrorEventArgs("Stream just finished, discarding last song. Please restart ripping.", null));
+				
+				
+			} catch (Exception e) {
+				// Catch all exceptions to prevent application from falling into a illegal state
+				// Raise event so client can display a message
+				if (this.OnError != null) 
+					this.OnError(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
+				
+			} finally {
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				this.RestoreState();
+			}
+		}
+		
+		/// <summary>
+		/// Restore the default variables at the state ConnectionStatus.Connected, when a stream has ended.
+		/// </summary>
+		protected void RestoreState()
+		{
+			//Aquire lock to insure Stream isn't in use
+			if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
+			{
+				Song = new System.IO.MemoryStream();
+			    Buffer = new System.Byte[LastManager.BufferSize];
 			
-			//Read from the radio stream again
-			RadioStream.BeginRead(this.Buffer , 0, LastManager.BufferSize, new System.AsyncCallback(this.Save),RadioStream);
+				Position = 1;
+				LastPosition = 1;		
+				
+				// Metainfo
+				_CurrentSong = MetaInfo.GetEmptyMetaInfo();
+				
+				// LastManager
+				Status = ConnectionStatus.Connected;
+				
+				//Release lock again
+				System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+				
+				if(this.OnNewSong != null) {
+					this.OnNewSong(this, this._CurrentSong);
+				}
+			}
 		}
 		
 		protected void SaveSongCallback(System.IAsyncResult Ar)
@@ -135,9 +221,13 @@ namespace LibLastRip
 		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
 		{
 			//Remove null-bytes at the end of each song.
+			//Ensure complete last frame with the magic number of 0-bytes to remove really!
 			System.Byte[] Buffer = Song.GetBuffer();
-			while(Count > 0 && Buffer[Count] == 0)
+			System.Int32 removed = 0;
+			while(Count > 0 && Buffer[Count] == 0 && removed < 26*16) {
 				Count--;
+				removed++;
+			}
 			
 			//Filesystem paths
 			System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
@@ -171,6 +261,23 @@ namespace LibLastRip
 				//Download covers - don't care for errors because some not exist
 				WebClient Client = new WebClient();
 				
+				// First download larger covers - because small cover fails more often
+				// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
+				Thread.Sleep(5000);
+				try {
+					if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
+						Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
+				} catch (System.Net.WebException) {
+					// no large cover
+				}
+
+				try {
+					if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
+						Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
+				} catch (System.Net.WebException) {
+					// no medium cover
+				}
+
 				try {
 					if((!File.Exists(AlbumPath + "SmallCover.jpg")) && SongInfo.AlbumcoverSmall != null)
 						Client.DownloadFile(SongInfo.AlbumcoverSmall,AlbumPath + "SmallCover.jpg");
@@ -178,22 +285,9 @@ namespace LibLastRip
 					// no small cover
 				}
 				
-				try {
-					if((!File.Exists(AlbumPath + "MediumCover.jpg")) && SongInfo.AlbumcoverMedium != null)
-						Client.DownloadFile(SongInfo.AlbumcoverMedium,AlbumPath + "MediumCover.jpg");
-				} catch (System.Net.WebException) {
-					// no medium cover
-				}
-				
-				try {
-					if((!File.Exists(AlbumPath + "LargeCover.jpg")) && SongInfo.AlbumcoverLarge != null)
-						Client.DownloadFile(SongInfo.AlbumcoverLarge,AlbumPath + "LargeCover.jpg");
-				} catch (System.Net.WebException) {
-					// no large cover
-				}
 			} catch (Exception) {
-				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters
-				Console.WriteLine(AlbumPath + " creation error");
+				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
+				// TODO: Consider launching an OnError event
 			}
 		}
 	}

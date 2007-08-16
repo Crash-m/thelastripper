@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <UserCombinePreferences filename="/home/jopsen/Development/TheLastRipper/trunk/trunk.mds">
-  <Files />
+  <Files>
+    <File filename="./libLastRip/LastManager/LastManager.Stream.cs" />
+    <File filename="./MonoClient/MainWindow.cs" />
+    <File filename="./MonoClient/Preferences.cs" />
+    <File filename="./libLastRip/LastManager/LastManager.Commands.cs" />
+  </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
@@ -9,7 +14,6 @@
             <Node name="LastManager" expanded="True">
               <Node name="LastManager.Commands.cs" expanded="False" selected="True" />
             </Node>
-            <Node name="PlayList" expanded="True" />
           </Node>
           <Node name="MonoClient" expanded="True" />
         </Node>
@@ -33,7 +37,7 @@
   </Views>
   <Properties>
     <Properties>
-      <Property key="ActiveWindow" value="" />
+      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/libLastRip/LastManager/LastManager.Commands.cs" />
       <Property key="ActiveConfiguration" value="Debug" />
     </Properties>
   </Properties>

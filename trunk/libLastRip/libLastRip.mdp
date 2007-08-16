@@ -29,6 +29,7 @@
     <File name="../taglib-sharp/taglib-sharp.dll" subtype="Code" buildaction="FileCopy" />
     <File name="./StreamAbstraction.cs" subtype="Code" buildaction="Compile" />
     <File name="./ProgressEventArgs.cs" subtype="Code" buildaction="Compile" />
+    <File name="./LastManager/ErrorEventArgs.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

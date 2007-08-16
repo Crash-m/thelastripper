@@ -43,15 +43,37 @@ namespace MonoClient {
         
         private Gtk.Label label3;
         
-        private Gtk.FileChooserWidget MusicPathChooser;
+        private Gtk.Frame ProxyFrame;
+        
+        private Gtk.Alignment GtkAlignment16;
+        
+        private Gtk.Table table2;
+        
+        private Gtk.Label label10;
+        
+        private Gtk.Label label8;
+        
+        private Gtk.Label label9;
+        
+        private Gtk.Entry ProxyPassEntry;
+        
+        private Gtk.Entry ProxyServerEntry;
+        
+        private Gtk.Entry ProxyUserEntry;
+        
+        private Gtk.Label GtkLabel27;
         
         private Gtk.Label label1;
+        
+        private Gtk.FileChooserWidget MusicPathChooser;
+        
+        private Gtk.Label label7;
         
         private Gtk.HBox hbox1;
         
         private Gtk.Frame frame5;
         
-        private Gtk.Alignment GtkAlignment12;
+        private Gtk.Alignment GtkAlignment15;
         
         private Gtk.VBox vbox3;
         
@@ -69,7 +91,7 @@ namespace MonoClient {
         
         private Gtk.CheckButton AllMixcheckbutton;
         
-        private Gtk.Label GtkLabel20;
+        private Gtk.Label GtkLabel21;
         
         private Gtk.Frame frame4;
         
@@ -83,7 +105,7 @@ namespace MonoClient {
         
         private Gtk.CheckButton SMILcheckbutton;
         
-        private Gtk.Label GtkLabel23;
+        private Gtk.Label GtkLabel26;
         
         private Gtk.Label label2;
         
@@ -108,7 +130,7 @@ namespace MonoClient {
             this.notebook1 = new Gtk.Notebook();
             this.notebook1.CanFocus = true;
             this.notebook1.Name = "notebook1";
-            this.notebook1.CurrentPage = 0;
+            this.notebook1.CurrentPage = 1;
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.vbox4 = new Gtk.VBox();
             this.vbox4.Name = "vbox4";
@@ -125,8 +147,6 @@ namespace MonoClient {
             // Container child GtkAlignment14.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
             this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.label4 = new Gtk.Label();
             this.label4.Name = "label4";
@@ -160,7 +180,7 @@ namespace MonoClient {
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image6";
+            w6.Name = "image54";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-apply", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
@@ -255,17 +275,114 @@ namespace MonoClient {
             this.label3.LabelProp = "User preferences";
             this.notebook1.SetTabLabel(this.vbox4, this.label3);
             // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.MusicPathChooser = new Gtk.FileChooserWidget(((Gtk.FileChooserAction)(2)));
-            this.MusicPathChooser.Name = "MusicPathChooser";
-            this.notebook1.Add(this.MusicPathChooser);
-            Gtk.Notebook.NotebookChild w22 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.MusicPathChooser]));
-            w22.Position = 1;
-            w22.TabExpand = false;
+            this.ProxyFrame = new Gtk.Frame();
+            this.ProxyFrame.Name = "ProxyFrame";
+            this.ProxyFrame.ShadowType = ((Gtk.ShadowType)(0));
+            this.ProxyFrame.LabelXalign = 0F;
+            // Container child ProxyFrame.Gtk.Container+ContainerChild
+            this.GtkAlignment16 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment16.Name = "GtkAlignment16";
+            this.GtkAlignment16.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment16.Gtk.Container+ContainerChild
+            this.table2 = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
+            this.table2.Name = "table2";
+            // Container child table2.Gtk.Table+TableChild
+            this.label10 = new Gtk.Label();
+            this.label10.Name = "label10";
+            this.label10.Xalign = 0F;
+            this.label10.LabelProp = Mono.Unix.Catalog.GetString("Password:");
+            this.table2.Add(this.label10);
+            Gtk.Table.TableChild w22 = ((Gtk.Table.TableChild)(this.table2[this.label10]));
+            w22.TopAttach = ((uint)(2));
+            w22.BottomAttach = ((uint)(3));
+            w22.XOptions = ((Gtk.AttachOptions)(4));
+            w22.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.label8 = new Gtk.Label();
+            this.label8.Name = "label8";
+            this.label8.Xalign = 0F;
+            this.label8.LabelProp = Mono.Unix.Catalog.GetString("Proxy server:");
+            this.table2.Add(this.label8);
+            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.table2[this.label8]));
+            w23.XOptions = ((Gtk.AttachOptions)(4));
+            w23.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.label9 = new Gtk.Label();
+            this.label9.Name = "label9";
+            this.label9.Xalign = 0F;
+            this.label9.LabelProp = Mono.Unix.Catalog.GetString("Username:");
+            this.table2.Add(this.label9);
+            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.table2[this.label9]));
+            w24.TopAttach = ((uint)(1));
+            w24.BottomAttach = ((uint)(2));
+            w24.XOptions = ((Gtk.AttachOptions)(4));
+            w24.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.ProxyPassEntry = new Gtk.Entry();
+            this.ProxyPassEntry.CanFocus = true;
+            this.ProxyPassEntry.Name = "ProxyPassEntry";
+            this.ProxyPassEntry.IsEditable = true;
+            this.ProxyPassEntry.Visibility = false;
+            this.ProxyPassEntry.InvisibleChar = '●';
+            this.table2.Add(this.ProxyPassEntry);
+            Gtk.Table.TableChild w25 = ((Gtk.Table.TableChild)(this.table2[this.ProxyPassEntry]));
+            w25.TopAttach = ((uint)(2));
+            w25.BottomAttach = ((uint)(3));
+            w25.LeftAttach = ((uint)(1));
+            w25.RightAttach = ((uint)(2));
+            w25.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.ProxyServerEntry = new Gtk.Entry();
+            this.ProxyServerEntry.CanFocus = true;
+            this.ProxyServerEntry.Name = "ProxyServerEntry";
+            this.ProxyServerEntry.IsEditable = true;
+            this.ProxyServerEntry.InvisibleChar = '●';
+            this.table2.Add(this.ProxyServerEntry);
+            Gtk.Table.TableChild w26 = ((Gtk.Table.TableChild)(this.table2[this.ProxyServerEntry]));
+            w26.LeftAttach = ((uint)(1));
+            w26.RightAttach = ((uint)(2));
+            w26.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.ProxyUserEntry = new Gtk.Entry();
+            this.ProxyUserEntry.CanFocus = true;
+            this.ProxyUserEntry.Name = "ProxyUserEntry";
+            this.ProxyUserEntry.IsEditable = true;
+            this.ProxyUserEntry.InvisibleChar = '●';
+            this.table2.Add(this.ProxyUserEntry);
+            Gtk.Table.TableChild w27 = ((Gtk.Table.TableChild)(this.table2[this.ProxyUserEntry]));
+            w27.TopAttach = ((uint)(1));
+            w27.BottomAttach = ((uint)(2));
+            w27.LeftAttach = ((uint)(1));
+            w27.RightAttach = ((uint)(2));
+            w27.YOptions = ((Gtk.AttachOptions)(4));
+            this.GtkAlignment16.Add(this.table2);
+            this.ProxyFrame.Add(this.GtkAlignment16);
+            this.GtkLabel27 = new Gtk.Label();
+            this.GtkLabel27.Name = "GtkLabel27";
+            this.GtkLabel27.LabelProp = Mono.Unix.Catalog.GetString("<b>Proxy settings</b>");
+            this.GtkLabel27.UseMarkup = true;
+            this.ProxyFrame.LabelWidget = this.GtkLabel27;
+            this.notebook1.Add(this.ProxyFrame);
+            Gtk.Notebook.NotebookChild w30 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.ProxyFrame]));
+            w30.Position = 1;
+            w30.TabExpand = false;
             // Notebook tab
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
-            this.label1.LabelProp = "Music directory";
-            this.notebook1.SetTabLabel(this.MusicPathChooser, this.label1);
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Network");
+            this.notebook1.SetTabLabel(this.ProxyFrame, this.label1);
+            // Container child notebook1.Gtk.Notebook+NotebookChild
+            this.MusicPathChooser = new Gtk.FileChooserWidget(((Gtk.FileChooserAction)(2)));
+            this.MusicPathChooser.Name = "MusicPathChooser";
+            this.notebook1.Add(this.MusicPathChooser);
+            Gtk.Notebook.NotebookChild w31 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.MusicPathChooser]));
+            w31.Position = 2;
+            w31.TabExpand = false;
+            // Notebook tab
+            this.label7 = new Gtk.Label();
+            this.label7.Name = "label7";
+            this.label7.LabelProp = "Music directory";
+            this.notebook1.SetTabLabel(this.MusicPathChooser, this.label7);
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
@@ -275,10 +392,10 @@ namespace MonoClient {
             this.frame5.ShadowType = ((Gtk.ShadowType)(0));
             this.frame5.LabelXalign = 0F;
             // Container child frame5.Gtk.Container+ContainerChild
-            this.GtkAlignment12 = new Gtk.Alignment(0F, 0F, 1F, 1F);
-            this.GtkAlignment12.Name = "GtkAlignment12";
-            this.GtkAlignment12.LeftPadding = ((uint)(12));
-            // Container child GtkAlignment12.Gtk.Container+ContainerChild
+            this.GtkAlignment15 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment15.Name = "GtkAlignment15";
+            this.GtkAlignment15.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment15.Gtk.Container+ContainerChild
             this.vbox3 = new Gtk.VBox();
             this.vbox3.Name = "vbox3";
             // Container child vbox3.Gtk.Box+BoxChild
@@ -288,10 +405,10 @@ namespace MonoClient {
             this.TopTrackscheckbutton.Label = "Top tracks";
             this.TopTrackscheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.TopTrackscheckbutton);
-            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.vbox3[this.TopTrackscheckbutton]));
-            w23.Position = 0;
-            w23.Expand = false;
-            w23.Fill = false;
+            Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.vbox3[this.TopTrackscheckbutton]));
+            w32.Position = 0;
+            w32.Expand = false;
+            w32.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.Lovedcheckbutton = new Gtk.CheckButton();
             this.Lovedcheckbutton.CanFocus = true;
@@ -299,10 +416,10 @@ namespace MonoClient {
             this.Lovedcheckbutton.Label = "Recent loved tracks";
             this.Lovedcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.Lovedcheckbutton);
-            Gtk.Box.BoxChild w24 = ((Gtk.Box.BoxChild)(this.vbox3[this.Lovedcheckbutton]));
-            w24.Position = 1;
-            w24.Expand = false;
-            w24.Fill = false;
+            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.vbox3[this.Lovedcheckbutton]));
+            w33.Position = 1;
+            w33.Expand = false;
+            w33.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.Weekcheckbutton = new Gtk.CheckButton();
             this.Weekcheckbutton.CanFocus = true;
@@ -310,10 +427,10 @@ namespace MonoClient {
             this.Weekcheckbutton.Label = "Weekly track chart";
             this.Weekcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.Weekcheckbutton);
-            Gtk.Box.BoxChild w25 = ((Gtk.Box.BoxChild)(this.vbox3[this.Weekcheckbutton]));
-            w25.Position = 2;
-            w25.Expand = false;
-            w25.Fill = false;
+            Gtk.Box.BoxChild w34 = ((Gtk.Box.BoxChild)(this.vbox3[this.Weekcheckbutton]));
+            w34.Position = 2;
+            w34.Expand = false;
+            w34.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.TopTracksMixcheckbutton = new Gtk.CheckButton();
             this.TopTracksMixcheckbutton.CanFocus = true;
@@ -321,10 +438,10 @@ namespace MonoClient {
             this.TopTracksMixcheckbutton.Label = "Top tracks mixed";
             this.TopTracksMixcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.TopTracksMixcheckbutton);
-            Gtk.Box.BoxChild w26 = ((Gtk.Box.BoxChild)(this.vbox3[this.TopTracksMixcheckbutton]));
-            w26.Position = 3;
-            w26.Expand = false;
-            w26.Fill = false;
+            Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(this.vbox3[this.TopTracksMixcheckbutton]));
+            w35.Position = 3;
+            w35.Expand = false;
+            w35.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.LovedMixcheckbutton = new Gtk.CheckButton();
             this.LovedMixcheckbutton.CanFocus = true;
@@ -332,10 +449,10 @@ namespace MonoClient {
             this.LovedMixcheckbutton.Label = "Recent loved tracks mixed";
             this.LovedMixcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.LovedMixcheckbutton);
-            Gtk.Box.BoxChild w27 = ((Gtk.Box.BoxChild)(this.vbox3[this.LovedMixcheckbutton]));
-            w27.Position = 4;
-            w27.Expand = false;
-            w27.Fill = false;
+            Gtk.Box.BoxChild w36 = ((Gtk.Box.BoxChild)(this.vbox3[this.LovedMixcheckbutton]));
+            w36.Position = 4;
+            w36.Expand = false;
+            w36.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.WeekMixcheckbutton = new Gtk.CheckButton();
             this.WeekMixcheckbutton.CanFocus = true;
@@ -343,10 +460,10 @@ namespace MonoClient {
             this.WeekMixcheckbutton.Label = "Weekly track chart mixed";
             this.WeekMixcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.WeekMixcheckbutton);
-            Gtk.Box.BoxChild w28 = ((Gtk.Box.BoxChild)(this.vbox3[this.WeekMixcheckbutton]));
-            w28.Position = 5;
-            w28.Expand = false;
-            w28.Fill = false;
+            Gtk.Box.BoxChild w37 = ((Gtk.Box.BoxChild)(this.vbox3[this.WeekMixcheckbutton]));
+            w37.Position = 5;
+            w37.Expand = false;
+            w37.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.AllMixcheckbutton = new Gtk.CheckButton();
             this.AllMixcheckbutton.CanFocus = true;
@@ -354,20 +471,20 @@ namespace MonoClient {
             this.AllMixcheckbutton.Label = "All tracks mixed";
             this.AllMixcheckbutton.DrawIndicator = true;
             this.vbox3.Add(this.AllMixcheckbutton);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.vbox3[this.AllMixcheckbutton]));
-            w29.Position = 6;
-            w29.Expand = false;
-            w29.Fill = false;
-            this.GtkAlignment12.Add(this.vbox3);
-            this.frame5.Add(this.GtkAlignment12);
-            this.GtkLabel20 = new Gtk.Label();
-            this.GtkLabel20.Name = "GtkLabel20";
-            this.GtkLabel20.LabelProp = Mono.Unix.Catalog.GetString("<b>Playlists</b>");
-            this.GtkLabel20.UseMarkup = true;
-            this.frame5.LabelWidget = this.GtkLabel20;
+            Gtk.Box.BoxChild w38 = ((Gtk.Box.BoxChild)(this.vbox3[this.AllMixcheckbutton]));
+            w38.Position = 6;
+            w38.Expand = false;
+            w38.Fill = false;
+            this.GtkAlignment15.Add(this.vbox3);
+            this.frame5.Add(this.GtkAlignment15);
+            this.GtkLabel21 = new Gtk.Label();
+            this.GtkLabel21.Name = "GtkLabel21";
+            this.GtkLabel21.LabelProp = Mono.Unix.Catalog.GetString("<b>Playlists</b>");
+            this.GtkLabel21.UseMarkup = true;
+            this.frame5.LabelWidget = this.GtkLabel21;
             this.hbox1.Add(this.frame5);
-            Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame5]));
-            w32.Position = 0;
+            Gtk.Box.BoxChild w41 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame5]));
+            w41.Position = 0;
             // Container child hbox1.Gtk.Box+BoxChild
             this.frame4 = new Gtk.Frame();
             this.frame4.Name = "frame4";
@@ -387,10 +504,10 @@ namespace MonoClient {
             this.M3Ucheckbutton.Label = ".m3u";
             this.M3Ucheckbutton.DrawIndicator = true;
             this.vbox2.Add(this.M3Ucheckbutton);
-            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.vbox2[this.M3Ucheckbutton]));
-            w33.Position = 0;
-            w33.Expand = false;
-            w33.Fill = false;
+            Gtk.Box.BoxChild w42 = ((Gtk.Box.BoxChild)(this.vbox2[this.M3Ucheckbutton]));
+            w42.Position = 0;
+            w42.Expand = false;
+            w42.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.PLScheckbutton = new Gtk.CheckButton();
             this.PLScheckbutton.CanFocus = true;
@@ -398,10 +515,10 @@ namespace MonoClient {
             this.PLScheckbutton.Label = ".pls";
             this.PLScheckbutton.DrawIndicator = true;
             this.vbox2.Add(this.PLScheckbutton);
-            Gtk.Box.BoxChild w34 = ((Gtk.Box.BoxChild)(this.vbox2[this.PLScheckbutton]));
-            w34.Position = 1;
-            w34.Expand = false;
-            w34.Fill = false;
+            Gtk.Box.BoxChild w43 = ((Gtk.Box.BoxChild)(this.vbox2[this.PLScheckbutton]));
+            w43.Position = 1;
+            w43.Expand = false;
+            w43.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.SMILcheckbutton = new Gtk.CheckButton();
             this.SMILcheckbutton.CanFocus = true;
@@ -409,73 +526,73 @@ namespace MonoClient {
             this.SMILcheckbutton.Label = ".smil";
             this.SMILcheckbutton.DrawIndicator = true;
             this.vbox2.Add(this.SMILcheckbutton);
-            Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(this.vbox2[this.SMILcheckbutton]));
-            w35.Position = 2;
-            w35.Expand = false;
-            w35.Fill = false;
+            Gtk.Box.BoxChild w44 = ((Gtk.Box.BoxChild)(this.vbox2[this.SMILcheckbutton]));
+            w44.Position = 2;
+            w44.Expand = false;
+            w44.Fill = false;
             this.GtkAlignment13.Add(this.vbox2);
             this.frame4.Add(this.GtkAlignment13);
-            this.GtkLabel23 = new Gtk.Label();
-            this.GtkLabel23.Name = "GtkLabel23";
-            this.GtkLabel23.LabelProp = Mono.Unix.Catalog.GetString("<b>Output formats</b>");
-            this.GtkLabel23.UseMarkup = true;
-            this.frame4.LabelWidget = this.GtkLabel23;
+            this.GtkLabel26 = new Gtk.Label();
+            this.GtkLabel26.Name = "GtkLabel26";
+            this.GtkLabel26.LabelProp = Mono.Unix.Catalog.GetString("<b>Output formats</b>");
+            this.GtkLabel26.UseMarkup = true;
+            this.frame4.LabelWidget = this.GtkLabel26;
             this.hbox1.Add(this.frame4);
-            Gtk.Box.BoxChild w38 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame4]));
-            w38.Position = 1;
-            w38.Expand = false;
-            w38.Fill = false;
+            Gtk.Box.BoxChild w47 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame4]));
+            w47.Position = 1;
+            w47.Expand = false;
+            w47.Fill = false;
             this.notebook1.Add(this.hbox1);
-            Gtk.Notebook.NotebookChild w39 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.hbox1]));
-            w39.Position = 2;
-            w39.TabExpand = false;
+            Gtk.Notebook.NotebookChild w48 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.hbox1]));
+            w48.Position = 3;
+            w48.TabExpand = false;
             // Notebook tab
             this.label2 = new Gtk.Label();
             this.label2.Name = "label2";
             this.label2.LabelProp = "Playlist settings";
             this.notebook1.SetTabLabel(this.hbox1, this.label2);
             w1.Add(this.notebook1);
-            Gtk.Box.BoxChild w40 = ((Gtk.Box.BoxChild)(w1[this.notebook1]));
-            w40.Position = 0;
+            Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(w1[this.notebook1]));
+            w49.Position = 0;
             // Internal child MonoClient.Preferences.ActionArea
-            Gtk.HButtonBox w41 = this.ActionArea;
-            w41.Events = ((Gdk.EventMask)(256));
-            w41.Name = "MonoClient.Preferences_ActionArea";
-            w41.Spacing = 6;
-            w41.BorderWidth = ((uint)(5));
-            w41.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w50 = this.ActionArea;
+            w50.Events = ((Gdk.EventMask)(256));
+            w50.Name = "MonoClient.Preferences_ActionArea";
+            w50.Spacing = 6;
+            w50.BorderWidth = ((uint)(5));
+            w50.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child MonoClient.Preferences_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.Closebutton = new Gtk.Button();
             this.Closebutton.CanDefault = true;
             this.Closebutton.CanFocus = true;
             this.Closebutton.Name = "Closebutton";
             // Container child Closebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w42 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            w42.Name = "GtkAlignment8";
+            Gtk.Alignment w51 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            w51.Name = "GtkAlignment8";
             // Container child GtkAlignment8.Gtk.Container+ContainerChild
-            Gtk.HBox w43 = new Gtk.HBox();
-            w43.Name = "GtkHBox13";
-            w43.Spacing = 2;
+            Gtk.HBox w52 = new Gtk.HBox();
+            w52.Name = "GtkHBox13";
+            w52.Spacing = 2;
             // Container child GtkHBox13.Gtk.Container+ContainerChild
-            Gtk.Image w44 = new Gtk.Image();
-            w44.Name = "image7";
-            w44.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
-            w43.Add(w44);
+            Gtk.Image w53 = new Gtk.Image();
+            w53.Name = "image55";
+            w53.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
+            w52.Add(w53);
             // Container child GtkHBox13.Gtk.Container+ContainerChild
-            Gtk.Label w46 = new Gtk.Label();
-            w46.Name = "GtkLabel19";
-            w46.LabelProp = Mono.Unix.Catalog.GetString("Close");
-            w43.Add(w46);
-            w42.Add(w43);
-            this.Closebutton.Add(w42);
+            Gtk.Label w55 = new Gtk.Label();
+            w55.Name = "GtkLabel19";
+            w55.LabelProp = Mono.Unix.Catalog.GetString("Close");
+            w52.Add(w55);
+            w51.Add(w52);
+            this.Closebutton.Add(w51);
             this.AddActionWidget(this.Closebutton, 0);
-            Gtk.ButtonBox.ButtonBoxChild w50 = ((Gtk.ButtonBox.ButtonBoxChild)(w41[this.Closebutton]));
-            w50.Expand = false;
-            w50.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w59 = ((Gtk.ButtonBox.ButtonBoxChild)(w50[this.Closebutton]));
+            w59.Expand = false;
+            w59.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 400;
+            this.DefaultWidth = 408;
             this.DefaultHeight = 286;
             this.Show();
             this.UserNameEntry.Changed += new System.EventHandler(this.OnUserNameEntryChanged);
