@@ -1,5 +1,9 @@
 2007-08-16  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
+	* MonoClient/logo.png: Using raster image as logo instead of svg
+
+2007-08-16  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
 	* MonoClient/MainWindow.cs: Implementing stream error support to handle
 	  end of streams.
 	* MonoClient/Preferences.cs: Implementing proxy support
