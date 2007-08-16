@@ -64,6 +64,33 @@ namespace WinFormsClient
 			
 			//Subscribe to command callback
 			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);
+			
+			//Subscribe to OnError
+			this.Manager.OnError += new EventHandler(this.OnError);
+		}
+		
+		protected virtual void OnError(System.Object Sender, System.EventArgs e)
+		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.OnProgress), new System.Object[]{Sender, e});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			LibLastRip.ErrorEventArgs Args = (LibLastRip.ErrorEventArgs)e;
+			if(Args.Exception != null)
+			{
+				System.Windows.Forms.MessageBox.Show(Args.Message + "\nException:\n" + Args.Exception.ToString(),"An expected exception has occured",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
+			}else{
+				System.Windows.Forms.MessageBox.Show(Args.Message, "A problem has occured", System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Warning);
+			}
 		}
 		
 		protected virtual void OnProgress(System.Object Sender, System.EventArgs Args)
@@ -118,12 +145,11 @@ namespace WinFormsClient
 			
 			if(Info.Streaming)
 			{
-				System.String StrT = "";
-				StrT += "Track: " + Info.Track;
-				StrT += "\nArtist: " + Info.Artist;
-				StrT += "\nAlbum: " + Info.Album;
-				StrT += "\nDuration: " + Info.Trackduration + " sec.";
-				this.StatusLabel.Text = StrT;
+				this.TrackLabel.Text = Info.Track;
+				this.ArtistLabel.Text = "Artist: " + Info.Artist;
+				this.AlbumLabel.Text = "Album: " + Info.Album;
+				this.DurationLabel.Text = "Duration: " + Info.Trackduration;
+				this.StationLabel.Text = "Station: " + Info.Station;
 				
 				//TODO: multithread download of album cover
 				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
@@ -163,17 +189,24 @@ namespace WinFormsClient
 			Application.Exit();
 		}
 		
-		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs e)
+		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs Args)
 		{
-			//TODO: Fix to run on mono for OS X using OPEN
-			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/LegalNotice");
+			try
+			{
+				System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/LegalNotice");
+			}catch(System.Exception e){
+				System.Windows.Forms.MessageBox.Show("Failed to open website: http://code.google.com/p/thelastripper/wiki/LegalNotice\nException:\n" + e.ToString(),"Failed to open browser",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
+			}
 		}
 		
-		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs e)
+		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs Args)
 		{
-			//TODO: Fix to run on mono for OS X using OPEN
-			System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/HelpWindows");
-			//TODO: Have a look at issue 45, apply patch to both "online help" and "legal issue"
+			try
+			{
+				System.Diagnostics.Process.Start("http://code.google.com/p/thelastripper/wiki/HelpWindows");
+			}catch(System.Exception e){
+				System.Windows.Forms.MessageBox.Show("Failed to open website: http://code.google.com/p/thelastripper/wiki/HelpWindows\nException:\n" + e.ToString(),"Failed to open browser",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
+			}
 		}
 		
 		void AboutToolStripMenuItemClick(object sender, EventArgs e)
