@@ -22,6 +22,7 @@ namespace MonoClient
 			{
 				this.LoginFrame.Sensitive = true;
 				this.Closebutton.Sensitive = false;
+				this.ProxyFrame.Sensitive = true;
 			}
 			this.setting = setting;
 			this.Manager = Manager;

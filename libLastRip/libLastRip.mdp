@@ -1,5 +1,5 @@
-<Project name="libLastRip" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+<Project name="libLastRip" fileversion="2.0" Description="A C# library used by TheLastRipper to record audio streams from Last.fm" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug" assembly="libLastRip" />
       <Build debugmode="True" target="Library" />
@@ -36,4 +36,14 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Assembly" localcopy="True" refto="../taglib-sharp/taglib-sharp.dll" />
   </References>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am" SyncReferences="True" IsAutotoolsProject="True" RelativeConfigureInPath="../">
+    <BuildFilesVar Sync="True" Name="FILES" />
+    <DeployFilesVar />
+    <ResourcesVar Sync="True" Name="RESOURCES" />
+    <OthersVar />
+    <GacRefVar Sync="True" Name="REFERENCES" />
+    <AsmRefVar Sync="True" Name="REFERENCES" />
+    <ProjectRefVar Sync="True" Name="REFERENCES" />
+  </MonoDevelop.Autotools.MakefileInfo>
+  <Deployment.LinuxDeployData generatePcFile="False" />
 </Project>

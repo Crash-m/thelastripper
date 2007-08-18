@@ -1,5 +1,5 @@
-<Combine name="trunk" fileversion="2.0">
-  <Configurations active="Debug">
+<Combine releaseversion="1.1.0" name="thelastripper" fileversion="2.0">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Debug" />
       <Entry build="True" name="MonoClient" configuration="Debug" />

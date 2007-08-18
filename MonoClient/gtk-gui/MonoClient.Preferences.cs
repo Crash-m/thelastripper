@@ -147,6 +147,8 @@ namespace MonoClient {
             // Container child GtkAlignment14.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
             this.table1.Name = "table1";
+            this.table1.RowSpacing = ((uint)(6));
+            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.label4 = new Gtk.Label();
             this.label4.Name = "label4";
@@ -180,7 +182,7 @@ namespace MonoClient {
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image54";
+            w6.Name = "image14";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-apply", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
@@ -276,6 +278,7 @@ namespace MonoClient {
             this.notebook1.SetTabLabel(this.vbox4, this.label3);
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.ProxyFrame = new Gtk.Frame();
+            this.ProxyFrame.Sensitive = false;
             this.ProxyFrame.Name = "ProxyFrame";
             this.ProxyFrame.ShadowType = ((Gtk.ShadowType)(0));
             this.ProxyFrame.LabelXalign = 0F;
@@ -286,6 +289,8 @@ namespace MonoClient {
             // Container child GtkAlignment16.Gtk.Container+ContainerChild
             this.table2 = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
             this.table2.Name = "table2";
+            this.table2.RowSpacing = ((uint)(6));
+            this.table2.ColumnSpacing = ((uint)(6));
             // Container child table2.Gtk.Table+TableChild
             this.label10 = new Gtk.Label();
             this.label10.Name = "label10";
@@ -575,7 +580,7 @@ namespace MonoClient {
             w52.Spacing = 2;
             // Container child GtkHBox13.Gtk.Container+ContainerChild
             Gtk.Image w53 = new Gtk.Image();
-            w53.Name = "image55";
+            w53.Name = "image15";
             w53.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
             w52.Add(w53);
             // Container child GtkHBox13.Gtk.Container+ContainerChild

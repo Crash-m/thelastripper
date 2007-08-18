@@ -101,7 +101,7 @@ public partial class MainWindow {
         this.AddAccelGroup(w1.AccelGroup);
         this.Name = "MainWindow";
         this.Title = Mono.Unix.Catalog.GetString("TheLastRipper");
-        this.Icon = Gdk.Pixbuf.LoadFromResource("logo2.png");
+        this.Icon = Gdk.Pixbuf.LoadFromResource("logo.png");
         this.WindowPosition = ((Gtk.WindowPosition)(4));
         // Container child MainWindow.Gtk.Container+ContainerChild
         this.vbox4 = new Gtk.VBox();
@@ -158,14 +158,14 @@ public partial class MainWindow {
         w5.Name = "GtkAlignment";
         // Container child GtkAlignment.Gtk.Container+ContainerChild
         Gtk.HBox w6 = new Gtk.HBox();
-        w6.Name = "GtkHBox1";
+        w6.Name = "GtkHBox";
         w6.Spacing = 2;
-        // Container child GtkHBox1.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Image w7 = new Gtk.Image();
-        w7.Name = "image64";
+        w7.Name = "image2";
         w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-play", Gtk.IconSize.Menu, 16);
         w6.Add(w7);
-        // Container child GtkHBox1.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Label w9 = new Gtk.Label();
         w9.Name = "GtkLabel";
         w9.LabelProp = Mono.Unix.Catalog.GetString("Tune in");
@@ -185,19 +185,19 @@ public partial class MainWindow {
         this.SkipButton.UseUnderline = true;
         // Container child SkipButton.Gtk.Container+ContainerChild
         Gtk.Alignment w14 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w14.Name = "GtkAlignment3";
-        // Container child GtkAlignment3.Gtk.Container+ContainerChild
+        w14.Name = "GtkAlignment";
+        // Container child GtkAlignment.Gtk.Container+ContainerChild
         Gtk.HBox w15 = new Gtk.HBox();
-        w15.Name = "GtkHBox2";
+        w15.Name = "GtkHBox";
         w15.Spacing = 2;
-        // Container child GtkHBox2.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Image w16 = new Gtk.Image();
-        w16.Name = "image65";
+        w16.Name = "image3";
         w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-next", Gtk.IconSize.Menu, 16);
         w15.Add(w16);
-        // Container child GtkHBox2.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Label w18 = new Gtk.Label();
-        w18.Name = "GtkLabel1";
+        w18.Name = "GtkLabel";
         w18.LabelProp = Mono.Unix.Catalog.GetString("Skip");
         w18.UseUnderline = true;
         w15.Add(w18);
@@ -215,19 +215,19 @@ public partial class MainWindow {
         this.LoveButton.Name = "LoveButton";
         // Container child LoveButton.Gtk.Container+ContainerChild
         Gtk.Alignment w23 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w23.Name = "GtkAlignment4";
-        // Container child GtkAlignment4.Gtk.Container+ContainerChild
+        w23.Name = "GtkAlignment";
+        // Container child GtkAlignment.Gtk.Container+ContainerChild
         Gtk.HBox w24 = new Gtk.HBox();
-        w24.Name = "GtkHBox3";
+        w24.Name = "GtkHBox";
         w24.Spacing = 2;
-        // Container child GtkHBox3.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Image w25 = new Gtk.Image();
-        w25.Name = "image66";
+        w25.Name = "image4";
         w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_3d-favourites", Gtk.IconSize.Menu, 16);
         w24.Add(w25);
-        // Container child GtkHBox3.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Label w27 = new Gtk.Label();
-        w27.Name = "GtkLabel2";
+        w27.Name = "GtkLabel";
         w27.LabelProp = Mono.Unix.Catalog.GetString("Love");
         w24.Add(w27);
         w23.Add(w24);
@@ -244,19 +244,19 @@ public partial class MainWindow {
         this.BanButton.Name = "BanButton";
         // Container child BanButton.Gtk.Container+ContainerChild
         Gtk.Alignment w32 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w32.Name = "GtkAlignment5";
-        // Container child GtkAlignment5.Gtk.Container+ContainerChild
+        w32.Name = "GtkAlignment";
+        // Container child GtkAlignment.Gtk.Container+ContainerChild
         Gtk.HBox w33 = new Gtk.HBox();
-        w33.Name = "GtkHBox4";
+        w33.Name = "GtkHBox";
         w33.Spacing = 2;
-        // Container child GtkHBox4.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Image w34 = new Gtk.Image();
-        w34.Name = "image67";
+        w34.Name = "image5";
         w34.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
         w33.Add(w34);
-        // Container child GtkHBox4.Gtk.Container+ContainerChild
+        // Container child GtkHBox.Gtk.Container+ContainerChild
         Gtk.Label w36 = new Gtk.Label();
-        w36.Name = "GtkLabel3";
+        w36.Name = "GtkLabel";
         w36.LabelProp = Mono.Unix.Catalog.GetString("Ban");
         w33.Add(w36);
         w32.Add(w33);

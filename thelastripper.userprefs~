@@ -1,20 +1,14 @@
 <?xml version="1.0"?>
 <UserCombinePreferences filename="/home/jopsen/Development/TheLastRipper/trunk/trunk.mds">
   <Files>
-    <File filename="./libLastRip/LastManager/LastManager.Stream.cs" />
-    <File filename="./MonoClient/MainWindow.cs" />
-    <File filename="./MonoClient/Preferences.cs" />
     <File filename="./libLastRip/LastManager/LastManager.Commands.cs" />
+    <File filename="./MonoClient/app.desktop" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
-        <Node expanded="True">
-          <Node name="libLastRip" expanded="True">
-            <Node name="LastManager" expanded="True">
-              <Node name="LastManager.Commands.cs" expanded="False" selected="True" />
-            </Node>
-          </Node>
+        <Node expanded="True" selected="True">
+          <Node name="libLastRip" expanded="True" />
           <Node name="MonoClient" expanded="True" />
         </Node>
       </TreeView>
@@ -37,8 +31,8 @@
   </Views>
   <Properties>
     <Properties>
-      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/libLastRip/LastManager/LastManager.Commands.cs" />
-      <Property key="ActiveConfiguration" value="Debug" />
+      <Property key="ActiveWindow" value="/home/jopsen/Development/TheLastRipper/trunk/MonoClient/app.desktop" />
+      <Property key="ActiveConfiguration" value="Release" />
     </Properties>
   </Properties>
 </UserCombinePreferences>
