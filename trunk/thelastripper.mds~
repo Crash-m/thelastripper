@@ -1,0 +1,21 @@
+<Combine releaseversion="1.1.0" name="trunk" fileversion="2.0">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="libLastRip" configuration="Debug" />
+      <Entry build="True" name="MonoClient" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="libLastRip" configuration="Release" />
+      <Entry build="True" name="MonoClient" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="MonoClient" single="True">
+    <Execute type="None" entry="libLastRip" />
+    <Execute type="None" entry="MonoClient" />
+    <Execute type="None" entry="TheLastRipper" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./libLastRip/libLastRip.mdp" />
+    <Entry filename="./MonoClient/MonoClient.mdp" />
+  </Entries>
+</Combine>
