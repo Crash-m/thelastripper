@@ -1,6 +1,9 @@
 #summary These are the known issues for the Linux version of TheLastRipper.
 #labels Help,Linux,Issues
 
+===TheLastRipper Version 1.1.0===
+Currently no known issues, though the stability of the skip, love and hate features are known to be questionable.
+
 ===TheLastRipper Version 1.0.2===
 Sometimes the songs are getting cut too soon or too late (delay between metadata and music), see this bug report for a more technical description of the issue:
    * http://code.google.com/p/thelastripper/issues/detail?id=6
