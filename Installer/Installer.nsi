@@ -2,10 +2,10 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "TheLastRipper"
-!define PRODUCT_VERSION "1.0.0"
-!define PRODUCT_PUBLISHER "TheLastRipper developer team."
-!define PRODUCT_WEB_SITE "http://code.google.com/p/thelastripper"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\WinFormsClient.exe"
+!define PRODUCT_VERSION "1.1.0"
+!define PRODUCT_PUBLISHER "TheLastRipper developer team"
+!define PRODUCT_WEB_SITE "http://thelastripper.com"
+!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\TheLastRipper.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
@@ -22,14 +22,12 @@
 ; License page
 !define MUI_LICENSEPAGE_CHECKBOX
 !insertmacro MUI_PAGE_LICENSE "license.txt"
-; Components page
-!insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-!define MUI_FINISHPAGE_RUN "$INSTDIR\WinFormsClient.exe"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\TheLastRipper.exe"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -50,11 +48,12 @@ ShowUnInstDetails show
 Section "TheLastRipper" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\WinFormsClient\bin\Release\WinFormsClient.exe"
+  File "taglib-sharp.dll"
+  File "LibLastRip.dll"
+  File "TheLastRipper.exe"
   CreateDirectory "$SMPROGRAMS\TheLastRipper"
-  CreateShortCut "$SMPROGRAMS\TheLastRipper\TheLastRipper.lnk" "$INSTDIR\WinFormsClient.exe"
-  CreateShortCut "$DESKTOP\TheLastRipper.lnk" "$INSTDIR\WinFormsClient.exe"
-  File "..\WinFormsClient\bin\Release\LibLastRip.dll"
+  CreateShortCut "$SMPROGRAMS\TheLastRipper\TheLastRipper.lnk" "$INSTDIR\TheLastRipper.exe"
+  CreateShortCut "$DESKTOP\TheLastRipper.lnk" "$INSTDIR\TheLastRipper.exe"
 SectionEnd
 
 Section -AdditionalIcons
@@ -65,19 +64,14 @@ SectionEnd
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\WinFormsClient.exe"
+  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\TheLastRipper.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\WinFormsClient.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\TheLastRipper.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
-
-; Section descriptions
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "TheLastRipper binaries."
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
 Function un.onUninstSuccess
@@ -93,8 +87,9 @@ FunctionEnd
 Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\TheLastRipper.exe"
   Delete "$INSTDIR\LibLastRip.dll"
-  Delete "$INSTDIR\WinFormsClient.exe"
+  Delete "$INSTDIR\taglib-sharp.dll"
 
   Delete "$SMPROGRAMS\TheLastRipper\Uninstall.lnk"
   Delete "$SMPROGRAMS\TheLastRipper\Website.lnk"
