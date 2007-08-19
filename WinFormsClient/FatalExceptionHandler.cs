@@ -20,9 +20,6 @@ namespace WinFormsClient
 	{
 		public FatalExceptionHandler(System.Exception e)
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
 			
 			//TODO: View the exception in a nice manner.
