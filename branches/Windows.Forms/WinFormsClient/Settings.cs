@@ -13,10 +13,6 @@ namespace WinFormsClient
 		public Settings()
 		{
 			this._MusicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic);
-			if(!System.IO.Directory.Exists(this._MusicPath))
-			{
-				System.IO.Directory.CreateDirectory(this._MusicPath);
-			}
 			this.Manager = new LibLastRip.LastManager(this._MusicPath);
 			
 			this.LaunchPreferences();
@@ -32,6 +28,18 @@ namespace WinFormsClient
 			//TODO: do settings
 			Preferences Pref = new Preferences(this.Manager, this);
 			Pref.ShowDialog();
+
+			if(!System.IO.Directory.Exists(Pref.MusicPathTextBox.Text))
+			{
+				try
+				{
+					System.IO.Directory.CreateDirectory(Pref.MusicPathTextBox.Text);
+				}
+				catch(System.Exception e)
+				{
+					throw new System.Exception("Music directory doesn't exist and could not be created! Please select another directory.", e);
+				}
+			}
 			
 			this._MusicPath = Pref.MusicPathTextBox.Text;
 			this.Manager.MusicPath = Pref.MusicPathTextBox.Text;
