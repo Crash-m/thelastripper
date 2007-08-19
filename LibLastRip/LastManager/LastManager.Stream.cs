@@ -82,8 +82,8 @@ namespace LibLastRip
 				this.UpdateMetaInfo();
 			} else {
 				if (this.OnProgress != null) {
-					// Update Progress bar every 8 seconds.
-					if (Position < LastPosition || LastPosition + 16384*8 < Position)
+					// Update Progress bar every 2 seconds.
+					if (Position < LastPosition || LastPosition + 16384*2 < Position)
 					{		//Note: 16383 [Byte/sec]
 						LastPosition = Position;
 						this.OnProgress(this, new ProgressEventArgs(Position / 16384));
