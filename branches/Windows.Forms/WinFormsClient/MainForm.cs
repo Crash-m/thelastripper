@@ -77,7 +77,7 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.OnProgress), new System.Object[]{Sender, e});
+				this.Invoke(new System.EventHandler(this.OnError), new System.Object[]{Sender, e});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}
