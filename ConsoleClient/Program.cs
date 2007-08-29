@@ -7,6 +7,7 @@
  * Sie können diese Vorlage unter Extras > Optionen > Codeerstellung > Standardheader ändern.
  */
 using System;
+using System.Threading;
 
 namespace ConsoleClient
 {
@@ -32,6 +33,7 @@ namespace ConsoleClient
 		protected System.String radioStation;
 		
 		protected bool working = true;
+		protected long timeout = 0;
 
 		public static void Main(string[] args)
 		{
@@ -90,6 +92,13 @@ namespace ConsoleClient
 			program.Manager.Handshake(program.userName, LibLastRip.LastManager.CalculateHash(program.password));
 						
 			while (program.working) {
+				program.timeout++;
+				Thread.Sleep(1000);
+				if (program.timeout > 15) {
+					Console.WriteLine("timeout for " + program.timeout.ToString() + "seconds");
+					program.working = false;
+				}
+				    
 			} 
 		}
 		
@@ -103,6 +112,7 @@ namespace ConsoleClient
 		protected virtual void OnProgress(System.Object Sender, System.EventArgs Args)
 		{
 			Console.Write(".");
+			timeout = 0;
 		}
 		
 		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
@@ -116,22 +126,26 @@ namespace ConsoleClient
 			Console.WriteLine("TrackLength: " + TrackLength.ToString());
 			
 			Console.Write("{");
+			timeout = 0;
 		}
 
 		void TuneInCallback(System.Object Sender, System.EventArgs e)
 		{
 			Console.WriteLine("# TUNEINCALLBACK #");
+			timeout = 0;
 		}
 
 		void CommandCallback(object Sender, EventArgs e)
 		{
 			Console.WriteLine("# COMMANDCALLBACK #");
+			timeout = 0;
 		}
 		
 		void LoginCallback(System.Object Sender, System.EventArgs Args)
 		{
 			Console.WriteLine("# LOGINCALLBACK #");
 			this.Manager.ChangeStation(this.radioStation);
+			timeout = 0;
 		}
 
 	}
