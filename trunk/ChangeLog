@@ -1,3 +1,8 @@
+2007-09-01  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/LastManager/LastManager.cs: Fixing minor bug, somehow an
+	  empty line caused TheLastRipper to fail login
+
 2007-08-16  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
 	* MonoClient/logo.png: Using raster image as logo instead of svg
