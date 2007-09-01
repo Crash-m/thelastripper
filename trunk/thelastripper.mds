@@ -1,4 +1,4 @@
-<Combine releaseversion="1.1.0" name="thelastripper" fileversion="2.0">
+<Combine releaseversion="1.1.1" name="thelastripper" fileversion="2.0">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Debug" />

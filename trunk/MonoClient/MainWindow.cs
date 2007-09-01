@@ -52,7 +52,6 @@ public partial class MainWindow: Gtk.Window
 		                                            Args.Exception != null ? Gtk.MessageType.Error : Gtk.MessageType.Warning,
 		                                            Gtk.ButtonsType.Ok,
 		                                            Args.Message + (Args.Exception != null ? "\nException:\n" + Args.Exception.ToString() : ""));
-		MD.UseMarkup = false;
 		MD.Run();
 		MD.Destroy();
 		});
