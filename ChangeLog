@@ -1,5 +1,9 @@
 2007-09-01  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
 
+	Bugfix 1.1.1 RC
+
+2007-09-01  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
 	* libLastRip/LastManager/LastManager.cs: Fixing minor bug, somehow an
 	  empty line caused TheLastRipper to fail login
 

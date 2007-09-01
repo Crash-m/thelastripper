@@ -94,6 +94,8 @@ namespace MonoClient
 			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);		
 			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 			
+			if(!System.IO.Directory.Exists(AppData))
+				System.IO.Directory.CreateDirectory(AppData);
 			System.IO.FileStream Stream = System.IO.File.Create(AppData + "/TheLastRipper.conf");
 			
 			Formatter.Serialize(Stream,this);
