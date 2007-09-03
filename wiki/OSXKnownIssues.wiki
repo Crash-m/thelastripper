@@ -1,5 +1,10 @@
 #summary These are the known issues for the Mac OS X version of TheLastRipper.
 #labels Help,OSX,Issues
+*Please post bugs under issues, not as comments here. Thanks!*
+
+==All versions broken ==
+TheLastRipper depends on Last.fm protocol 1.1, which have been dropped. I'm sorry to say that this breaks all current versions of TheLastRipper. More information:
+http://jopsen.dk/blog/2007/09/all-version-of-thelastripper-broken
 
 == TheLastRipper Version 0.2.1 ==
 *delay between metadata and music* Sometimes the songs are getting cut too soon or too late, see this bug report for a more technical description of the issue:
