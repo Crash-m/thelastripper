@@ -42,7 +42,7 @@ namespace LibLastRip
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected System.Boolean SkipSave = false;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
-	
+		
 		protected static ArrayList invalidPathChars = getInvalidPathChars();
 		protected static ArrayList invalidFilenameChars = getInvalidFilenameChars();
 		
@@ -58,7 +58,7 @@ namespace LibLastRip
 			chars.Add('\\');
 			
 			// Special characters which are not in system list but are also invalid
-			chars.Add('?');		
+			chars.Add('?');
 			return chars;
 		}
 
@@ -77,12 +77,12 @@ namespace LibLastRip
 			chars.Add('?');
 			return chars;
 		}
-					
+		
 		///<summary>
 		///Initializes an instance of LastManager, and initiates handshake
 		///</summary>
 		public LastManager(System.String UserID, System.String Password, System.String MusicPath)
-		{	
+		{
 			this.MusicPath = MusicPath;
 			
 			this.Handshake(UserID, Password);
@@ -92,7 +92,7 @@ namespace LibLastRip
 		///Initializes an instance of LastManager
 		///</summary>
 		public LastManager(System.String MusicPath)
-		{	
+		{
 			this.MusicPath = MusicPath;
 		}
 
@@ -165,41 +165,42 @@ namespace LibLastRip
 			foreach(System.String Line in Lines)
 			{
 				System.String []Opts = Line.Split (new System.Char[] {'='},2);
-				
-				switch(Opts[0].ToLower())
-				{
-					case "session":
-						if(Opts[1].ToLower() == "failed")
-						{
-							Result = false;
-						}else{
-							Result = true;
-							this.SessionID = Opts[1];
-						}
-						break;
-					case "stream_url":
-						this.StreamURL = Opts[1];
-						break;
-					case "subscriber":
-						if(Opts[1] == "1")
-						{
-							this.Subscripter = true;
-						}else{
-							this.Subscripter = false;
-						}
-						break;
-					case "framehack":
-						//Don't know what this is for
-						break;
-					case "base_url":
-						this.BaseURL = Opts[1];
-						break;
-					case "base_path":
-						this.BasePath = Opts[1];
-						break;
-					default:
-						Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
-						break;
+				if (Opts.Length > 1) {
+					switch(Opts[0].ToLower())
+					{
+						case "session":
+							if(Opts[1].ToLower() == "failed")
+							{
+								Result = false;
+							}else{
+								Result = true;
+								this.SessionID = Opts[1];
+							}
+							break;
+						case "stream_url":
+							this.StreamURL = Opts[1];
+							break;
+						case "subscriber":
+							if(Opts[1] == "1")
+							{
+								this.Subscripter = true;
+							}else{
+								this.Subscripter = false;
+							}
+							break;
+						case "framehack":
+							//Don't know what this is for
+							break;
+						case "base_url":
+							this.BaseURL = Opts[1];
+							break;
+						case "base_path":
+							this.BasePath = Opts[1];
+							break;
+						default:
+							Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
+							break;
+					}
 				}
 			}
 			return Result;
@@ -222,18 +223,18 @@ namespace LibLastRip
 		
 		public static System.String CalculateHash(System.String Pass)
 		{
-				/*
+			/*
 				Inspired by Last-Exit-4 another GNU GPL licensed Last.FM client
-				*/
-				MD5 Hasher = MD5.Create ();
-				byte[] Hash = Hasher.ComputeHash (Encoding.Default.GetBytes (Pass));
-				StringBuilder StrHash = new StringBuilder ();
-				
-				for (int i = 0; i < Hash.Length; ++i) {
-					StrHash.Append (Hash[i].ToString ("x2"));
-				}
-				
-				return StrHash.ToString ();
+			 */
+			MD5 Hasher = MD5.Create ();
+			byte[] Hash = Hasher.ComputeHash (Encoding.Default.GetBytes (Pass));
+			StringBuilder StrHash = new StringBuilder ();
+			
+			for (int i = 0; i < Hash.Length; ++i) {
+				StrHash.Append (Hash[i].ToString ("x2"));
+			}
+			
+			return StrHash.ToString ();
 		}
 		
 		///<summary>
@@ -297,7 +298,7 @@ namespace LibLastRip
 			//can't have null (this should have been prevented in the header for MetaInfo)
 			if(PathName == null || PathName == "")
 				throw new System.Exception("A directory must have a name, it can't be null");
-				
+			
 			return LastManager.RemoveChars(PathName, invalidPathChars);
 		}
 		
@@ -323,7 +324,7 @@ namespace LibLastRip
 		{
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
-			{	
+			{
 				if (InvalidChars.Contains(TestChar)) {
 					Output += '_';
 				}
