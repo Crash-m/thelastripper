@@ -24,9 +24,9 @@ namespace LibLastRip
 {
 	/*
 	This part of the LastManager class handles and exposes Last.FM commands.
-	*/
+	 */
 	public partial class LastManager
-	{	
+	{
 		///<summary>
 		///Constants for commands
 		///</summary>
@@ -61,10 +61,10 @@ namespace LibLastRip
 				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
 				
 				Stream Stream = Response.GetResponseStream();
-				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+				StreamReader sr = new StreamReader(Stream, Encoding.UTF8);
 				
-				System.String []Data = StreamReader.ReadToEnd().Split(new System.Char[] {'\n'});
-			
+				System.String []Data = sr.ReadToEnd().Split(new System.Char[] {'\n'});
+				
 				System.Boolean Result = false;
 				foreach(System.String Line in Data)
 				{
@@ -98,7 +98,8 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand(commandSkip);
+				// this.SendCommand(commandSkip);
+				this.skip = true;
 			}
 		}
 		
@@ -120,7 +121,7 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand(commandBan);	
+				this.SendCommand(commandBan);
 			}
 		}
 		
@@ -166,20 +167,21 @@ namespace LibLastRip
 			{
 				System.String []Opts = Line.Split(new System.Char[] {'='});
 				
-				if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
-				{
-					Result = true;
-					//If we're already recording then don't save current song
-					if(this.Status == ConnectionStatus.Recording)
+				if (Opts.Length > 1) {
+					if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
 					{
-						//Dont save the current song
-						this.SkipSave = true;
-					}else{
-						//If not already recording, then start it and change status
-						this.Status = ConnectionStatus.Recording;
-						this.StartRecording();
-					}
-				}
+						Result = true;
+						//If we're already recording then don't save current song
+						if(this.Status == ConnectionStatus.Recording)
+						{
+							//Dont save the current song
+							this.SkipSave = true;
+						}else{
+							//If not already recording, then start it and change status
+							this.Status = ConnectionStatus.Recording;
+							this.StartRecording();
+						}
+					}}
 			}
 			
 			//Fire an event
