@@ -125,7 +125,6 @@ namespace LibLastRip
 			
 			//Read data sync, since stream.beginRead is worth the trouble when the connections have been established
 			System.String Data = StreamReader.ReadToEnd();
-			
 			//Closeing everything related to a connection, and releasing system resources
 			StreamReader.Close();
 			Stream.Close();
