@@ -192,6 +192,9 @@ namespace LibLastRip
 					if (this.OnError != null) {
 						this.OnError(this, new ErrorEventArgs("No playlist found. Please restart ripping.", null));
 					}
+					
+					// no way to continue...
+					started = true;
 				}
 			}
 		}
@@ -290,8 +293,9 @@ namespace LibLastRip
 			} catch (Exception e) {
 				// Catch all exceptions to prevent application from falling into a illegal state
 				// Raise event so client can display a message
-				if (this.OnError != null)
+				if (this.OnError != null) {
 					this.OnError(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
+				}
 				
 				this.RestoreState();
 			} finally {
