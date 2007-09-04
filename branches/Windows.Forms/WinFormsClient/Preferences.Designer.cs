@@ -62,7 +62,7 @@ namespace WinFormsClient
 			this.OKbutton = new System.Windows.Forms.Button();
 			this.NetworkGroupBox = new System.Windows.Forms.GroupBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.ProxyAdressTextBox = new System.Windows.Forms.TextBox();
+			this.ProxyAddressTextBox = new System.Windows.Forms.TextBox();
 			this.ProxyPasswordTextBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -339,7 +339,7 @@ namespace WinFormsClient
 			// NetworkGroupBox
 			// 
 			this.NetworkGroupBox.Controls.Add(this.label5);
-			this.NetworkGroupBox.Controls.Add(this.ProxyAdressTextBox);
+			this.NetworkGroupBox.Controls.Add(this.ProxyAddressTextBox);
 			this.NetworkGroupBox.Controls.Add(this.ProxyPasswordTextBox);
 			this.NetworkGroupBox.Controls.Add(this.label3);
 			this.NetworkGroupBox.Controls.Add(this.label4);
@@ -357,14 +357,14 @@ namespace WinFormsClient
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(100, 23);
 			this.label5.TabIndex = 12;
-			this.label5.Text = "Proxy Adress:";
+			this.label5.Text = "proxy host:";
 			// 
-			// ProxyAdressTextBox
+			// ProxyAddressTextBox
 			// 
-			this.ProxyAdressTextBox.Location = new System.Drawing.Point(112, 13);
-			this.ProxyAdressTextBox.Name = "ProxyAdressTextBox";
-			this.ProxyAdressTextBox.Size = new System.Drawing.Size(296, 20);
-			this.ProxyAdressTextBox.TabIndex = 7;
+			this.ProxyAddressTextBox.Location = new System.Drawing.Point(112, 13);
+			this.ProxyAddressTextBox.Name = "ProxyAddressTextBox";
+			this.ProxyAddressTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyAddressTextBox.TabIndex = 7;
 			// 
 			// ProxyPasswordTextBox
 			// 
@@ -492,7 +492,7 @@ namespace WinFormsClient
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
 		public System.Windows.Forms.TextBox ProxyPasswordTextBox;
-		public System.Windows.Forms.TextBox ProxyAdressTextBox;
+		public System.Windows.Forms.TextBox ProxyAddressTextBox;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.GroupBox LoginGroupBox;
 		public System.Windows.Forms.TextBox PasswordTextBox;

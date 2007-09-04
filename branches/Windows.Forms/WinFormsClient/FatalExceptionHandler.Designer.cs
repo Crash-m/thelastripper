@@ -64,7 +64,7 @@ namespace WinFormsClient
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(352, 35);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "An exception has occured";
+			this.label1.Text = "An exception has occurred";
 			// 
 			// ExceptionBox
 			// 
@@ -124,7 +124,7 @@ namespace WinFormsClient
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "FatalExceptionHandler";
-			this.Text = "An exception has occured";
+			this.Text = "An exception has occurred";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
