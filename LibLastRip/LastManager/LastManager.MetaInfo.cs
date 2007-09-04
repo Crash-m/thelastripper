@@ -78,33 +78,12 @@ namespace LibLastRip
 		///<summary>
 		///Handles metadata callback from UpdateMetaInfo
 		///</summary>					
-		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
+		protected void MetaInfoDownloaded(System.IAsyncResult ar)
 		{
 			try
 			{
-				//Get the HttpWebRequest
-				HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
-				
-				//Get the response
-				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
-				
-				//Get the stream
-				Stream Stream = Response.GetResponseStream();
-				
-				//Create a StreamReader to warp the stream
-				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
-				
-				//Read all the data from the stream, notice this could be multithreaded with use of Stream.beginRead
-				//But sources on the net suggest that it's not relevant
-				System.String Data = StreamReader.ReadToEnd();
-				
-				//Close the StreamReader, Stream and Response to release system resources
-				StreamReader.Close();
-				Stream.Close();
-				Response.Close();
-				
-				//Parse the newly recived data
-				MetaInfo nSong = new MetaInfo(Data, currentXspf);
+				//Parse the xspf data into MetaInfo structure
+				MetaInfo nSong = new MetaInfo(xspf, currentXspfTrack);
 				
 				//Is this a new song?
 				if(!MetaInfo.Equals(nSong,this._CurrentSong))

@@ -30,8 +30,8 @@ namespace LibLastRip
 	public partial class LastManager
 	{
 		protected static System.Int32 BufferSize = 8192; //8 KiB
-		protected ArrayList xspfList = new ArrayList();
-		protected XSPF currentXspf = XSPF.GetEmptyXSPF();
+		protected XSPF xspf = XSPF.GetEmptyXSPF();
+		protected XSPFTrack currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 		protected MemoryStream Song = new System.IO.MemoryStream();
 		protected System.Boolean SkipSave = false;
 		protected System.Int32 counter = 0;
@@ -53,7 +53,7 @@ namespace LibLastRip
 		/// <remarks>The arguments can be casted to LibLastRip.ErrorEventArgs</remarks>
 		public event System.EventHandler OnError;
 		
-		private void AddChildren(XSPF xspf, XmlNode xnod, int level) {
+		private void AddChildren(XSPFTrack xspfTrack, XmlNode xnod, int level) {
 			String pad = new String(' ', level * 2);
 
 			// if this is an element, extract any attributes
@@ -62,34 +62,34 @@ namespace LibLastRip
 				XmlNamedNodeMap mapAttributes = xnod.Attributes;
 				if ("location".Equals(xnod.Name)) {
 					// got song url
-					xspf.Location = xnod.InnerText;
+					xspfTrack.Location = xnod.InnerText;
 				}
 				if ("title".Equals(xnod.Name)) {
-					xspf.Title = xnod.InnerText;
+					xspfTrack.Title = xnod.InnerText;
 				}
 				if ("id".Equals(xnod.Name)) {
-					xspf.Id = xnod.InnerText;
+					xspfTrack.Id = xnod.InnerText;
 				}
 				if ("album".Equals(xnod.Name)) {
-					xspf.Album = xnod.InnerText;
+					xspfTrack.Album = xnod.InnerText;
 				}
 				if ("creator".Equals(xnod.Name)) {
-					xspf.Creator = xnod.InnerText;
+					xspfTrack.Creator = xnod.InnerText;
 				}
 				if ("duration".Equals(xnod.Name)) {
-					xspf.Duration = xnod.InnerText;
+					xspfTrack.Duration = xnod.InnerText;
 				}
 				if ("image".Equals(xnod.Name)) {
-					xspf.Image = xnod.InnerText;
+					xspfTrack.Image = xnod.InnerText;
 				}
 				if ("lastfm:trackauth".Equals(xnod.Name)) {
-					xspf.LastFm.Trackauth = xnod.InnerText;
+					xspfTrack.LastFm.Trackauth = xnod.InnerText;
 				}
 				if ("lastfm:albumId".Equals(xnod.Name)) {
-					xspf.LastFm.AlbumId = xnod.InnerText;
+					xspfTrack.LastFm.AlbumId = xnod.InnerText;
 				}
 				if ("lastfm:artistId".Equals(xnod.Name)) {
-					xspf.LastFm.ArtistId = xnod.InnerText;
+					xspfTrack.LastFm.ArtistId = xnod.InnerText;
 				}
 				if ("link".Equals(xnod.Name)) {
 					// TODO: this is a list xspf.link = xnod.Value;
@@ -106,18 +106,26 @@ namespace LibLastRip
 			// call recursively on all children of the current node
 			if (xnod.HasChildNodes)
 			{
+				if ("playlist".Equals(xnod.Name)) {
+				}
+				if ("creator".Equals(xnod.Name)) {
+					xspf.Creator = xnod.InnerText;
+				}
+				if ("title".Equals(xnod.Name)) {
+					xspf.Title = xnod.InnerText;
+				}
 				if ("track".Equals(xnod.Name)) {
-					XSPF xspf = XSPF.GetEmptyXSPF();
+					XSPFTrack xspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 
 					xnodWorking = xnod.FirstChild;
 					while (xnodWorking != null)
 					{
-						AddChildren(xspf, xnodWorking, level+1);
+						AddChildren(xspfTrack, xnodWorking, level+1);
 						xnodWorking = xnodWorking.NextSibling;
 					}
 					
-					if (xspf.Location != null) {
-						this.xspfList.Add(xspf);
+					if (xspfTrack.Location != null) {
+						xspf.AddTrack(xspfTrack);
 					}
 				} else {
 					xnodWorking = xnod.FirstChild;
@@ -132,14 +140,15 @@ namespace LibLastRip
 		
 		protected void StartRecording(bool newStation) {
 			if (newStation) {
-				xspfList.Clear();
+				xspf = XSPF.GetEmptyXSPF();
+				currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 			}
 			
 			bool started = false;
 			
 			while (started == false) {
 				
-				if (xspfList.Count == 0) {
+				if (xspf.CountTracks() == 0) {
 					// Getting Playlist
 					String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
 					WebRequest wReq = WebRequest.Create(url);
@@ -163,13 +172,12 @@ namespace LibLastRip
 					// close the reader
 					xmlTextReader.Close();
 				}
-				if (xspfList.Count > 0) {
-					this.currentXspf = (XSPF)xspfList.ToArray()[0];
-					xspfList.RemoveAt(0);
-					this.StreamURL = currentXspf.Location;
+				if (xspf.CountTracks() > 0) {
+					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
+					this.StreamURL = this.currentXspfTrack.Location;
 
-					System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(currentXspf.Creator) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(currentXspf.Album) + Path.DirectorySeparatorChar;
-					System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(currentXspf.Title) + ".mp3";
+					System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album) + Path.DirectorySeparatorChar;
+					System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title) + ".mp3";
 			
 					//Check if file exists
 					if(!File.Exists(NewFilePath)) 
@@ -215,8 +223,11 @@ namespace LibLastRip
 			//Create a new MemoryStream
 			MemoryStream NewSong = new MemoryStream();
 			
+			Console.WriteLine("Song length in bytes: " + this.Song.Length);
+			Console.WriteLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
+			
 			//Should we save this song?
-			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() || !this.CurrentSong.Streaming)
+			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo())
 			{
 				//If not, then don't save it
 				this.SkipSave = false;
@@ -294,7 +305,7 @@ namespace LibLastRip
 				// Catch all exceptions to prevent application from falling into a illegal state
 				// Raise event so client can display a message
 				if (this.OnError != null) {
-					this.OnError(this, new ErrorEventArgs("Exception occured. Please restart ripping.", e));
+					this.OnError(this, new ErrorEventArgs("Exception occurred. Please restart ripping.", e));
 				}
 				
 				this.RestoreState();
