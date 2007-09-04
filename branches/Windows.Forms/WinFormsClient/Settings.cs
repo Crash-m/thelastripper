@@ -6,9 +6,9 @@ namespace WinFormsClient
 	[SerializableAttribute]
 	public class Settings : LibLastRip.PlayListGenerator
 	{
-		protected System.String _password;
+		private System.String _password = "";
 		public LibLastRip.LastManager manager;
-		public System.Boolean savePassword;
+		private System.Boolean savePassword;
 		
 		public Settings()
 		{
@@ -160,14 +160,14 @@ namespace WinFormsClient
 		/// </summary>
 		/// <param name="Info">Object that data must be restored from</param>
 		/// <remarks>This method calls parent method, so all fields on LibLastRip.PlayListGenerator is restored by the base class</remarks>
-		protected Settings(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context):base(Info, context) //Note this executes base class and restores data saved in it.
+		protected Settings(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context):base(info, context) //Note this executes base class and restores data saved in it.
 		{	
 			//Note the names used here MUST match the names used in serialization method below
 			
 			//Get password from serialization object if it was saved
-			if(Info.GetBoolean("HasPassword"))
+			if(info.GetBoolean("HasPassword"))
 			{
-				this._password = Info.GetString("Password");
+				this._password = info.GetString("Password");
 				this.savePassword = true;
 			}
 			
@@ -184,20 +184,20 @@ namespace WinFormsClient
 		/// </summary>
 		/// <param name="Info">Object that data must be saved to</param>
 		/// <remarks>This method class parent method, so all fields on LibLastRip.PlayListGenerator is saved by the base class</remarks>
-		public override void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
+		public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
 		{
 			//Add values from base class to serialization object
-			base.GetObjectData(Info, context);
+			base.GetObjectData(info, context);
 			
 			//Add password if password exists
 			if(this.manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
 			{
 				this.savePassword = false;
 			}
-			Info.AddValue("HasPassword",this.savePassword);
+			info.AddValue("HasPassword",this.savePassword);
 			if(this.savePassword)
 			{
-				Info.AddValue("Password",this._password);
+				info.AddValue("Password",this._password);
 			}
 		}
 	}
