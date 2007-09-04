@@ -6,9 +6,9 @@ namespace WinFormsClient
 	[SerializableAttribute]
 	public class Settings : LibLastRip.PlayListGenerator
 	{
-		protected System.String _password = "";
+		protected System.String _password;
 		public LibLastRip.LastManager manager;
-		public System.Boolean savePassword = false;
+		public System.Boolean savePassword;
 		
 		public Settings()
 		{
@@ -23,7 +23,7 @@ namespace WinFormsClient
 			this.LaunchPreferences(true);
 		}
 		
-		public virtual void LaunchPreferences(System.Boolean SaveSettings)
+		public virtual void LaunchPreferences(System.Boolean saveSettings)
 		{
 			//TODO: do settings
 			Preferences Pref = new Preferences(this.manager, this);
@@ -68,7 +68,7 @@ namespace WinFormsClient
 			this._proxyPassword = Pref.ProxyPasswordTextBox.Text;
 			this._proxyUsername = Pref.ProxyUsernameTextBox.Text;
 			
-			if(SaveSettings)
+			if(saveSettings)
 			{
 				this.SaveSettings();
 			}
