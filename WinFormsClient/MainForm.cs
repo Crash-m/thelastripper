@@ -36,9 +36,8 @@ namespace WinFormsClient
 			}
 		}
 		
-		protected LibLastRip.LastManager Manager;
-		protected Settings settings;
-		protected System.Int32 TrackDuration = 0;
+		private LibLastRip.LastManager manager;
+		private Settings settings;
 		
 		public MainForm()
 		{
@@ -49,27 +48,27 @@ namespace WinFormsClient
 			//
 			//
 			this.settings = Settings.Restore();
-			this.Manager = this.settings.Manager;
+			this.manager = this.settings.manager;
 			
-			if(this.Manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
+			if(this.manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 			{
 				this.RadioStation.Enabled = true;
 				this.TuneInButton.Enabled = true;
 			}
-			this.Manager.OnNewSong += new EventHandler(this.OnNewSong);
-			this.Manager.OnProgress += new EventHandler(this.OnProgress);
+			this.manager.OnNewSong += new EventHandler(this.OnNewSong);
+			this.manager.OnProgress += new EventHandler(this.OnProgress);
 			
 			//Subscribe to stations changed event
-			this.Manager.StationChanged += new EventHandler(this.TuneInCallback);
+			this.manager.StationChanged += new EventHandler(this.TuneInCallback);
 			
 			//Subscribe to command callback
-			this.Manager.CommandReturn += new EventHandler(this.CommandCallback);
+			this.manager.CommandReturn += new EventHandler(this.CommandCallback);
 			
 			//Subscribe to OnError
-			this.Manager.OnError += new EventHandler(this.OnError);
+			this.manager.OnError += new EventHandler(this.OnError);
 		}
 		
-		protected virtual void OnError(System.Object Sender, System.EventArgs e)
+		private void OnError(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
 			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
@@ -77,23 +76,23 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.OnError), new System.Object[]{Sender, e});
+				this.Invoke(new System.EventHandler(this.OnError), new System.Object[]{sender, args});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-			LibLastRip.ErrorEventArgs Args = (LibLastRip.ErrorEventArgs)e;
+			LibLastRip.ErrorEventArgs Args = (LibLastRip.ErrorEventArgs)args;
 			if(Args.Exception != null)
 			{
-				System.Windows.Forms.MessageBox.Show(Args.Message + "\nException:\n" + Args.Exception.ToString(),"An expected exception has occured",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
+				System.Windows.Forms.MessageBox.Show(Args.Message + "\nException:\n" + Args.Exception.ToString(),"An expected exception has occurred",System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Error);
 			}else{
-				System.Windows.Forms.MessageBox.Show(Args.Message, "A problem has occured", System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Warning);
+				System.Windows.Forms.MessageBox.Show(Args.Message, "A problem has occurred", System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Warning);
 			}
 		}
 		
-		protected virtual void OnProgress(System.Object Sender, System.EventArgs Args)
+		private void OnProgress(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
 			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
@@ -101,14 +100,14 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.OnProgress), new System.Object[]{Sender, Args});
+				this.Invoke(new System.EventHandler(this.OnProgress), new System.Object[]{sender, args});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-			LibLastRip.ProgressEventArgs progressArgs = (LibLastRip.ProgressEventArgs)Args;
+			LibLastRip.ProgressEventArgs progressArgs = (LibLastRip.ProgressEventArgs)args;
 			if (progressArgs.Streamprogress > this.StatusBar.Maximum) {
 				this.StatusBar.Value = this.StatusBar.Maximum;
 			} else {
@@ -116,7 +115,7 @@ namespace WinFormsClient
 			}
 		}
 		
-		protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
+		private void OnNewSong(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
 			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
@@ -124,55 +123,51 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.OnNewSong), new System.Object[]{Sender, Args});
+				this.Invoke(new System.EventHandler(this.OnNewSong), new System.Object[]{sender, args});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-			
-			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
-			this.TrackDuration = 0;
+			LibLastRip.MetaInfo info = (LibLastRip.MetaInfo)args;
 			this.StatusBar.Value = 0;
 			
 			//Get length of the track
-			System.Int32 TrackLength = System.Convert.ToInt32(System.Convert.ToInt32(Info.Trackduration));
+			System.Int32 TrackLength = System.Convert.ToInt32(System.Convert.ToInt32(info.Trackduration));
 			if(TrackLength < 1) //If smaller then 1 set to 1, to avoid devision by zero error fixing issue 48, I think :)
 				this.StatusBar.Maximum = 1;
 			else
 				this.StatusBar.Maximum = TrackLength;
 			
-			if(Info.Streaming)
+			this.TrackLabel.Text = info.Track;
+			this.ArtistLabel.Text = "Artist: " + info.Artist;
+			this.AlbumLabel.Text = "Album: " + info.Album;
+			this.DurationLabel.Text = "Duration: " + info.Trackduration;
+			this.StationLabel.Text = "Station: " + info.Station;
+			
+			//TODO: multithread download of album cover
+			if(info.Albumcover != null && info.Albumcover.StartsWith("http://"))
 			{
-				this.TrackLabel.Text = Info.Track;
-				this.ArtistLabel.Text = "Artist: " + Info.Artist;
-				this.AlbumLabel.Text = "Album: " + Info.Album;
-				this.DurationLabel.Text = "Duration: " + Info.Trackduration;
-				this.StationLabel.Text = "Station: " + Info.Station;
-				
-				//TODO: multithread download of album cover
-				if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
+				try
 				{
-					try
-					{
-						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Info.Albumcover);
-						System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
-						System.IO.Stream ResponseStream = hRes.GetResponseStream();
-						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
-					}
-					catch
-					{
-						//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
-					}
+					System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(info.Albumcover);
+					System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
+					System.IO.Stream ResponseStream = hRes.GetResponseStream();
+					this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
 				}
+				catch
+				{
+					//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
+				}
+				
 			}
 		}
 		
-		void SettingsToolStripMenuItemClick(object sender, EventArgs e)
+		void SettingsToolStripMenuItemClick(object sender, EventArgs args)
 		{
 			this.settings.LaunchPreferences();
-			if(this.Manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
+			if(this.manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 			{
 				this.RadioStation.Enabled = true;
 				this.TuneInButton.Enabled = true;
@@ -184,12 +179,12 @@ namespace WinFormsClient
 			this.settings.Generate();
 		}
 		
-		void ExitToolStripMenuItemClick(object sender, EventArgs e)
+		void ExitToolStripMenuItemClick(object sender, EventArgs args)
 		{
 			Application.Exit();
 		}
 		
-		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs Args)
+		void LegalIssuesToolStripMenuItemClick(object sender, EventArgs args)
 		{
 			try
 			{
@@ -199,7 +194,7 @@ namespace WinFormsClient
 			}
 		}
 		
-		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs Args)
+		void OnlineHelpToolStripMenuItemClick(object sender, EventArgs args)
 		{
 			try
 			{
@@ -209,19 +204,19 @@ namespace WinFormsClient
 			}
 		}
 		
-		void AboutToolStripMenuItemClick(object sender, EventArgs e)
+		void AboutToolStripMenuItemClick(object sender, EventArgs args)
 		{
 			About ab = new About();
 			ab.ShowDialog(this);
 		}
 		
-		void TuneInButtonClick(object sender, EventArgs e)
+		void TuneInButtonClick(object sender, EventArgs args)
 		{
 			this.TuneInButton.Enabled = false;
-			this.Manager.ChangeStation(this.RadioStation.Text);
+			this.manager.ChangeStation(this.RadioStation.Text);
 		}
 		
-		void TuneInCallback(System.Object Sender, System.EventArgs e)
+		void TuneInCallback(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
 			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
@@ -229,7 +224,7 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.TuneInCallback), new System.Object[]{Sender, e});
+				this.Invoke(new System.EventHandler(this.TuneInCallback), new System.Object[]{sender, args});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}
@@ -237,40 +232,40 @@ namespace WinFormsClient
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
 			
-			LibLastRip.StationChangedEventArgs Args = (LibLastRip.StationChangedEventArgs)e;
+			LibLastRip.StationChangedEventArgs stationChangedEventArgs = (LibLastRip.StationChangedEventArgs)args;
 			this.TuneInButton.Enabled = true;
-			if(Args.Success){
+			if(stationChangedEventArgs.Success){
 				this.EnableCommands();
 			}
 		}
 		
-		void SkipButtonClick(object sender, EventArgs e)
-		{   
+		void SkipButtonClick(object sender, EventArgs args)
+		{
 			// only skip if there is a song to skip
-			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
-				this.Manager.SkipSong();
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
+				this.manager.SkipSong();
 			}
 		}
 		
-		void LoveButtonClick(object sender, EventArgs e)
+		void LoveButtonClick(object sender, EventArgs args)
 		{
 			// only love if there is a song to love
-			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
 				this.DisableCommands();
-				this.Manager.LoveSong();
+				this.manager.LoveSong();
 			}
 		}
 		
-		void HateButtonClick(object sender, EventArgs e)
+		void HateButtonClick(object sender, EventArgs args)
 		{
 			// only hate if there is a song to hate
-			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
+			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
 				this.DisableCommands();
-				this.Manager.BanSong();
+				this.manager.BanSong();
 			}
 		}
 		
-		void CommandCallback(object Sender, EventArgs e)
+		void CommandCallback(object sender, EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
 			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
@@ -278,7 +273,7 @@ namespace WinFormsClient
 			if(this.InvokeRequired)
 			{
 				//Invoke this method and it's arguments to the correct thread.
-				this.Invoke(new System.EventHandler(this.CommandCallback), new System.Object[]{Sender, e});
+				this.Invoke(new System.EventHandler(this.CommandCallback), new System.Object[]{sender, args});
 				//Return this method to avoid executing the logic on the wrong thread.
 				return;
 			}

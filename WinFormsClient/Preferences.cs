@@ -19,18 +19,18 @@ namespace WinFormsClient
 	/// </summary>
 	public partial class Preferences : Form
 	{
-		public System.Boolean HasPassword = false;
-		public LibLastRip.LastManager Manager;
-		public Preferences(LibLastRip.LastManager Manager,Settings settings)
+		public System.Boolean hasPassword = false;
+		private LibLastRip.LastManager manager;
+		public Preferences(LibLastRip.LastManager manager,Settings settings)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 			
-			this.Manager = Manager;
+			this.manager = manager;
 			
-			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
+			if(this.manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
 			{
 				this.LoginGroupBox.Enabled = true;
 				this.NetworkGroupBox.Enabled = true;
@@ -53,20 +53,20 @@ namespace WinFormsClient
 			this.UserNameTextBox.Text = settings.UserName;
 
 			// ...and then the password
-			if(settings.Password != "")
+			if(!String.IsNullOrEmpty(settings.Password))
 			{
-				this.HasPassword = true;
+				this.hasPassword = true;
 				this.PasswordTextBox.Text = settings.Password;
 				this.PasswordTextBox.Enabled = false;
 			}
 			this.MusicPathTextBox.Text = settings.MusicPath;
 			
-			this.ProxyAdressTextBox.Text = settings.ProxyAdress;
+			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
 			this.ProxyPasswordTextBox.Text = settings.ProxyPassword;
 			
 			//Subscribe to handshake callback event
-			this.Manager.HandshakeReturn += new EventHandler(this.LoginCallback);
+			this.manager.HandshakeReturn += new EventHandler(this.LoginCallback);
 		}
 		
 		void BrowseButtonClick(object sender, EventArgs e)
@@ -82,8 +82,8 @@ namespace WinFormsClient
 		void LoginButtonClick(object sender, EventArgs e)
 		{
 			// Proxy Setting from Settings-Group
-			if (this.ProxyAdressTextBox.Text != null && this.ProxyAdressTextBox.Text.Length > 0) {
-				WebProxy iwp = new WebProxy(this.ProxyAdressTextBox.Text);
+			if (this.ProxyAddressTextBox.Text != null && this.ProxyAddressTextBox.Text.Length > 0) {
+				WebProxy iwp = new WebProxy(this.ProxyAddressTextBox.Text);
 				if (this.ProxyUsernameTextBox.Text.Length > 0 || this.ProxyPasswordTextBox.Text.Length > 0) {
 					iwp.Credentials = new NetworkCredential(this.ProxyUsernameTextBox.Text, this.ProxyPasswordTextBox.Text);
 				}
@@ -92,16 +92,16 @@ namespace WinFormsClient
 				WebRequest.DefaultWebProxy = GlobalProxySelection.GetEmptyWebProxy ();
 			}
 			
-			if(this.PasswordTextBox.Text != "" && this.UserNameTextBox.Text != "")
+			if(!String.IsNullOrEmpty(this.PasswordTextBox.Text) && !String.IsNullOrEmpty(this.UserNameTextBox.Text))
 			{
-				System.String Password;
-				if(this.HasPassword)
+				System.String password;
+				if(this.hasPassword)
 				{
-					Password = this.PasswordTextBox.Text;
+					password = this.PasswordTextBox.Text;
 				}else{
-					Password = LibLastRip.LastManager.CalculateHash(this.PasswordTextBox.Text);
+					password = LibLastRip.LastManager.CalculateHash(this.PasswordTextBox.Text);
 				}
-				this.Manager.Handshake(this.UserNameTextBox.Text,Password);
+				this.manager.Handshake(this.UserNameTextBox.Text, password);
 				//Disable login to prevent multiple logins
 				setLoginElements(false);
 			}
@@ -142,9 +142,9 @@ namespace WinFormsClient
 		
 		void UserNameTextBoxTextChanged(object sender, EventArgs e)
 		{
-			if(this.HasPassword)
+			if(this.hasPassword)
 			{
-				this.HasPassword = false;
+				this.hasPassword = false;
 				this.PasswordTextBox.Text = "";
 				this.PasswordTextBox.Enabled = true;
 			}
