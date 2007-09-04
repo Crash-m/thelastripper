@@ -6,14 +6,14 @@ namespace WinFormsClient
 	[SerializableAttribute]
 	public class Settings : LibLastRip.PlayListGenerator
 	{
-		protected System.String _Password = "";
-		public LibLastRip.LastManager Manager;
-		public System.Boolean SavePassword = false;
+		protected System.String _password = "";
+		public LibLastRip.LastManager manager;
+		public System.Boolean savePassword = false;
 		
 		public Settings()
 		{
-			this._MusicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic);
-			this.Manager = new LibLastRip.LastManager(this._MusicPath);
+			this._musicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic);
+			this.manager = new LibLastRip.LastManager(this._musicPath);
 			
 			this.LaunchPreferences();
 		}
@@ -26,7 +26,7 @@ namespace WinFormsClient
 		public virtual void LaunchPreferences(System.Boolean SaveSettings)
 		{
 			//TODO: do settings
-			Preferences Pref = new Preferences(this.Manager, this);
+			Preferences Pref = new Preferences(this.manager, this);
 			Pref.ShowDialog();
 
 			if(!System.IO.Directory.Exists(Pref.MusicPathTextBox.Text))
@@ -42,8 +42,8 @@ namespace WinFormsClient
 				}
 			}
 			
-			this._MusicPath = Pref.MusicPathTextBox.Text;
-			this.Manager.MusicPath = Pref.MusicPathTextBox.Text;
+			this._musicPath = Pref.MusicPathTextBox.Text;
+			this.manager.MusicPath = Pref.MusicPathTextBox.Text;
 			
 			this.TopTracks = Pref.TopTracksCheckBox.Checked;
 			this.RecentLovedTracks = Pref.RecentlyLovedCheckBox.Checked;
@@ -56,17 +56,17 @@ namespace WinFormsClient
 			this.pls = Pref.PLSCheckBox.Checked;
 			this.smil = Pref.SMILCheckBox.Checked;
 			
-			this.SavePassword = Pref.SavePasswordCheckBox.Checked;
+			this.savePassword = Pref.SavePasswordCheckBox.Checked;
 			
-			this._UserName = Pref.UserNameTextBox.Text;
-			if(!Pref.HasPassword)
+			this._userName = Pref.UserNameTextBox.Text;
+			if(!Pref.hasPassword)
 			{
-				this._Password = LibLastRip.LastManager.CalculateHash(Pref.PasswordTextBox.Text);
+				this._password = LibLastRip.LastManager.CalculateHash(Pref.PasswordTextBox.Text);
 			}
 			
-			this._ProxyAdress = Pref.ProxyAdressTextBox.Text;
-			this._ProxyPassword = Pref.ProxyPasswordTextBox.Text;
-			this._ProxyUsername = Pref.ProxyUsernameTextBox.Text;
+			this._proxyAddress = Pref.ProxyAddressTextBox.Text;
+			this._proxyPassword = Pref.ProxyPasswordTextBox.Text;
+			this._proxyUsername = Pref.ProxyUsernameTextBox.Text;
 			
 			if(SaveSettings)
 			{
@@ -116,42 +116,42 @@ namespace WinFormsClient
 		{
 			get
 			{
-				return this._UserName;
+				return this._userName;
 			}
 		}
 		public System.String Password
 		{
 			get
 			{
-				return this._Password;
+				return this._password;
 			}
 		}
 		public System.String MusicPath
 		{
 			get
 			{
-				return this._MusicPath;
+				return this._musicPath;
 			}
 		}
-		public System.String ProxyAdress
+		public System.String ProxyAddress
 		{
 			get
 			{
-				return this._ProxyAdress;
+				return this._proxyAddress;
 			}
 		}
 		public System.String ProxyUsername
 		{
 			get
 			{
-				return this._ProxyUsername;
+				return this._proxyUsername;
 			}
 		}
 		public System.String ProxyPassword
 		{
 			get
 			{
-				return this._ProxyPassword;
+				return this._proxyPassword;
 			}
 		}
 		
@@ -167,12 +167,12 @@ namespace WinFormsClient
 			//Get password from serialization object if it was saved
 			if(Info.GetBoolean("HasPassword"))
 			{
-				this._Password = Info.GetString("Password");
-				this.SavePassword = true;
+				this._password = Info.GetString("Password");
+				this.savePassword = true;
 			}
 			
 			//Create LastManager from restored data
-			this.Manager = new LibLastRip.LastManager(this._MusicPath);
+			this.manager = new LibLastRip.LastManager(this._musicPath);
 			
 			//Launch preferences without saving, after close since that would give IO problems, cause this method would have returned and serialization object/stream would still be open.
 			this.LaunchPreferences(false);
@@ -190,14 +190,14 @@ namespace WinFormsClient
 			base.GetObjectData(Info, context);
 			
 			//Add password if password exists
-			if(this.Manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
+			if(this.manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
 			{
-				this.SavePassword = false;
+				this.savePassword = false;
 			}
-			Info.AddValue("HasPassword",this.SavePassword);
-			if(this.SavePassword)
+			Info.AddValue("HasPassword",this.savePassword);
+			if(this.savePassword)
 			{
-				Info.AddValue("Password",this._Password);
+				Info.AddValue("Password",this._password);
 			}
 		}
 	}
