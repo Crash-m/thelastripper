@@ -16,7 +16,7 @@ namespace ConsoleClient
 		public static string PAR_MUSICPATH = "-musicpath=";
 		public static string PAR_USERNAME = "-username=";
 		public static string PAR_PASSWORD = "-password=";
-		public static string PAR_PROXYADRESS = "-proxyadress=";
+		public static string PAR_PROXYADDRESS = "-proxyaddress=";
 		public static string PAR_PROXYUSERNAME = "-proxyusername=";
 		public static string PAR_PROXYPASSWORD = "-proxypassword=";
 		public static string PAR_RADIOSTATION = "-radiostation=";
@@ -26,7 +26,7 @@ namespace ConsoleClient
 		protected System.String userName;
 		protected System.String password;
 		
-		protected System.String proxyAdress;
+		protected System.String proxyAddress;
 		protected System.String proxyUsername;
 		protected System.String proxyPassword;
 		
@@ -55,9 +55,9 @@ namespace ConsoleClient
 					program.password = args[i].Substring(PAR_PASSWORD.Length);
 					Console.WriteLine("set password to " + program.password);
 				}
-				if (args[i].ToLower().StartsWith(PAR_PROXYADRESS)) {
-					program.proxyAdress = args[i].Substring(PAR_PROXYADRESS.Length);
-					Console.WriteLine("set proxyAdress to " + program.proxyAdress);
+				if (args[i].ToLower().StartsWith(PAR_PROXYADDRESS)) {
+					program.proxyAddress = args[i].Substring(PAR_PROXYADDRESS.Length);
+					Console.WriteLine("set proxyAddress to " + program.proxyAddress);
 				}
 				if (args[i].ToLower().StartsWith(PAR_PROXYUSERNAME)) {
 					program.proxyUsername = args[i].Substring(PAR_PROXYUSERNAME.Length);
