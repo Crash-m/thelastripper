@@ -37,6 +37,7 @@ namespace WinFormsClient
 				}
 				catch(System.Exception e)
 				{
+					//TODO: Inform user in a pleasen't manner
 					throw new System.Exception("Music directory doesn't exist and could not be created! Please select another directory.", e);
 				}
 			}
