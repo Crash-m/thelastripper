@@ -16,7 +16,8 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 using System;
-
+using System.Collections;
+	
 namespace LibLastRip
 {
 	public class LastFm
@@ -25,7 +26,7 @@ namespace LibLastRip
 		protected System.String _albumId;
 		protected System.String _artistId;
 
-	/// <summary>
+		/// <summary>
         /// Get an empty instance of LastFm, used to represent no song.
         /// </summary>
         public static LastFm GetEmptyLastFm()
@@ -78,7 +79,7 @@ namespace LibLastRip
 		
 	}
 	
-	public class XSPF
+	public class XSPFTrack
 	{
 		protected System.String _location;
 		protected System.String _title;
@@ -92,15 +93,15 @@ namespace LibLastRip
 		/// <summary>
         /// Get an empty instance of XSPF, used to represent no song.
         /// </summary>
-        public static XSPF GetEmptyXSPF()
+        public static XSPFTrack GetEmptyXSPFTrack()
         {
-            return new XSPF();
+            return new XSPFTrack();
         }
        
         /// <summary>
         /// Creates an instance of XSPF representing no song.
         /// </summary>
-        protected XSPF()
+        protected XSPFTrack()
         {
         	this.LastFm = LastFm.GetEmptyLastFm();
         }
@@ -229,11 +230,11 @@ namespace LibLastRip
         {
             return XSPF.Equals(obj,this);
         }
-        public static bool operator == (XSPF Obj1, XSPF Obj2)
+        public static bool operator == (XSPFTrack Obj1, XSPFTrack Obj2)
         {
             return XSPF.Equals(Obj1,Obj2);
         }
-        public static bool operator != (XSPF Obj1, XSPF Obj2)
+        public static bool operator != (XSPFTrack Obj1, XSPFTrack Obj2)
         {
             return !(Obj1 == Obj2);
         }
@@ -257,4 +258,66 @@ namespace LibLastRip
 		}
 
 	}
+
+	public class XSPF
+	{
+		protected ArrayList _xspfList;
+		protected System.String _title;
+		protected System.String _creator;
+
+		/// <summary>
+        /// Get an empty instance of LastFm, used to represent no song.
+        /// </summary>
+        public static XSPF GetEmptyXSPF()
+        {
+            return new XSPF();
+        }
+       
+        /// <summary>
+        /// Creates an instance of LastFm.
+        /// </summary>
+        protected XSPF()
+        {
+        	this._xspfList = new ArrayList();
+        }
+
+		public System.String Title
+		{
+			get
+			{
+				return this._title;
+			}
+			set
+			{
+				this._title = value;
+			}
+		}
+
+		public System.String Creator
+		{
+			get
+			{
+				return this._creator;
+			}
+			set
+			{
+				this._creator = value;
+			}
+		}		
+		
+		public void AddTrack(XSPFTrack track) {
+			this._xspfList.Add(track);
+		}
+
+		public System.Int32 CountTracks() {
+			return this._xspfList.Count;
+		}
+		
+		public XSPFTrack getTrack() {
+			XSPFTrack track = (XSPFTrack)this._xspfList.ToArray()[0];
+			this._xspfList.RemoveAt(0);
+			return track;
+		}
+	}
 }
+

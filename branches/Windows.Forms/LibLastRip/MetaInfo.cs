@@ -28,7 +28,6 @@ namespace LibLastRip
 		protected System.String _Albumcover;
 		protected System.String _Trackduration;
 		protected System.String _Trackprogress;
-		protected System.Boolean _Streaming = true;
 		
 		/// <summary>
         /// Get an empty instance of MetaInfo, used to represent no song.
@@ -50,55 +49,14 @@ namespace LibLastRip
             this._Trackprogress = "0";
         }
 		
-		internal MetaInfo(System.String Data, XSPF xspf)
+		internal MetaInfo(XSPF xspf, XSPFTrack xspfTrack)
 		{
-			System.String []Lines = Data.Split(new System.Char[] {'\n'});
-			foreach(System.String Line in Lines)
-			{
-				System.String []Opts = Line.Split(new System.Char[] {'='});
-				switch(Opts[0].ToLower())
-				{
-					case "station":
-						this._Station = Opts[1];
-						break;
-					case "artist":
-						this._Artist = Opts[1];
-						break;
-					case "track":
-						this._Track = Opts[1];
-						break;
-					case "album":
-						this._Album = Opts[1];
-						break;
-					case "albumcover_small":
-						this._Albumcover = Opts[1];
-						break;
-					case "albumcover_medium":
-						this._Albumcover = Opts[1];
-						break;
-					case "albumcover_large":
-						this._Albumcover = Opts[1];
-						break;
-					case "trackduration":
-						this._Trackduration = Opts[1];
-						break;
-					case "trackprogress":
-						this._Trackprogress = Opts[1];
-						break;
-					case "streaming":
-						if(Opts[1].ToLower()=="false")
-						{
-							this._Streaming = false;
-						}
-					break;
-				}
-				
-				this._Album = xspf.Album;
-				this._Artist = xspf.Creator;
-				this._Trackduration = (Int32.Parse(xspf.Duration) / 1000).ToString();
-				this._Track = xspf.Title;
-				this._Albumcover = xspf.Image;
-			}
+			this._Album = xspfTrack.Album;
+			this._Artist = xspfTrack.Creator;
+			this._Trackduration = (Int32.Parse(xspfTrack.Duration) / 1000).ToString();
+			this._Track = xspfTrack.Title;
+			this._Albumcover = xspfTrack.Image;
+			this._Station = xspf.Title;
 			
 			//We've got to have something to write as ID3tag's, filename and directories
 			if(String.IsNullOrEmpty(this._Track))
@@ -165,26 +123,13 @@ namespace LibLastRip
 			}
 		}
 		
-		public System.Boolean Streaming
-		{
-			get
-			{
-				return this._Streaming;
-			}
-		}
-
 		public override System.String ToString()
 		{
 			System.String OutStr = "";
 			
-			if(this._Streaming)
-			{
-				OutStr += "Track: " + this._Artist + " - " + this._Album + " - " + this._Track + "\n";
-				OutStr += "From: " + this._Station + "\n";
-				OutStr += "Duration: " + this._Trackduration;
-			}else{
-				OutStr = "Streaming: " + this._Streaming.ToString();
-			}
+			OutStr += "Track: " + this._Artist + " - " + this._Album + " - " + this._Track + "\n";
+			OutStr += "From: " + this._Station + "\n";
+			OutStr += "Duration: " + this._Trackduration;
 			return OutStr;
 		}
 		
