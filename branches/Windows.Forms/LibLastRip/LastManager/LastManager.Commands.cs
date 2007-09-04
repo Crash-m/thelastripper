@@ -138,7 +138,7 @@ namespace LibLastRip
 				if(this.StationChanged != null) {
 					this.StationChanged(this, new StationChangedEventArgs(false));
 				}
-			} 
+			}
 			else{
 				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
 				Request.BeginGetResponse(new System.AsyncCallback(this.OnStationChanged), Request);
@@ -169,22 +169,28 @@ namespace LibLastRip
 				System.String []Opts = Line.Split(new System.Char[] {'='});
 				
 				if (Opts.Length > 1) {
-					if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
-					{
-						Result = true;
-
-						// Don't continue with old playlist
-						this.xspfList.Clear();
-
-						//If we're already recording then don't save current song
-						if(this.Status == ConnectionStatus.Recording)
+					if(Opts[0].ToLower() == "response") {
+						if (Opts[1].ToLower().StartsWith("ok"))
 						{
-							// Don't save the current song
-							this.SkipSave = true;							
-						}else{
-							//If not already recording, then start it and change status
-							this.Status = ConnectionStatus.Recording;
-							this.StartRecording();
+							Result = true;
+
+							// Don't continue with old playlist
+							this.xspfList.Clear();
+
+							//If we're already recording then don't save current song
+							if(this.Status == ConnectionStatus.Recording)
+							{
+								// Don't save the current song
+								this.SkipSave = true;
+							}else{
+								//If not already recording, then start it and change status
+								this.Status = ConnectionStatus.Recording;
+								this.StartRecording();
+							}
+						} else {
+							if (this.OnError != null) {
+								this.OnError(this, new ErrorEventArgs("No station found. Please change and restart ripping.", null));
+							}
 						}
 					}}
 			}
