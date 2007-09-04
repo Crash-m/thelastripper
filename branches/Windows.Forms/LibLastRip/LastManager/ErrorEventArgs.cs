@@ -32,7 +32,7 @@ namespace LibLastRip
 		/// Creates an instance of ErrorEventArgs with an error message and a techical exception.
 		/// </summary>
 		/// <param name="Message">A human readable message for the user</param
-		/// <param name="e">Exception that have occured.</param>
+		/// <param name="e">Exception that have occurred.</param>
 		internal ErrorEventArgs(System.String Message, System.Exception e)
 		{
 			this._Message = Message;
@@ -40,9 +40,9 @@ namespace LibLastRip
 		}
 		
 		/// <summary>
-		/// A System.Exception that have occured.
+		/// A System.Exception that have occurred.
 		/// </summary>
-		/// <remarks>This property may return null if no exception occured.</remarks>
+		/// <remarks>This property may return null if no exception occurred.</remarks>
 		public System.Exception Exception
 		{
 			get{

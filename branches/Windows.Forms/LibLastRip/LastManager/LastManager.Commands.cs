@@ -175,7 +175,7 @@ namespace LibLastRip
 							Result = true;
 
 							// Don't continue with old playlist
-							this.xspfList.Clear();
+							this.xspf = XSPF.GetEmptyXSPF();
 
 							//If we're already recording then don't save current song
 							if(this.Status == ConnectionStatus.Recording)
