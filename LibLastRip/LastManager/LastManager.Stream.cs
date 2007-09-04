@@ -33,7 +33,7 @@ namespace LibLastRip
 		protected ArrayList xspfList = new ArrayList();
 		protected XSPF currentXspf = XSPF.GetEmptyXSPF();
 		protected MemoryStream Song = new System.IO.MemoryStream();
-		protected bool skip = false;
+		protected System.Boolean SkipSave = false;
 		protected System.Int32 counter = 0;
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		
@@ -274,18 +274,16 @@ namespace LibLastRip
 				
 				System.Int32 read = 1;
 				// we just read syncron from here - no nead for another AsyncCallback!
-				while (read > 0 && skip == false) {
+				while (read > 0 && SkipSave == false) {
 					read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
 					Save(read);
 				}
-				if (skip == false) {
+				if (SkipSave == false) {
 					// If this line is reached we have no more data in stream
 					SaveToFile();
 				} else {
-					SkipSave = true;
 					RadioStream.Close();
 					SaveToFile();
-					skip = false;
 				}
 				// Continue recording with next stream
 				StartRecording(false);
