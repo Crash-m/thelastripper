@@ -1,13 +1,12 @@
 #summary These are the known issues for the Linux version of TheLastRipper.
 #labels Help,Linux,Issues
-*These are the known issues for the Mac OS X version of TheLastRipper.*
 
-==All versions broken ==
-TheLastRipper depends on Last.fm protocol 1.1, which have been dropped. I'm sorry to say that this breaks all current versions of TheLastRipper. More information:
-http://jopsen.dk/blog/2007/09/all-version-of-thelastripper-broken
+===TheLastRipper Version 1.1.1===
+No known issues, though the stability of the skip, love and hate features are known to be questionable.
 
 ===TheLastRipper Version 1.1.0===
-Currently no known issues, though the stability of the skip, love and hate features are known to be questionable.
+   * Unable to login (Issue 63)
+   * the stability of the skip, love and hate features are known to be questionable.
 
 ===TheLastRipper Version 1.0.2===
 Sometimes the songs are getting cut too soon or too late (delay between metadata and music), see this bug report for a more technical description of the issue:
