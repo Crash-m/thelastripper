@@ -40,7 +40,6 @@ namespace LibLastRip
 		protected System.String _MusicPath;
 		protected const System.String PathSeparator = "/";
 		protected const System.Int32 ProtocolBufferSize = 4096;
-		protected System.Boolean SkipSave = false;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
 		
 		protected static ArrayList invalidPathChars = getInvalidPathChars();
