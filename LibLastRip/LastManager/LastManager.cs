@@ -198,7 +198,8 @@ namespace LibLastRip
 						this.BasePath = Opts[1];
 						break;
 					default:
-						Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
+						if(Opts[0] != "")
+							Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
 						break;
 				}
 			}
