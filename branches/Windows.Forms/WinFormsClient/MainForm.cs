@@ -152,11 +152,11 @@ namespace WinFormsClient
 				this.StationLabel.Text = "Station: " + Info.Station;
 				
 				//TODO: multithread download of album cover
-				if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
+				if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
 				{
 					try
 					{
-						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Info.AlbumcoverSmall);
+						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Info.Albumcover);
 						System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
 						System.IO.Stream ResponseStream = hRes.GetResponseStream();
 						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
@@ -248,7 +248,6 @@ namespace WinFormsClient
 		{   
 			// only skip if there is a song to skip
 			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.Manager.CurrentSong)) {
-				this.DisableCommands();
 				this.Manager.SkipSong();
 			}
 		}
