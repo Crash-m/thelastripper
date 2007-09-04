@@ -1,6 +1,0 @@
-Name: libLastRip
-Description: libLastRip
-Version: 0.1
-
-Requires: 
-Libs: -r:/usr/local/lib/trunk/libLastRip.dll
