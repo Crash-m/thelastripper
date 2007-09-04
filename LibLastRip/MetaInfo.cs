@@ -25,9 +25,7 @@ namespace LibLastRip
 		protected System.String _Artist;
 		protected System.String _Track;
 		protected System.String _Album;
-		protected System.String _AlbumcoverSmall;
-		protected System.String _AlbumcoverMedium;
-		protected System.String _AlbumcoverLarge;
+		protected System.String _Albumcover;
 		protected System.String _Trackduration;
 		protected System.String _Trackprogress;
 		protected System.Boolean _Streaming = true;
@@ -52,7 +50,7 @@ namespace LibLastRip
             this._Trackprogress = "0";
         }
 		
-		internal MetaInfo(System.String Data)
+		internal MetaInfo(System.String Data, XSPF xspf)
 		{
 			System.String []Lines = Data.Split(new System.Char[] {'\n'});
 			foreach(System.String Line in Lines)
@@ -73,13 +71,13 @@ namespace LibLastRip
 						this._Album = Opts[1];
 						break;
 					case "albumcover_small":
-						this._AlbumcoverSmall = Opts[1];
+						this._Albumcover = Opts[1];
 						break;
 					case "albumcover_medium":
-						this._AlbumcoverMedium = Opts[1];
+						this._Albumcover = Opts[1];
 						break;
 					case "albumcover_large":
-						this._AlbumcoverLarge = Opts[1];
+						this._Albumcover = Opts[1];
 						break;
 					case "trackduration":
 						this._Trackduration = Opts[1];
@@ -94,6 +92,12 @@ namespace LibLastRip
 						}
 					break;
 				}
+				
+				this._Album = xspf.Album;
+				this._Artist = xspf.Creator;
+				this._Trackduration = (Int32.Parse(xspf.Duration) / 1000).ToString();
+				this._Track = xspf.Title;
+				this._Albumcover = xspf.Image;
 			}
 			
 			//We've got to have something to write as ID3tag's, filename and directories
@@ -137,30 +141,14 @@ namespace LibLastRip
 			}
 		}
 		
-		public System.String AlbumcoverSmall
+		public System.String Albumcover
 		{
 			get
 			{
-				return this._AlbumcoverSmall;
+				return this._Albumcover;
 			}
 		}
-		
-		public System.String AlbumcoverMedium
-		{
-			get
-			{
-				return this._AlbumcoverMedium;
-			}
-		}
-		
-		public System.String AlbumcoverLarge
-		{
-			get
-			{
-				return this._AlbumcoverLarge;
-			}
-		}
-		
+				
 		public System.String Trackduration
 		{
 			get
