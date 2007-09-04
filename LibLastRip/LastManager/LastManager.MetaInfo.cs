@@ -104,7 +104,7 @@ namespace LibLastRip
 				Response.Close();
 				
 				//Parse the newly recived data
-				MetaInfo nSong = new MetaInfo(Data);
+				MetaInfo nSong = new MetaInfo(Data, currentXspf);
 				
 				//Is this a new song?
 				if(!MetaInfo.Equals(nSong,this._CurrentSong))
