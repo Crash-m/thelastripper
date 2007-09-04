@@ -59,6 +59,7 @@
     <Compile Include="PlayList\PlayListGenerator.cs" />
     <Compile Include="ProgressEventArgs.cs" />
     <Compile Include="StreamAbstraction.cs" />
+    <Compile Include="XSPF.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LastManager" />
