@@ -27,6 +27,10 @@ Role: Windows.Forms developer and tester.
 
 == Thanks to ==
 
+*Tobias Brennecke (tburny), Jonas F. Jensen (Jop...) and Matt Brown (blueboxed)* for the [LastFM12UnofficialDocumentation Last.fm 1.2 Unofficial documentation].
+
 *Maxim Heijndijk* for Mandriva packages.
 
 *Joeyrs* for ArchLinux packages, available from: [http://aur.archlinux.org aur.ArchLinux.org].
+
+
