@@ -140,27 +140,36 @@ namespace WinFormsClient
 			else
 				this.StatusBar.Maximum = TrackLength;
 			
-			this.TrackLabel.Text = info.Track;
-			this.ArtistLabel.Text = "Artist: " + info.Artist;
-			this.AlbumLabel.Text = "Album: " + info.Album;
-			this.DurationLabel.Text = "Duration: " + info.Trackduration;
-			this.StationLabel.Text = "Station: " + info.Station;
-			
-			//TODO: multithread download of album cover
-			if(info.Albumcover != null && info.Albumcover.StartsWith("http://"))
-			{
-				try
-				{
-					System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(info.Albumcover);
-					System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
-					System.IO.Stream ResponseStream = hRes.GetResponseStream();
-					this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
-				}
-				catch
-				{
-					//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
-				}
+			if (info.isEmpty()) {
+				this.TrackLabel.Text = "nothing to do";
+				this.ArtistLabel.Text = "";
+				this.AlbumLabel.Text = "";
+				this.DurationLabel.Text = "";
+				this.StationLabel.Text = "";
+				this.StatuspictureBox.Image = null;
+			} else {
+				this.TrackLabel.Text = info.Track;
+				this.ArtistLabel.Text = "Artist: " + info.Artist;
+				this.AlbumLabel.Text = "Album: " + info.Album;
+				this.DurationLabel.Text = "Duration: " + info.Trackduration;
+				this.StationLabel.Text = "Station: " + info.Station;
 				
+				//TODO: multithread download of album cover
+				if(info.Albumcover != null && info.Albumcover.StartsWith("http://"))
+				{
+					try
+					{
+						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(info.Albumcover);
+						System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
+						System.IO.Stream ResponseStream = hRes.GetResponseStream();
+						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
+					}
+					catch
+					{
+						//Exceptions may accour if URL is bad, bad connection, etc... We'll just ignore that since it's not critical
+					}
+					
+				}
 			}
 		}
 		

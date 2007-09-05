@@ -27,7 +27,7 @@ namespace LibLastRip
 	*/
 	public partial class LastManager
 	{
-		protected MetaInfo _CurrentSong = MetaInfo.GetEmptyMetaInfo();
+		protected MetaInfo currentSong = MetaInfo.GetEmptyMetaInfo();
 	
 		///<summary>
 		///Gets the meta info about the current song
@@ -36,7 +36,7 @@ namespace LibLastRip
 		{
 			get
 			{
-				return this._CurrentSong;
+				return this.currentSong;
 			}
 		}
 		/// <summary>
@@ -50,59 +50,6 @@ namespace LibLastRip
 		/// </summary>
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnProgress;
-
-		///<summary>
-		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
-		///</summary>
-		protected System.Boolean IsUpdateing = false;
-		
-		///<summary>
-		///Updates metainfo, and pushes an OnNewSong event if new song is detected.
-		///</summary>
-		public void UpdateMetaInfo()
-		{
-			//Do not update if we're already doing that, and don't request if we're not recording
-			if(!this.IsUpdateing && this.Status == ConnectionStatus.Recording)
-			{
-				//We've commenced downloading of metadata
-				this.IsUpdateing = true;
-
-				//Create a WebRequest
-				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-				
-				//Begin to optain a response
-				Request.BeginGetResponse(new AsyncCallback(this.MetaInfoDownloaded), Request);
-			}
-		}
-		
-		///<summary>
-		///Handles metadata callback from UpdateMetaInfo
-		///</summary>					
-		protected void MetaInfoDownloaded(System.IAsyncResult ar)
-		{
-			try
-			{
-				//Parse the xspf data into MetaInfo structure
-				MetaInfo nSong = new MetaInfo(xspf, currentXspfTrack);
-				
-				//Is this a new song?
-				if(!MetaInfo.Equals(nSong,this._CurrentSong))
-				{
-					//Save metadata and raise OnNewSong event
-					this._CurrentSong = nSong;
-					if(this.OnNewSong != null)
-						this.OnNewSong(this, this._CurrentSong);
-				}
-			}
-			catch(System.Exception)
-			{
-				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped
-			}
-			finally 
-			{
-				//We're no longer updating metadata
-				this.IsUpdateing = false;			
-			}
-		}
+	
 	}
 }

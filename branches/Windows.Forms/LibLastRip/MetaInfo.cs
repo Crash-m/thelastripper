@@ -214,5 +214,9 @@ namespace LibLastRip
 			//Saves the Current file
 			File.Save();
 		}
+		
+		public bool isEmpty() {
+			return MetaInfo.GetEmptyMetaInfo().Equals(this);
+		}
 	}
 }

@@ -102,7 +102,7 @@ namespace LibLastRip
 		{
 			XmlNode xnodWorking;
 			String pad = new String(' ', level * 2);
-	
+			
 			// call recursively on all children of the current node
 			if (xnod.HasChildNodes)
 			{
@@ -145,6 +145,7 @@ namespace LibLastRip
 			}
 			
 			bool started = false;
+			int tryCounter = 3;
 			
 			while (started == false) {
 				
@@ -178,11 +179,11 @@ namespace LibLastRip
 
 					System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album) + Path.DirectorySeparatorChar;
 					System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title) + ".mp3";
-			
+					
 					//Check if file exists
-					if(!File.Exists(NewFilePath)) 
+					if(!File.Exists(NewFilePath))
 					{
-						Console.WriteLine("getting " + NewFilePath);
+						Console.WriteLine("get " + NewFilePath);
 						started = true;
 						//Getting stream
 						WebRequest wReq = WebRequest.Create(this.StreamURL);
@@ -194,12 +195,10 @@ namespace LibLastRip
 						RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
 					} else {
 						counter++;
-						Console.WriteLine("skipped " + counter.ToString() + " songs because they already exist! Last:"+NewFilePath);
+						Console.WriteLine("skip(" + counter.ToString() + ") " + NewFilePath);
 					}
-				} else {
-					if (this.OnError != null) {
-						this.OnError(this, new ErrorEventArgs("No playlist found. Please restart ripping.", null));
-					}
+				} else if (tryCounter-- == 0) {
+					handleError(true, new ErrorEventArgs("No playlist found. Please restart ripping."));
 					
 					// no way to continue...
 					started = true;
@@ -254,18 +253,13 @@ namespace LibLastRip
 			
 			System.Byte []Buf = this.Song.GetBuffer();
 			
-			//Request metadata if needed
-			if (firstRead) {
-				this.UpdateMetaInfo();
-			} else {
-				if (this.OnProgress != null) {
-					// Update Progress bar every 2 seconds.
-					if (this.Song.Length < LastPosition || LastPosition + 16384*2 < this.Song.Length)
-					{
-						//Note: 16383 [Byte/sec]
-						LastPosition = this.Song.Length;
-						this.OnProgress(this, new ProgressEventArgs((int)this.Song.Length / 16384));
-					}
+			if (this.OnProgress != null) {
+				// Update Progress bar every 2 seconds.
+				if (this.Song.Length < LastPosition || LastPosition + 16384*2 < this.Song.Length)
+				{
+					//Note: 16383 [Byte/sec]
+					LastPosition = this.Song.Length;
+					this.OnProgress(this, new ProgressEventArgs((int)this.Song.Length / 16384));
 				}
 			}
 		}
@@ -281,14 +275,25 @@ namespace LibLastRip
 			//	throw new UnauthorizedAccessException("Illegal call to method Save - process is already active");
 			//}
 			try {
+				//Parse the xspf data into MetaInfo structure
+				MetaInfo nSong = new MetaInfo(xspf, currentXspfTrack);
+				
+				//Is this a new song?
+				if(!MetaInfo.Equals(nSong,this.currentSong))
+				{
+					//Save metadata and raise OnNewSong event
+					this.currentSong = nSong;
+					if(this.OnNewSong != null)
+						this.OnNewSong(this, this.currentSong);
+				}
+				
 				//Save data read from async read.
 				Stream RadioStream = (Stream)Res.AsyncState;
-				System.Int32 Count = RadioStream.EndRead(Res);
-				Save(Count);
+				System.Int32 read = RadioStream.EndRead(Res);
+				Save(read);
 				
-				System.Int32 read = 1;
 				// we just read syncron from here - no nead for another AsyncCallback!
-				while (read > 0 && SkipSave == false) {
+				while (read > 0 && SkipSave == false && this.Status == ConnectionStatus.Recording) {
 					read = RadioStream.Read(this.Buffer, 0, LastManager.BufferSize);
 					Save(read);
 				}
@@ -304,13 +309,36 @@ namespace LibLastRip
 			} catch (Exception e) {
 				// Catch all exceptions to prevent application from falling into a illegal state
 				// Raise event so client can display a message
-				if (this.OnError != null) {
-					this.OnError(this, new ErrorEventArgs("Exception occurred. Please restart ripping.", e));
-				}
-				
+				handleError(true, new ErrorEventArgs("Exception occurred. Please restart ripping.", e));
+
 				this.RestoreState();
 			} finally {
 				//System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
+			}
+		}
+		
+		protected void handleError(bool resetSong, ErrorEventArgs args)
+		{
+			//Parse the xspf data into MetaInfo structure
+			MetaInfo nSong = MetaInfo.GetEmptyMetaInfo();
+				
+			//Is this a new song?
+			if(!MetaInfo.Equals(nSong,this.currentSong))
+			{
+				//Save metadata and raise OnNewSong event
+				this.currentSong = nSong;
+				if(this.OnNewSong != null) {
+					this.OnNewSong(this, this.currentSong);
+				}
+			}
+				
+			if (this.OnError != null) {
+				this.OnError(this, args);
+			}
+			
+			if (this.Status == ConnectionStatus.Recording) {
+				SkipSave = true;
+				this.Status = ConnectionStatus.Connected;
 			}
 		}
 		
@@ -328,7 +356,7 @@ namespace LibLastRip
 				LastPosition = 1;
 				
 				// Metainfo
-				_CurrentSong = MetaInfo.GetEmptyMetaInfo();
+				currentSong = MetaInfo.GetEmptyMetaInfo();
 				
 				// LastManager
 				Status = ConnectionStatus.Connected;
@@ -337,7 +365,7 @@ namespace LibLastRip
 				//System.Threading.Monitor.Exit(LastManager.ReadStreamLock);
 				
 				if(this.OnNewSong != null) {
-					this.OnNewSong(this, this._CurrentSong);
+					this.OnNewSong(this, this.currentSong);
 				}
 			}
 		}
