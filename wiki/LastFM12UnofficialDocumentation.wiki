@@ -1,4 +1,5 @@
 #summary An unofficial documentation of the Last.fm protocol version 1.2
+#labels Featured
 
 _Copyright 2007 by Tobias Brennecke (tburny), Jonas F. Jensen (Jop...), and Matt Brown (blueboxed).
 Release under CreativeCommons Attribution Non-commercial Share Alike ([http://creativecommons.org/licenses/by-nc-sa/3.0/ by-nc-sa])._
