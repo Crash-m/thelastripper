@@ -1,5 +1,6 @@
 #summary These are the known issues for the Linux version of TheLastRipper.
 #labels Help,Linux,Issues
+*Please don't report issues here, this is just a summarized list of know issues. Report issue in the issue tracker, click issues at the top of this page.*      
 
 ===TheLastRipper Version 1.1.1===
 No known issues, though the stability of the skip, love and hate features are known to be questionable.
