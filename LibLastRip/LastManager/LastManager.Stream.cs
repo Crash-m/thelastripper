@@ -145,7 +145,9 @@ namespace LibLastRip
 			}
 			
 			bool started = false;
-			int tryCounter = 3;
+			
+			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
+			int tryCounter = 5;
 			
 			while (started == false) {
 				
