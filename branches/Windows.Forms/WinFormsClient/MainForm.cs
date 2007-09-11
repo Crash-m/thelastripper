@@ -52,7 +52,7 @@ namespace WinFormsClient
 			
 			if(this.manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 			{
-				this.RadioStation.Enabled = true;
+				this.RadioStationCb.Enabled = true;
 				this.TuneInButton.Enabled = true;
 			}
 			this.manager.OnNewSong += new EventHandler(this.OnNewSong);
@@ -178,7 +178,7 @@ namespace WinFormsClient
 			this.settings.LaunchPreferences();
 			if(this.manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 			{
-				this.RadioStation.Enabled = true;
+				this.RadioStationCb.Enabled = true;
 				this.TuneInButton.Enabled = true;
 			}
 		}
@@ -222,7 +222,7 @@ namespace WinFormsClient
 		void TuneInButtonClick(object sender, EventArgs args)
 		{
 			this.TuneInButton.Enabled = false;
-			this.manager.ChangeStation(this.RadioStation.Text);
+			this.manager.ChangeStation(this.RadioStationCb.Text);
 		}
 		
 		void TuneInCallback(System.Object sender, System.EventArgs args)
@@ -312,6 +312,41 @@ namespace WinFormsClient
 			this.LoveButton.Enabled = true;
 			this.HateButton.Enabled = true;
 			this.SkipButton.Enabled = true;
+		}
+
+		void TuneInTo(String station) {
+			this.RadioStationCb.Text = station;
+			this.TuneInButtonClick(null, null);
+		}
+		
+		void ArtistButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://artist/" + RadioElementCb.Text + "/similarartists");
+		}
+		
+		void TagButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://globaltags/" + RadioElementCb.Text);
+		}
+
+		void PlaylistButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/playlist");
+		}
+		
+		void PersonalButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/personal");
+		}
+
+		void LovedButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/loved");
+		}
+		
+		void GroupButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://group/" + RadioElementCb.Text);
 		}
 	}
 }
