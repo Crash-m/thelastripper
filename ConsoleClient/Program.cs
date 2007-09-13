@@ -94,7 +94,7 @@ namespace ConsoleClient
 			while (program.working) {
 				program.timeout++;
 				Thread.Sleep(1000);
-				if (program.timeout > 15) {
+				if (program.timeout > 60) {
 					Console.WriteLine("timeout for " + program.timeout.ToString() + "seconds");
 					program.working = false;
 				}

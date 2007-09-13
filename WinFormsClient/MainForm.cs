@@ -348,5 +348,15 @@ namespace WinFormsClient
 		{
 			TuneInTo("lastfm://group/" + RadioElementCb.Text);
 		}
+		
+		void NeighbourhoodButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/neighbours");
+		}
+		
+		void RecommendationsButtonClick(object sender, EventArgs e)
+		{
+			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/recommended/100");
+		}
 	}
 }
