@@ -68,9 +68,11 @@ namespace WinFormsClient
 			this.RadioElementCb = new System.Windows.Forms.ComboBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.NeighbourhoodButton = new System.Windows.Forms.Button();
+			this.RecommendationsButton = new System.Windows.Forms.Button();
+			this.GroupButton = new System.Windows.Forms.Button();
 			this.LovedButton = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.GroupButton = new System.Windows.Forms.Button();
 			this.MainMenu.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).BeginInit();
@@ -81,9 +83,9 @@ namespace WinFormsClient
 			// 
 			// PersonalButton
 			// 
-			this.PersonalButton.Location = new System.Drawing.Point(156, 33);
+			this.PersonalButton.Location = new System.Drawing.Point(6, 62);
 			this.PersonalButton.Name = "PersonalButton";
-			this.PersonalButton.Size = new System.Drawing.Size(56, 23);
+			this.PersonalButton.Size = new System.Drawing.Size(60, 23);
 			this.PersonalButton.TabIndex = 8;
 			this.PersonalButton.Text = "Personal";
 			this.PersonalButton.UseVisualStyleBackColor = true;
@@ -91,9 +93,9 @@ namespace WinFormsClient
 			// 
 			// TagButton
 			// 
-			this.TagButton.Location = new System.Drawing.Point(56, 33);
+			this.TagButton.Location = new System.Drawing.Point(72, 33);
 			this.TagButton.Name = "TagButton";
-			this.TagButton.Size = new System.Drawing.Size(44, 23);
+			this.TagButton.Size = new System.Drawing.Size(60, 23);
 			this.TagButton.TabIndex = 7;
 			this.TagButton.Text = "Tag";
 			this.TagButton.UseVisualStyleBackColor = true;
@@ -101,9 +103,9 @@ namespace WinFormsClient
 			// 
 			// PlaylistButton
 			// 
-			this.PlaylistButton.Location = new System.Drawing.Point(218, 33);
+			this.PlaylistButton.Location = new System.Drawing.Point(72, 62);
 			this.PlaylistButton.Name = "PlaylistButton";
-			this.PlaylistButton.Size = new System.Drawing.Size(50, 23);
+			this.PlaylistButton.Size = new System.Drawing.Size(60, 23);
 			this.PlaylistButton.TabIndex = 6;
 			this.PlaylistButton.Text = "Playlist";
 			this.PlaylistButton.UseVisualStyleBackColor = true;
@@ -113,7 +115,7 @@ namespace WinFormsClient
 			// 
 			this.ArtistButton.Location = new System.Drawing.Point(6, 33);
 			this.ArtistButton.Name = "ArtistButton";
-			this.ArtistButton.Size = new System.Drawing.Size(44, 23);
+			this.ArtistButton.Size = new System.Drawing.Size(60, 23);
 			this.ArtistButton.TabIndex = 4;
 			this.ArtistButton.Text = "Artist";
 			this.ArtistButton.UseVisualStyleBackColor = true;
@@ -290,7 +292,7 @@ namespace WinFormsClient
 			this.groupBox2.Controls.Add(this.LoveButton);
 			this.groupBox2.Controls.Add(this.StatusBar);
 			this.groupBox2.Controls.Add(this.SkipButton);
-			this.groupBox2.Location = new System.Drawing.Point(12, 121);
+			this.groupBox2.Location = new System.Drawing.Point(12, 153);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(338, 219);
 			this.groupBox2.TabIndex = 0;
@@ -386,11 +388,13 @@ namespace WinFormsClient
 			this.tabControl1.Location = new System.Drawing.Point(12, 27);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(338, 88);
+			this.tabControl1.Size = new System.Drawing.Size(338, 120);
 			this.tabControl1.TabIndex = 2;
 			// 
 			// tabPage1
 			// 
+			this.tabPage1.Controls.Add(this.NeighbourhoodButton);
+			this.tabPage1.Controls.Add(this.RecommendationsButton);
 			this.tabPage1.Controls.Add(this.GroupButton);
 			this.tabPage1.Controls.Add(this.LovedButton);
 			this.tabPage1.Controls.Add(this.TagButton);
@@ -401,16 +405,46 @@ namespace WinFormsClient
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(330, 62);
+			this.tabPage1.Size = new System.Drawing.Size(330, 94);
 			this.tabPage1.TabIndex = 1;
 			this.tabPage1.Text = "Find Music";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
+			// NeighbourhoodButton
+			// 
+			this.NeighbourhoodButton.Location = new System.Drawing.Point(221, 33);
+			this.NeighbourhoodButton.Name = "NeighbourhoodButton";
+			this.NeighbourhoodButton.Size = new System.Drawing.Size(103, 23);
+			this.NeighbourhoodButton.TabIndex = 12;
+			this.NeighbourhoodButton.Text = "Neighbourhood";
+			this.NeighbourhoodButton.UseVisualStyleBackColor = true;
+			this.NeighbourhoodButton.Click += new System.EventHandler(this.NeighbourhoodButtonClick);
+			// 
+			// RecommendationsButton
+			// 
+			this.RecommendationsButton.Location = new System.Drawing.Point(221, 62);
+			this.RecommendationsButton.Name = "RecommendationsButton";
+			this.RecommendationsButton.Size = new System.Drawing.Size(103, 23);
+			this.RecommendationsButton.TabIndex = 11;
+			this.RecommendationsButton.Text = "Recommendations";
+			this.RecommendationsButton.UseVisualStyleBackColor = true;
+			this.RecommendationsButton.Click += new System.EventHandler(this.RecommendationsButtonClick);
+			// 
+			// GroupButton
+			// 
+			this.GroupButton.Location = new System.Drawing.Point(138, 33);
+			this.GroupButton.Name = "GroupButton";
+			this.GroupButton.Size = new System.Drawing.Size(60, 23);
+			this.GroupButton.TabIndex = 10;
+			this.GroupButton.Text = "Group";
+			this.GroupButton.UseVisualStyleBackColor = true;
+			this.GroupButton.Click += new System.EventHandler(this.GroupButtonClick);
+			// 
 			// LovedButton
 			// 
-			this.LovedButton.Location = new System.Drawing.Point(274, 33);
+			this.LovedButton.Location = new System.Drawing.Point(138, 62);
 			this.LovedButton.Name = "LovedButton";
-			this.LovedButton.Size = new System.Drawing.Size(50, 23);
+			this.LovedButton.Size = new System.Drawing.Size(60, 23);
 			this.LovedButton.TabIndex = 9;
 			this.LovedButton.Text = "Loved";
 			this.LovedButton.UseVisualStyleBackColor = true;
@@ -423,26 +457,16 @@ namespace WinFormsClient
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(330, 62);
+			this.tabPage2.Size = new System.Drawing.Size(330, 94);
 			this.tabPage2.TabIndex = 0;
 			this.tabPage2.Text = "URL";
 			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// GroupButton
-			// 
-			this.GroupButton.Location = new System.Drawing.Point(106, 33);
-			this.GroupButton.Name = "GroupButton";
-			this.GroupButton.Size = new System.Drawing.Size(44, 23);
-			this.GroupButton.TabIndex = 10;
-			this.GroupButton.Text = "Group";
-			this.GroupButton.UseVisualStyleBackColor = true;
-			this.GroupButton.Click += new System.EventHandler(this.GroupButtonClick);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 347);
+			this.ClientSize = new System.Drawing.Size(362, 380);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.MainMenu);
@@ -461,6 +485,8 @@ namespace WinFormsClient
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button RecommendationsButton;
+		private System.Windows.Forms.Button NeighbourhoodButton;
 		private System.Windows.Forms.Button GroupButton;
 		private System.Windows.Forms.Button LovedButton;
 		private System.Windows.Forms.Button PlaylistButton;
