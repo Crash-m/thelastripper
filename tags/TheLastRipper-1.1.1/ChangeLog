@@ -1,0 +1,71 @@
+2007-09-01  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	Bugfix 1.1.1 RC
+
+2007-09-01  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/LastManager/LastManager.cs: Fixing minor bug, somehow an
+	  empty line caused TheLastRipper to fail login
+
+2007-08-16  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* MonoClient/logo.png: Using raster image as logo instead of svg
+
+2007-08-16  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* MonoClient/MainWindow.cs: Implementing stream error support to handle
+	  end of streams.
+	* MonoClient/Preferences.cs: Implementing proxy support
+
+2007-08-14  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	Backport from Windows.Forms branch
+
+2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/LastManager/LastManager.Commands.cs: Performing all
+	  commands asynchroniously, results are returned as events.
+	* Performing ChangeStation() asynchroniously, results are returned as
+	  events.
+	* libLastRip/LastManager/LastManager.cs: Performing handshake
+	  asynchroniously, result is returned as an event.
+
+2007-08-05  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/LastManager/LastManager.MetaInfo.cs: Multithreading
+	  UpdateMetaInfo(), and closing connections correctly to save system
+	  resources.
+
+2007-07-31  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/MetaInfo.cs: Implementing ID3v2 support using
+	  TagLib-Sharp.
+	* libLastRip/LastManager/LastManager.cs: Replacing RemoveIllegalChars()
+	  with RemoveInvalidPathChars() and RemoveInvalidFileNameChars(),
+	  fixing issue 4
+	  (http://code.google.com/p/thelastripper/issues/detail?id=4). New
+	  solution only removes chars defined by invalid by the framework
+	  (System.IO.Path.GetInvalidFileNameChars() and
+	  System.IO.Path.GetInvalidPathChars()).
+	* taglib-sharp/taglib-sharp.dll: Adding taglib-sharp as binary, source
+	  is only release through SVN, not included in build process or
+	  source releases.
+
+2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* AboutBox.svg: Moving to SVG AboutBox
+	* TheLastRipper: Creating package project, pushing binary 1.1 alpha
+	  release
+
+2007-07-29  Jop... (Jonas F. Jensen) <jopsen@gmail.com> 
+
+	* libLastRip/AssemblyInfo.cs: Updating version information to 1.1.0,
+	  thereby starting development of the 1.1.x series.
+
+	* MonoClient/AssemblyInfo.cs: Updating version number to 1.1.0, starting 1.1.x series with an alpha release.
+
+2007-07-27  Jop... (Jonas F. Jensen) <jopsen@gmail.com>
+
+	* PlayList/PlayList.cs: Download XML to memory instead of using temp file.
+
+	* LastManager/LastManager.Stream.cs: Searches for SYNC-byte order to detect songs precisely. 
