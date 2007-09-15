@@ -2,6 +2,9 @@
 #labels Help,OSX,Issues
 *Please post bugs under issues, not as comments here. Thanks!*
 
+== TheLastRipper Version 1.1.1 ==
+ There's currently no known issues for this version, though skip, love and hate features are known to be unstable.
+
 == TheLastRipper Version 0.9 ==
 This version and all prior version can't login (Issue 63).
 
@@ -11,3 +14,4 @@ This version and all prior version can't login (Issue 63).
 
 == TheLastRipper Version 0.2 ==
 *Typo* there's a typo in the app bundle that prevents the application from launching.
+ 
