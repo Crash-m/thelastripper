@@ -1,0 +1,7 @@
+obj\Debug\ResolveAssemblyReference.cache
+bin\Debug\nScrobbler.dll
+bin\Debug\nScrobbler.pdb
+bin\Debug\nSpiff.dll
+bin\Debug\nSpiff.pdb
+obj\Debug\nScrobbler.dll
+obj\Debug\nScrobbler.pdb
