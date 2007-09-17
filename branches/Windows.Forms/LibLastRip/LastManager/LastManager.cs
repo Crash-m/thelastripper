@@ -57,7 +57,9 @@ namespace LibLastRip
 			chars.Add('\\');
 			
 			// Special characters which are not in system list but are also invalid
+			chars.Add('*');
 			chars.Add('?');
+			chars.Add(':');
 			return chars;
 		}
 
@@ -73,7 +75,9 @@ namespace LibLastRip
 			chars.Add('\\');
 
 			// Special characters which are not in system list but are also invalid
+			chars.Add('*');
 			chars.Add('?');
+			chars.Add(':');
 			return chars;
 		}
 		
