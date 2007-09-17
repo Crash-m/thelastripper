@@ -4,9 +4,15 @@ using System.Collections.Generic;
 
 namespace nSpiff
 {
-	//TODO: Document this class and members
+	/// <summary>
+	/// A class to representate tracks in an XSPF file, used by Playlist.
+	/// </summary>
 	public class Track
 	{
+		//TODO: Add support for creating tracks too, must be done with nSpiff.Playlist too
+		//TODO: Extent the amount of properties to support everything defined by the specification at http://xspf.org
+				//Currently it only implements what needed to use Last.fm's services
+		
 		/// <summary>
 		/// Creates an instance of Track
 		/// </summary>
@@ -32,12 +38,42 @@ namespace nSpiff
 		/// <summary>
 		/// Parses the Xml to the different fields on this instance of track
 		/// </summary>
-		/// <param name="Data">The XmlNode that holds this track</param>
-		protected virtual void ParseXml(System.Xml.XmlNode Data)
+		/// <param name="xml">The XmlNode with xpath playlist/tracklist/track of an XSPF.</param>
+		protected void ParseXml(XmlNode xml)
 		{
-			//TODO: Parse XML
+			//Set the different fields
+			this._Title = xml.SelectSingleNode("title").InnerText;
+			this._Location = xml.SelectSingleNode("location").InnerText;
+			this._Image = xml.SelectSingleNode("image").InnerText;
+			this._Artist = xml.SelectSingleNode("creatir").InnerText;
+			this._Album = xml.SelectSingleNode("album").InnerText;
+			
+			//Get the duration and try to convert it
+			System.String duration = xml.SelectSingleNode("duration").InnerText;
+			if(duration != null)
+			{
+				//Catch different exceptions, since these aren't worth dying for!
+				try
+				{
+					this._Duration = System.Convert.ToInt32(duration);
+				}
+				//Bad format don't kill the app
+				catch(System.FormatException)
+				{
+					//Do nothing, just a bad value
+				}
+				//Bad big duration (probably bad format or server error) don't kill the app
+				catch(System.OverflowException)
+				{
+					//Do nothing, just a big value :)
+					//Seriously nothing cry about
+				}
+			}
 		}
 		
+		/// <summary>
+		/// Gets the title of the track, returns null of no title is available.
+		/// </summary>
 		public virtual System.String Title
 		{
 			get
@@ -46,6 +82,9 @@ namespace nSpiff
 			}
 		}
 
+		/// <summary>
+		/// Gets the album of the track, returns null of no album is available.
+		/// </summary>
 		public virtual System.String Album
 		{
 			get
@@ -54,6 +93,9 @@ namespace nSpiff
 			}
 		}
 
+		/// <summary>
+		/// Gets the location of the track, returns null of no location is available.
+		/// </summary>
 		public virtual System.String Location
 		{
 			get
@@ -62,6 +104,9 @@ namespace nSpiff
 			}
 		}
 
+		/// <summary>
+		/// Gets the artist of the track, returns null of no artist is available.
+		/// </summary>
 		public virtual System.String Artist
 		{
 			get
@@ -70,6 +115,9 @@ namespace nSpiff
 			}
 		}
 
+		/// <summary>
+		/// Gets the image location of the track, returns null of no image location is available.
+		/// </summary>
 		public virtual System.String Image
 		{
 			get
@@ -78,6 +126,9 @@ namespace nSpiff
 			}
 		}
 
+		/// <summary>
+		/// Gets the duration of the track in milliseconds, returns null of no duration is available.
+		/// </summary>
 		public virtual System.Int32 Duration
 		{
 			get
@@ -95,14 +146,25 @@ namespace nSpiff
 			return this.Title + " on " + this.Album + " by " + this.Artist;
 		}
 
+		/// <summary>
+		/// Compares this object to another object.
+		/// </summary>
+		/// <remarks>This method uses GetHashCode(), and therefore only compares Title, Album and Artist.</remarks>
+		/// <param name="obj">Objec to compare with this</param>
+		/// <returns>Result of the comparation, true if they are the same.</returns>
 		public override bool Equals(object obj)
 		{
 			return obj != null && this.GetHashCode() == obj.GetHashCode();
 		}
 
+		/// <summary>
+		/// Generates a unique hashcode for this track, based on Title, Album and Artist. 
+		/// </summary>
+		/// <remarks>This hashcode doesn't care about duration, image, location etc. only Title, Album and Artist matters.</remarks>
+		/// <returns>A unique hashcode</returns>
 		public override int GetHashCode()
 		{
-			//TODO: improve this!
+			//When comparing tracks use only Title, Album and Artist.
 			return this.ToString().GetHashCode();
 		}
 	}

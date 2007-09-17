@@ -6,6 +6,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>nSpiff</RootNamespace>
     <AssemblyName>nSpiff</AssemblyName>
+    <RunCodeAnalysis>True</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Design#CA1017</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
