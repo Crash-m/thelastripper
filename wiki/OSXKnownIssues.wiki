@@ -16,5 +16,3 @@ This version and all prior version can't login (Issue 63).
 
 == TheLastRipper Version 0.2 ==
 *Typo* there's a typo in the app bundle that prevents the application from launching.
- 
- 
