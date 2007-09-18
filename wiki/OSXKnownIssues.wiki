@@ -4,8 +4,7 @@
 
 == TheLastRipper Version 1.1.1 ==
 The skip, love and hate features are known to be unstable.
-
-   * Some users have reported that the config file prevents it from starting again, can others confirm this (issue 74).
+There can be problems in the login process. (issue 74).
 
 == TheLastRipper Version 0.9 ==
 This version and all prior version can't login (Issue 63).
@@ -16,3 +15,5 @@ This version and all prior version can't login (Issue 63).
 
 == TheLastRipper Version 0.2 ==
 *Typo* there's a typo in the app bundle that prevents the application from launching.
+ 
+ 
