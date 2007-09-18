@@ -4,10 +4,10 @@ _This document describes the different features/bugs/issues we would like to imp
 
 == TheLastRipper version 2.0 ==
   * Implementation of Last.fm protocol 1.2
+  * Update notifier (?)
 
-== Linux version 1.2 ==
+== TheLastRipper version 1.2 ==
   * Internationalization (Issue 8)
   * Commandline interface
-
-== Mac OS X version 1.1.0 ==
   * Code cleanup and fixes for other minor details.
+ 
