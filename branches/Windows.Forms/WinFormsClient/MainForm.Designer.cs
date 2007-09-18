@@ -41,9 +41,6 @@ namespace WinFormsClient
 			this.TagButton = new System.Windows.Forms.Button();
 			this.PlaylistButton = new System.Windows.Forms.Button();
 			this.ArtistButton = new System.Windows.Forms.Button();
-			this.HateButton = new System.Windows.Forms.Button();
-			this.LoveButton = new System.Windows.Forms.Button();
-			this.SkipButton = new System.Windows.Forms.Button();
 			this.TuneInButton = new System.Windows.Forms.Button();
 			this.RadioStationCb = new System.Windows.Forms.ComboBox();
 			this.MainMenu = new System.Windows.Forms.MenuStrip();
@@ -57,14 +54,6 @@ namespace WinFormsClient
 			this.onlineHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.StationLabel = new System.Windows.Forms.Label();
-			this.DurationLabel = new System.Windows.Forms.Label();
-			this.AlbumLabel = new System.Windows.Forms.Label();
-			this.ArtistLabel = new System.Windows.Forms.Label();
-			this.TrackLabel = new System.Windows.Forms.Label();
-			this.StatuspictureBox = new System.Windows.Forms.PictureBox();
-			this.StatusBar = new System.Windows.Forms.ProgressBar();
 			this.RadioElementCb = new System.Windows.Forms.ComboBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -73,12 +62,28 @@ namespace WinFormsClient
 			this.GroupButton = new System.Windows.Forms.Button();
 			this.LovedButton = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabControl2 = new System.Windows.Forms.TabControl();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.StatusBar = new System.Windows.Forms.ProgressBar();
+			this.StatuspictureBox = new System.Windows.Forms.PictureBox();
+			this.DurationLabel = new System.Windows.Forms.Label();
+			this.StationLabel = new System.Windows.Forms.Label();
+			this.ArtistLabel = new System.Windows.Forms.Label();
+			this.HateButton = new System.Windows.Forms.Button();
+			this.LoveButton = new System.Windows.Forms.Button();
+			this.AlbumLabel = new System.Windows.Forms.Label();
+			this.TrackLabel = new System.Windows.Forms.Label();
+			this.SkipButton = new System.Windows.Forms.Button();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.LogTextBox = new System.Windows.Forms.TextBox();
 			this.MainMenu.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
+			this.tabControl2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).BeginInit();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// PersonalButton
@@ -121,49 +126,10 @@ namespace WinFormsClient
 			this.ArtistButton.UseVisualStyleBackColor = true;
 			this.ArtistButton.Click += new System.EventHandler(this.ArtistButtonClick);
 			// 
-			// HateButton
-			// 
-			this.HateButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.HateButton.Enabled = false;
-			this.HateButton.Location = new System.Drawing.Point(168, 190);
-			this.HateButton.Name = "HateButton";
-			this.HateButton.Size = new System.Drawing.Size(75, 23);
-			this.HateButton.TabIndex = 0;
-			this.HateButton.Text = "H&ate";
-			this.HateButton.UseVisualStyleBackColor = true;
-			this.HateButton.Click += new System.EventHandler(this.HateButtonClick);
-			// 
-			// LoveButton
-			// 
-			this.LoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.LoveButton.Enabled = false;
-			this.LoveButton.Location = new System.Drawing.Point(87, 190);
-			this.LoveButton.Name = "LoveButton";
-			this.LoveButton.Size = new System.Drawing.Size(75, 23);
-			this.LoveButton.TabIndex = 0;
-			this.LoveButton.Text = "&Love";
-			this.LoveButton.UseVisualStyleBackColor = true;
-			this.LoveButton.Click += new System.EventHandler(this.LoveButtonClick);
-			// 
-			// SkipButton
-			// 
-			this.SkipButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.SkipButton.Enabled = false;
-			this.SkipButton.Location = new System.Drawing.Point(6, 190);
-			this.SkipButton.Name = "SkipButton";
-			this.SkipButton.Size = new System.Drawing.Size(75, 23);
-			this.SkipButton.TabIndex = 0;
-			this.SkipButton.Text = "&Skip";
-			this.SkipButton.UseVisualStyleBackColor = true;
-			this.SkipButton.Click += new System.EventHandler(this.SkipButtonClick);
-			// 
 			// TuneInButton
 			// 
 			this.TuneInButton.Enabled = false;
-			this.TuneInButton.Location = new System.Drawing.Point(6, 33);
+			this.TuneInButton.Location = new System.Drawing.Point(6, 34);
 			this.TuneInButton.Name = "TuneInButton";
 			this.TuneInButton.Size = new System.Drawing.Size(75, 23);
 			this.TuneInButton.TabIndex = 2;
@@ -278,101 +244,6 @@ namespace WinFormsClient
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
-			// groupBox2
-			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Controls.Add(this.StationLabel);
-			this.groupBox2.Controls.Add(this.DurationLabel);
-			this.groupBox2.Controls.Add(this.AlbumLabel);
-			this.groupBox2.Controls.Add(this.ArtistLabel);
-			this.groupBox2.Controls.Add(this.TrackLabel);
-			this.groupBox2.Controls.Add(this.StatuspictureBox);
-			this.groupBox2.Controls.Add(this.HateButton);
-			this.groupBox2.Controls.Add(this.LoveButton);
-			this.groupBox2.Controls.Add(this.StatusBar);
-			this.groupBox2.Controls.Add(this.SkipButton);
-			this.groupBox2.Location = new System.Drawing.Point(12, 153);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(338, 219);
-			this.groupBox2.TabIndex = 0;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Currently recording";
-			// 
-			// StationLabel
-			// 
-			this.StationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.StationLabel.Location = new System.Drawing.Point(6, 135);
-			this.StationLabel.Name = "StationLabel";
-			this.StationLabel.Size = new System.Drawing.Size(180, 23);
-			this.StationLabel.TabIndex = 6;
-			this.StationLabel.Text = "Station: ";
-			// 
-			// DurationLabel
-			// 
-			this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.DurationLabel.Location = new System.Drawing.Point(6, 112);
-			this.DurationLabel.Name = "DurationLabel";
-			this.DurationLabel.Size = new System.Drawing.Size(180, 23);
-			this.DurationLabel.TabIndex = 5;
-			this.DurationLabel.Text = "Duration: ";
-			// 
-			// AlbumLabel
-			// 
-			this.AlbumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.AlbumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AlbumLabel.Location = new System.Drawing.Point(6, 89);
-			this.AlbumLabel.Name = "AlbumLabel";
-			this.AlbumLabel.Size = new System.Drawing.Size(180, 23);
-			this.AlbumLabel.TabIndex = 4;
-			this.AlbumLabel.Text = "Album: ";
-			// 
-			// ArtistLabel
-			// 
-			this.ArtistLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.ArtistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ArtistLabel.Location = new System.Drawing.Point(6, 66);
-			this.ArtistLabel.Name = "ArtistLabel";
-			this.ArtistLabel.Size = new System.Drawing.Size(180, 23);
-			this.ArtistLabel.TabIndex = 3;
-			this.ArtistLabel.Text = "Artist: ";
-			// 
-			// TrackLabel
-			// 
-			this.TrackLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.TrackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TrackLabel.Location = new System.Drawing.Point(6, 19);
-			this.TrackLabel.Name = "TrackLabel";
-			this.TrackLabel.Size = new System.Drawing.Size(180, 47);
-			this.TrackLabel.TabIndex = 2;
-			this.TrackLabel.Text = "Not recording...";
-			// 
-			// StatuspictureBox
-			// 
-			this.StatuspictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatuspictureBox.Location = new System.Drawing.Point(192, 15);
-			this.StatuspictureBox.Name = "StatuspictureBox";
-			this.StatuspictureBox.Size = new System.Drawing.Size(140, 140);
-			this.StatuspictureBox.TabIndex = 1;
-			this.StatuspictureBox.TabStop = false;
-			// 
-			// StatusBar
-			// 
-			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusBar.Location = new System.Drawing.Point(6, 161);
-			this.StatusBar.Name = "StatusBar";
-			this.StatusBar.Size = new System.Drawing.Size(326, 23);
-			this.StatusBar.TabIndex = 0;
-			// 
 			// RadioElementCb
 			// 
 			this.RadioElementCb.FormattingEnabled = true;
@@ -462,13 +333,178 @@ namespace WinFormsClient
 			this.tabPage2.Text = "URL";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
+			// tabControl2
+			// 
+			this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.tabControl2.Controls.Add(this.tabPage3);
+			this.tabControl2.Controls.Add(this.tabPage4);
+			this.tabControl2.Location = new System.Drawing.Point(12, 153);
+			this.tabControl2.Name = "tabControl2";
+			this.tabControl2.SelectedIndex = 0;
+			this.tabControl2.Size = new System.Drawing.Size(338, 215);
+			this.tabControl2.TabIndex = 3;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.StatusBar);
+			this.tabPage3.Controls.Add(this.StatuspictureBox);
+			this.tabPage3.Controls.Add(this.DurationLabel);
+			this.tabPage3.Controls.Add(this.StationLabel);
+			this.tabPage3.Controls.Add(this.ArtistLabel);
+			this.tabPage3.Controls.Add(this.HateButton);
+			this.tabPage3.Controls.Add(this.LoveButton);
+			this.tabPage3.Controls.Add(this.AlbumLabel);
+			this.tabPage3.Controls.Add(this.TrackLabel);
+			this.tabPage3.Controls.Add(this.SkipButton);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(330, 189);
+			this.tabPage3.TabIndex = 0;
+			this.tabPage3.Text = "Currently recording";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// StatusBar
+			// 
+			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.StatusBar.Location = new System.Drawing.Point(6, 141);
+			this.StatusBar.Name = "StatusBar";
+			this.StatusBar.Size = new System.Drawing.Size(317, 13);
+			this.StatusBar.TabIndex = 0;
+			// 
+			// StatuspictureBox
+			// 
+			this.StatuspictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.StatuspictureBox.Location = new System.Drawing.Point(195, 6);
+			this.StatuspictureBox.Name = "StatuspictureBox";
+			this.StatuspictureBox.Size = new System.Drawing.Size(129, 129);
+			this.StatuspictureBox.TabIndex = 1;
+			this.StatuspictureBox.TabStop = false;
+			// 
+			// DurationLabel
+			// 
+			this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.DurationLabel.Location = new System.Drawing.Point(2, 104);
+			this.DurationLabel.Name = "DurationLabel";
+			this.DurationLabel.Size = new System.Drawing.Size(189, 14);
+			this.DurationLabel.TabIndex = 5;
+			this.DurationLabel.Text = "Duration: ";
+			// 
+			// StationLabel
+			// 
+			this.StationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.StationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.StationLabel.Location = new System.Drawing.Point(2, 121);
+			this.StationLabel.Name = "StationLabel";
+			this.StationLabel.Size = new System.Drawing.Size(189, 14);
+			this.StationLabel.TabIndex = 6;
+			this.StationLabel.Text = "Station: ";
+			// 
+			// ArtistLabel
+			// 
+			this.ArtistLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.ArtistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ArtistLabel.Location = new System.Drawing.Point(2, 61);
+			this.ArtistLabel.Name = "ArtistLabel";
+			this.ArtistLabel.Size = new System.Drawing.Size(189, 23);
+			this.ArtistLabel.TabIndex = 3;
+			this.ArtistLabel.Text = "Artist: ";
+			// 
+			// HateButton
+			// 
+			this.HateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.HateButton.Enabled = false;
+			this.HateButton.Location = new System.Drawing.Point(72, 160);
+			this.HateButton.Name = "HateButton";
+			this.HateButton.Size = new System.Drawing.Size(51, 23);
+			this.HateButton.TabIndex = 0;
+			this.HateButton.Text = "H&ate";
+			this.HateButton.UseVisualStyleBackColor = true;
+			this.HateButton.Click += new System.EventHandler(this.HateButtonClick);
+			// 
+			// LoveButton
+			// 
+			this.LoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.LoveButton.Enabled = false;
+			this.LoveButton.Location = new System.Drawing.Point(6, 160);
+			this.LoveButton.Name = "LoveButton";
+			this.LoveButton.Size = new System.Drawing.Size(60, 23);
+			this.LoveButton.TabIndex = 0;
+			this.LoveButton.Text = "&Love";
+			this.LoveButton.UseVisualStyleBackColor = true;
+			this.LoveButton.Click += new System.EventHandler(this.LoveButtonClick);
+			// 
+			// AlbumLabel
+			// 
+			this.AlbumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.AlbumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.AlbumLabel.Location = new System.Drawing.Point(2, 84);
+			this.AlbumLabel.Name = "AlbumLabel";
+			this.AlbumLabel.Size = new System.Drawing.Size(189, 20);
+			this.AlbumLabel.TabIndex = 4;
+			this.AlbumLabel.Text = "Album: ";
+			// 
+			// TrackLabel
+			// 
+			this.TrackLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.TrackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TrackLabel.Location = new System.Drawing.Point(2, 2);
+			this.TrackLabel.Name = "TrackLabel";
+			this.TrackLabel.Size = new System.Drawing.Size(189, 58);
+			this.TrackLabel.TabIndex = 2;
+			this.TrackLabel.Text = "Not recording...";
+			// 
+			// SkipButton
+			// 
+			this.SkipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.SkipButton.Enabled = false;
+			this.SkipButton.Location = new System.Drawing.Point(129, 160);
+			this.SkipButton.Name = "SkipButton";
+			this.SkipButton.Size = new System.Drawing.Size(60, 23);
+			this.SkipButton.TabIndex = 0;
+			this.SkipButton.Text = "&Skip";
+			this.SkipButton.UseVisualStyleBackColor = true;
+			this.SkipButton.Click += new System.EventHandler(this.SkipButtonClick);
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.LogTextBox);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(330, 189);
+			this.tabPage4.TabIndex = 1;
+			this.tabPage4.Text = "Log";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// LogTextBox
+			// 
+			this.LogTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.LogTextBox.Location = new System.Drawing.Point(6, 6);
+			this.LogTextBox.Multiline = true;
+			this.LogTextBox.Name = "LogTextBox";
+			this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.LogTextBox.Size = new System.Drawing.Size(318, 177);
+			this.LogTextBox.TabIndex = 0;
+			this.LogTextBox.WordWrap = false;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(362, 380);
+			this.Controls.Add(this.tabControl2);
 			this.Controls.Add(this.tabControl1);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.MainMenu);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MainMenu;
@@ -477,14 +513,21 @@ namespace WinFormsClient
 			this.Text = "TheLastRipper";
 			this.MainMenu.ResumeLayout(false);
 			this.MainMenu.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).EndInit();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
+			this.tabControl2.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).EndInit();
+			this.tabPage4.ResumeLayout(false);
+			this.tabPage4.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox LogTextBox;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabControl tabControl2;
 		private System.Windows.Forms.Button RecommendationsButton;
 		private System.Windows.Forms.Button NeighbourhoodButton;
 		private System.Windows.Forms.Button GroupButton;
@@ -520,6 +563,5 @@ namespace WinFormsClient
 		private System.Windows.Forms.ToolStripMenuItem generatePlaylistsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.GroupBox groupBox2;
 	}
 }
