@@ -57,6 +57,7 @@ namespace WinFormsClient
 			}
 			this.manager.OnNewSong += new EventHandler(this.OnNewSong);
 			this.manager.OnProgress += new EventHandler(this.OnProgress);
+			this.manager.OnLog += new EventHandler(this.OnLog);
 			
 			//Subscribe to stations changed event
 			this.manager.StationChanged += new EventHandler(this.TuneInCallback);
@@ -115,6 +116,25 @@ namespace WinFormsClient
 			}
 		}
 		
+		private void OnLog(System.Object sender, System.EventArgs args)
+		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.OnLog), new System.Object[]{sender, args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			LibLastRip.LogEventArgs logArgs = (LibLastRip.LogEventArgs)args;
+			this.LogTextBox.AppendText(logArgs.Log + "\n");
+		}
+
 		private void OnNewSong(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
