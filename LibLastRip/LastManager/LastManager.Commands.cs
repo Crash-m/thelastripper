@@ -248,4 +248,29 @@ namespace LibLastRip
 			}
 		}
 	}
+	
+	///<summary>
+	///EventArgs for Log event
+	///</summary>
+	public class LogEventArgs : System.EventArgs
+	{
+		protected String _log;
+		
+		internal LogEventArgs(String log)
+		{
+			this._log = log;
+		}
+		
+		///<summary>
+		///String containing log message
+		///</summary>
+		public virtual String Log
+		{
+			get
+			{
+				return this._log;
+			}
+		}
+	}
+
 }

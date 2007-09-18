@@ -53,13 +53,17 @@ namespace LibLastRip
 			chars.AddRange(System.IO.Path.GetInvalidPathChars());
 			
 			// Path separation chars - should not occur in our album path
-			chars.Add('/');
 			chars.Add('\\');
+			chars.Add('/');
 			
 			// Special characters which are not in system list but are also invalid
+			chars.Add(':');
 			chars.Add('*');
 			chars.Add('?');
-			chars.Add(':');
+			chars.Add('"');
+			chars.Add('<');
+			chars.Add('>');
+			chars.Add('|');
 			return chars;
 		}
 
@@ -71,13 +75,17 @@ namespace LibLastRip
 			chars.AddRange(System.IO.Path.GetInvalidFileNameChars());
 
 			// Path separation chars - should not occur in our filename
-			chars.Add('/');
 			chars.Add('\\');
+			chars.Add('/');
 
 			// Special characters which are not in system list but are also invalid
+			chars.Add(':');
 			chars.Add('*');
 			chars.Add('?');
-			chars.Add(':');
+			chars.Add('"');
+			chars.Add('<');
+			chars.Add('>');
+			chars.Add('|');
 			return chars;
 		}
 		
@@ -200,7 +208,7 @@ namespace LibLastRip
 							this.BasePath = Opts[1];
 							break;
 						default:
-							Console.WriteLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
+							writeLogLine("LastManager.ParseHandshake() Unknown key: " + Opts[0] + " Value: " + Opts[1]);
 							break;
 					}
 				}

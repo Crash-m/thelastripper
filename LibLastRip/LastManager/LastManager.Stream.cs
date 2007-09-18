@@ -138,6 +138,43 @@ namespace LibLastRip
 			}
 		}
 		
+		protected void writeLogLine(String logText) {
+			Console.WriteLine(logText);
+			if (this.OnLog != null) {
+				this.OnLog(this, new LogEventArgs(logText));
+			}
+		}
+		
+		protected bool processFile() {
+			System.String CreatorPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator);
+			System.String AlbumPath = CreatorPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album) + Path.DirectorySeparatorChar;
+			System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title) + ".mp3";
+			
+			// TODO: ProcessModes (multiple choices allowed)
+			// a) reload existing files DEFAULT=false
+			// b) only load existing artists DEFAULT=false
+			
+			// File exists - dont process
+			if (File.Exists(NewFilePath)) {
+				counter++;
+				writeLogLine("skipFE (" + counter.ToString() + ") " + NewFilePath);
+				return false;
+			}
+
+			// Directory exists not - dont process
+			if (!Directory.Exists(CreatorPath)) {
+				counter++;
+				writeLogLine("skipDnE(" + counter.ToString() + ") " + CreatorPath);
+				return false;
+			}		
+			
+			writeLogLine("get     " + NewFilePath);
+
+			// Default: Process file
+			return true;
+
+		}
+		
 		protected void StartRecording(bool newStation) {
 			if (newStation) {
 				xspf = XSPF.GetEmptyXSPF();
@@ -179,13 +216,9 @@ namespace LibLastRip
 					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
 					this.StreamURL = this.currentXspfTrack.Location;
 
-					System.String AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album) + Path.DirectorySeparatorChar;
-					System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title) + ".mp3";
-					
 					//Check if file exists
-					if(!File.Exists(NewFilePath))
+					if(processFile())
 					{
-						Console.WriteLine("get " + NewFilePath);
 						started = true;
 						//Getting stream
 						WebRequest wReq = WebRequest.Create(this.StreamURL);
@@ -195,9 +228,6 @@ namespace LibLastRip
 						//Start reading process
 						// TODO: Lock could be active if response is fast - re-think about stream locking!
 						RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
-					} else {
-						counter++;
-						Console.WriteLine("skip(" + counter.ToString() + ") " + NewFilePath);
 					}
 				} else if (tryCounter-- == 0) {
 					handleError(true, new ErrorEventArgs("No playlist found. Please restart ripping."));
@@ -224,8 +254,8 @@ namespace LibLastRip
 			//Create a new MemoryStream
 			MemoryStream NewSong = new MemoryStream();
 			
-			Console.WriteLine("Song length in bytes: " + this.Song.Length);
-			Console.WriteLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
+			writeLogLine("Song length in bytes: " + this.Song.Length);
+			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
 			
 			//Should we save this song?
 			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo())
@@ -409,18 +439,18 @@ namespace LibLastRip
 					Directory.CreateDirectory(AlbumPath);
 				}
 				
-				//Save the MemoryStream to file
+ 				//Save the MemoryStream to file
 				FileStream FS = File.Create(NewFilePath);
 				FS.Write(Song.GetBuffer(), 0, Count);
 				
-				//Write metadata to stream as ID3v1
+ 				//Write metadata to stream as ID3v1
 				SongInfo.AppendID3(FS);
 
 				//Close the file
 				FS.Flush();
 				FS.Close();
 				
-				//Download covers - don't care for errors because some not exist
+ 				//Download covers - don't care for errors because some not exist
 				WebClient Client = new WebClient();
 				
 				// First download larger covers - because small cover fails more often
@@ -432,7 +462,8 @@ namespace LibLastRip
 				} catch (System.Net.WebException) {
 					// no cover
 				}
-			} catch (Exception) {
+			} catch (Exception e) {
+				writeLogLine("Exception occured: " + e.ToString());
 				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
 				// TODO: Consider launching an OnError event
 			}
