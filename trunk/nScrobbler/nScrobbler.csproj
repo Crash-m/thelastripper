@@ -30,12 +30,16 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="CommandEventArgs.cs" />
     <Compile Include="CommandType.cs" />
-    <Compile Include="nScrobbler.cs" />
+    <Compile Include="nScrobbler\nScrobbler.Commands.cs" />
+    <Compile Include="nScrobbler\nScrobbler.cs" />
+    <Compile Include="nScrobbler\nScrobbler.Login.cs" />
+    <Compile Include="nScrobbler\nScrobbler.RequestPlaylist.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nSpiff\nSpiff.csproj">
       <Project>{6F7ED59E-1766-41EE-9588-1D70022541CA}</Project>
       <Name>nSpiff</Name>
     </ProjectReference>
+    <Folder Include="nScrobbler" />
   </ItemGroup>
 </Project>
