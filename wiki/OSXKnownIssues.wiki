@@ -5,7 +5,8 @@
 == TheLastRipper Version 1.1.1 ==
 The skip, love and hate features are known to be unstable.
 
-There can be problems in the login process. (issue 74).
+   * *Globaltags* some have reported problems recording default globaltag stations, see issue 77.
+   * There can be problems in the *login* process. (issue 74).
 
 == TheLastRipper Version 0.9 ==
 This version and all prior version can't login (Issue 63).
