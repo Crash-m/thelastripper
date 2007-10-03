@@ -4,7 +4,7 @@
 
 ===TheLastRipper Version 1.1.1===
 No known issues, though the stability of the skip, love and hate features are known to be questionable.
-   * *Globaltags* some have reported problems recording default globaltag stations, see issue 77.
+
    * *Compilation*, it's known that some version of Mono uses different methods of controlling proxy settings, there's a solution to this, have a look at issue 70.
 
 ===TheLastRipper Version 1.1.0===
