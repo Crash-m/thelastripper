@@ -4,7 +4,6 @@
 
 ===TheLastRipper Version 1.1.1===
 Currently no known issues, though skip, love and hate commands are known to be unstable.
-   * *Globaltags* some have reported problems recording default globaltag stations, see issue 77.
 
 ===TheLastRipper Version 1.1.0===
 This version and all prior versions can't login (Issue 63).
