@@ -54,7 +54,9 @@ namespace LibLastRip
 			if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
 			{
 				//Getting stream
-				WebRequest wReq = WebRequest.Create(this.StreamURL);
+				HttpWebRequest wReq = (HttpWebRequest)WebRequest.Create(this.StreamURL);
+				wReq.Accept = "*/*";
+				
 				HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
 				System.IO.Stream RadioStream = hRes.GetResponseStream();
 				

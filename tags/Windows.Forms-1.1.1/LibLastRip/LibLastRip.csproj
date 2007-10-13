@@ -41,7 +41,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp">
-      <HintPath>..\..\..\trunk\taglib-sharp\taglib-sharp.dll</HintPath>
+      <HintPath>..\..\..\branches\Windows.Forms\LibLastRip\bin\Release\taglib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
