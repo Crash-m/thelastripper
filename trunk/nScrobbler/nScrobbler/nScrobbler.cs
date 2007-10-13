@@ -2,6 +2,7 @@ using System;
 using System.Xml;
 using System.Collections.Generic;
 using System.Net;
+using System.IO;
 
 namespace nScrobbler
 {
@@ -9,9 +10,24 @@ namespace nScrobbler
 	public partial class nScrobbler : nSpiff.Playlist
 	{
 		/// <summary>
+		/// Session ID, only set if connnected
+		/// </summary>
+		protected System.String SessionID;
+		
+		/// <summary>
+		/// Base URL for protocol reqeusts
+		/// </summary>
+		protected System.String BaseURL = "ws.audioscrobbler.com";
+		
+		/// <summary>
+		/// Base path for protocol requests
+		/// </summary>
+		protected System.String BasePath = "/radio";
+		
+		/// <summary>
 		/// Is this instance of nScrobbler logged in?
 		/// </summary>
-		protected System.Boolean _Connected;
+		protected System.Boolean _Connected = false;
 
 		/// <summary>
 		/// Is this instance of nScrobbler logged in?
@@ -43,7 +59,7 @@ namespace nScrobbler
 			}
 			
 			//TODO: try using System.BitConverter, I've seen it done somewhere
-				
+			
 			//Return a string
 			return HashString.ToString();
 		}
@@ -53,10 +69,11 @@ namespace nScrobbler
 		/// </summary>
 		/// <param name="Uri">Uniform Resource Identifier, HTTP-address of the wanted resource.</param>
 		/// <param name="Callback">The callback to be called when the request completes.</param>
+		/// <param name="ExceptionCallback">The callback to be called when a request fails.</param>
 		/// <remarks>This method merly warps around HttpWebRequest and HttpWebResponse to avoid dublicate code and
 		///  to make future implementation of proxy and different request methods easier. Currently it warps around
 		///  some weird hack, needed to get internet access some places in the world.</remarks>
-		private void HttpWebRequest(System.String Uri, HttpWebCallback Callback)
+		private void HttpWebRequest(System.String Uri, HttpWebCallback Callback, HttpExceptionCallback ExceptionCallback)
 		{
 			//Create a HttpWebRequest
 			HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(Uri);
@@ -70,7 +87,7 @@ namespace nScrobbler
 			 *  */
 			
 			//Start the asynchronous request
-			Request.BeginGetResponse(new AsyncCallback(this.HttpWebResponse), new System.Object[]{Request, Callback});
+			Request.BeginGetResponse(new AsyncCallback(this.HttpWebResponse), new System.Object[]{Request, Callback, ExceptionCallback});
 		}
 		
 		/// <summary>
@@ -84,27 +101,42 @@ namespace nScrobbler
 			//Get the system object array from the AsyncState
 			System.Object[] AsyncStates = (System.Object[])Ar.AsyncState;
 			
-			//Get Response
-			HttpWebRequest Request = (HttpWebRequest)(AsyncStates[0]);
-			HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
-			
-			//Get stream and create StreamReader
-			Stream Stream = Response.GetResponseStream();
-			System.IO.StreamReader StreamReader = new System.IO.StreamReader(Stream, Encoding.UTF8);
-			
-			//Read the stream to end
-			System.String Data = StreamReader.ReadToEnd();
-			
-			//Get the HttpWebCallback delegate
-			HttpWebCallback Callback = (HttpWebCallback)(AsyncStates[1]);
-			
-			//Invoke the callback
-			Callback.Invoke(Data);
+			//Try getting the content
+			try
+			{
+				//Get Response
+				HttpWebRequest Request = (HttpWebRequest)(AsyncStates[0]);
+				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+				
+				//Get stream and create StreamReader
+				Stream Stream = Response.GetResponseStream();
+				System.IO.StreamReader StreamReader = new System.IO.StreamReader(Stream, System.Text.Encoding.UTF8);
+				
+				//Read the stream to end
+				System.String Data = StreamReader.ReadToEnd();
+				
+				//Get the HttpWebCallback delegate
+				HttpWebCallback Callback = (HttpWebCallback)(AsyncStates[1]);
+				
+				//Invoke the callback
+				Callback.Invoke(Data);
+			}
+			catch(System.Exception e)
+			{
+				//Catch the exception and throw it to a callback defined by caller.
+				HttpExceptionCallback ExceptionCallback = (HttpExceptionCallback)(AsyncStates[2]);
+				ExceptionCallback.Invoke(e);
+			}
 		}
 		
 		/// <summary>
 		/// A private helper delegate for providing callbacks to nScrobbler.HttpWebRequest later used by nScrobbler.HttpWebResponse
 		/// </summary>
 		private delegate void HttpWebCallback(System.String Data);
+		
+		/// <summary>
+		/// A private helper delegate for providing exception callbacks to nScrobbler.HttpWebRequest, later used by nScrobbler.HttpWebResponse
+		/// </summary>
+		private delegate void HttpExceptionCallback(System.Exception e);
 	}
 }

@@ -27,6 +27,9 @@ namespace nScrobbler
 			}
 		}
 
+		/// <summary>
+		/// Returns the exception that caused it to fail, or null if no exception occured.
+		/// </summary>
 		public virtual System.Exception Exception
 		{
 			get
