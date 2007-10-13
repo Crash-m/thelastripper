@@ -110,6 +110,7 @@ namespace LibLastRip
 			}
 			
 			HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("http://ws.audioscrobbler.com/radio/handshake.php?version=" + "1.1.1" + "&platform=" + "linux" + "&username=" + this.UserID + "&passwordmd5=" + this.Password + "&debug=" + "0" + "&partner=");
+			Request.Accept = "*/*";
 			Request.BeginGetResponse(new System.AsyncCallback(this.OnHandshakeReturn), Request);
 		}
 		

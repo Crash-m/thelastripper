@@ -69,6 +69,7 @@ namespace LibLastRip
 
 				//Create a WebRequest
 				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
+				Request.Accept = "*/*";
 				
 				//Begin to optain a response
 				Request.BeginGetResponse(new AsyncCallback(this.MetaInfoDownloaded), Request);

@@ -48,6 +48,7 @@ namespace LibLastRip
 			if(this.Status == ConnectionStatus.Recording)
 			{
 				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "control.php?session=" + this.SessionID + "&command=" + Command + "&debug=0");
+				Request.Accept = "*/*";
 				Request.BeginGetResponse(new System.AsyncCallback(this.OnCommandReturn), new System.Object[]{Request, Command});
 			}
 		}
@@ -139,6 +140,7 @@ namespace LibLastRip
 					this.StationChanged(this, new StationChangedEventArgs(false));
 			}else{
 				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
+				Request.Accept = "*/*";
 				Request.BeginGetResponse(new System.AsyncCallback(this.OnStationChanged), Request);
 			}
 		}

@@ -157,6 +157,7 @@ namespace WinFormsClient
 					try
 					{
 						System.Net.HttpWebRequest hReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(Info.AlbumcoverSmall);
+						hReq.Accept = "*/*";
 						System.Net.HttpWebResponse hRes = (System.Net.HttpWebResponse)hReq.GetResponse();
 						System.IO.Stream ResponseStream = hRes.GetResponseStream();
 						this.StatuspictureBox.Image = System.Drawing.Image.FromStream(ResponseStream);
