@@ -30,6 +30,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="CommandEventArgs.cs" />
     <Compile Include="CommandType.cs" />
+    <Compile Include="LoginCommandEventArgs.cs" />
     <Compile Include="nScrobbler\nScrobbler.Commands.cs" />
     <Compile Include="nScrobbler\nScrobbler.cs" />
     <Compile Include="nScrobbler\nScrobbler.Login.cs" />

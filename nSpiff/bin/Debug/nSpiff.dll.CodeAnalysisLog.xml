@@ -4,7 +4,7 @@
  <Namespaces>
   <Namespace Name="nSpiff">
    <Messages>
-    <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+    <Message TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
      <Issue Name="Namespace" Certainty="95" Level="Error">Correct the casing of namespace name 'nSpiff'.</Issue>
     </Message>
    </Messages>
@@ -15,13 +15,13 @@
    <Modules>
     <Module Name="nspiff.dll">
      <Messages>
-      <Message TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+      <Message TypeName="AssembliesShouldDeclareMinimumSecurity" Category="Microsoft.Usage" CheckId="CA2209" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
        <Issue Certainty="95" Level="CriticalError">No valid permission requests were found for assembly 'nSpiff'. You should always specify the minimum security permissions using SecurityAction.RequestMinimum.</Issue>
       </Message>
-      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
        <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Sign 'nSpiff' with a strong name key.</Issue>
       </Message>
-      <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
+      <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
        <Issue Name="NoAttr" Certainty="95" Level="Error">'nSpiff' should be marked with CLSCompliantAttribute and its value should be true.</Issue>
       </Message>
      </Messages>
@@ -30,72 +30,69 @@
        <Types>
         <Type Name="Playlist" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+          <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
            <Issue Certainty="95" Level="Error">Rename 'nSpiff.Playlist' to end in 'Collection'.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name=".ctor(System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="26">'Playlist.Playlist(String)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Playlist.Playlist(String)&#xD;&#xA;Playlist.ParseXml(XmlNode):Void</Issue>
-            </Message>
-            <Message Id="0#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="0#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Parameter" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="26">Correct the casing of parameter name 'XmlData'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name=".ctor(System.Xml.XmlNode)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="38">'Playlist.Playlist(XmlNode)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Playlist.Playlist(XmlNode)&#xD;&#xA;Playlist.ParseXml(XmlNode):Void</Issue>
-            </Message>
-            <Message Id="0#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="0#" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Parameter" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="38">Correct the casing of parameter name 'Data'.</Issue>
             </Message>
-            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="System.Xml.XmlNode" Certainty="75" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="38">Modify member 'Playlist.Playlist(XmlNode)' so that it no longer exposes the concrete type System.Xml.XmlNode. Use IXPathNavigable to represent Xml data sources.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Creator" Kind="Property" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="86">Remove all underscores from member '_Creator'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Data" Kind="Property" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="56">Remove all underscores from member '_Data'.</Issue>
             </Message>
-            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="System.Xml.XmlNode" Certainty="75" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="56">Modify member 'Playlist._Data:XmlNode' so that it no longer exposes the concrete type System.Xml.XmlNode. Use IXPathNavigable to represent Xml data sources.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Title" Kind="Property" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="101">Remove all underscores from member '_Title'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Version" Kind="Property" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="71">Remove all underscores from member '_Version'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="ParseXml(System.Xml.XmlNode):System.Void" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="System.Xml.XmlNode" Certainty="75" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="148">Modify member 'Playlist.ParseXml(XmlNode):Void' so that it no longer exposes the concrete type System.Xml.XmlNode. Use IXPathNavigable to represent Xml data sources.</Issue>
             </Message>
-            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
+            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="160">Playlist.ParseXml(XmlNode):Void makes a call to System.Convert.ToInt32(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToInt32(System.String,System.IFormatProvider).</Issue>
+            </Message>
+            <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Playlist.cs" Line="150">Validate parameter 'xml' passed to externally visible method Playlist.ParseXml(XmlNode):Void.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -105,86 +102,86 @@
          <Members>
           <Member Name="_Album" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Album' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Album'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Artist" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Artist' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Artist'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Data" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Data' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Data'.</Issue>
             </Message>
-            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="System.Xml.XmlNode" Certainty="75" Level="Error">Modify member 'Track._Data' so that it no longer exposes the concrete type System.Xml.XmlNode. Use IXPathNavigable to represent Xml data sources.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Duration" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Duration' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Duration'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Image" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Image' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Image'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Location" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Location' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Location'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="_Title" Kind="Field" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Certainty="90" Level="Error">Make '_Title' private or internal (Friend in VB, public private in C++) and provide a public or protected property to access it.</Issue>
             </Message>
-            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="Member" TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="Member" Certainty="95" Level="Error">Remove all underscores from member '_Title'.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="ParseXml(System.Xml.XmlNode):System.Void" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="Breaking">
+            <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="Breaking">
              <Issue Name="System.Xml.XmlNode" Certainty="75" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Track.cs" Line="43">Modify member 'Track.ParseXml(XmlNode):Void' so that it no longer exposes the concrete type System.Xml.XmlNode. Use IXPathNavigable to represent Xml data sources.</Issue>
             </Message>
-            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
+            <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Track.cs" Line="58">Track.ParseXml(XmlNode):Void makes a call to System.Convert.ToInt32(System.String) that does not explicitly provide an IFormatProvider. This should be replaced with a call to System.Convert.ToInt32(System.String,System.IFormatProvider).</Issue>
             </Message>
-            <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2007-09-17 21:08:30Z" FixCategory="NonBreaking">
+            <Message TypeName="ValidateArgumentsOfPublicMethods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2007-10-13 11:04:01Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="Error" Path="c:\Documents and Settings\q\Dokumenter\TheLastRipper\trunk\nSpiff" File="Track.cs" Line="45">Validate parameter 'xml' passed to externally visible method Track.ParseXml(XmlNode):Void.</Issue>
             </Message>
            </Messages>
@@ -218,16 +215,6 @@
    <Email>[none]</Email>
    <MessageLevel Certainty="95">CriticalError</MessageLevel>
    <File Name="DesignRules.dll" Version="1.35.0.0" />
-  </Rule>
-  <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
-   <Name>Do not call overridable methods in constructors</Name>
-   <Description>Virtual methods defined on the class should not be called from constructors. If a derived class has overridden the method, the derived class version will be called (before the derived class constructor is called).</Description>
-   <Resolution Name="Default">'{0}' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
-   <Owner />
-   <Url>http://www.gotdotnet.com/team/fxcop/docs/rules.aspx?version=1.35&amp;url=/Usage/DoNotCallOverridableMethodsInConstructors.html</Url>
-   <Email>[none]</Email>
-   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
-   <File Name="UsageRules.dll" Version="1.35.0.0" />
   </Rule>
   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
    <Name>Do not declare visible instance fields</Name>
