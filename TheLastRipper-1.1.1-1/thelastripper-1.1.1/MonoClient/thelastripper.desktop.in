@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=TheLastRipper
+Terminal=false
+GenericName=Last.fm stream ripper
+Comment=An audo stream ripper for last.fm
+Exec=thelastripper
+Path=/usr/bin/
+Categories=Recorder;AudioVideo;
+Icon=@prefix@/lib/@PACKAGE@/TheLastRipper.png
