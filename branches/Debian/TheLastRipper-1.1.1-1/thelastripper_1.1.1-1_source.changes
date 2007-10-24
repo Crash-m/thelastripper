@@ -1,0 +1,30 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.7
+Date: Sat,  1 Sep 2007 11:24:21 +0200
+Source: thelastripper
+Binary: thelastripper
+Architecture: source
+Version: 1.1.1-1
+Distribution: stable
+Urgency: low
+Maintainer: Jop... (Jonas F. Jensen). <Jopsen@gmail.com>
+Changed-By: Jop... (Jonas F. Jensen). <Jopsen@gmail.com>
+Description: 
+ thelastripper - An audio stream ripper for Last.fm.
+Changes: 
+ thelastripper (1.1.1-1) stable; urgency=low
+ .
+   * Fixing Critical bug issue 63
+Files: 
+ 1b1a70896d204d85f07bcb447c425921 709 sound optional thelastripper_1.1.1-1.dsc
+ af2e12bbf064829b8c152bbc9825a036 206537 sound optional thelastripper_1.1.1-1.tar.gz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG2TCmJGJlbgC6qOARAhDbAKCRxX+zsKcVlBDCEKFnAN5u+QLuBgCeJ8HJ
+8COvInBzOZqJGH0tePMzPBg=
+=0xM2
+-----END PGP SIGNATURE-----
