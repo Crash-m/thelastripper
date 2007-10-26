@@ -7,7 +7,7 @@ _This document describes the different features/bugs/issues we would like to imp
   * Update notifier (?)
 
 == TheLastRipper version 1.2 ==
+_(If this release is made)_
   * Internationalization (Issue 8)
   * Commandline interface
   * Code cleanup and fixes for other minor details.
- 
