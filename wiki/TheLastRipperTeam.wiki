@@ -27,7 +27,7 @@ Role: Windows.Forms developer and tester.
 
 
 === Moritz Strübe ===
-Role: Maintainer of LastFM12UnofficialDocumentation.
+Role: Maintainer of [LastFM12UnofficialDocumentation].
 
 == Thanks to ==
 
