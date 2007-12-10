@@ -25,6 +25,10 @@ Platform: Mac OS X
 === Andreas Langmann ===
 Role: Windows.Forms developer and tester.
 
+
+=== Moritz Strübe ===
+Role: Maintainer of LastFM12UnofficialDocumentation.
+
 == Thanks to ==
 
 *Tobias Brennecke (tburny), Jonas F. Jensen (Jop...) and Matt Brown (blueboxed)* for the [LastFM12UnofficialDocumentation Last.fm 1.2 Unofficial documentation].
@@ -32,5 +36,3 @@ Role: Windows.Forms developer and tester.
 *Maxim Heijndijk* for Mandriva packages.
 
 *Joeyrs* for ArchLinux packages, available from: [http://aur.archlinux.org aur.ArchLinux.org].
-
-
