@@ -41,6 +41,17 @@ namespace nScrobbler
 		}
 
 		/// <summary>
+		/// URL that all Last.fm protocol request must go to.
+		/// </summary>
+		public virtual System.String ServiceURL
+		{
+			get
+			{
+				return "http://" + this.BaseURL + this.BasePath + "/";
+			}
+		}
+		
+		/// <summary>
 		/// Generate a hashsum that can be used with Last.fm (MD5)
 		/// </summary>
 		/// <param name="Password">The string you want to compute the hash of</param>

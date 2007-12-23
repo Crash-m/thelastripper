@@ -14,11 +14,6 @@ namespace nScrobbler
 	public partial class nScrobbler
 	{
 		
-		public virtual void AdjustStation(System.String Station)
-		{
-			//TODO: Initiate Adjustment command
-		}
-		
 		public virtual void Love()
 		{
 			//TODO: Initiate love command
