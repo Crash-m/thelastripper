@@ -11,7 +11,9 @@ using System;
 
 namespace nScrobbler
 {
-	//TODO: Description of LoginCommandEventArgs and members
+	/// <summary>
+	/// Command event arguments used whenever a login command is returned.
+	/// </summary>
 	public class LoginCommandEventArgs : CommandEventArgs
 	{
 		/// <summary>
@@ -29,11 +31,22 @@ namespace nScrobbler
 			}
 		}
 		
+		/// <summary>
+		/// Create a new instance of LoginCommandEventArgs
+		/// </summary>
+		/// <param name="Success">Indication of whether or not the request was succesfull</param>
+		/// <param name="Subscriber">Indication of whether or not the user was a subscriber</param>
 		public LoginCommandEventArgs(System.Boolean Success, System.Boolean Subscriber) : base(Success, CommandType.Login)
 		{
 			this._Subscriber = Subscriber;
 		}
 		
+		/// <summary>
+		/// Create a new instance of LoginCommandEventArgs
+		/// </summary>
+		/// <param name="Success">Indication of whether or not the request was succesfull</param>
+		/// <param name="Subscriber">Indication of whether or not the user was a subscriber</param>
+		/// <param name="Exception">Exception that occured during command request/execution.</param>
 		public LoginCommandEventArgs(System.Boolean Success, System.Boolean Subscriber, System.Exception e) : base(Success, CommandType.Login, e)
 		{
 			this._Subscriber = Subscriber;
