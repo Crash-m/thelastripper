@@ -62,6 +62,7 @@ namespace WinFormsClient
 			
 			this.manager.ExcludeFile = this._excludeFile = Pref.ExcludeFileTextBox.Text;
 			this.manager.ExcludeNewMusic = this._excludeNewMusic = Pref.ExcludeNewMusicCheckBox.Checked;
+			this.manager.ExcludeExistingMusic = this._excludeExistingMusic = Pref.ExcludeExistingMusicCheckBox.Checked;
 			
 			this.TopTracks = Pref.TopTracksCheckBox.Checked;
 			this.RecentLovedTracks = Pref.RecentlyLovedCheckBox.Checked;
@@ -172,6 +173,13 @@ namespace WinFormsClient
 				return this._excludeNewMusic;
 			}
 		}
+		public System.Boolean ExcludeExistingMusic
+		{
+			get
+			{
+				return this._excludeExistingMusic;
+			}
+		}					
 		public System.String ProxyAddress
 		{
 			get

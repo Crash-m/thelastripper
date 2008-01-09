@@ -41,6 +41,7 @@ namespace LibLastRip
 		protected System.String _QuarantinePath;
 		protected System.String _ExcludeFile;
 		protected System.Boolean _ExcludeNewMusic;
+		protected System.Boolean _ExcludeExistingMusic;
 		protected const System.String PathSeparator = "/";
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
@@ -328,6 +329,21 @@ namespace LibLastRip
 			set
 			{
 				this._ExcludeNewMusic = value;
+			}
+		}
+
+		///<summary>
+		///Gets or set the ExcludeExistingMusic
+		///</summary>
+		public System.Boolean ExcludeExistingMusic
+		{
+			get
+			{
+				return this._ExcludeExistingMusic;
+			}
+			set
+			{
+				this._ExcludeExistingMusic = value;
 			}
 		}
 

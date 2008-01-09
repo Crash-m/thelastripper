@@ -63,6 +63,7 @@ namespace WinFormsClient
 			this.QuarantinePathTextBox.Text = settings.QuarantinePath;
 			this.ExcludeFileTextBox.Text = settings.ExcludeFile;
 			this.ExcludeNewMusicCheckBox.Checked = settings.ExcludeNewMusic;
+			this.ExcludeExistingMusicCheckBox.Checked = settings.ExcludeExistingMusic;
 			
 			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;

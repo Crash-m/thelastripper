@@ -163,18 +163,20 @@ namespace LibLastRip
 			// a) reload existing files DEFAULT=false
 			// b) only load existing artists DEFAULT=false
 			
-			// File exists - dont process
-			if (File.Exists(FilePath)) {
-    			writeLogLine("skipFE(" + counter.ToString() + ") " + FilePath);
-				counter++;
-				return false;
-			}
-			
-			// File exists - dont process
-			if (!String.IsNullOrEmpty(QuarantineFilePath) && File.Exists(QuarantineFilePath)) {
-    			writeLogLine("skipFE(" + counter.ToString() + ") " + QuarantineFilePath);
-				counter++;
-				return false;
+			if (ExcludeExistingMusic) {
+				// File exists - dont process
+				if (File.Exists(FilePath)) {
+					writeLogLine("skipFE(" + counter.ToString() + ") " + FilePath);
+					counter++;
+					return false;
+				}
+				
+				// File exists - dont process
+				if (!String.IsNullOrEmpty(QuarantineFilePath) && File.Exists(QuarantineFilePath)) {
+					writeLogLine("skipFE(" + counter.ToString() + ") " + QuarantineFilePath);
+					counter++;
+					return false;
+				}
 			}
 
 			if (String.IsNullOrEmpty(ExcludeFile) == false) {
@@ -274,7 +276,7 @@ namespace LibLastRip
 
 					if (tryCounter <= 0) {
 						handleError(true, new ErrorEventArgs("No playlist found. Please restart ripping."));
-					
+						
 						// no way to continue...
 						started = true;
 					}
