@@ -60,6 +60,9 @@ namespace WinFormsClient
 				this.PasswordTextBox.Enabled = false;
 			}
 			this.MusicPathTextBox.Text = settings.MusicPath;
+			this.QuarantinePathTextBox.Text = settings.QuarantinePath;
+			this.ExcludeFileTextBox.Text = settings.ExcludeFile;
+			this.ExcludeNewMusicCheckBox.Checked = settings.ExcludeNewMusic;
 			
 			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
@@ -107,7 +110,7 @@ namespace WinFormsClient
 			}
 		}
 		
-		void setLoginElements(bool value) {
+		public void setLoginElements(bool value) {
 			this.LoginGroupBox.Enabled = value;
 			this.NetworkGroupBox.Enabled = value;
 			this.LoginButton.Enabled = value;
@@ -147,6 +150,33 @@ namespace WinFormsClient
 				this.hasPassword = false;
 				this.PasswordTextBox.Text = "";
 				this.PasswordTextBox.Enabled = true;
+			}
+		}
+		
+		void Button1Click(object sender, EventArgs e)
+		{
+			this.OpenFileDialog.FileName = "";
+			if (!String.IsNullOrEmpty(this.ExcludeFileTextBox.Text)) {
+				this.OpenFileDialog.FileName = this.ExcludeFileTextBox.Text;
+			}
+			System.Windows.Forms.DialogResult Res = this.OpenFileDialog.ShowDialog(this);
+			if(Res == System.Windows.Forms.DialogResult.OK)
+			{
+				this.ExcludeFileTextBox.Text = this.OpenFileDialog.FileName;
+			}
+		}
+
+		
+		void BrowseButton2Click(object sender, EventArgs e)
+		{
+			this.FolderBrowserDialog.SelectedPath = "";
+			if (!String.IsNullOrEmpty(this.QuarantinePathTextBox.Text)) {
+				this.FolderBrowserDialog.SelectedPath = this.QuarantinePathTextBox.Text;
+			}
+			System.Windows.Forms.DialogResult Res = this.FolderBrowserDialog.ShowDialog(this);
+			if(Res == System.Windows.Forms.DialogResult.OK)
+			{
+				this.QuarantinePathTextBox.Text = this.FolderBrowserDialog.SelectedPath;
 			}
 		}
 	}
