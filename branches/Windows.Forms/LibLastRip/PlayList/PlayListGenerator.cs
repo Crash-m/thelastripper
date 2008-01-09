@@ -7,8 +7,12 @@ namespace LibLastRip
 	public class PlayListGenerator : System.Runtime.Serialization.ISerializable
 	{
 		protected System.String _musicPath;
+		protected System.String _quarantinePath;
 		protected System.String _userName;
 		
+		protected System.String _excludeFile;
+		protected System.Boolean _excludeNewMusic = false;
+
 		protected System.String _proxyAddress;
 		protected System.String _proxyUsername;
 		protected System.String _proxyPassword;
@@ -107,7 +111,11 @@ namespace LibLastRip
 			this.smil = (System.Boolean)Info.GetValue("smil",typeof(System.Boolean));
 			
 			this._musicPath = (System.String)Info.GetValue("MusicPath",typeof(System.String));
+			this._quarantinePath = (System.String)Info.GetValue("QuarantinePath",typeof(System.String));
 			this._userName = (System.String)Info.GetValue("UserName",typeof(System.String));
+			
+			this._excludeFile = (System.String)Info.GetValue("ExcludeFile",typeof(System.String));
+			this._excludeNewMusic = (System.Boolean)Info.GetValue("ExcludeNewMusic",typeof(System.Boolean));
 
 		    this._proxyAddress = (System.String)Info.GetValue("ProxyAddress",typeof(System.String));
 			this._proxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
@@ -135,8 +143,12 @@ namespace LibLastRip
 			Info.AddValue("smil",this.smil);
 			
 			Info.AddValue("MusicPath",this._musicPath);
+			Info.AddValue("QuarantinePath",this._quarantinePath);
 			Info.AddValue("UserName",this._userName);
 			
+			Info.AddValue("ExcludeFile",this._excludeFile);
+			Info.AddValue("ExcludeNewMusic",this._excludeNewMusic);
+
 			Info.AddValue("ProxyAddress", this._proxyAddress);
 			Info.AddValue("ProxyUsername", this._proxyUsername);
 			Info.AddValue("ProxyPassword", this._proxyPassword);
