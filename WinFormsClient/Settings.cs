@@ -42,8 +42,26 @@ namespace WinFormsClient
 				}
 			}
 			
+			if(String.IsNullOrEmpty(Pref.ExcludeFileTextBox.Text) == false && !System.IO.File.Exists(Pref.ExcludeFileTextBox.Text))
+			{
+				try
+				{
+					System.IO.File.CreateText(Pref.ExcludeFileTextBox.Text);
+				}
+				catch(System.Exception e)
+				{
+					//TODO: Inform user in a pleasen't manner
+					throw new System.Exception("Exclude file doesn't exist and could not be created! Please select another file.", e);
+				}
+			}
+
 			this._musicPath = Pref.MusicPathTextBox.Text;
+			this._quarantinePath = Pref.QuarantinePathTextBox.Text;
 			this.manager.MusicPath = Pref.MusicPathTextBox.Text;
+			this.manager.QuarantinePath = Pref.QuarantinePathTextBox.Text;
+			
+			this.manager.ExcludeFile = this._excludeFile = Pref.ExcludeFileTextBox.Text;
+			this.manager.ExcludeNewMusic = this._excludeNewMusic = Pref.ExcludeNewMusicCheckBox.Checked;
 			
 			this.TopTracks = Pref.TopTracksCheckBox.Checked;
 			this.RecentLovedTracks = Pref.RecentlyLovedCheckBox.Checked;
@@ -131,6 +149,27 @@ namespace WinFormsClient
 			get
 			{
 				return this._musicPath;
+			}
+		}
+		public System.String QuarantinePath
+		{
+			get
+			{
+				return this._quarantinePath;
+			}
+		}
+		public System.String ExcludeFile
+		{
+			get
+			{
+				return this._excludeFile;
+			}
+		}
+		public System.Boolean ExcludeNewMusic
+		{
+			get
+			{
+				return this._excludeNewMusic;
 			}
 		}
 		public System.String ProxyAddress
