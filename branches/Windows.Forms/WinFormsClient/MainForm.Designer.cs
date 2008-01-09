@@ -75,7 +75,7 @@ namespace WinFormsClient
 			this.TrackLabel = new System.Windows.Forms.Label();
 			this.SkipButton = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.LogTextBox = new System.Windows.Forms.TextBox();
+			this.LogListBox = new System.Windows.Forms.ListBox();
 			this.MainMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -370,9 +370,10 @@ namespace WinFormsClient
 			// 
 			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusBar.Location = new System.Drawing.Point(6, 141);
+			this.StatusBar.Location = new System.Drawing.Point(195, 160);
 			this.StatusBar.Name = "StatusBar";
-			this.StatusBar.Size = new System.Drawing.Size(317, 13);
+			this.StatusBar.Size = new System.Drawing.Size(129, 23);
+			this.StatusBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.StatusBar.TabIndex = 0;
 			// 
 			// StatuspictureBox
@@ -388,7 +389,7 @@ namespace WinFormsClient
 			// 
 			this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.DurationLabel.Location = new System.Drawing.Point(2, 104);
+			this.DurationLabel.Location = new System.Drawing.Point(2, 129);
 			this.DurationLabel.Name = "DurationLabel";
 			this.DurationLabel.Size = new System.Drawing.Size(189, 14);
 			this.DurationLabel.TabIndex = 5;
@@ -399,9 +400,9 @@ namespace WinFormsClient
 			this.StationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.StationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.StationLabel.Location = new System.Drawing.Point(2, 121);
+			this.StationLabel.Location = new System.Drawing.Point(2, 143);
 			this.StationLabel.Name = "StationLabel";
-			this.StationLabel.Size = new System.Drawing.Size(189, 14);
+			this.StationLabel.Size = new System.Drawing.Size(322, 14);
 			this.StationLabel.TabIndex = 6;
 			this.StationLabel.Text = "Station: ";
 			// 
@@ -412,7 +413,7 @@ namespace WinFormsClient
 			this.ArtistLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ArtistLabel.Location = new System.Drawing.Point(2, 61);
 			this.ArtistLabel.Name = "ArtistLabel";
-			this.ArtistLabel.Size = new System.Drawing.Size(189, 23);
+			this.ArtistLabel.Size = new System.Drawing.Size(189, 34);
 			this.ArtistLabel.TabIndex = 3;
 			this.ArtistLabel.Text = "Artist: ";
 			// 
@@ -445,9 +446,9 @@ namespace WinFormsClient
 			this.AlbumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.AlbumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.AlbumLabel.Location = new System.Drawing.Point(2, 84);
+			this.AlbumLabel.Location = new System.Drawing.Point(2, 95);
 			this.AlbumLabel.Name = "AlbumLabel";
-			this.AlbumLabel.Size = new System.Drawing.Size(189, 20);
+			this.AlbumLabel.Size = new System.Drawing.Size(189, 34);
 			this.AlbumLabel.TabIndex = 4;
 			this.AlbumLabel.Text = "Album: ";
 			// 
@@ -455,12 +456,12 @@ namespace WinFormsClient
 			// 
 			this.TrackLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.TrackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TrackLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
 			this.TrackLabel.Location = new System.Drawing.Point(2, 2);
 			this.TrackLabel.Name = "TrackLabel";
-			this.TrackLabel.Size = new System.Drawing.Size(189, 58);
+			this.TrackLabel.Size = new System.Drawing.Size(189, 59);
 			this.TrackLabel.TabIndex = 2;
-			this.TrackLabel.Text = "Not recording...";
+			this.TrackLabel.Text = "Not recording... ";
 			// 
 			// SkipButton
 			// 
@@ -476,7 +477,7 @@ namespace WinFormsClient
 			// 
 			// tabPage4
 			// 
-			this.tabPage4.Controls.Add(this.LogTextBox);
+			this.tabPage4.Controls.Add(this.LogListBox);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -485,18 +486,20 @@ namespace WinFormsClient
 			this.tabPage4.Text = "Log";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
-			// LogTextBox
+			// LogListBox
 			// 
-			this.LogTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.LogListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.LogTextBox.Location = new System.Drawing.Point(6, 6);
-			this.LogTextBox.Multiline = true;
-			this.LogTextBox.Name = "LogTextBox";
-			this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.LogTextBox.Size = new System.Drawing.Size(318, 177);
-			this.LogTextBox.TabIndex = 0;
-			this.LogTextBox.WordWrap = false;
+			this.LogListBox.FormattingEnabled = true;
+			this.LogListBox.HorizontalScrollbar = true;
+			this.LogListBox.Items.AddRange(new object[] {
+									"TheLastRipper started."});
+			this.LogListBox.Location = new System.Drawing.Point(6, 6);
+			this.LogListBox.Name = "LogListBox";
+			this.LogListBox.ScrollAlwaysVisible = true;
+			this.LogListBox.Size = new System.Drawing.Size(318, 173);
+			this.LogListBox.TabIndex = 1;
 			// 
 			// MainForm
 			// 
@@ -520,11 +523,10 @@ namespace WinFormsClient
 			this.tabPage3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).EndInit();
 			this.tabPage4.ResumeLayout(false);
-			this.tabPage4.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.TextBox LogTextBox;
+		private System.Windows.Forms.ListBox LogListBox;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabControl tabControl2;

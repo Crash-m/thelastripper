@@ -132,7 +132,10 @@ namespace WinFormsClient
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
 			LibLastRip.LogEventArgs logArgs = (LibLastRip.LogEventArgs)args;
-			this.LogTextBox.AppendText(logArgs.Log + "\n");
+			if (this.LogListBox.Items.Count > 100) {
+				this.LogListBox.Items.RemoveAt(0);
+			}
+			this.LogListBox.Items.Add(logArgs.Log + "\n");
 		}
 
 		private void OnNewSong(System.Object sender, System.EventArgs args)
@@ -351,16 +354,25 @@ namespace WinFormsClient
 
 		void PlaylistButtonClick(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(RadioElementCb.Text)) {
+				RadioElementCb.Text = manager.UserName;
+			}
 			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/playlist");
 		}
 		
 		void PersonalButtonClick(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(RadioElementCb.Text)) {
+				RadioElementCb.Text = manager.UserName;
+			}
 			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/personal");
 		}
 
 		void LovedButtonClick(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(RadioElementCb.Text)) {
+				RadioElementCb.Text = manager.UserName;
+			}
 			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/loved");
 		}
 		
@@ -371,11 +383,17 @@ namespace WinFormsClient
 		
 		void NeighbourhoodButtonClick(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(RadioElementCb.Text)) {
+				RadioElementCb.Text = manager.UserName;
+			}
 			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/neighbours");
 		}
 		
 		void RecommendationsButtonClick(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(RadioElementCb.Text)) {
+				RadioElementCb.Text = manager.UserName;
+			}
 			TuneInTo("lastfm://user/" + RadioElementCb.Text + "/recommended/100");
 		}
 	}

@@ -38,6 +38,9 @@ namespace LibLastRip
 		protected System.String BasePath;
 		protected System.Boolean Subscripter;
 		protected System.String _MusicPath;
+		protected System.String _QuarantinePath;
+		protected System.String _ExcludeFile;
+		protected System.Boolean _ExcludeNewMusic;
 		protected const System.String PathSeparator = "/";
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
@@ -126,22 +129,28 @@ namespace LibLastRip
 		
 		protected void OnHandshakeReturn(System.IAsyncResult Ar)
 		{
-			//Get Response
-			HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
-			HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+			System.Boolean Result = false;
+			try {
+				//Get Response
+				HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
+				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
+				
+				//Get stream and create StreamReader
+				Stream Stream = Response.GetResponseStream();
+				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+				
+				//Read data sync, since stream.beginRead is worth the trouble when the connections have been established
+				System.String Data = StreamReader.ReadToEnd();
+				//Closeing everything related to a connection, and releasing system resources
+				StreamReader.Close();
+				Stream.Close();
+				Response.Close();
+				
+				Result = this.ParseHandshake(Data);
+			} catch (Exception) {
+				handleError(true, new ErrorEventArgs("No connection to server."));
+			}
 			
-			//Get stream and create StreamReader
-			Stream Stream = Response.GetResponseStream();
-			StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
-			
-			//Read data sync, since stream.beginRead is worth the trouble when the connections have been established
-			System.String Data = StreamReader.ReadToEnd();
-			//Closeing everything related to a connection, and releasing system resources
-			StreamReader.Close();
-			Stream.Close();
-			Response.Close();
-			
-			System.Boolean Result = this.ParseHandshake(Data);
 			if(Result)
 			{
 				this.Status = ConnectionStatus.Connected;
@@ -263,7 +272,7 @@ namespace LibLastRip
 		}
 		
 		///<summary>
-		///Gets or set the UserName
+		///Gets or set the MusicPath
 		///</summary>
 		public System.String MusicPath
 		{
@@ -277,6 +286,51 @@ namespace LibLastRip
 			}
 		}
 		
+		///<summary>
+		///Gets or set the QuarantinePath
+		///</summary>
+		public System.String QuarantinePath
+		{
+			get
+			{
+				return this._QuarantinePath;
+			}
+			set
+			{
+				this._QuarantinePath = value;
+			}
+		}
+
+		///<summary>
+		///Gets or set the ExcludeFile
+		///</summary>
+		public System.String ExcludeFile
+		{
+			get
+			{
+				return this._ExcludeFile;
+			}
+			set
+			{
+				this._ExcludeFile = value;
+			}
+		}
+
+		///<summary>
+		///Gets or set the ExcludeNewMusic
+		///</summary>
+		public System.Boolean ExcludeNewMusic
+		{
+			get
+			{
+				return this._ExcludeNewMusic;
+			}
+			set
+			{
+				this._ExcludeNewMusic = value;
+			}
+		}
+
 		///<summary>
 		///Gets current connection status
 		///</summary>

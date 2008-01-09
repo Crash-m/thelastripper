@@ -2,8 +2,8 @@ bin\Release\LibLastRip.dll
 bin\Release\taglib-sharp.dll
 obj\Release\ResolveAssemblyReference.cache
 obj\Release\LibLastRip.dll
-obj\Debug\ResolveAssemblyReference.cache
 bin\Debug\LibLastRip.dll
 bin\Debug\LibLastRip.pdb
+obj\Debug\ResolveAssemblyReference.cache
 obj\Debug\LibLastRip.dll
 obj\Debug\LibLastRip.pdb
