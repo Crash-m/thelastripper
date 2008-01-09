@@ -71,7 +71,18 @@ namespace WinFormsClient
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.label7 = new System.Windows.Forms.Label();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.QuarantinePathTextBox = new System.Windows.Forms.TextBox();
+			this.BrowseButton2 = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.ExcludeNewMusicCheckBox = new System.Windows.Forms.CheckBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.ExcludeFileTextBox = new System.Windows.Forms.TextBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.LoginGroupBox.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -81,7 +92,10 @@ namespace WinFormsClient
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.groupBox5.SuspendLayout();
 			this.tabPage4.SuspendLayout();
+			this.tabPage5.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FolderBrowserDialog
@@ -99,9 +113,9 @@ namespace WinFormsClient
 			this.LoginGroupBox.Controls.Add(this.label1);
 			this.LoginGroupBox.Controls.Add(this.UserNameTextBox);
 			this.LoginGroupBox.Enabled = false;
-			this.LoginGroupBox.Location = new System.Drawing.Point(0, 0);
+			this.LoginGroupBox.Location = new System.Drawing.Point(-4, 0);
 			this.LoginGroupBox.Name = "LoginGroupBox";
-			this.LoginGroupBox.Size = new System.Drawing.Size(419, 107);
+			this.LoginGroupBox.Size = new System.Drawing.Size(430, 165);
 			this.LoginGroupBox.TabIndex = 0;
 			this.LoginGroupBox.TabStop = false;
 			this.LoginGroupBox.Text = "Login";
@@ -174,14 +188,14 @@ namespace WinFormsClient
 			// 
 			this.MusicPathTextBox.Location = new System.Drawing.Point(6, 22);
 			this.MusicPathTextBox.Name = "MusicPathTextBox";
-			this.MusicPathTextBox.Size = new System.Drawing.Size(321, 20);
+			this.MusicPathTextBox.Size = new System.Drawing.Size(333, 20);
 			this.MusicPathTextBox.TabIndex = 1;
 			// 
 			// BrowseButton
 			// 
-			this.BrowseButton.Location = new System.Drawing.Point(333, 19);
+			this.BrowseButton.Location = new System.Drawing.Point(345, 22);
 			this.BrowseButton.Name = "BrowseButton";
-			this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+			this.BrowseButton.Size = new System.Drawing.Size(63, 20);
 			this.BrowseButton.TabIndex = 2;
 			this.BrowseButton.Text = "&Browse";
 			this.BrowseButton.UseVisualStyleBackColor = true;
@@ -199,7 +213,7 @@ namespace WinFormsClient
 			this.groupBox3.Controls.Add(this.groupBox4);
 			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(414, 142);
+			this.groupBox3.Size = new System.Drawing.Size(416, 155);
 			this.groupBox3.TabIndex = 2;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Playlist settings";
@@ -283,12 +297,15 @@ namespace WinFormsClient
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox4.Controls.Add(this.SMILCheckBox);
 			this.groupBox4.Controls.Add(this.PLSCheckBox);
 			this.groupBox4.Controls.Add(this.M3UCheckBox);
-			this.groupBox4.Location = new System.Drawing.Point(280, 19);
+			this.groupBox4.Location = new System.Drawing.Point(286, 19);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(128, 107);
+			this.groupBox4.Size = new System.Drawing.Size(130, 107);
 			this.groupBox4.TabIndex = 0;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Format";
@@ -403,11 +420,12 @@ namespace WinFormsClient
 			this.tabControl1.Controls.Add(this.tabPage2);
 			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Controls.Add(this.tabPage5);
 			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(430, 187);
-			this.tabControl1.TabIndex = 6;
+			this.tabControl1.TabIndex = 1;
 			// 
 			// tabPage1
 			// 
@@ -433,6 +451,8 @@ namespace WinFormsClient
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.label7);
+			this.tabPage3.Controls.Add(this.groupBox5);
 			this.tabPage3.Controls.Add(this.groupBox2);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
@@ -441,6 +461,43 @@ namespace WinFormsClient
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Storage";
 			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// label7
+			// 
+			this.label7.Location = new System.Drawing.Point(6, 110);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(410, 48);
+			this.label7.TabIndex = 3;
+			this.label7.Text = "If you enter quarantine directory all new music will be stored there. If you ente" +
+			"r none, all music will be stored in music directory.";
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.QuarantinePathTextBox);
+			this.groupBox5.Controls.Add(this.BrowseButton2);
+			this.groupBox5.Location = new System.Drawing.Point(2, 53);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(419, 54);
+			this.groupBox5.TabIndex = 2;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Quarantine directory";
+			// 
+			// QuarantinePathTextBox
+			// 
+			this.QuarantinePathTextBox.Location = new System.Drawing.Point(6, 22);
+			this.QuarantinePathTextBox.Name = "QuarantinePathTextBox";
+			this.QuarantinePathTextBox.Size = new System.Drawing.Size(333, 20);
+			this.QuarantinePathTextBox.TabIndex = 1;
+			// 
+			// BrowseButton2
+			// 
+			this.BrowseButton2.Location = new System.Drawing.Point(345, 22);
+			this.BrowseButton2.Name = "BrowseButton2";
+			this.BrowseButton2.Size = new System.Drawing.Size(63, 20);
+			this.BrowseButton2.TabIndex = 2;
+			this.BrowseButton2.Text = "&Browse";
+			this.BrowseButton2.UseVisualStyleBackColor = true;
+			this.BrowseButton2.Click += new System.EventHandler(this.BrowseButton2Click);
 			// 
 			// tabPage4
 			// 
@@ -453,12 +510,75 @@ namespace WinFormsClient
 			this.tabPage4.Text = "Playlist";
 			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
+			// tabPage5
+			// 
+			this.tabPage5.Controls.Add(this.groupBox1);
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(422, 161);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "Filter";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.ExcludeNewMusicCheckBox);
+			this.groupBox1.Controls.Add(this.label6);
+			this.groupBox1.Controls.Add(this.ExcludeFileTextBox);
+			this.groupBox1.Controls.Add(this.button1);
+			this.groupBox1.Location = new System.Drawing.Point(3, 6);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(419, 149);
+			this.groupBox1.TabIndex = 4;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Filter";
+			// 
+			// ExcludeNewMusicCheckBox
+			// 
+			this.ExcludeNewMusicCheckBox.Location = new System.Drawing.Point(6, 78);
+			this.ExcludeNewMusicCheckBox.Name = "ExcludeNewMusicCheckBox";
+			this.ExcludeNewMusicCheckBox.Size = new System.Drawing.Size(407, 24);
+			this.ExcludeNewMusicCheckBox.TabIndex = 8;
+			this.ExcludeNewMusicCheckBox.Text = "Skip new music (no artist directory in music or quarantine directory)";
+			this.ExcludeNewMusicCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// label6
+			// 
+			this.label6.Location = new System.Drawing.Point(6, 16);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(333, 20);
+			this.label6.TabIndex = 5;
+			this.label6.Text = "Exclude file (CR/LF separated artists; UTF-8)";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// ExcludeFileTextBox
+			// 
+			this.ExcludeFileTextBox.Location = new System.Drawing.Point(6, 40);
+			this.ExcludeFileTextBox.Name = "ExcludeFileTextBox";
+			this.ExcludeFileTextBox.Size = new System.Drawing.Size(333, 20);
+			this.ExcludeFileTextBox.TabIndex = 3;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(345, 40);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(63, 20);
+			this.button1.TabIndex = 4;
+			this.button1.Text = "&Browse";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
+			// OpenFileDialog
+			// 
+			this.OpenFileDialog.FileName = "exclude.txt";
+			// 
 			// Preferences
 			// 
 			this.AcceptButton = this.OKbutton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(454, 237);
+			this.ClientSize = new System.Drawing.Size(452, 238);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.OKbutton);
 			this.Controls.Add(this.LoginButton);
@@ -479,9 +599,25 @@ namespace WinFormsClient
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
 			this.tabPage4.ResumeLayout(false);
+			this.tabPage5.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Button BrowseButton2;
+		public System.Windows.Forms.TextBox QuarantinePathTextBox;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.TabPage tabPage5;
+		private System.Windows.Forms.OpenFileDialog OpenFileDialog;
+		public System.Windows.Forms.CheckBox ExcludeNewMusicCheckBox;
+		private System.Windows.Forms.Button button1;
+		public System.Windows.Forms.TextBox ExcludeFileTextBox;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabPage tabPage2;
