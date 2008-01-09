@@ -339,7 +339,10 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl2.Controls.Add(this.tabPage3);
+#if !REDUCED_FUNCTIONALITY
+// Show debug log in application
 			this.tabControl2.Controls.Add(this.tabPage4);
+#endif
 			this.tabControl2.Location = new System.Drawing.Point(12, 153);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
