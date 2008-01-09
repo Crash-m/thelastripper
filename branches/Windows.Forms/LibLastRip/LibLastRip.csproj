@@ -41,7 +41,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp">
-      <HintPath>..\..\..\trunk\taglib-sharp\taglib-sharp.dll</HintPath>
+      <HintPath>..\..\..\tags\TheLastRipper-1.1.1\taglib-sharp\taglib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
