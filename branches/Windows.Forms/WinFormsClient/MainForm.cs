@@ -297,6 +297,12 @@ namespace WinFormsClient
 			}
 		}
 		
+		void StopButtonClick(object sender, System.EventArgs e)
+		{
+			// Empty next songs list
+			this.manager.Stop();
+		}
+
 		void CommandCallback(object sender, EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.

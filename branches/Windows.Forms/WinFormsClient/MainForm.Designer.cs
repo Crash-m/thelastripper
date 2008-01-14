@@ -64,6 +64,7 @@ namespace WinFormsClient
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.StopButton = new System.Windows.Forms.Button();
 			this.StatusBar = new System.Windows.Forms.ProgressBar();
 			this.StatuspictureBox = new System.Windows.Forms.PictureBox();
 			this.DurationLabel = new System.Windows.Forms.Label();
@@ -339,18 +340,16 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl2.Controls.Add(this.tabPage3);
-#if !REDUCED_FUNCTIONALITY
-// Show debug log in application
 			this.tabControl2.Controls.Add(this.tabPage4);
-#endif
 			this.tabControl2.Location = new System.Drawing.Point(12, 153);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(338, 215);
+			this.tabControl2.Size = new System.Drawing.Size(338, 251);
 			this.tabControl2.TabIndex = 3;
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.StopButton);
 			this.tabPage3.Controls.Add(this.StatusBar);
 			this.tabPage3.Controls.Add(this.StatuspictureBox);
 			this.tabPage3.Controls.Add(this.DurationLabel);
@@ -364,18 +363,28 @@ namespace WinFormsClient
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(330, 189);
+			this.tabPage3.Size = new System.Drawing.Size(330, 225);
 			this.tabPage3.TabIndex = 0;
 			this.tabPage3.Text = "Currently recording";
 			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// StopButton
+			// 
+			this.StopButton.Location = new System.Drawing.Point(264, 196);
+			this.StopButton.Name = "StopButton";
+			this.StopButton.Size = new System.Drawing.Size(60, 23);
+			this.StopButton.TabIndex = 3;
+			this.StopButton.Text = "Sto&p";
+			this.StopButton.UseVisualStyleBackColor = true;
+			this.StopButton.Click += new System.EventHandler(this.StopButtonClick);
 			// 
 			// StatusBar
 			// 
 			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusBar.Location = new System.Drawing.Point(195, 160);
+			this.StatusBar.Location = new System.Drawing.Point(6, 167);
 			this.StatusBar.Name = "StatusBar";
-			this.StatusBar.Size = new System.Drawing.Size(129, 23);
+			this.StatusBar.Size = new System.Drawing.Size(318, 23);
 			this.StatusBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.StatusBar.TabIndex = 0;
 			// 
@@ -424,10 +433,10 @@ namespace WinFormsClient
 			// 
 			this.HateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.HateButton.Enabled = false;
-			this.HateButton.Location = new System.Drawing.Point(72, 160);
+			this.HateButton.Location = new System.Drawing.Point(72, 196);
 			this.HateButton.Name = "HateButton";
-			this.HateButton.Size = new System.Drawing.Size(51, 23);
-			this.HateButton.TabIndex = 0;
+			this.HateButton.Size = new System.Drawing.Size(60, 23);
+			this.HateButton.TabIndex = 1;
 			this.HateButton.Text = "H&ate";
 			this.HateButton.UseVisualStyleBackColor = true;
 			this.HateButton.Click += new System.EventHandler(this.HateButtonClick);
@@ -436,7 +445,7 @@ namespace WinFormsClient
 			// 
 			this.LoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LoveButton.Enabled = false;
-			this.LoveButton.Location = new System.Drawing.Point(6, 160);
+			this.LoveButton.Location = new System.Drawing.Point(6, 196);
 			this.LoveButton.Name = "LoveButton";
 			this.LoveButton.Size = new System.Drawing.Size(60, 23);
 			this.LoveButton.TabIndex = 0;
@@ -470,10 +479,10 @@ namespace WinFormsClient
 			// 
 			this.SkipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.SkipButton.Enabled = false;
-			this.SkipButton.Location = new System.Drawing.Point(129, 160);
+			this.SkipButton.Location = new System.Drawing.Point(138, 196);
 			this.SkipButton.Name = "SkipButton";
 			this.SkipButton.Size = new System.Drawing.Size(60, 23);
-			this.SkipButton.TabIndex = 0;
+			this.SkipButton.TabIndex = 2;
 			this.SkipButton.Text = "&Skip";
 			this.SkipButton.UseVisualStyleBackColor = true;
 			this.SkipButton.Click += new System.EventHandler(this.SkipButtonClick);
@@ -484,7 +493,7 @@ namespace WinFormsClient
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(330, 189);
+			this.tabPage4.Size = new System.Drawing.Size(330, 225);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Log";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -501,14 +510,14 @@ namespace WinFormsClient
 			this.LogListBox.Location = new System.Drawing.Point(6, 6);
 			this.LogListBox.Name = "LogListBox";
 			this.LogListBox.ScrollAlwaysVisible = true;
-			this.LogListBox.Size = new System.Drawing.Size(318, 173);
+			this.LogListBox.Size = new System.Drawing.Size(318, 212);
 			this.LogListBox.TabIndex = 1;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 380);
+			this.ClientSize = new System.Drawing.Size(362, 416);
 			this.Controls.Add(this.tabControl2);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.MainMenu);
@@ -529,6 +538,7 @@ namespace WinFormsClient
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button StopButton;
 		private System.Windows.Forms.ListBox LogListBox;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage3;
@@ -568,5 +578,6 @@ namespace WinFormsClient
 		private System.Windows.Forms.ToolStripMenuItem generatePlaylistsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		
 	}
 }
