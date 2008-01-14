@@ -1,0 +1,6 @@
+Name: libLastRip
+Description: libLastRip
+Version: 0.1
+
+Requires: 
+Libs: -r:@prefix@/lib/@PACKAGE@/libLastRip.dll
