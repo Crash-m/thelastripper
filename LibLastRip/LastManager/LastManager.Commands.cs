@@ -124,6 +124,14 @@ namespace LibLastRip
 			}
 		}
 		
+		///<summary>
+		///Stops all actions
+		///</summary>
+		public void Stop()
+		{
+			this.stopRecording = true;
+		}
+
 		///<summary>Occurs when a ChangeStation is returned</summary>
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler StationChanged;
@@ -132,6 +140,9 @@ namespace LibLastRip
 		///<remarks>This method may be used to change station during recording, and to initiate recording.</remarks>
 		public void ChangeStation(System.String LastFMStation)
 		{
+			// Reset stop command
+			this.stopRecording = false;
+
 			//Can't do anything if not a least connected
 			if(this.Status == ConnectionStatus.Created)
 			{
