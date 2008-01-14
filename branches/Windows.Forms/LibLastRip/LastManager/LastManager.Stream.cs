@@ -34,6 +34,7 @@ namespace LibLastRip
 		protected XSPFTrack currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 		protected MemoryStream Song = new System.IO.MemoryStream();
 		protected System.Boolean SkipSave = false;
+		protected System.Boolean stopRecording = false;
 		protected System.Int32 counter = 0;
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		protected Hashtable excludeFile = null;
@@ -217,6 +218,14 @@ namespace LibLastRip
 
 		}
 		
+		protected void StopRecording() {
+			this.Status = ConnectionStatus.Connected;
+			this.stopRecording = false;
+			this.currentSong = MetaInfo.GetEmptyMetaInfo();
+			if(this.OnNewSong != null)
+				this.OnNewSong(this, this.currentSong);
+		}
+		
 		protected void StartRecording(bool newStation) {
 			if (newStation) {
 				xspf = XSPF.GetEmptyXSPF();
@@ -228,7 +237,7 @@ namespace LibLastRip
 			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
 			int tryCounter = 5;
 			
-			while (started == false) {
+			while (started == false && this.Status == ConnectionStatus.Recording) {
 				
 				if (xspf.CountTracks() == 0) {
 					// Getting Playlist
@@ -278,8 +287,12 @@ namespace LibLastRip
 						handleError(true, new ErrorEventArgs("No playlist found. Please restart ripping."));
 						
 						// no way to continue...
-						started = true;
+						StopRecording();
 					}
+				}
+				
+				if (this.stopRecording == true) {
+					StopRecording();
 				}
 			}
 		}
@@ -382,8 +395,14 @@ namespace LibLastRip
 					RadioStream.Close();
 					SaveToFile();
 				}
-				// Continue recording with next stream
-				StartRecording(false);
+				
+				if (this.stopRecording == false) {
+			    	// Continue recording with next stream
+			    	StartRecording(false);
+				} else {
+					StopRecording();
+				}
+				
 			} catch (Exception e) {
 				// Catch all exceptions to prevent application from falling into a illegal state
 				// Raise event so client can display a message
