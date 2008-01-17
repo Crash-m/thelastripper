@@ -13,6 +13,12 @@ In denmark the law is, that it is not illegal to record music from the radio, bu
   * http://147.29.40.91/_LINK_0/0&ACCN/A20060076329 (The law about copyright in Denmark)
   * http://www.infokiosk.dk/sw10272.asp (Law about recording radio) 
 
+=== German Law ===
+
+There had been a change in copyright law - now it is forbidden to download recognizeable illegal mp3's. So as long as last.fm (owned by BBC) is legal operating in germany using TheLastRipper is also legal.
+
+But you should never share the ripped files with too many others, it is illegal to give them to more than some good friends.
+
 === Contribute ===
 
 If anyone, knows anything about copyright law in any country, TheLastRipperTeam would like to hear from you. It would help us and other users of this client a lot. If we think your information is relevant to the project, we will post your information at this site.
