@@ -131,11 +131,13 @@ namespace WinFormsClient
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
+		#if FULL_FUNCTIONALITY
 			LibLastRip.LogEventArgs logArgs = (LibLastRip.LogEventArgs)args;
 			if (this.LogListBox.Items.Count > 100) {
 				this.LogListBox.Items.RemoveAt(0);
 			}
 			this.LogListBox.Items.Add(logArgs.Log + "\n");
+		#endif
 		}
 
 		private void OnNewSong(System.Object sender, System.EventArgs args)

@@ -75,8 +75,11 @@ namespace WinFormsClient
 			this.AlbumLabel = new System.Windows.Forms.Label();
 			this.TrackLabel = new System.Windows.Forms.Label();
 			this.SkipButton = new System.Windows.Forms.Button();
+		#if FULL_FUNCTIONALITY
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.LogListBox = new System.Windows.Forms.ListBox();
+			this.tabPage4.SuspendLayout();
+		#endif
 			this.MainMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -84,7 +87,6 @@ namespace WinFormsClient
 			this.tabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).BeginInit();
-			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// PersonalButton
@@ -340,7 +342,9 @@ namespace WinFormsClient
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl2.Controls.Add(this.tabPage3);
+		#if FULL_FUNCTIONALITY
 			this.tabControl2.Controls.Add(this.tabPage4);
+		#endif
 			this.tabControl2.Location = new System.Drawing.Point(12, 153);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
@@ -486,6 +490,7 @@ namespace WinFormsClient
 			this.SkipButton.Text = "&Skip";
 			this.SkipButton.UseVisualStyleBackColor = true;
 			this.SkipButton.Click += new System.EventHandler(this.SkipButtonClick);
+		#if FULL_FUNCTIONALITY
 			// 
 			// tabPage4
 			// 
@@ -512,6 +517,7 @@ namespace WinFormsClient
 			this.LogListBox.ScrollAlwaysVisible = true;
 			this.LogListBox.Size = new System.Drawing.Size(318, 212);
 			this.LogListBox.TabIndex = 1;
+		#endif
 			// 
 			// MainForm
 			// 
@@ -534,13 +540,17 @@ namespace WinFormsClient
 			this.tabControl2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.StatuspictureBox)).EndInit();
+		#if FULL_FUNCTIONALITY
 			this.tabPage4.ResumeLayout(false);
+		#endif
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
 		private System.Windows.Forms.Button StopButton;
+		#if FULL_FUNCTIONALITY
 		private System.Windows.Forms.ListBox LogListBox;
 		private System.Windows.Forms.TabPage tabPage4;
+		#endif
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabControl tabControl2;
 		private System.Windows.Forms.Button RecommendationsButton;
