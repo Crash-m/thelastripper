@@ -8,6 +8,7 @@ _This document describes the different features/bugs/issues we would like to imp
 
 == TheLastRipper version 1.3.1 ==
   * Internationalization (Issue 8)
+  * Configure Album Art Download in Properties (yes/no)
   * Code cleanup and fixes for other minor details.
   * Stop Button (Done)
   * Commandline interface (Done)
