@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE;REDUCED_FUNCTIONALITY</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;FULL_FUNCTIONALITY</DefineConstants>
     <Optimize>True</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
