@@ -37,3 +37,5 @@ Role: Maintainer of [LastFM12UnofficialDocumentation].
 *Maxim Heijndijk* for Mandriva packages.
 
 *Joeyrs* for ArchLinux packages, available from: [http://aur.archlinux.org aur.ArchLinux.org].
+
+*Toni Graffy* for OpenSuSE package available at [http://packman.links2linux.org/package/thelastripper packman].
