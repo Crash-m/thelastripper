@@ -6,6 +6,7 @@ Release under CreativeCommons Attribution Non-commercial Share Alike ([http://cr
 
 = Introduction =
 This document is to be used in compliment of existing documentation.  For more information, refer to the following pages: [http://www.audioscrobbler.net/wiki/Protocol1.1.merged Audioscrobbler Protocol v1.1],  [http://www.audioscrobbler.net/development/protocol/ Audioscrobbler Protocol v1.2].
+For web services 2.0 documentation, please see [http://last.fm/api Web services 2.0 documentation on last.fm]. 
 
 == Conventions Used in this Document ==
 _In order to avoid redundancy, some conventions and abbreviations are used in this document._
@@ -20,6 +21,8 @@ _In order to avoid redundancy, some conventions and abbreviations are used in th
 
 = Handshake =
 _An intial handshake/login, consists of a request and a response._
+
+*Please Note:* This handshake is for the old web services 1.0, but is also used nowadays for radio functions.
 
 == Request ==
 *Example:*
