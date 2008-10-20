@@ -44,9 +44,17 @@ namespace WinFormsClient
 			this.label1 = new System.Windows.Forms.Label();
 			this.UserNameTextBox = new System.Windows.Forms.TextBox();
 			this.LoginButton = new System.Windows.Forms.Button();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.MusicPathLabel = new System.Windows.Forms.Label();
 			this.MusicPathTextBox = new System.Windows.Forms.TextBox();
 			this.BrowseButton = new System.Windows.Forms.Button();
+			this.PatternLabel = new System.Windows.Forms.Label();
+			this.FilenamePattern = new System.Windows.Forms.TextBox();
+			this.AfterRipLabel = new System.Windows.Forms.Label();
+			this.AfterRipTextBox = new System.Windows.Forms.TextBox();
+			this.NewSongCommandLabel = new System.Windows.Forms.Label();
+			this.NewSongCommandTextBox = new System.Windows.Forms.TextBox();
+			this.CommentLabel = new System.Windows.Forms.Label();
+			this.CommentTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.AllMixedCheckBox = new System.Windows.Forms.CheckBox();
 			this.WeeklyTrackChartMixedCheckBox = new System.Windows.Forms.CheckBox();
@@ -70,7 +78,12 @@ namespace WinFormsClient
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.PortLabel = new System.Windows.Forms.Label();
+			this.PortTextBox = new System.Windows.Forms.TextBox();
+			this.PortComment = new System.Windows.Forms.Label();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.SaveModeLabel = new System.Windows.Forms.Label();
+			this.SaveModeCombo = new System.Windows.Forms.ComboBox();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.BrowseButton2 = new System.Windows.Forms.Button();
@@ -81,9 +94,9 @@ namespace WinFormsClient
 			this.label6 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.ExcludeFileTextBox = new System.Windows.Forms.TextBox();
+			this.tabPage6 = new System.Windows.Forms.TabPage();
 			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.LoginGroupBox.SuspendLayout();
-			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.NetworkGroupBox.SuspendLayout();
@@ -93,6 +106,7 @@ namespace WinFormsClient
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
 			this.tabPage5.SuspendLayout();
+			this.tabPage6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FolderBrowserDialog
@@ -170,20 +184,17 @@ namespace WinFormsClient
 			this.LoginButton.UseVisualStyleBackColor = true;
 			this.LoginButton.Click += new System.EventHandler(this.LoginButtonClick);
 			// 
-			// groupBox2
+			// MusicPathLabel
 			// 
-			this.groupBox2.Controls.Add(this.MusicPathTextBox);
-			this.groupBox2.Controls.Add(this.BrowseButton);
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(419, 54);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Music directory";
+			this.MusicPathLabel.Location = new System.Drawing.Point(0, 0);
+			this.MusicPathLabel.Name = "MusicPathLabel";
+			this.MusicPathLabel.Size = new System.Drawing.Size(81, 19);
+			this.MusicPathLabel.TabIndex = 1;
+			this.MusicPathLabel.Text = "Music directory";
 			// 
 			// MusicPathTextBox
 			// 
-			this.MusicPathTextBox.Location = new System.Drawing.Point(6, 22);
+			this.MusicPathTextBox.Location = new System.Drawing.Point(3, 22);
 			this.MusicPathTextBox.Name = "MusicPathTextBox";
 			this.MusicPathTextBox.Size = new System.Drawing.Size(333, 20);
 			this.MusicPathTextBox.TabIndex = 1;
@@ -197,6 +208,66 @@ namespace WinFormsClient
 			this.BrowseButton.Text = "&Browse";
 			this.BrowseButton.UseVisualStyleBackColor = true;
 			this.BrowseButton.Click += new System.EventHandler(this.BrowseButtonClick);
+			// 
+			// PatternLabel
+			// 
+			this.PatternLabel.Location = new System.Drawing.Point(0, 78);
+			this.PatternLabel.Name = "PatternLabel";
+			this.PatternLabel.Size = new System.Drawing.Size(89, 19);
+			this.PatternLabel.TabIndex = 3;
+			this.PatternLabel.Text = "Filename Pattern";
+			// 
+			// FilenamePattern
+			// 
+			this.FilenamePattern.Location = new System.Drawing.Point(95, 75);
+			this.FilenamePattern.Name = "FilenamePattern";
+			this.FilenamePattern.Size = new System.Drawing.Size(241, 20);
+			this.FilenamePattern.TabIndex = 3;
+			// 
+			// AfterRipLabel
+			// 
+			this.AfterRipLabel.Location = new System.Drawing.Point(0, 21);
+			this.AfterRipLabel.Name = "AfterRipLabel";
+			this.AfterRipLabel.Size = new System.Drawing.Size(114, 17);
+			this.AfterRipLabel.TabIndex = 2;
+			this.AfterRipLabel.Text = "After Rip Command";
+			// 
+			// AfterRipTextBox
+			// 
+			this.AfterRipTextBox.Location = new System.Drawing.Point(6, 41);
+			this.AfterRipTextBox.Name = "AfterRipTextBox";
+			this.AfterRipTextBox.Size = new System.Drawing.Size(333, 20);
+			this.AfterRipTextBox.TabIndex = 1;
+			// 
+			// NewSongCommandLabel
+			// 
+			this.NewSongCommandLabel.Location = new System.Drawing.Point(0, 79);
+			this.NewSongCommandLabel.Name = "NewSongCommandLabel";
+			this.NewSongCommandLabel.Size = new System.Drawing.Size(114, 17);
+			this.NewSongCommandLabel.TabIndex = 4;
+			this.NewSongCommandLabel.Text = "New Song Command";
+			// 
+			// NewSongCommandTextBox
+			// 
+			this.NewSongCommandTextBox.Location = new System.Drawing.Point(6, 99);
+			this.NewSongCommandTextBox.Name = "NewSongCommandTextBox";
+			this.NewSongCommandTextBox.Size = new System.Drawing.Size(333, 20);
+			this.NewSongCommandTextBox.TabIndex = 3;
+			// 
+			// CommentLabel
+			// 
+			this.CommentLabel.Location = new System.Drawing.Point(0, 104);
+			this.CommentLabel.Name = "CommentLabel";
+			this.CommentLabel.Size = new System.Drawing.Size(89, 17);
+			this.CommentLabel.TabIndex = 5;
+			this.CommentLabel.Text = "ID3 Comment";
+			// 
+			// CommentTextBox
+			// 
+			this.CommentTextBox.Location = new System.Drawing.Point(95, 101);
+			this.CommentTextBox.Name = "CommentTextBox";
+			this.CommentTextBox.Size = new System.Drawing.Size(241, 20);
+			this.CommentTextBox.TabIndex = 6;
 			// 
 			// groupBox3
 			// 
@@ -418,6 +489,7 @@ namespace WinFormsClient
 			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Controls.Add(this.tabPage4);
 			this.tabControl1.Controls.Add(this.tabPage5);
+			this.tabControl1.Controls.Add(this.tabPage6);
 			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -438,6 +510,9 @@ namespace WinFormsClient
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.NetworkGroupBox);
+			this.tabPage2.Controls.Add(this.PortLabel);
+			this.tabPage2.Controls.Add(this.PortTextBox);
+			this.tabPage2.Controls.Add(this.PortComment);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -446,9 +521,41 @@ namespace WinFormsClient
 			this.tabPage2.Text = "Network";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
+			// PortLabel
+			// 
+			this.PortLabel.Location = new System.Drawing.Point(6, 97);
+			this.PortLabel.Name = "PortLabel";
+			this.PortLabel.Size = new System.Drawing.Size(100, 23);
+			this.PortLabel.TabIndex = 8;
+			this.PortLabel.Text = "Port Number:";
+			// 
+			// PortTextBox
+			// 
+			this.PortTextBox.Location = new System.Drawing.Point(112, 97);
+			this.PortTextBox.Name = "PortTextBox";
+			this.PortTextBox.Size = new System.Drawing.Size(51, 20);
+			this.PortTextBox.TabIndex = 8;
+			// 
+			// PortComment
+			// 
+			this.PortComment.Location = new System.Drawing.Point(169, 91);
+			this.PortComment.Name = "PortComment";
+			this.PortComment.Size = new System.Drawing.Size(239, 47);
+			this.PortComment.TabIndex = 8;
+			this.PortComment.Text = "Listen to the song you are ripping opening the \"http://127.0.0.1:PortNumber\" address with your fa" +
+			"vourite music player.";
+			// 
 			// tabPage3
 			// 
-			this.tabPage3.Controls.Add(this.groupBox2);
+			this.tabPage3.Controls.Add(this.MusicPathLabel);
+			this.tabPage3.Controls.Add(this.MusicPathTextBox);
+			this.tabPage3.Controls.Add(this.BrowseButton);
+			this.tabPage3.Controls.Add(this.SaveModeLabel);
+			this.tabPage3.Controls.Add(this.SaveModeCombo);
+			this.tabPage3.Controls.Add(this.PatternLabel);
+			this.tabPage3.Controls.Add(this.FilenamePattern);
+			this.tabPage3.Controls.Add(this.CommentLabel);
+			this.tabPage3.Controls.Add(this.CommentTextBox);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -456,6 +563,24 @@ namespace WinFormsClient
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Storage";
 			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// SaveModeLabel
+			// 
+			this.SaveModeLabel.Location = new System.Drawing.Point(0, 51);
+			this.SaveModeLabel.Name = "SaveModeLabel";
+			this.SaveModeLabel.Size = new System.Drawing.Size(89, 20);
+			this.SaveModeLabel.TabIndex = 5;
+			this.SaveModeLabel.Text = "Save Mode:";
+			// 
+			// SaveModeCombo
+			// 
+			this.SaveModeCombo.Items.AddRange(new object[] {
+									"Save directly to disc",
+									"Buffer in memory and after save to disc"});
+			this.SaveModeCombo.Location = new System.Drawing.Point(95, 48);
+			this.SaveModeCombo.Name = "SaveModeCombo";
+			this.SaveModeCombo.Size = new System.Drawing.Size(241, 21);
+			this.SaveModeCombo.TabIndex = 2;
 			// 
 			// tabPage4
 			// 
@@ -521,7 +646,7 @@ namespace WinFormsClient
 			this.ExcludeExistingMusicCheckBox.Name = "ExcludeExistingMusicCheckBox";
 			this.ExcludeExistingMusicCheckBox.Size = new System.Drawing.Size(407, 24);
 			this.ExcludeExistingMusicCheckBox.TabIndex = 9;
-			this.ExcludeExistingMusicCheckBox.Text = "Check existing music (in music  or quarantine dir)";
+			this.ExcludeExistingMusicCheckBox.Text = "Skip existing music (in music  or quarantine directory).";
 			this.ExcludeExistingMusicCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// QuarantinePathTextBox
@@ -556,6 +681,20 @@ namespace WinFormsClient
 			this.ExcludeFileTextBox.Size = new System.Drawing.Size(333, 20);
 			this.ExcludeFileTextBox.TabIndex = 3;
 			// 
+			// tabPage6
+			// 
+			this.tabPage6.Controls.Add(this.AfterRipLabel);
+			this.tabPage6.Controls.Add(this.AfterRipTextBox);
+			this.tabPage6.Controls.Add(this.NewSongCommandLabel);
+			this.tabPage6.Controls.Add(this.NewSongCommandTextBox);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage6.Size = new System.Drawing.Size(422, 156);
+			this.tabPage6.TabIndex = 5;
+			this.tabPage6.Text = "Commands";
+			this.tabPage6.UseVisualStyleBackColor = true;
+			// 
 			// OpenFileDialog
 			// 
 			this.OpenFileDialog.FileName = "exclude.txt";
@@ -576,8 +715,6 @@ namespace WinFormsClient
 			this.Text = "Preferences";
 			this.LoginGroupBox.ResumeLayout(false);
 			this.LoginGroupBox.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.NetworkGroupBox.ResumeLayout(false);
@@ -585,10 +722,14 @@ namespace WinFormsClient
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
+			this.tabPage2.PerformLayout();
 			this.tabPage3.ResumeLayout(false);
+			this.tabPage3.PerformLayout();
 			this.tabPage4.ResumeLayout(false);
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
+			this.tabPage6.ResumeLayout(false);
+			this.tabPage6.PerformLayout();
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.Label label8;
@@ -601,6 +742,7 @@ namespace WinFormsClient
 		private System.Windows.Forms.Button button1;
 		public System.Windows.Forms.TextBox ExcludeFileTextBox;
 		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TabPage tabPage6;
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabPage tabPage2;
@@ -619,6 +761,11 @@ namespace WinFormsClient
 		public System.Windows.Forms.CheckBox SavePasswordCheckBox;
 		private System.Windows.Forms.Button LoginButton;
 		public System.Windows.Forms.TextBox MusicPathTextBox;
+		public System.Windows.Forms.TextBox FilenamePattern;
+		public System.Windows.Forms.TextBox AfterRipTextBox;
+		public System.Windows.Forms.TextBox NewSongCommandTextBox;
+		private System.Windows.Forms.Label CommentLabel;
+		public System.Windows.Forms.TextBox CommentTextBox;
 		private System.Windows.Forms.Button BrowseButton;
 		public System.Windows.Forms.CheckBox SMILCheckBox;
 		public System.Windows.Forms.CheckBox PLSCheckBox;
@@ -634,8 +781,16 @@ namespace WinFormsClient
 		private System.Windows.Forms.Button OKbutton;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label MusicPathLabel;
+		private System.Windows.Forms.Label PatternLabel;
+		private System.Windows.Forms.Label AfterRipLabel;
+		private System.Windows.Forms.Label NewSongCommandLabel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label SaveModeLabel;
+		public System.Windows.Forms.ComboBox SaveModeCombo;
+		private System.Windows.Forms.Label PortLabel;
+		public System.Windows.Forms.TextBox PortTextBox;
+		private System.Windows.Forms.Label PortComment;
 	}
 }
