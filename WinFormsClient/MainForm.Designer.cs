@@ -79,6 +79,7 @@ namespace WinFormsClient
 			this.SkipButton = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.LogListBox = new System.Windows.Forms.ListBox();
+			this.TracknrLabel = new System.Windows.Forms.Label();
 			this.MainMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -347,11 +348,12 @@ namespace WinFormsClient
 			this.tabControl2.MinimumSize = new System.Drawing.Size(338, 264);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(338, 264);
+			this.tabControl2.Size = new System.Drawing.Size(338, 293);
 			this.tabControl2.TabIndex = 3;
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.TracknrLabel);
 			this.tabPage3.Controls.Add(this.StopButton);
 			this.tabPage3.Controls.Add(this.StatusBar);
 			this.tabPage3.Controls.Add(this.StatuspictureBox);
@@ -368,7 +370,7 @@ namespace WinFormsClient
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(330, 238);
+			this.tabPage3.Size = new System.Drawing.Size(330, 267);
 			this.tabPage3.TabIndex = 0;
 			this.tabPage3.Text = "Currently recording";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -376,7 +378,7 @@ namespace WinFormsClient
 			// StopButton
 			// 
 			this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.StopButton.Location = new System.Drawing.Point(264, 209);
+			this.StopButton.Location = new System.Drawing.Point(264, 238);
 			this.StopButton.Name = "StopButton";
 			this.StopButton.Size = new System.Drawing.Size(60, 23);
 			this.StopButton.TabIndex = 3;
@@ -388,7 +390,7 @@ namespace WinFormsClient
 			// 
 			this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.StatusBar.Location = new System.Drawing.Point(6, 180);
+			this.StatusBar.Location = new System.Drawing.Point(6, 209);
 			this.StatusBar.Name = "StatusBar";
 			this.StatusBar.Size = new System.Drawing.Size(318, 23);
 			this.StatusBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -407,9 +409,9 @@ namespace WinFormsClient
 			// 
 			this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.DurationLabel.Location = new System.Drawing.Point(2, 121);
+			this.DurationLabel.Location = new System.Drawing.Point(6, 149);
 			this.DurationLabel.Name = "DurationLabel";
-			this.DurationLabel.Size = new System.Drawing.Size(186, 14);
+			this.DurationLabel.Size = new System.Drawing.Size(155, 14);
 			this.DurationLabel.TabIndex = 5;
 			this.DurationLabel.Text = "Duration: ";
 			// 
@@ -418,9 +420,9 @@ namespace WinFormsClient
 			this.StationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.StationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.StationLabel.Location = new System.Drawing.Point(2, 160);
+			this.StationLabel.Location = new System.Drawing.Point(6, 191);
 			this.StationLabel.Name = "StationLabel";
-			this.StationLabel.Size = new System.Drawing.Size(322, 17);
+			this.StationLabel.Size = new System.Drawing.Size(318, 15);
 			this.StationLabel.TabIndex = 7;
 			this.StationLabel.Text = "Station: ";
 			// 
@@ -428,18 +430,18 @@ namespace WinFormsClient
 			// 
 			this.GenreLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.GenreLabel.Location = new System.Drawing.Point(3, 140);
+			this.GenreLabel.Location = new System.Drawing.Point(6, 177);
 			this.GenreLabel.Name = "GenreLabel";
-			this.GenreLabel.Size = new System.Drawing.Size(186, 14);
+			this.GenreLabel.Size = new System.Drawing.Size(155, 14);
 			this.GenreLabel.TabIndex = 6;
 			this.GenreLabel.Text = "Genre: ";
 			// 
 			// RemainingTimeLabel
 			// 
 			this.RemainingTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.RemainingTimeLabel.Location = new System.Drawing.Point(195, 140);
+			this.RemainingTimeLabel.Location = new System.Drawing.Point(169, 149);
 			this.RemainingTimeLabel.Name = "RemainingTimeLabel";
-			this.RemainingTimeLabel.Size = new System.Drawing.Size(129, 14);
+			this.RemainingTimeLabel.Size = new System.Drawing.Size(155, 14);
 			this.RemainingTimeLabel.TabIndex = 8;
 			this.RemainingTimeLabel.Text = "Remaining Time: ";
 			// 
@@ -458,7 +460,7 @@ namespace WinFormsClient
 			// 
 			this.HateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.HateButton.Enabled = false;
-			this.HateButton.Location = new System.Drawing.Point(72, 209);
+			this.HateButton.Location = new System.Drawing.Point(72, 238);
 			this.HateButton.Name = "HateButton";
 			this.HateButton.Size = new System.Drawing.Size(60, 23);
 			this.HateButton.TabIndex = 1;
@@ -470,7 +472,7 @@ namespace WinFormsClient
 			// 
 			this.LoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LoveButton.Enabled = false;
-			this.LoveButton.Location = new System.Drawing.Point(6, 209);
+			this.LoveButton.Location = new System.Drawing.Point(6, 238);
 			this.LoveButton.Name = "LoveButton";
 			this.LoveButton.Size = new System.Drawing.Size(60, 23);
 			this.LoveButton.TabIndex = 0;
@@ -485,7 +487,7 @@ namespace WinFormsClient
 			this.AlbumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.AlbumLabel.Location = new System.Drawing.Point(2, 87);
 			this.AlbumLabel.Name = "AlbumLabel";
-			this.AlbumLabel.Size = new System.Drawing.Size(190, 34);
+			this.AlbumLabel.Size = new System.Drawing.Size(190, 48);
 			this.AlbumLabel.TabIndex = 4;
 			this.AlbumLabel.Text = "Album: ";
 			// 
@@ -504,7 +506,7 @@ namespace WinFormsClient
 			// 
 			this.SkipButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.SkipButton.Enabled = false;
-			this.SkipButton.Location = new System.Drawing.Point(138, 209);
+			this.SkipButton.Location = new System.Drawing.Point(138, 238);
 			this.SkipButton.Name = "SkipButton";
 			this.SkipButton.Size = new System.Drawing.Size(60, 23);
 			this.SkipButton.TabIndex = 2;
@@ -538,17 +540,27 @@ namespace WinFormsClient
 			this.LogListBox.Size = new System.Drawing.Size(318, 212);
 			this.LogListBox.TabIndex = 1;
 			// 
+			// TracknrLabel
+			// 
+			this.TracknrLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.TracknrLabel.Location = new System.Drawing.Point(6, 163);
+			this.TracknrLabel.Name = "TracknrLabel";
+			this.TracknrLabel.Size = new System.Drawing.Size(155, 14);
+			this.TracknrLabel.TabIndex = 9;
+			this.TracknrLabel.Text = "Track Nr.: ";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 429);
+			this.ClientSize = new System.Drawing.Size(362, 458);
 			this.Controls.Add(this.tabControl2);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.MainMenu);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MainMenu;
-			this.MinimumSize = new System.Drawing.Size(370, 350);
+			this.MinimumSize = new System.Drawing.Size(370, 485);
 			this.Name = "MainForm";
 			this.Text = "TheLastRipper";
 			this.MainMenu.ResumeLayout(false);
@@ -563,6 +575,7 @@ namespace WinFormsClient
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label TracknrLabel;
 		private System.Windows.Forms.Button StopButton;
 		#if FULL_FUNCTIONALITY
 		private System.Windows.Forms.ListBox LogListBox;
