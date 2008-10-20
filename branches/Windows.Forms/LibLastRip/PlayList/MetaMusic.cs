@@ -28,11 +28,11 @@ namespace LibLastRip
 		public MetaMusic(System.String FileURL)
 		{
 			FileInfo MusicInfo = new FileInfo(FileURL);
-			
+			TagLib.File file = TagLib.File.Create(FileURL);
 			this._TrackDuration = (MusicInfo.Length / 128).ToString();
-			this._Artist = MusicInfo.Directory.Parent.Name;
-			this._Album = MusicInfo.Directory.Name;
-			this._Track = MusicInfo.Name.Replace(".mp3","");
+			this._Artist = file.Tag.AlbumArtists[0];
+			this._Album = file.Tag.Album;
+			this._Track = file.Tag.Title;
 		}
 		
 		protected System.String _Track;
