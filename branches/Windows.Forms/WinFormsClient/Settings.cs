@@ -83,7 +83,7 @@ namespace WinFormsClient
 			this._SaveMode = Pref.SaveModeCombo.SelectedIndex == 0;
 			try{
 				this._PortNum = Int32.Parse(Pref.PortTextBox.Text);
-			}catch(Exception e){
+			}catch(Exception){
 				this._PortNum = 0;
 			}
 			this.manager.NewSongCommand = _NewSongCommand;
