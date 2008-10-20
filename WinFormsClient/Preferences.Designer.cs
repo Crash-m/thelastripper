@@ -521,7 +521,7 @@ namespace WinFormsClient
 			this.ExcludeExistingMusicCheckBox.Name = "ExcludeExistingMusicCheckBox";
 			this.ExcludeExistingMusicCheckBox.Size = new System.Drawing.Size(407, 24);
 			this.ExcludeExistingMusicCheckBox.TabIndex = 9;
-			this.ExcludeExistingMusicCheckBox.Text = "Skip existing music (in music  or quarantine directory).";
+			this.ExcludeExistingMusicCheckBox.Text = "Check existing music (in music  or quarantine dir)";
 			this.ExcludeExistingMusicCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// QuarantinePathTextBox
