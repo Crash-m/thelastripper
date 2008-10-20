@@ -176,6 +176,7 @@ namespace WinFormsClient
 			if (info.isEmpty()) {
 				this.TrackLabel.Text = "nothing to do";
 				this.ArtistLabel.Text = "";
+				this.TracknrLabel.Text = "";
 				this.AlbumLabel.Text = "";
 				this.DurationLabel.Text = "";
 				this.StationLabel.Text = "";
@@ -184,6 +185,7 @@ namespace WinFormsClient
 			} else {
 				this.TrackLabel.Text = info.Track;
 				this.ArtistLabel.Text = "Artist: " + info.Artist;
+				this.TracknrLabel.Text = "Track Nr.: " + info.TrackNum;
 				this.AlbumLabel.Text = "Album: " + info.Album;
 				System.Int32 dur = System.Int32.Parse(info.Trackduration);
 				System.String durat = (dur / 60) + ":";
