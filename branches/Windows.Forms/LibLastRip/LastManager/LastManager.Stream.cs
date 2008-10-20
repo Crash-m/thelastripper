@@ -211,7 +211,7 @@ namespace LibLastRip
 				}
 			}
 			
-			writeLogLine("get " + title + " (" + album + ") " + " from " + creator);
+			writeLogLine("get '" + title + "' (" + album + ") " + " from '" + creator + "'");
 
 			// Default: Process file
 			return true;
