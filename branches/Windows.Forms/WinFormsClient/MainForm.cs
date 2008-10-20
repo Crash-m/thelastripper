@@ -136,7 +136,7 @@ namespace WinFormsClient
 			if (this.LogListBox.Items.Count > 100) {
 				this.LogListBox.Items.RemoveAt(0);
 			}
-			this.LogListBox.Items.Add(logArgs.Log + "\n");
+			this.LogListBox.Items.Add(logArgs.Log);
 		#endif
 		}
 
