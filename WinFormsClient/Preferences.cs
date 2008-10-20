@@ -21,13 +21,14 @@ namespace WinFormsClient
 	{
 		public System.Boolean hasPassword = false;
 		private LibLastRip.LastManager manager;
+		
 		public Preferences(LibLastRip.LastManager manager,Settings settings)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
+
 			this.manager = manager;
 			
 			if(this.manager.ConnectionStatus == LibLastRip.ConnectionStatus.Created)
@@ -60,11 +61,25 @@ namespace WinFormsClient
 				this.PasswordTextBox.Enabled = false;
 			}
 			this.MusicPathTextBox.Text = settings.MusicPath;
+/*			this.FilenamePattern.Text = settings.manager.filename_pattern;
+			this.AfterRipTextBox.Text = settings.manager.AfterRipCommand;
+			this.CommentTextBox.Text = settings.manager.Comment;*/
+			this.FilenamePattern.Text = settings.FileNamePattern;
+			this.AfterRipTextBox.Text = settings.AfterRipCommand;
+			this.CommentTextBox.Text = settings.Comment;
 			this.QuarantinePathTextBox.Text = settings.QuarantinePath;
 			this.ExcludeFileTextBox.Text = settings.ExcludeFile;
 			this.ExcludeNewMusicCheckBox.Checked = settings.ExcludeNewMusic;
 			this.ExcludeExistingMusicCheckBox.Checked = settings.ExcludeExistingMusic;
-			
+			this.NewSongCommandTextBox.Text = settings.NewSongCommand;
+			this.SaveModeCombo.SelectedIndexChanged += new System.EventHandler(ToggleNewSongCommand);
+			this.SaveModeCombo.SelectedIndex = settings.SaveMode ? 0 : 1;
+			this.PortTextBox.Text = settings.PortNumber.ToString();
+/*			if(settings.SaveMode)
+				this.NewSongCommandTextBox.Enabled = true;
+			else
+				this.NewSongCommandTextBox.Enabled = false;
+*/			
 			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
 			this.ProxyPasswordTextBox.Text = settings.ProxyPassword;
@@ -179,6 +194,13 @@ namespace WinFormsClient
 			{
 				this.QuarantinePathTextBox.Text = this.FolderBrowserDialog.SelectedPath;
 			}
+		}
+		
+		private void ToggleNewSongCommand(object sender,System.EventArgs e){
+			if(this.SaveModeCombo.SelectedIndex == 0)
+				this.NewSongCommandTextBox.Enabled = true;
+			else
+				this.NewSongCommandTextBox.Enabled = false;
 		}
 	}
 }
