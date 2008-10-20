@@ -16,6 +16,9 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 using System;
+using System.Xml;
+using System.Net;
+using System.IO;
 
 namespace LibLastRip
 {
@@ -24,9 +27,12 @@ namespace LibLastRip
 		protected System.String _Station;
 		protected System.String _Artist;
 		protected System.String _Track;
+		protected uint _TrackNum = 0;
 		protected System.String _Album;
 		protected System.String _Albumcover;
 		protected System.String _Trackduration;
+		protected System.String _Genre;
+		protected System.String _Comment;
 		protected System.String _Trackprogress;
 		
 		/// <summary>
@@ -45,7 +51,9 @@ namespace LibLastRip
             this._Track = "Refreshing...";
             this._Artist = "";
             this._Album = "";
+            this._TrackNum = 0;
             this._Trackduration = "1";
+            this._Genre = "";
             this._Trackprogress = "0";
         }
 		
@@ -56,7 +64,8 @@ namespace LibLastRip
 			this._Trackduration = (Int32.Parse(xspfTrack.Duration) / 1000).ToString();
 			this._Track = xspfTrack.Title;
 			this._Albumcover = xspfTrack.Image;
-			this._Station = xspf.Title;
+			System.String station = xspf.Title.Replace("+"," ");
+			this._Station = System.Uri.UnescapeDataString(station);
 			
 			//We've got to have something to write as ID3tag's, filename and directories
 			if(String.IsNullOrEmpty(this._Track))
@@ -65,6 +74,45 @@ namespace LibLastRip
 				this._Album = "unknown";
 			if(String.IsNullOrEmpty(this._Artist))
 				this._Artist = "unknown";
+				_TrackNum = SearchTrackNum();
+				_Genre = SearchTrackGenre();
+		}
+		
+		private uint SearchTrackNum(){
+			try{
+				System.String XmlPath = "http://ws.audioscrobbler.com/1.0/album/";
+				XmlPath += _Artist + "/" + _Album + "/info.xml";
+				XmlDocument xmlDocument = LastManager.getXmlDocument(XmlPath);
+				XmlNodeList nl = xmlDocument.GetElementsByTagName("track");
+				uint tnum = 0;
+				foreach(XmlNode node in nl){
+					tnum++;
+					System.String title = node.Attributes.GetNamedItem("title").InnerText;
+					if(title.ToLower().Equals(_Track.ToLower()))
+						return tnum;
+				}
+				return 0;
+			}catch(Exception e){
+				return 0;
+			}
+		}
+		
+		private System.String SearchTrackGenre(){
+			try{
+				System.String XmlPath = "http://ws.audioscrobbler.com/1.0/track/";
+				XmlPath += this._Artist + "/" + this._Track + "/toptags.xml";
+				XmlDocument xmlDocument = LastManager.getXmlDocument(XmlPath);
+				XmlNodeList nl = xmlDocument.GetElementsByTagName("tag");
+				if(nl.Count > 0){
+					nl = nl.Item(0).ChildNodes;
+					foreach(XmlNode node in nl)
+						if(node.Name.Equals("name"))
+							return node.InnerText;
+				}
+				return "";
+			}catch(Exception e){
+				return "";
+			}
 		}
 		
 		public System.String Station
@@ -88,6 +136,17 @@ namespace LibLastRip
 			get
 			{
 				return this._Track;
+			}
+		}
+		
+		public uint TrackNum
+		{
+			set{
+				this._TrackNum = value;
+			}
+			get
+			{
+				return this._TrackNum;
 			}
 		}
 		
@@ -115,6 +174,28 @@ namespace LibLastRip
 			}
 		}
 		
+		public System.String Genre
+		{
+			set{
+				this._Genre = value;
+			}
+			get
+			{
+				return this._Genre;
+			}
+		}
+
+		public System.String Comment
+		{
+			set{
+				this._Comment = value;
+			}
+			get
+			{
+				return this._Comment;
+			}
+		}
+
 		public System.String Trackprogress
 		{
 			get
@@ -197,16 +278,23 @@ namespace LibLastRip
 
 			//Set track title
 			File.Tag.Title = this.Track;
+			if(this.TrackNum > 0)
+				File.Tag.Track = this.TrackNum;
 			
 			//Set Artists
 			File.Tag.Performers =  new System.String[]{this.Artist};
 			File.Tag.AlbumArtists = new System.String[]{this.Artist};
 			
 			//Set album
-			File.Tag.Album = this.Album;
+			if(!this.Album.Equals("unknown"))
+				File.Tag.Album = this.Album;
 			
+			if(!String.IsNullOrEmpty(this.Genre))
+				File.Tag.Genres = new System.String[]{this.Genre};
 			//Add comment, defining from where the music was recorded.
-			File.Tag.Comment = "Recorded with TheLastRipper from " + this.Station;
+			//Modify: personal message
+			if(!String.IsNullOrEmpty(this.Comment))
+				File.Tag.Comment = LastManager.ReplacePattern(this.Comment,this);
 
 			//TODO: Add picture using TagLib-Sharp
 			//TagLib.Picture.CreateFromFile()
