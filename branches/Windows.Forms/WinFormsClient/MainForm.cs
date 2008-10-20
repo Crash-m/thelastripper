@@ -111,8 +111,16 @@ namespace WinFormsClient
 			LibLastRip.ProgressEventArgs progressArgs = (LibLastRip.ProgressEventArgs)args;
 			if (progressArgs.Streamprogress > this.StatusBar.Maximum) {
 				this.StatusBar.Value = this.StatusBar.Maximum;
+				this.RemainingTimeLabel.Text = "";
 			} else {
 				this.StatusBar.Value = progressArgs.Streamprogress;
+				System.Int32 time = (this.StatusBar.Maximum - progressArgs.Streamprogress);
+				System.String timerem = (time / 60) + ":";
+				time = time % 60;
+				if(time < 10)
+					timerem += "0";
+				timerem += time;
+				this.RemainingTimeLabel.Text = "Remaining Time: " + timerem;
 			}
 		}
 		
@@ -171,13 +179,22 @@ namespace WinFormsClient
 				this.AlbumLabel.Text = "";
 				this.DurationLabel.Text = "";
 				this.StationLabel.Text = "";
+				this.GenreLabel.Text = "";
 				this.StatuspictureBox.Image = null;
 			} else {
 				this.TrackLabel.Text = info.Track;
 				this.ArtistLabel.Text = "Artist: " + info.Artist;
 				this.AlbumLabel.Text = "Album: " + info.Album;
-				this.DurationLabel.Text = "Duration: " + info.Trackduration;
+				System.Int32 dur = System.Int32.Parse(info.Trackduration);
+				System.String durat = (dur / 60) + ":";
+				dur = dur % 60;
+				if(dur < 10)
+					durat += "0";
+				durat += dur;
+				this.DurationLabel.Text = "Duration: " + durat;
 				this.StationLabel.Text = "Station: " + info.Station;
+				if(!String.IsNullOrEmpty(info.Genre))
+					this.GenreLabel.Text = "Genre: " + info.Genre;
 				
 				//TODO: multithread download of album cover
 				if(info.Albumcover != null && info.Albumcover.StartsWith("http://"))
