@@ -18,9 +18,12 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Xml;
 using System.Collections;
+using System.Diagnostics;
+using System.Text;
 
 namespace LibLastRip
 {
@@ -32,18 +35,22 @@ namespace LibLastRip
 		protected static System.Int32 BufferSize = 8192; //8 KiB
 		protected XSPF xspf = XSPF.GetEmptyXSPF();
 		protected XSPFTrack currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
-		protected MemoryStream Song = new System.IO.MemoryStream();
+		protected Stream Song;
+		protected System.String _Filename;
 		protected System.Boolean SkipSave = false;
 		protected System.Boolean stopRecording = false;
 		protected System.Int32 counter = 0;
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		protected Hashtable excludeFile = null;
-		
-		/// <summary>
-		/// System.Object used to lock the stream while reading.
-		/// </summary>
-		// protected static System.Object ReadStreamLock = new System.Object();
-		
+		public System.String AfterRipCommand = "\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" /add \"%F\"";
+		public System.Boolean SaveDirectlyToDisc = false;
+		public System.String NewSongCommand = "\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" \"%F\"";
+		private bool _executed;
+		private ManualResetEvent allDone = new ManualResetEvent(false);
+		private Socket server;
+		private ArrayList connections;
+		public Int32 PortNum = 8000;
+				
 		/// <summary>
 		/// Bytes of the stream that have been announced to OnProgress Event
 		/// </summary>
@@ -55,6 +62,13 @@ namespace LibLastRip
 		/// <remarks>The arguments can be casted to LibLastRip.ErrorEventArgs</remarks>
 		public event System.EventHandler OnError;
 		
+		protected void writeLogLine(String logText) {
+			Console.WriteLine(logText);
+			if (this.OnLog != null) {
+				this.OnLog(this, new LogEventArgs(logText));
+			}
+		}
+
 		private void AddChildren(XSPFTrack xspfTrack, XmlNode xnod, int level) {
 			String pad = new String(' ', level * 2);
 
@@ -139,23 +153,44 @@ namespace LibLastRip
 				}
 			}
 		}
-		
-		protected void writeLogLine(String logText) {
-			Console.WriteLine(logText);
-			if (this.OnLog != null) {
-				this.OnLog(this, new LogEventArgs(logText));
+				
+		protected bool CheckFileInDirectory(String FilePath, String title, String creator, String album) {
+			DirectoryInfo dir = new DirectoryInfo(FilePath);
+			FileInfo[] files = getFiles(dir,title);
+			// if exist a file with the song title
+			foreach(FileInfo file_1 in files){
+				if(IsCompatibleSong(file_1,creator,album,title))
+					return true;
 			}
+			DirectoryInfo[] dirs = getDirectories(dir,creator);
+			//if exist a folder with artist name
+			foreach(DirectoryInfo folder in dirs){
+				files = getFiles(folder,title);
+				if(IsSongInFiles(files,creator,album,title))
+					return true;
+				DirectoryInfo[] folders = getDirectories(folder,album);
+				//if exists a folder with album name
+				foreach(DirectoryInfo fold in folders){
+					files = getFiles(fold,title);
+					if(IsSongInFiles(files,creator,album,title))
+						return true;
+				}
+			}
+			dirs = getDirectories(dir,album);
+			//if exist a folder with album name
+			foreach(DirectoryInfo folder in dirs){
+				files = getFiles(folder,title);
+				if(IsSongInFiles(files,creator,album,title))
+					return true;
+			}
+			return false;
 		}
 		
 		protected bool processFile() {
 			System.String creator = LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator);
 			System.String album = LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album);
 			System.String title = LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title);
-			
-			System.String CreatorPath = this.MusicPath + Path.DirectorySeparatorChar + creator;
-			System.String AlbumPath = CreatorPath + Path.DirectorySeparatorChar + album + Path.DirectorySeparatorChar;
-			System.String FilePath = AlbumPath + title + ".mp3";
-			
+				
 			System.String QuarantineCreatorPath = this.QuarantinePath + Path.DirectorySeparatorChar + creator;
 			System.String QuarantineAlbumPath = QuarantineCreatorPath + Path.DirectorySeparatorChar + album + Path.DirectorySeparatorChar;
 			System.String QuarantineFilePath = QuarantineAlbumPath + title + ".mp3";
@@ -164,18 +199,17 @@ namespace LibLastRip
 			// a) reload existing files DEFAULT=false
 			// b) only load existing artists DEFAULT=false
 			
-			if (ExcludeExistingMusic) {
-				// File exists - dont process
-				if (File.Exists(FilePath)) {
-					writeLogLine("skipFE(" + counter.ToString() + ") " + FilePath);
+			if (_ExcludeExistingMusic) {
+				if (CheckFileInDirectory(this._MusicPath, title, creator, album)) {
+    				// File exists - dont process
 					counter++;
+					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
 					return false;
 				}
-				
-				// File exists - dont process
-				if (!String.IsNullOrEmpty(QuarantineFilePath) && File.Exists(QuarantineFilePath)) {
-					writeLogLine("skipFE(" + counter.ToString() + ") " + QuarantineFilePath);
+				if ((String.IsNullOrEmpty(this._QuarantinePath)) || (CheckFileInDirectory(this._QuarantinePath, title, creator, album))) {
+    				// File exists - dont process
 					counter++;
+					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
 					return false;
 				}
 			}
@@ -197,13 +231,15 @@ namespace LibLastRip
 				}
 				
 				if (excludeFile.Contains(this.currentXspfTrack.Creator)) {
-					writeLogLine("skipEF(" + counter.ToString() + ") " + CreatorPath);
+					writeLogLine("skipEF(" + counter.ToString() + ") ");
 					return false;
 				}
 			}
 
 			if (ExcludeNewMusic) {
+				// TODO: Works only if filename pattern starts with "%a\..." - this should be included in documentation
 				// Directory exists not - dont process
+				System.String CreatorPath = this.MusicPath + Path.DirectorySeparatorChar + creator;
 				if (!Directory.Exists(CreatorPath) && !Directory.Exists(QuarantineCreatorPath)) {
 					counter++;
 					writeLogLine("skipDnE(" + counter.ToString() + ") " + CreatorPath);
@@ -244,7 +280,7 @@ namespace LibLastRip
 					String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
 					WebRequest wReq = WebRequest.Create(url);
 					HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-
+					
 					Stream Stream = hRes.GetResponseStream();
 					
 					XmlTextReader xmlTextReader = new XmlTextReader(Stream);
@@ -274,6 +310,8 @@ namespace LibLastRip
 						//Getting stream
 						WebRequest wReq = WebRequest.Create(this.StreamURL);
 						HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+						//this._SongUrl = hRes.ResponseUri.AbsoluteUri;
+						//writeLogLine("Response uri: " + hRes.ResponseUri.AbsoluteUri);
 						System.IO.Stream RadioStream = hRes.GetResponseStream();
 
 						//Start reading process
@@ -310,9 +348,7 @@ namespace LibLastRip
 		}
 		
 		protected void SaveToFile() {
-			//Create a new MemoryStream
-			MemoryStream NewSong = new MemoryStream();
-			
+		
 			writeLogLine("Song length in bytes: " + this.Song.Length);
 			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
 			
@@ -322,6 +358,10 @@ namespace LibLastRip
 				//If not, then don't save it
 				this.SkipSave = false;
 				this.Song.Close();
+				if(this.Song is FileStream){
+					FileInfo file = new FileInfo(_Filename);
+					file.Delete();
+				}
 			}else{
 				//If so, then save it but do it on another thread
 				SaveSongCall SSC = new SaveSongCall(this.SaveSong);
@@ -330,7 +370,8 @@ namespace LibLastRip
 			}
 			
 			//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
-			this.Song = NewSong;
+			if(this.Song is MemoryStream)
+				this.Song = new MemoryStream();
 		}
 		
 		/// <summary>
@@ -338,11 +379,19 @@ namespace LibLastRip
 		/// </summary>
 		protected void Save(System.Int32 read) {
 			bool firstRead = this.Song.Length == 0;
-			
 			//Write data from buffer to memory
 			this.Song.Write(this.Buffer,0,read);
+			if(this.server == null)
+				intializeServer();
+			listen();
+			sendToClients(read);
 			
-			System.Byte []Buf = this.Song.GetBuffer();
+			if(this.Song is FileStream)
+				if(this.Song.Length > 200 * 1024 && ! this._executed){
+					ExecuteCommand(this.NewSongCommand,this.CurrentSong);
+					this._executed = true;
+				}
+			//System.Byte []Buf = ((FileStream)this.Song).GetBuffer();
 			
 			if (this.OnProgress != null) {
 				// Update Progress bar every 2 seconds.
@@ -372,12 +421,14 @@ namespace LibLastRip
 				//Is this a new song?
 				if(!MetaInfo.Equals(nSong,this.currentSong))
 				{
+					this._Filename = GetFilename(this.filename_pattern,nSong);
+					Song = NewStream();
 					//Save metadata and raise OnNewSong event
 					this.currentSong = nSong;
 					if(this.OnNewSong != null)
 						this.OnNewSong(this, this.currentSong);
 				}
-				
+				this._executed = false;
 				//Save data read from async read.
 				Stream RadioStream = (Stream)Res.AsyncState;
 				System.Int32 read = RadioStream.EndRead(Res);
@@ -422,11 +473,21 @@ namespace LibLastRip
 			//Is this a new song?
 			if(!MetaInfo.Equals(nSong,this.currentSong))
 			{
+				//delete error file
+				if(this.Song is FileStream){
+					FileInfo file = new FileInfo(this._Filename);
+					if(file.Exists)
+						file.Delete();
+				}
+				//start next song
+				this._Filename = GetFilename(this.filename_pattern,nSong);
+				Song = NewStream();
 				//Save metadata and raise OnNewSong event
 				this.currentSong = nSong;
 				if(this.OnNewSong != null) {
 					this.OnNewSong(this, this.currentSong);
 				}
+				this._executed = false;
 			}
 			
 			if (this.OnError != null) {
@@ -447,7 +508,8 @@ namespace LibLastRip
 			//Aquire lock to insure Stream isn't in use
 			//if(System.Threading.Monitor.TryEnter(LastManager.ReadStreamLock))
 			{
-				Song = new System.IO.MemoryStream();
+				//Song = new System.IO.MemoryStream();
+				Song = NewStream();
 				Buffer = new System.Byte[LastManager.BufferSize];
 				
 				LastPosition = 1;
@@ -470,56 +532,49 @@ namespace LibLastRip
 		protected void SaveSongCallback(System.IAsyncResult Ar)
 		{
 			SaveSongCall SSC = (SaveSongCall)(((System.Runtime.Remoting.Messaging.AsyncResult)Ar).AsyncDelegate);
-			SSC.EndInvoke(Ar);
+
+			try{
+				SSC.EndInvoke(Ar);
+			}catch(Exception e){}
 			
+			if(this.Song is MemoryStream)
+				((MemoryStream)Ar.AsyncState).Close();
 			//Close the old song
-			((MemoryStream)Ar.AsyncState).Close();
 		}
 		
-		protected delegate void SaveSongCall(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo);
+		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo);
 		
 		///<summary>Save a song to disk</summary>
 		///<param name="Song">A MemoryStream containing the song.</param>
 		///<param name="Count">Number of bytes from MemoryStream to save.</param>
 		///<param name="SongInfo">MetaInfo about the song to be saved.</param>
-		protected void SaveSong(MemoryStream Song, System.Int32 Count, MetaInfo SongInfo)
+		protected void SaveSong(Stream Song, System.Int32 Count, MetaInfo SongInfo)
 		{
-			System.Byte[] Buffer = Song.GetBuffer();
-			
-			//Filesystem paths
-			System.String AlbumPath;
-			if (String.IsNullOrEmpty(QuarantinePath) == false && Directory.Exists(QuarantinePath)) {
-				AlbumPath = this.QuarantinePath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
-			} else {
-				AlbumPath = this.MusicPath + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Artist) + Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(SongInfo.Album) + Path.DirectorySeparatorChar;
-			}
-			System.String NewFilePath = AlbumPath + LastManager.RemoveInvalidFileNameChars(SongInfo.Track) + ".mp3";
-			
-			//Check if file exists
-			if(File.Exists(NewFilePath))
-			{
-				//TODO: decide whether or not to delete the file!
-				File.Delete(NewFilePath);
-			}
-			
+			SongInfo.Comment = this.Comment;
 			try {
-				//Check if Album directory exists, if not create it
-				if(!Directory.Exists(AlbumPath))
-				{
-					Directory.CreateDirectory(AlbumPath);
+				String Filename = GetFilename(this.filename_pattern, SongInfo);
+				String AlbumPath = GetAlbumPath(this.filename_pattern, SongInfo);
+				
+				if(this.Song is MemoryStream){
+					checkDirectoriesInPath(Filename);
+					FileStream FS = File.Create(Filename);
+					FS.Write(((MemoryStream)Song).GetBuffer(), 0, Count);
+					FS.Flush();
+					FS.Close();
+				}else{
+					this.Song.Close();
 				}
-				
-				//Save the MemoryStream to file
-				FileStream FS = File.Create(NewFilePath);
-				FS.Write(Song.GetBuffer(), 0, Count);
-				
+    			
 				//Write metadata to stream as ID3v1
-				SongInfo.AppendID3(FS);
-
-				//Close the file
-				FS.Flush();
-				FS.Close();
+				SongInfo.AppendID3(Filename);
 				
+				try {
+					//execute after rip command
+					ExecuteCommand(this.AfterRipCommand,SongInfo);
+				} catch (Exception e) {
+					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);					
+				}
+					
 				//Download covers - don't care for errors because some not exist
 				WebClient Client = new WebClient();
 				
@@ -527,9 +582,10 @@ namespace LibLastRip
 				// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
 				Thread.Sleep(5000);
 				try {
-					if((!File.Exists(AlbumPath + "cover.jpg")) && SongInfo.Albumcover != null) {
-						writeLogLine("download cover " + AlbumPath + "cover.jpg");
-						Client.DownloadFile(SongInfo.Albumcover, AlbumPath + "cover.jpg");
+					String cover = AlbumPath + Path.DirectorySeparatorChar + "cover.jpg";
+					if((!File.Exists(cover)) && SongInfo.Albumcover != null) {
+						writeLogLine("download cover " + cover);
+						Client.DownloadFile(SongInfo.Albumcover, cover);
 					}
 				} catch (System.Net.WebException) {
 					// no cover
@@ -539,6 +595,254 @@ namespace LibLastRip
 				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
 				// TODO: Consider launching an OnError event
 			}
+		}
+		
+		public String filename_pattern = "%a"+Path.DirectorySeparatorChar+"%r"+Path.DirectorySeparatorChar+"[%N - ]%t";
+		
+		public String FilenamePattern{
+			set{
+				value = value.Replace("/",Path.DirectorySeparatorChar.ToString());
+				value = value.Replace("\\",Path.DirectorySeparatorChar.ToString());
+				this.filename_pattern = value;
+			}
+			get{
+				return this.filename_pattern;
+			}
+		}
+		
+		private static string ReplaceToken(string token,string key,string val,bool emptyOnError){
+			if(String.IsNullOrEmpty(val))
+				return "";
+			val = val.Replace("[","_");
+			val = val.Replace("]","_");
+			key = key.ToLower();
+			if(token.ToLower().IndexOf("%"+key) != -1)
+				if(System.String.IsNullOrEmpty(val))
+					if(emptyOnError)
+						return "";
+					else{
+						token = token.Replace("%"+key,"");
+						token = token.Replace("%"+key.ToUpper(),"");
+					}
+				else{
+					val = LastManager.RemoveInvalidPathChars(val);
+					token = token.Replace("%"+key,val);
+					val = System.Text.RegularExpressions.Regex.Replace(val,"[^a-zA-Z0-9]{1}","_");
+					token = token.Replace("%"+key.ToUpper(),val);
+				}
+			return token;
+		}
+		
+		private static System.String ReplacePatternBool(System.String str,MetaInfo SongInfo,bool emptyOnError){
+			while(str.IndexOf("[") != -1 && str.IndexOf("]") != -1){
+				System.Int32 len = str.IndexOf("]");
+				System.Int32 index = str.Substring(0,len).IndexOf("[") + 1;
+				len -= index;
+				System.String part = str.Substring(index,len);
+				str = str.Substring(0,index-1) + ReplacePatternBool(part,SongInfo,true) + str.Substring(index+len+1);
+			}
+			str = ReplaceToken(str,"a",SongInfo.Artist,emptyOnError);
+			str = ReplaceToken(str,"r",SongInfo.Album,emptyOnError);
+			str = ReplaceToken(str,"t",SongInfo.Track,emptyOnError);
+			str = ReplaceToken(str,"s",SongInfo.Station,emptyOnError);
+			str = ReplaceToken(str,"g",SongInfo.Genre,emptyOnError);
+			if(str.IndexOf("%n") != -1 || str.IndexOf("%N") != -1)
+				if(SongInfo.TrackNum <= 0)
+					if(emptyOnError)
+						return "";
+					else{
+						str = str.Replace("%N","");
+						str = str.Replace("%n","");
+					}
+				else{
+					str = str.Replace("%n",LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
+					if(SongInfo.TrackNum > 9)
+						str = str.Replace("%N",LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
+					else
+						str = str.Replace("%N","0"+LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
+				}
+			//remove null directories
+			str = str.Replace(Path.DirectorySeparatorChar+""+Path.DirectorySeparatorChar,""+Path.DirectorySeparatorChar);
+			return str;
+		}
+
+		public static System.String ReplacePattern(System.String str,MetaInfo SongInfo){
+			str = ReplacePatternBool(str,SongInfo,false);
+			return str;
+		}
+		
+		private System.String GetAlbumPath(System.String pattern,MetaInfo SongInfo) {
+			System.String albumPath = ReplacePattern(pattern,SongInfo) + ".mp3";
+			albumPath = Path.DirectorySeparatorChar + albumPath.Substring(0, albumPath.LastIndexOf(Path.DirectorySeparatorChar));
+			if (String.IsNullOrEmpty(_QuarantinePath)) {
+				// write directly to music directory
+				return _MusicPath + albumPath;
+			} else {
+				// write to quarantine directory
+				return _QuarantinePath + albumPath;
+			}
+		}
+		
+		private System.String GetFilename(System.String pattern,MetaInfo SongInfo){
+			System.String filename = Path.DirectorySeparatorChar + ReplacePattern(pattern,SongInfo) + ".mp3";
+			if (String.IsNullOrEmpty(_QuarantinePath)) {
+				// write directly to music directory
+				return _MusicPath + filename;
+			} else {
+				// write to quarantine directory
+				return _QuarantinePath + filename;
+			}
+		}
+		
+		public void ExecuteCommand(System.String comm,MetaInfo SongInfo){
+				if(comm != ""){
+					comm = ReplacePattern(comm,SongInfo);
+					comm = comm.Replace("%F",_Filename);
+					comm = comm.Replace("%f",_Filename.Substring(_Filename.LastIndexOf(Path.DirectorySeparatorChar)+1));
+					//comm = comm.Replace("%u",_SongUrl);
+					System.String cmd;
+					if(comm.StartsWith("\""))
+						cmd = comm.Substring(0,comm.Substring(1).IndexOf("\"")+2);
+					else if(comm.IndexOf(" ") == -1)
+						cmd = comm;
+					else
+						cmd = comm.Substring(0,comm.IndexOf(" "));
+					System.String args;
+					if(comm.Length > cmd.Length +1)
+						args = comm.Substring(cmd.Length+1);
+					else
+						args = "";
+					System.Diagnostics.Process proc = new System.Diagnostics.Process();
+					proc.StartInfo.FileName = cmd;
+					proc.StartInfo.Arguments = args;
+					//System.Threading.Thread.Sleep(500);
+					proc.Start();
+				}
+		}
+		
+		public static XmlDocument getXmlDocument(System.String url){
+			WebRequest wReq = WebRequest.Create(url);
+			Stream stream = ((HttpWebResponse)wReq.GetResponse()).GetResponseStream();
+			XmlTextReader xmlTextReader = new XmlTextReader(stream);
+			xmlTextReader.WhitespaceHandling = WhitespaceHandling.None;
+			XmlDocument xmlDocument = new XmlDocument();
+			xmlDocument.Load(xmlTextReader);
+			return xmlDocument;
+		}
+		
+		private Stream NewStream(){
+			if(this.SaveDirectlyToDisc){
+				checkDirectoriesInPath(_Filename);
+				return new FileStream(_Filename,FileMode.Create,FileAccess.Write,FileShare.ReadWrite);
+			}
+			else
+				return new MemoryStream();				
+		}
+		
+		private String workingPath() {
+			if (String.IsNullOrEmpty(this._QuarantinePath)) {
+				return this._MusicPath;
+			} else {
+				return this._QuarantinePath;
+			}
+		}
+		
+		private void checkDirectoriesInPath(String filename){
+			System.String workPath = workingPath();
+			System.String AlbumPath = filename.Substring(workPath.Length+1, filename.LastIndexOf(Path.DirectorySeparatorChar)-workPath.Length-1);
+			String[] folders = AlbumPath.Split(Path.DirectorySeparatorChar);
+			
+			foreach(System.String folder in folders){
+				workPath += Path.DirectorySeparatorChar + folder;
+				if(!Directory.Exists(workPath))
+				{
+					Directory.CreateDirectory(workPath);
+				}
+			}
+		}
+		
+		public void intializeServer(){
+			connections = new ArrayList();
+			server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			IPAddress addr = IPAddress.Parse("127.0.0.1");
+			IPEndPoint ep = new IPEndPoint(addr,8000);
+			server.Bind(ep);
+			server.Listen(10);
+		}
+		
+		public void listen(){
+			allDone.Reset();
+			server.BeginAccept(new AsyncCallback(this.AcceptCallback),server);
+			//allDone.WaitOne();
+		}
+		
+		private void AcceptCallback(IAsyncResult ar){
+			allDone.Set();
+			Socket listener = (Socket) ar.AsyncState;
+			Socket handler = server.EndAccept(ar);
+			try{
+				if(handler.Receive(new byte[512],512,SocketFlags.None) > 0){
+					char[] str = ("HTTP/1.0 200 OK\r\n" +
+								 "Connection: close\r\n" +
+								 "\r\n").ToCharArray();
+					byte[] bytes = new byte[str.Length];
+					for(int i = 0;i<str.Length;i++)
+						bytes[i] = (byte)(0xff & str[i]);
+					handler.Send(bytes,bytes.Length,SocketFlags.None);
+				}
+				connections.Add(handler);
+			}catch(Exception e){}
+		}
+		
+		private void sendToClients(int size){
+			for(int i = 0; i < connections.Count; i++){
+				try{
+					Socket sock = (Socket)connections[i];
+					if(sock.Connected){
+						sock.Send(this.Buffer,size,SocketFlags.None);
+					}else
+						connections.RemoveAt(i);
+				}catch(Exception e){
+					connections.RemoveAt(i);
+				}
+			}
+		}
+		
+		private bool IsCompatibleSong(FileInfo file,string artist,string album,string title){
+			try{
+				TagLib.File f = TagLib.File.Create(file.FullName);
+				if((f.Tag.FirstAlbumArtist.IndexOf(artist) != -1) || (f.Tag.FirstPerformer.IndexOf(artist) != -1))
+					if(f.Tag.Album.IndexOf(album) != -1)
+						if(f.Tag.Title.IndexOf(title) != -1)
+							return true;
+			}catch(Exception e){
+				writeLogLine("skipFnA: song not accessible: " + e.ToString());
+				return true;
+			}
+			return false;
+		}
+		
+		private bool IsSongInFiles(FileInfo[] files,string artist,string album,string title){
+			foreach(FileInfo file in files)
+				if(IsCompatibleSong(file,artist,album,title))
+					return true;
+			return false;
+		}
+		
+		private static FileInfo[] getFiles(DirectoryInfo dir,string pattern){
+			pattern = System.Text.RegularExpressions.Regex.Replace(pattern,"[^a-zA-Z0-9]{1}","*");
+			pattern = "*" + pattern + "*.mp3";
+			while(pattern.Contains("**"))
+				pattern = pattern.Replace("**","*");
+			return dir.GetFiles(pattern);
+		}
+		
+		private static DirectoryInfo[] getDirectories(DirectoryInfo dir,string pattern){
+			pattern = System.Text.RegularExpressions.Regex.Replace(pattern,"[^a-zA-Z0-9]{1}","*");
+			pattern = "*" + pattern + "*";
+			while(pattern.Contains("**"))
+				pattern = pattern.Replace("**","*");
+			return dir.GetDirectories(pattern);
 		}
 	}
 }
