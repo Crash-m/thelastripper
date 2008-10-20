@@ -200,13 +200,15 @@ namespace LibLastRip
 			// b) only load existing artists DEFAULT=false
 			
 			if (_ExcludeExistingMusic) {
-				if (CheckFileInDirectory(this._MusicPath, title, creator, album)) {
+				// we check with original data (title, creator, album) from last.fm against files in music collection
+				// the converted (RemoveInvalidPathChars) variables should only be used for file access
+				if (CheckFileInDirectory(this._MusicPath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album)) {
     				// File exists - dont process
 					counter++;
 					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
 					return false;
 				}
-				if ((String.IsNullOrEmpty(this._QuarantinePath)) || (CheckFileInDirectory(this._QuarantinePath, title, creator, album))) {
+				if ((String.IsNullOrEmpty(this._QuarantinePath)) || (CheckFileInDirectory(this._QuarantinePath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album))) {
     				// File exists - dont process
 					counter++;
 					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
@@ -535,7 +537,7 @@ namespace LibLastRip
 
 			try{
 				SSC.EndInvoke(Ar);
-			}catch(Exception e){}
+			}catch(Exception){}
 			
 			if(this.Song is MemoryStream)
 				((MemoryStream)Ar.AsyncState).Close();
@@ -571,7 +573,7 @@ namespace LibLastRip
 				try {
 					//execute after rip command
 					ExecuteCommand(this.AfterRipCommand,SongInfo);
-				} catch (Exception e) {
+				} catch (Exception) {
 					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);					
 				}
 					
@@ -791,7 +793,7 @@ namespace LibLastRip
 					handler.Send(bytes,bytes.Length,SocketFlags.None);
 				}
 				connections.Add(handler);
-			}catch(Exception e){}
+			}catch(Exception){}
 		}
 		
 		private void sendToClients(int size){
@@ -802,23 +804,34 @@ namespace LibLastRip
 						sock.Send(this.Buffer,size,SocketFlags.None);
 					}else
 						connections.RemoveAt(i);
-				}catch(Exception e){
+				}catch(Exception){
 					connections.RemoveAt(i);
 				}
 			}
 		}
 		
+		private bool compareTagStrings(String tagvalue, String match) {
+			if (String.IsNullOrEmpty(tagvalue)) {
+				return false;
+			}
+			if (String.IsNullOrEmpty(match)) {
+				return false;
+			}
+			String tagvalue1 = tagvalue.ToLower();
+			String match1 = match.ToLower();
+			return tagvalue1.IndexOf(match1) != -1;
+		}
+		
 		private bool IsCompatibleSong(FileInfo file,string artist,string album,string title){
 			try{
 				TagLib.File f = TagLib.File.Create(file.FullName);
-				if(
-					(f.Tag.FirstAlbumArtist != null && f.Tag.FirstAlbumArtist.IndexOf(artist) != -1) 
-					|| 
-					(f.Tag.FirstPerformer != null && f.Tag.FirstPerformer.IndexOf(artist) != -1)
-				)
-					if(f.Tag.Album != null && f.Tag.Album.IndexOf(album) != -1)
-						if(f.Tag.Title != null && f.Tag.Title.IndexOf(title) != -1)
+				if(compareTagStrings(f.Tag.FirstAlbumArtist, artist) || compareTagStrings(f.Tag.FirstPerformer, artist)) {
+					if(compareTagStrings(f.Tag.Album, album)) {
+						if(compareTagStrings(f.Tag.Title, title)) {
 							return true;
+						}
+					}
+				}
 			}catch(Exception e){
 				writeLogLine("skipFnA: song not accessible: " + e.ToString());
 				return true;

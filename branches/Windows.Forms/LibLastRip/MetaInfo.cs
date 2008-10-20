@@ -92,7 +92,7 @@ namespace LibLastRip
 						return tnum;
 				}
 				return 0;
-			}catch(Exception e){
+			}catch(Exception){
 				return 0;
 			}
 		}
@@ -110,7 +110,7 @@ namespace LibLastRip
 							return node.InnerText;
 				}
 				return "";
-			}catch(Exception e){
+			}catch(Exception){
 				return "";
 			}
 		}
