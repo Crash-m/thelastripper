@@ -9,6 +9,12 @@ namespace WinFormsClient
 		private System.String _password = "";
 		public LibLastRip.LastManager manager;
 		private System.Boolean savePassword;
+		private System.String _Comment;
+		private System.String _FileNamePattern;
+		private System.String _AfterRipCommand;
+		private System.String _NewSongCommand;
+		private System.Boolean _SaveMode;
+		private System.Int32 _PortNum;
 		
 		public Settings()
 		{
@@ -42,6 +48,19 @@ namespace WinFormsClient
 				}
 			}
 			
+			if(!System.IO.Directory.Exists(Pref.QuarantinePathTextBox.Text))
+			{
+				try
+				{
+					System.IO.Directory.CreateDirectory(Pref.QuarantinePathTextBox.Text);
+				}
+				catch(System.Exception e)
+				{
+					//TODO: Inform user in a pleasen't manner
+					throw new System.Exception("Quarantine directory doesn't exist and could not be created! Please select another directory.", e);
+				}
+			}
+
 			if(String.IsNullOrEmpty(Pref.ExcludeFileTextBox.Text) == false && !System.IO.File.Exists(Pref.ExcludeFileTextBox.Text))
 			{
 				try
@@ -57,8 +76,24 @@ namespace WinFormsClient
 
 			this._musicPath = Pref.MusicPathTextBox.Text;
 			this._quarantinePath = Pref.QuarantinePathTextBox.Text;
+			this._FileNamePattern = Pref.FilenamePattern.Text;
+			this._AfterRipCommand = Pref.AfterRipTextBox.Text;
+			this._Comment = Pref.CommentTextBox.Text;
+			this._NewSongCommand = Pref.NewSongCommandTextBox.Text;
+			this._SaveMode = Pref.SaveModeCombo.SelectedIndex == 0;
+			try{
+				this._PortNum = Int32.Parse(Pref.PortTextBox.Text);
+			}catch(Exception e){
+				this._PortNum = 0;
+			}
+			this.manager.NewSongCommand = _NewSongCommand;
 			this.manager.MusicPath = Pref.MusicPathTextBox.Text;
 			this.manager.QuarantinePath = Pref.QuarantinePathTextBox.Text;
+			this.manager.filename_pattern = FileNamePattern;
+			this.manager.AfterRipCommand = AfterRipCommand;
+			this.manager.Comment = Comment;
+			this.manager.SaveDirectlyToDisc = this._SaveMode;
+			this.manager.PortNum = this._PortNum;
 			
 			this.manager.ExcludeFile = this._excludeFile = Pref.ExcludeFileTextBox.Text;
 			this.manager.ExcludeNewMusic = this._excludeNewMusic = Pref.ExcludeNewMusicCheckBox.Checked;
@@ -91,7 +126,12 @@ namespace WinFormsClient
 			{
 				this.SaveSettings();
 			}
-		}
+			
+/*			if(this._SaveMode) //save to disc
+				Pref.NewSongCommandTextBox.Enabled = true;
+			else
+				Pref.NewSongCommandTextBox.Enabled = false;
+*/		}
 		
 		public static Settings Restore()
 		{
@@ -201,7 +241,53 @@ namespace WinFormsClient
 				return this._proxyPassword;
 			}
 		}
+				
+		public string Comment {
+			get { 
+				if(String.IsNullOrEmpty(_Comment))
+					return manager.Comment;
+				return _Comment;
+			}
+		}
 		
+		public string FileNamePattern {
+			get {
+				if(String.IsNullOrEmpty(_FileNamePattern))
+					return manager.FilenamePattern;
+				return _FileNamePattern;
+			}
+		}
+				
+		public string AfterRipCommand {
+			get {
+				if(_AfterRipCommand == null)
+					return manager.AfterRipCommand;
+				return _AfterRipCommand;
+			}
+		}
+
+		public string NewSongCommand {
+			get {
+				if(_NewSongCommand == null)
+					return manager.NewSongCommand;
+				return _NewSongCommand;
+			}
+		}
+		
+		public bool SaveMode {
+			get{
+				return this._SaveMode;
+			}
+		}
+
+		public Int32 PortNumber {
+			get {
+				if(_PortNum == 0)
+					return manager.PortNum;
+				return _PortNum;
+			}
+		}
+
 		/// <summary>
 		/// Deserializes data from serialization object, used when restoring data saved with serialization.
 		/// </summary>
@@ -221,6 +307,17 @@ namespace WinFormsClient
 			//Create LastManager from restored data
 			this.manager = new LibLastRip.LastManager(this._musicPath);
 			
+			if(info.GetString("Comment") != null)
+				this._Comment = info.GetString("Comment");
+			if(!String.IsNullOrEmpty(info.GetString("FileNamePattern")))
+				this._FileNamePattern = info.GetString("FileNamePattern");
+			if(info.GetString("AfterRipCommand") != null)
+				this._AfterRipCommand = info.GetString("AfterRipCommand");
+			if(info.GetString("NewSongCommand") != null)
+				this._NewSongCommand = info.GetString("NewSongCommand");
+			this._SaveMode = info.GetBoolean("SaveMode");
+			this._PortNum = info.GetInt32("PortNumber");
+				
 			//Launch preferences without saving, after close since that would give IO problems, cause this method would have returned and serialization object/stream would still be open.
 			this.LaunchPreferences(false);
 		}
@@ -246,6 +343,12 @@ namespace WinFormsClient
 			{
 				info.AddValue("Password",this._password);
 			}
+			info.AddValue("Comment",this._Comment);
+			info.AddValue("FileNamePattern",this._FileNamePattern);
+			info.AddValue("AfterRipCommand",this._AfterRipCommand);
+			info.AddValue("NewSongCommand",this._NewSongCommand);
+			info.AddValue("SaveMode",this._SaveMode);
+			info.AddValue("PortNumber",this._PortNum);
 		}
 	}
 }
