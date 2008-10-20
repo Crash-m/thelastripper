@@ -40,6 +40,7 @@ namespace LibLastRip
 		protected System.String _MusicPath;
 		protected System.String _QuarantinePath;
 		protected System.String _ExcludeFile;
+		public System.String Comment = "Recorded by TheLastRipper from %s";
 		protected System.Boolean _ExcludeNewMusic;
 		protected System.Boolean _ExcludeExistingMusic;
 		protected const System.String PathSeparator = "/";
@@ -70,7 +71,7 @@ namespace LibLastRip
 			chars.Add('|');
 			return chars;
 		}
-
+		
 		///<summary>
 		///Initializes an arraylist which contains the system invalid filename chars and additional invalid chars for file creation
 		///</summary>
