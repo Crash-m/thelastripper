@@ -811,9 +811,13 @@ namespace LibLastRip
 		private bool IsCompatibleSong(FileInfo file,string artist,string album,string title){
 			try{
 				TagLib.File f = TagLib.File.Create(file.FullName);
-				if((f.Tag.FirstAlbumArtist.IndexOf(artist) != -1) || (f.Tag.FirstPerformer.IndexOf(artist) != -1))
-					if(f.Tag.Album.IndexOf(album) != -1)
-						if(f.Tag.Title.IndexOf(title) != -1)
+				if(
+					(f.Tag.FirstAlbumArtist != null && f.Tag.FirstAlbumArtist.IndexOf(artist) != -1) 
+					|| 
+					(f.Tag.FirstPerformer != null && f.Tag.FirstPerformer.IndexOf(artist) != -1)
+				)
+					if(f.Tag.Album != null && f.Tag.Album.IndexOf(album) != -1)
+						if(f.Tag.Title != null && f.Tag.Title.IndexOf(title) != -1)
 							return true;
 			}catch(Exception e){
 				writeLogLine("skipFnA: song not accessible: " + e.ToString());
