@@ -50,7 +50,7 @@ namespace LibLastRip
 		private Socket server;
 		private ArrayList connections;
 		public Int32 PortNum = 8000;
-				
+		
 		/// <summary>
 		/// Bytes of the stream that have been announced to OnProgress Event
 		/// </summary>
@@ -153,7 +153,7 @@ namespace LibLastRip
 				}
 			}
 		}
-				
+		
 		protected bool CheckFileInDirectory(String FilePath, String title, String creator, String album) {
 			DirectoryInfo dir = new DirectoryInfo(FilePath);
 			FileInfo[] files = getFiles(dir,title);
@@ -186,36 +186,27 @@ namespace LibLastRip
 			return false;
 		}
 		
-		protected bool processFile() {
-			System.String creator = LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator);
-			System.String album = LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Album);
-			System.String title = LastManager.RemoveInvalidFileNameChars(this.currentXspfTrack.Title);
-				
-			System.String QuarantineCreatorPath = this.QuarantinePath + Path.DirectorySeparatorChar + creator;
-			System.String QuarantineAlbumPath = QuarantineCreatorPath + Path.DirectorySeparatorChar + album + Path.DirectorySeparatorChar;
-			System.String QuarantineFilePath = QuarantineAlbumPath + title + ".mp3";
-			
-			// ProcessModes (multiple choices allowed)
-			// a) reload existing files DEFAULT=false
-			// b) only load existing artists DEFAULT=false
-			
+		protected bool processExcludeExisting() {
 			if (_ExcludeExistingMusic) {
 				// we check with original data (title, creator, album) from last.fm against files in music collection
 				// the converted (RemoveInvalidPathChars) variables should only be used for file access
 				if (CheckFileInDirectory(this._MusicPath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album)) {
-    				// File exists - dont process
+					// File exists - dont process
 					counter++;
-					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
+					writeLogLine("skipFEc(" + counter.ToString() + ") " + "'" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 					return false;
 				}
 				if ((String.IsNullOrEmpty(this._QuarantinePath)) || (CheckFileInDirectory(this._QuarantinePath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album))) {
-    				// File exists - dont process
+					// File exists - dont process
 					counter++;
-					writeLogLine("skipFE(" + counter.ToString() + ") " + "'" + title + "' (" + album + ") " + " from '" + creator + "'");
+					writeLogLine("skipFEq(" + counter.ToString() + ") " + "'" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 					return false;
 				}
 			}
-
+			return true;
+		}
+		
+		protected bool processExcludeFile() {
 			if (String.IsNullOrEmpty(ExcludeFile) == false) {
 				// if excludeFile contains artist then skip
 				
@@ -233,23 +224,49 @@ namespace LibLastRip
 				}
 				
 				if (excludeFile.Contains(this.currentXspfTrack.Creator)) {
-					writeLogLine("skipEF(" + counter.ToString() + ") ");
+					writeLogLine("skipEF(" + counter.ToString() + ") " + this.currentXspfTrack.Creator);
 					return false;
 				}
 			}
 
+			return true;
+		}
+		
+		protected bool processExcludeNew() {
 			if (ExcludeNewMusic) {
 				// TODO: Works only if filename pattern starts with "%a\..." - this should be included in documentation
+				System.String creator = LastManager.RemoveInvalidPathChars(this.currentXspfTrack.Creator);
+
 				// Directory exists not - dont process
 				System.String CreatorPath = this.MusicPath + Path.DirectorySeparatorChar + creator;
+				System.String QuarantineCreatorPath = this.QuarantinePath + Path.DirectorySeparatorChar + creator;
 				if (!Directory.Exists(CreatorPath) && !Directory.Exists(QuarantineCreatorPath)) {
 					counter++;
 					writeLogLine("skipDnE(" + counter.ToString() + ") " + CreatorPath);
 					return false;
 				}
 			}
+			return true;
+		}
+		
+		protected bool processFile() {
+			// ProcessModes (multiple choices allowed)
+			// a) reload existing files DEFAULT=false
+			// b) only load existing artists DEFAULT=false
 			
-			writeLogLine("get '" + title + "' (" + album + ") " + " from '" + creator + "'");
+			if (!processExcludeExisting()) {
+				return false;
+			}
+
+			if (!processExcludeFile()) {
+				return false;
+			}
+
+			if (!processExcludeNew()) {
+				return false;
+			}
+			
+			writeLogLine("get '" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 
 			// Default: Process file
 			return true;
@@ -350,7 +367,7 @@ namespace LibLastRip
 		}
 		
 		protected void SaveToFile() {
-		
+			
 			writeLogLine("Song length in bytes: " + this.Song.Length);
 			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
 			
@@ -390,9 +407,9 @@ namespace LibLastRip
 			
 			if(this.Song is FileStream)
 				if(this.Song.Length > 200 * 1024 && ! this._executed){
-					ExecuteCommand(this.NewSongCommand,this.CurrentSong);
-					this._executed = true;
-				}
+				ExecuteCommand(this.NewSongCommand,this.CurrentSong);
+				this._executed = true;
+			}
 			//System.Byte []Buf = ((FileStream)this.Song).GetBuffer();
 			
 			if (this.OnProgress != null) {
@@ -450,8 +467,8 @@ namespace LibLastRip
 				}
 				
 				if (this.stopRecording == false) {
-			    	// Continue recording with next stream
-			    	StartRecording(false);
+					// Continue recording with next stream
+					StartRecording(false);
 				} else {
 					StopRecording();
 				}
@@ -566,7 +583,7 @@ namespace LibLastRip
 				}else{
 					this.Song.Close();
 				}
-    			
+				
 				//Write metadata to stream as ID3v1
 				SongInfo.AppendID3(Filename);
 				
@@ -574,9 +591,9 @@ namespace LibLastRip
 					//execute after rip command
 					ExecuteCommand(this.AfterRipCommand,SongInfo);
 				} catch (Exception) {
-					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);					
+					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);
 				}
-					
+				
 				//Download covers - don't care for errors because some not exist
 				WebClient Client = new WebClient();
 				
@@ -613,25 +630,26 @@ namespace LibLastRip
 		}
 		
 		private static string ReplaceToken(string token,string key,string val,bool emptyOnError){
-			if(String.IsNullOrEmpty(val))
-				return "";
+			if(String.IsNullOrEmpty(val)) {
+				val = "";
+			}
 			val = val.Replace("[","_");
 			val = val.Replace("]","_");
 			key = key.ToLower();
 			if(token.ToLower().IndexOf("%"+key) != -1)
 				if(System.String.IsNullOrEmpty(val))
-					if(emptyOnError)
-						return "";
-					else{
-						token = token.Replace("%"+key,"");
-						token = token.Replace("%"+key.ToUpper(),"");
-					}
-				else{
-					val = LastManager.RemoveInvalidPathChars(val);
-					token = token.Replace("%"+key,val);
-					val = System.Text.RegularExpressions.Regex.Replace(val,"[^a-zA-Z0-9]{1}","_");
-					token = token.Replace("%"+key.ToUpper(),val);
-				}
+				if(emptyOnError)
+				return "";
+			else{
+				token = token.Replace("%"+key,"");
+				token = token.Replace("%"+key.ToUpper(),"");
+			}
+			else{
+				val = LastManager.RemoveInvalidPathChars(val);
+				token = token.Replace("%"+key,val);
+				val = System.Text.RegularExpressions.Regex.Replace(val,"[^a-zA-Z0-9]{1}","_");
+				token = token.Replace("%"+key.ToUpper(),val);
+			}
 			return token;
 		}
 		
@@ -640,29 +658,34 @@ namespace LibLastRip
 				System.Int32 len = str.IndexOf("]");
 				System.Int32 index = str.Substring(0,len).IndexOf("[") + 1;
 				len -= index;
+				System.String prefix = str.Substring(0,index-1);
+				System.String suffix = str.Substring(index+len+1);
 				System.String part = str.Substring(index,len);
-				str = str.Substring(0,index-1) + ReplacePatternBool(part,SongInfo,true) + str.Substring(index+len+1);
+				str = prefix + ReplacePatternBool(part,SongInfo,true) + suffix;
 			}
 			str = ReplaceToken(str,"a",SongInfo.Artist,emptyOnError);
 			str = ReplaceToken(str,"r",SongInfo.Album,emptyOnError);
 			str = ReplaceToken(str,"t",SongInfo.Track,emptyOnError);
 			str = ReplaceToken(str,"s",SongInfo.Station,emptyOnError);
 			str = ReplaceToken(str,"g",SongInfo.Genre,emptyOnError);
-			if(str.IndexOf("%n") != -1 || str.IndexOf("%N") != -1)
-				if(SongInfo.TrackNum <= 0)
-					if(emptyOnError)
+			if(str.IndexOf("%n") != -1 || str.IndexOf("%N") != -1) {
+				if(SongInfo.TrackNum <= 0) {
+					if(emptyOnError) {
 						return "";
-					else{
+					} else {
 						str = str.Replace("%N","");
 						str = str.Replace("%n","");
 					}
-				else{
+				}
+				else
+				{
 					str = str.Replace("%n",LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
 					if(SongInfo.TrackNum > 9)
 						str = str.Replace("%N",LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
 					else
 						str = str.Replace("%N","0"+LastManager.RemoveInvalidPathChars(""+SongInfo.TrackNum));
 				}
+			}
 			//remove null directories
 			str = str.Replace(Path.DirectorySeparatorChar+""+Path.DirectorySeparatorChar,""+Path.DirectorySeparatorChar);
 			return str;
@@ -697,29 +720,29 @@ namespace LibLastRip
 		}
 		
 		public void ExecuteCommand(System.String comm,MetaInfo SongInfo){
-				if(comm != ""){
-					comm = ReplacePattern(comm,SongInfo);
-					comm = comm.Replace("%F",_Filename);
-					comm = comm.Replace("%f",_Filename.Substring(_Filename.LastIndexOf(Path.DirectorySeparatorChar)+1));
-					//comm = comm.Replace("%u",_SongUrl);
-					System.String cmd;
-					if(comm.StartsWith("\""))
-						cmd = comm.Substring(0,comm.Substring(1).IndexOf("\"")+2);
-					else if(comm.IndexOf(" ") == -1)
-						cmd = comm;
-					else
-						cmd = comm.Substring(0,comm.IndexOf(" "));
-					System.String args;
-					if(comm.Length > cmd.Length +1)
-						args = comm.Substring(cmd.Length+1);
-					else
-						args = "";
-					System.Diagnostics.Process proc = new System.Diagnostics.Process();
-					proc.StartInfo.FileName = cmd;
-					proc.StartInfo.Arguments = args;
-					//System.Threading.Thread.Sleep(500);
-					proc.Start();
-				}
+			if(comm != ""){
+				comm = ReplacePattern(comm,SongInfo);
+				comm = comm.Replace("%F",_Filename);
+				comm = comm.Replace("%f",_Filename.Substring(_Filename.LastIndexOf(Path.DirectorySeparatorChar)+1));
+				//comm = comm.Replace("%u",_SongUrl);
+				System.String cmd;
+				if(comm.StartsWith("\""))
+					cmd = comm.Substring(0,comm.Substring(1).IndexOf("\"")+2);
+				else if(comm.IndexOf(" ") == -1)
+					cmd = comm;
+				else
+					cmd = comm.Substring(0,comm.IndexOf(" "));
+				System.String args;
+				if(comm.Length > cmd.Length +1)
+					args = comm.Substring(cmd.Length+1);
+				else
+					args = "";
+				System.Diagnostics.Process proc = new System.Diagnostics.Process();
+				proc.StartInfo.FileName = cmd;
+				proc.StartInfo.Arguments = args;
+				//System.Threading.Thread.Sleep(500);
+				proc.Start();
+			}
 		}
 		
 		public static XmlDocument getXmlDocument(System.String url){
@@ -738,7 +761,7 @@ namespace LibLastRip
 				return new FileStream(_Filename,FileMode.Create,FileAccess.Write,FileShare.ReadWrite);
 			}
 			else
-				return new MemoryStream();				
+				return new MemoryStream();
 		}
 		
 		private String workingPath() {
@@ -785,8 +808,8 @@ namespace LibLastRip
 			try{
 				if(handler.Receive(new byte[512],512,SocketFlags.None) > 0){
 					char[] str = ("HTTP/1.0 200 OK\r\n" +
-								 "Connection: close\r\n" +
-								 "\r\n").ToCharArray();
+					              "Connection: close\r\n" +
+					              "\r\n").ToCharArray();
 					byte[] bytes = new byte[str.Length];
 					for(int i = 0;i<str.Length;i++)
 						bytes[i] = (byte)(0xff & str[i]);
@@ -810,6 +833,12 @@ namespace LibLastRip
 			}
 		}
 		
+		///<summary>removes characters from a string to better compare tag values</summary>
+		///<param name="val">Tag value to handle.</param>
+		private String unifyTagString(String val) {
+			return val.ToLower().Replace(" ", null).Replace("!", null).Replace(",", null).Replace("_", null).Replace("-", null).Replace("'", null).Replace("´", null);;
+		}
+		
 		private bool compareTagStrings(String tagvalue, String match) {
 			if (String.IsNullOrEmpty(tagvalue)) {
 				return false;
@@ -817,9 +846,7 @@ namespace LibLastRip
 			if (String.IsNullOrEmpty(match)) {
 				return false;
 			}
-			String tagvalue1 = tagvalue.ToLower();
-			String match1 = match.ToLower();
-			return tagvalue1.IndexOf(match1) != -1;
+			return unifyTagString(tagvalue).IndexOf(unifyTagString(match)) != -1;
 		}
 		
 		private bool IsCompatibleSong(FileInfo file,string artist,string album,string title){
@@ -842,7 +869,7 @@ namespace LibLastRip
 		private bool IsSongInFiles(FileInfo[] files,string artist,string album,string title){
 			foreach(FileInfo file in files)
 				if(IsCompatibleSong(file,artist,album,title))
-					return true;
+				return true;
 			return false;
 		}
 		
