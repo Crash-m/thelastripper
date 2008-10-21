@@ -11,6 +11,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Net;
+using System.IO;
 
 namespace WinFormsClient
 {
@@ -61,7 +62,7 @@ namespace WinFormsClient
 				this.PasswordTextBox.Enabled = false;
 			}
 			this.MusicPathTextBox.Text = settings.MusicPath;
-/*			this.FilenamePattern.Text = settings.manager.filename_pattern;
+			/*			this.FilenamePattern.Text = settings.manager.filename_pattern;
 			this.AfterRipTextBox.Text = settings.manager.AfterRipCommand;
 			this.CommentTextBox.Text = settings.manager.Comment;*/
 			this.FilenamePattern.Text = settings.FileNamePattern;
@@ -75,11 +76,11 @@ namespace WinFormsClient
 			this.SaveModeCombo.SelectedIndexChanged += new System.EventHandler(ToggleNewSongCommand);
 			this.SaveModeCombo.SelectedIndex = settings.SaveMode ? 0 : 1;
 			this.PortTextBox.Text = settings.PortNumber.ToString();
-/*			if(settings.SaveMode)
+			/*			if(settings.SaveMode)
 				this.NewSongCommandTextBox.Enabled = true;
 			else
 				this.NewSongCommandTextBox.Enabled = false;
-*/			
+			 */
 			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
 			this.ProxyPasswordTextBox.Text = settings.ProxyPassword;
@@ -152,9 +153,10 @@ namespace WinFormsClient
 			
 			
 			LibLastRip.HandshakeEventArgs hArgs = (LibLastRip.HandshakeEventArgs)Args;
-			if(hArgs.Success)
+			if(hArgs.Success)  {
 				this.OKbutton.Enabled = true;
-			else {
+				this.OKbutton.Focus();
+			} else {
 				setLoginElements(true);
 			}
 		}
@@ -201,6 +203,28 @@ namespace WinFormsClient
 				this.NewSongCommandTextBox.Enabled = true;
 			else
 				this.NewSongCommandTextBox.Enabled = false;
+		}
+		
+		private void checkValidValues() {
+			if (ExcludeNewMusicCheckBox.Checked) {
+				String test = "%a" + Path.DirectorySeparatorChar;
+				if (FilenamePattern.Text == null || !FilenamePattern.Text.StartsWith(test)) {
+					// Error
+					System.Windows.Forms.MessageBox.Show("Skip new music option can only be checked if filename pattern starts with '" + test + "', checked state removed!", "Invalid options selected");
+					ExcludeNewMusicCheckBox.Checked = false;
+				}
+			}
+
+		}
+		
+		void ExcludeNewMusicCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			checkValidValues();
+		}
+		
+		void FilenamePatternTextChanged(object sender, EventArgs e)
+		{
+			checkValidValues();
 		}
 	}
 }

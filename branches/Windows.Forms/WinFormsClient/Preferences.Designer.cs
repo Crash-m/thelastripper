@@ -179,7 +179,7 @@ namespace WinFormsClient
 			this.LoginButton.Location = new System.Drawing.Point(12, 200);
 			this.LoginButton.Name = "LoginButton";
 			this.LoginButton.Size = new System.Drawing.Size(75, 23);
-			this.LoginButton.TabIndex = 4;
+			this.LoginButton.TabIndex = 0;
 			this.LoginButton.Text = "&Login";
 			this.LoginButton.UseVisualStyleBackColor = true;
 			this.LoginButton.Click += new System.EventHandler(this.LoginButtonClick);
@@ -223,6 +223,7 @@ namespace WinFormsClient
 			this.FilenamePattern.Name = "FilenamePattern";
 			this.FilenamePattern.Size = new System.Drawing.Size(241, 20);
 			this.FilenamePattern.TabIndex = 3;
+			this.FilenamePattern.TextChanged += new System.EventHandler(this.FilenamePatternTextChanged);
 			// 
 			// AfterRipLabel
 			// 
@@ -413,7 +414,7 @@ namespace WinFormsClient
 			// 
 			// OKbutton
 			// 
-			this.OKbutton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.OKbutton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.OKbutton.Location = new System.Drawing.Point(93, 200);
 			this.OKbutton.Name = "OKbutton";
 			this.OKbutton.Size = new System.Drawing.Size(75, 23);
@@ -542,8 +543,8 @@ namespace WinFormsClient
 			this.PortComment.Name = "PortComment";
 			this.PortComment.Size = new System.Drawing.Size(239, 47);
 			this.PortComment.TabIndex = 8;
-			this.PortComment.Text = "Listen to the song you are ripping opening the \"http://127.0.0.1:PortNumber\" address with your fa" +
-			"vourite music player.";
+			this.PortComment.Text = "Listen to the song you are ripping opening the \"http://127.0.0.1:PortNumber\" addr" +
+			"ess with your favourite music player.";
 			// 
 			// tabPage3
 			// 
@@ -639,6 +640,7 @@ namespace WinFormsClient
 			this.ExcludeNewMusicCheckBox.TabIndex = 8;
 			this.ExcludeNewMusicCheckBox.Text = "Skip new music (no artist directory in music or quarantine directory)";
 			this.ExcludeNewMusicCheckBox.UseVisualStyleBackColor = true;
+			this.ExcludeNewMusicCheckBox.CheckedChanged += new System.EventHandler(this.ExcludeNewMusicCheckBoxCheckedChanged);
 			// 
 			// ExcludeExistingMusicCheckBox
 			// 
