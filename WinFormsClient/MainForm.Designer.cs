@@ -64,6 +64,7 @@ namespace WinFormsClient
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.TracknrLabel = new System.Windows.Forms.Label();
 			this.StopButton = new System.Windows.Forms.Button();
 			this.StatusBar = new System.Windows.Forms.ProgressBar();
 			this.StatuspictureBox = new System.Windows.Forms.PictureBox();
@@ -79,7 +80,6 @@ namespace WinFormsClient
 			this.SkipButton = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.LogListBox = new System.Windows.Forms.ListBox();
-			this.TracknrLabel = new System.Windows.Forms.Label();
 			this.MainMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -95,7 +95,7 @@ namespace WinFormsClient
 			this.PersonalButton.Location = new System.Drawing.Point(6, 62);
 			this.PersonalButton.Name = "PersonalButton";
 			this.PersonalButton.Size = new System.Drawing.Size(60, 23);
-			this.PersonalButton.TabIndex = 8;
+			this.PersonalButton.TabIndex = 7;
 			this.PersonalButton.Text = "Personal";
 			this.PersonalButton.UseVisualStyleBackColor = true;
 			this.PersonalButton.Click += new System.EventHandler(this.PersonalButtonClick);
@@ -105,7 +105,7 @@ namespace WinFormsClient
 			this.TagButton.Location = new System.Drawing.Point(72, 33);
 			this.TagButton.Name = "TagButton";
 			this.TagButton.Size = new System.Drawing.Size(60, 23);
-			this.TagButton.TabIndex = 7;
+			this.TagButton.TabIndex = 5;
 			this.TagButton.Text = "Tag";
 			this.TagButton.UseVisualStyleBackColor = true;
 			this.TagButton.Click += new System.EventHandler(this.TagButtonClick);
@@ -115,7 +115,7 @@ namespace WinFormsClient
 			this.PlaylistButton.Location = new System.Drawing.Point(72, 62);
 			this.PlaylistButton.Name = "PlaylistButton";
 			this.PlaylistButton.Size = new System.Drawing.Size(60, 23);
-			this.PlaylistButton.TabIndex = 6;
+			this.PlaylistButton.TabIndex = 8;
 			this.PlaylistButton.Text = "Playlist";
 			this.PlaylistButton.UseVisualStyleBackColor = true;
 			this.PlaylistButton.Click += new System.EventHandler(this.PlaylistButtonClick);
@@ -290,7 +290,7 @@ namespace WinFormsClient
 			this.NeighbourhoodButton.Location = new System.Drawing.Point(221, 33);
 			this.NeighbourhoodButton.Name = "NeighbourhoodButton";
 			this.NeighbourhoodButton.Size = new System.Drawing.Size(103, 23);
-			this.NeighbourhoodButton.TabIndex = 12;
+			this.NeighbourhoodButton.TabIndex = 10;
 			this.NeighbourhoodButton.Text = "Neighbourhood";
 			this.NeighbourhoodButton.UseVisualStyleBackColor = true;
 			this.NeighbourhoodButton.Click += new System.EventHandler(this.NeighbourhoodButtonClick);
@@ -310,7 +310,7 @@ namespace WinFormsClient
 			this.GroupButton.Location = new System.Drawing.Point(138, 33);
 			this.GroupButton.Name = "GroupButton";
 			this.GroupButton.Size = new System.Drawing.Size(60, 23);
-			this.GroupButton.TabIndex = 10;
+			this.GroupButton.TabIndex = 6;
 			this.GroupButton.Text = "Group";
 			this.GroupButton.UseVisualStyleBackColor = true;
 			this.GroupButton.Click += new System.EventHandler(this.GroupButtonClick);
@@ -375,6 +375,17 @@ namespace WinFormsClient
 			this.tabPage3.Text = "Currently recording";
 			this.tabPage3.UseVisualStyleBackColor = true;
 			// 
+			// TracknrLabel
+			// 
+			this.TracknrLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.TracknrLabel.Location = new System.Drawing.Point(6, 163);
+			this.TracknrLabel.Name = "TracknrLabel";
+			this.TracknrLabel.Size = new System.Drawing.Size(155, 14);
+			this.TracknrLabel.TabIndex = 9;
+			this.TracknrLabel.Text = "Track Nr.: ";
+			this.TracknrLabel.UseMnemonic = false;
+			// 
 			// StopButton
 			// 
 			this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -414,6 +425,7 @@ namespace WinFormsClient
 			this.DurationLabel.Size = new System.Drawing.Size(155, 14);
 			this.DurationLabel.TabIndex = 5;
 			this.DurationLabel.Text = "Duration: ";
+			this.DurationLabel.UseMnemonic = false;
 			// 
 			// StationLabel
 			// 
@@ -425,6 +437,7 @@ namespace WinFormsClient
 			this.StationLabel.Size = new System.Drawing.Size(318, 15);
 			this.StationLabel.TabIndex = 7;
 			this.StationLabel.Text = "Station: ";
+			this.StationLabel.UseMnemonic = false;
 			// 
 			// GenreLabel
 			// 
@@ -435,6 +448,7 @@ namespace WinFormsClient
 			this.GenreLabel.Size = new System.Drawing.Size(155, 14);
 			this.GenreLabel.TabIndex = 6;
 			this.GenreLabel.Text = "Genre: ";
+			this.GenreLabel.UseMnemonic = false;
 			// 
 			// RemainingTimeLabel
 			// 
@@ -444,6 +458,7 @@ namespace WinFormsClient
 			this.RemainingTimeLabel.Size = new System.Drawing.Size(155, 14);
 			this.RemainingTimeLabel.TabIndex = 8;
 			this.RemainingTimeLabel.Text = "Remaining Time: ";
+			this.RemainingTimeLabel.UseMnemonic = false;
 			// 
 			// ArtistLabel
 			// 
@@ -455,6 +470,7 @@ namespace WinFormsClient
 			this.ArtistLabel.Size = new System.Drawing.Size(189, 34);
 			this.ArtistLabel.TabIndex = 3;
 			this.ArtistLabel.Text = "Artist: ";
+			this.ArtistLabel.UseMnemonic = false;
 			// 
 			// HateButton
 			// 
@@ -490,6 +506,7 @@ namespace WinFormsClient
 			this.AlbumLabel.Size = new System.Drawing.Size(190, 48);
 			this.AlbumLabel.TabIndex = 4;
 			this.AlbumLabel.Text = "Album: ";
+			this.AlbumLabel.UseMnemonic = false;
 			// 
 			// TrackLabel
 			// 
@@ -501,6 +518,7 @@ namespace WinFormsClient
 			this.TrackLabel.Size = new System.Drawing.Size(187, 51);
 			this.TrackLabel.TabIndex = 2;
 			this.TrackLabel.Text = "Not recording... ";
+			this.TrackLabel.UseMnemonic = false;
 			// 
 			// SkipButton
 			// 
@@ -520,7 +538,7 @@ namespace WinFormsClient
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(330, 238);
+			this.tabPage4.Size = new System.Drawing.Size(330, 267);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Log";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -539,16 +557,6 @@ namespace WinFormsClient
 			this.LogListBox.ScrollAlwaysVisible = true;
 			this.LogListBox.Size = new System.Drawing.Size(318, 212);
 			this.LogListBox.TabIndex = 1;
-			// 
-			// TracknrLabel
-			// 
-			this.TracknrLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.TracknrLabel.Location = new System.Drawing.Point(6, 163);
-			this.TracknrLabel.Name = "TracknrLabel";
-			this.TracknrLabel.Size = new System.Drawing.Size(155, 14);
-			this.TracknrLabel.TabIndex = 9;
-			this.TracknrLabel.Text = "Track Nr.: ";
 			// 
 			// MainForm
 			// 

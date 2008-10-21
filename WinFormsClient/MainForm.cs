@@ -174,13 +174,14 @@ namespace WinFormsClient
 				this.StatusBar.Maximum = TrackLength;
 			
 			if (info.isEmpty()) {
-				this.TrackLabel.Text = "nothing to do";
-				this.ArtistLabel.Text = "";
-				this.TracknrLabel.Text = "";
-				this.AlbumLabel.Text = "";
-				this.DurationLabel.Text = "";
-				this.StationLabel.Text = "";
-				this.GenreLabel.Text = "";
+				this.TrackLabel.Text = "Not recording...";
+				this.ArtistLabel.Text = "Artist: ";
+				this.TracknrLabel.Text = "Track Nr.:";
+				this.AlbumLabel.Text = "Album: ";
+				this.DurationLabel.Text = "Duration: ";
+				this.StationLabel.Text = "Station: ";
+				this.GenreLabel.Text = "Genre: ";
+				this.RemainingTimeLabel.Text = "Remaining Time: ";
 				this.StatuspictureBox.Image = null;
 			} else {
 				this.TrackLabel.Text = info.Track;
