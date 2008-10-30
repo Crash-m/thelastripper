@@ -282,6 +282,11 @@ namespace LibLastRip
 		}
 		
 		protected void StartRecording(bool newStation) {
+			if (this.OnScanning != null) {
+				// Update Scanning bar
+				this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_STARTED));
+			}
+
 			if (newStation) {
 				xspf = XSPF.GetEmptyXSPF();
 				currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
@@ -293,30 +298,43 @@ namespace LibLastRip
 			int tryCounter = 5;
 			
 			while (started == false && this.Status == ConnectionStatus.Recording) {
+				if (this.OnScanning != null) {
+					// Update Scanning bar
+					this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_PROGRESS));
+				}
 				
 				if (xspf.CountTracks() == 0) {
-					// Getting Playlist
-					String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
-					WebRequest wReq = WebRequest.Create(url);
-					HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-					
-					Stream Stream = hRes.GetResponseStream();
-					
-					XmlTextReader xmlTextReader = new XmlTextReader(Stream);
-					xmlTextReader.WhitespaceHandling = WhitespaceHandling.None;
-					
-					// load the file into an XmlDocuent
-					XmlDocument xmlDocument = new XmlDocument();
-					xmlDocument.Load(xmlTextReader);
-					
-					// get the document root node
-					XmlNode xmlNode = xmlDocument.DocumentElement;
-					
-					// recursively walk the node tree
-					AddChildren(xmlNode, 0);
-					
-					// close the reader
-					xmlTextReader.Close();
+					try {
+						// Getting Playlist
+						String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
+						WebRequest wReq = WebRequest.Create(url);
+						// setting timeout to 15s
+						wReq.Timeout = 1000 * 15;
+						HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+						
+						Stream Stream = hRes.GetResponseStream();
+						
+						XmlTextReader xmlTextReader = new XmlTextReader(Stream);
+						xmlTextReader.WhitespaceHandling = WhitespaceHandling.None;
+						
+						// load the file into an XmlDocuent
+						XmlDocument xmlDocument = new XmlDocument();
+						xmlDocument.Load(xmlTextReader);
+						
+						// get the document root node
+						XmlNode xmlNode = xmlDocument.DocumentElement;
+						
+						// recursively walk the node tree
+						AddChildren(xmlNode, 0);
+						
+						// close the reader
+						xmlTextReader.Close();
+					} catch (WebException) {
+						writeLogLine("Server request failed.");
+					} catch (Exception) {
+						// Web request timeout or other unexpected responses - just continue
+						writeLogLine("Timeout/Server failure occured.");
+					}
 				}
 				if (xspf.CountTracks() > 0) {
 					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
@@ -341,7 +359,7 @@ namespace LibLastRip
 					tryCounter = tryCounter - 1;
 
 					if (tryCounter <= 0) {
-						handleError(true, new ErrorEventArgs("No playlist found. Please restart ripping."));
+						handleError(true, new ErrorEventArgs("No playlist found or no more songs available. Please restart ripping."));
 						
 						// no way to continue...
 						StopRecording();
@@ -351,6 +369,10 @@ namespace LibLastRip
 				if (this.stopRecording == true) {
 					StopRecording();
 				}
+			}
+			if (this.OnScanning != null) {
+				// Update Scanning bar
+				this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_STOPPED));
 			}
 		}
 		
@@ -836,10 +858,41 @@ namespace LibLastRip
 		///<summary>removes characters from a string to better compare tag values</summary>
 		///<param name="val">Tag value to handle.</param>
 		private String unifyTagString(String val) {
-			return val.ToLower().Replace(" ", null).Replace("!", null).Replace(",", null).Replace("_", null).Replace("-", null).Replace("'", null).Replace("´", null);;
+			return val.ToLower().
+				Replace(" ", "").
+				Replace("!", "").
+				Replace(",", "").
+				Replace("_", "").Replace("-", "").
+				Replace("'", "").Replace("´", "").
+				Replace("/", "").Replace("\\", "");
 		}
 		
-		private bool compareTagStrings(String tagvalue, String match) {
+		private bool compareTagStrings(String tagvalue, String match, bool canBeUnknown) {
+			if (canBeUnknown) {
+				bool nullTagvalue = String.IsNullOrEmpty(tagvalue);
+				bool nullMatch = String.IsNullOrEmpty(match);
+				if (nullTagvalue == false) {
+					if (tagvalue.Equals("unknown")) {
+						nullTagvalue = true;
+					}
+				}
+				if (nullMatch == false) {
+					if (match.Equals("unknown")) {
+						nullMatch = true;
+					}
+				}
+				if (nullTagvalue && nullMatch) {
+					// both tags are empty strings, null  or "unknown"
+					return true;
+				} else if (nullTagvalue == false && nullMatch == true) {
+					// a song with "unknown" album will not be ripped if same song with other album name exists
+					return true;
+					
+				} else if (nullTagvalue || nullMatch) {
+					// a song with "unknown" album exists - so get thw same song with album information again
+					return false;
+				}
+			}
 			if (String.IsNullOrEmpty(tagvalue)) {
 				return false;
 			}
@@ -852,11 +905,13 @@ namespace LibLastRip
 		private bool IsCompatibleSong(FileInfo file,string artist,string album,string title){
 			try{
 				TagLib.File f = TagLib.File.Create(file.FullName);
-				if(compareTagStrings(f.Tag.FirstAlbumArtist, artist) || compareTagStrings(f.Tag.FirstPerformer, artist)) {
-					if(compareTagStrings(f.Tag.Album, album)) {
-						if(compareTagStrings(f.Tag.Title, title)) {
+				if(compareTagStrings(f.Tag.FirstAlbumArtist, artist, false) || compareTagStrings(f.Tag.FirstPerformer, artist, false)) {
+					if(compareTagStrings(f.Tag.Album, album, true)) {
+						if(compareTagStrings(f.Tag.Title, title, false)) {
 							return true;
 						}
+					} else {
+						compareTagStrings(f.Tag.Album, album, true);
 					}
 				}
 			}catch(Exception e){

@@ -48,7 +48,7 @@ namespace WinFormsClient
 				}
 			}
 			
-			if(!System.IO.Directory.Exists(Pref.QuarantinePathTextBox.Text))
+			if (String.IsNullOrEmpty(Pref.QuarantinePathTextBox.Text) == false && !System.IO.Directory.Exists(Pref.QuarantinePathTextBox.Text))
 			{
 				try
 				{
@@ -59,6 +59,7 @@ namespace WinFormsClient
 					//TODO: Inform user in a pleasen't manner
 					throw new System.Exception("Quarantine directory doesn't exist and could not be created! Please select another directory.", e);
 				}
+				
 			}
 
 			if(String.IsNullOrEmpty(Pref.ExcludeFileTextBox.Text) == false && !System.IO.File.Exists(Pref.ExcludeFileTextBox.Text))
@@ -127,11 +128,11 @@ namespace WinFormsClient
 				this.SaveSettings();
 			}
 			
-/*			if(this._SaveMode) //save to disc
+			/*			if(this._SaveMode) //save to disc
 				Pref.NewSongCommandTextBox.Enabled = true;
 			else
 				Pref.NewSongCommandTextBox.Enabled = false;
-*/		}
+			 */		}
 		
 		public static Settings Restore()
 		{
@@ -160,7 +161,7 @@ namespace WinFormsClient
 		}
 		public virtual void SaveSettings()
 		{
-			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);    
+			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
 			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 			
 			System.IO.FileStream Stream = System.IO.File.Create(AppData + "\\TheLastRipper.xml");
@@ -219,7 +220,7 @@ namespace WinFormsClient
 			{
 				return this._excludeExistingMusic;
 			}
-		}					
+		}
 		public System.String ProxyAddress
 		{
 			get
@@ -241,9 +242,9 @@ namespace WinFormsClient
 				return this._proxyPassword;
 			}
 		}
-				
+		
 		public string Comment {
-			get { 
+			get {
 				if(String.IsNullOrEmpty(_Comment))
 					return manager.Comment;
 				return _Comment;
@@ -257,7 +258,7 @@ namespace WinFormsClient
 				return _FileNamePattern;
 			}
 		}
-				
+		
 		public string AfterRipCommand {
 			get {
 				if(_AfterRipCommand == null)
@@ -294,7 +295,7 @@ namespace WinFormsClient
 		/// <param name="Info">Object that data must be restored from</param>
 		/// <remarks>This method calls parent method, so all fields on LibLastRip.PlayListGenerator is restored by the base class</remarks>
 		protected Settings(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context):base(info, context) //Note this executes base class and restores data saved in it.
-		{	
+		{
 			//Note the names used here MUST match the names used in serialization method below
 			
 			//Get password from serialization object if it was saved
@@ -317,7 +318,7 @@ namespace WinFormsClient
 				this._NewSongCommand = info.GetString("NewSongCommand");
 			this._SaveMode = info.GetBoolean("SaveMode");
 			this._PortNum = info.GetInt32("PortNumber");
-				
+			
 			//Launch preferences without saving, after close since that would give IO problems, cause this method would have returned and serialization object/stream would still be open.
 			this.LaunchPreferences(false);
 		}
