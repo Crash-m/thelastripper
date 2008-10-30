@@ -58,6 +58,7 @@ namespace WinFormsClient
 			this.manager.OnNewSong += new EventHandler(this.OnNewSong);
 			this.manager.OnProgress += new EventHandler(this.OnProgress);
 			this.manager.OnLog += new EventHandler(this.OnLog);
+			this.manager.OnScanning += new EventHandler(this.OnScanning);
 			
 			//Subscribe to stations changed event
 			this.manager.StationChanged += new EventHandler(this.TuneInCallback);
@@ -91,6 +92,41 @@ namespace WinFormsClient
 			}else{
 				System.Windows.Forms.MessageBox.Show(Args.Message, "A problem has occurred", System.Windows.Forms.MessageBoxButtons.OK,System.Windows.Forms.MessageBoxIcon.Warning);
 			}
+		}
+		
+		private void OnScanning(System.Object sender, System.EventArgs args)
+		{
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new System.EventHandler(this.OnScanning), new System.Object[]{sender, args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			LibLastRip.ScanningEventArgs scanningArgs = (LibLastRip.ScanningEventArgs)args;
+			if (LibLastRip.ScanningEventArgs.SCANNING_STARTED.Equals(scanningArgs.Streamprogress)) {
+				this.TrackLabel.Text = "Scanning started -";
+				this.StopButton.Enabled = true;
+			} else if (LibLastRip.ScanningEventArgs.SCANNING_STOPPED.Equals(scanningArgs.Streamprogress)) {
+				this.TrackLabel.Text = "Nothing to do...";
+				this.StopButton.Enabled = false;
+			} else if (LibLastRip.ScanningEventArgs.SCANNING_PROGRESS.Equals(scanningArgs.Streamprogress)) {
+				if ("Scanning started -".Equals(this.TrackLabel.Text)) {
+					this.TrackLabel.Text = "Scanning started \\";
+				} else if ("Scanning started \\".Equals(this.TrackLabel.Text)) {
+					this.TrackLabel.Text = "Scanning started |";
+				} else if ("Scanning started |".Equals(this.TrackLabel.Text)) {
+					this.TrackLabel.Text = "Scanning started /";
+				} else {
+					this.TrackLabel.Text = "Scanning started -";
+				}
+			}			
 		}
 		
 		private void OnProgress(System.Object sender, System.EventArgs args)
@@ -139,13 +175,13 @@ namespace WinFormsClient
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-		#if FULL_FUNCTIONALITY
+			#if FULL_FUNCTIONALITY
 			LibLastRip.LogEventArgs logArgs = (LibLastRip.LogEventArgs)args;
 			if (this.LogListBox.Items.Count > 100) {
 				this.LogListBox.Items.RemoveAt(0);
 			}
 			this.LogListBox.Items.Add(logArgs.Log);
-		#endif
+			#endif
 		}
 
 		private void OnNewSong(System.Object sender, System.EventArgs args)
