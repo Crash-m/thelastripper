@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ScanningEventArgs.cs" />
     <Compile Include="LastManager\ErrorEventArgs.cs" />
     <Compile Include="LastManager\LastManager.Commands.cs" />
     <Compile Include="LastManager\LastManager.cs" />
