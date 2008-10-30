@@ -321,7 +321,7 @@ namespace WinFormsClient
 			this.LovedButton.Name = "LovedButton";
 			this.LovedButton.Size = new System.Drawing.Size(60, 23);
 			this.LovedButton.TabIndex = 9;
-			this.LovedButton.Text = "Loved";
+			this.LovedButton.Text = "Loved (€)";
 			this.LovedButton.UseVisualStyleBackColor = true;
 			this.LovedButton.Click += new System.EventHandler(this.LovedButtonClick);
 			// 
@@ -389,6 +389,7 @@ namespace WinFormsClient
 			// StopButton
 			// 
 			this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.StopButton.Enabled = false;
 			this.StopButton.Location = new System.Drawing.Point(264, 238);
 			this.StopButton.Name = "StopButton";
 			this.StopButton.Size = new System.Drawing.Size(60, 23);
