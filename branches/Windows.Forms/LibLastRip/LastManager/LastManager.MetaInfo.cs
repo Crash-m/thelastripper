@@ -57,5 +57,10 @@ namespace LibLastRip
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnLog;
 
+		/// <summary>
+		/// Occurs when scanning event occurs.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
+		public event System.EventHandler OnScanning;
 	}
 }
