@@ -22,6 +22,8 @@ public partial class MainWindow: Gtk.Window
 		}
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
+
+		//TODO: handle this.LastManager.OnScanning
 		
 		//Handle command return
 		this.LastManager.CommandReturn += new System.EventHandler(this.OnCommandReturn);
@@ -116,7 +118,7 @@ public partial class MainWindow: Gtk.Window
 			this.TrackDuration = 250; //Just a wild guess ;)
 		}
 		
-		if(Info.Streaming)
+		if(!Info.isEmpty())
 		{
 			System.String StrText = "";
 			StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track) + "</span>\n";
@@ -126,12 +128,12 @@ public partial class MainWindow: Gtk.Window
 			StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station) + "</i>";
 			this.StatusLabel.Markup = StrText;
 			
-			if(Info.AlbumcoverSmall != null && Info.AlbumcoverSmall.StartsWith("http://"))
+			if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
 			{
 				try
 				{
 					System.Net.WebClient Client = new System.Net.WebClient();
-					this.CoverBox.FromPixbuf = new Gdk.Pixbuf(Client.DownloadData(Info.AlbumcoverSmall));
+					this.CoverBox.FromPixbuf = new Gdk.Pixbuf(Client.DownloadData(Info.Albumcover));
 				}
 				catch
 				{}

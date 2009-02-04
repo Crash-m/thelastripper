@@ -12,12 +12,12 @@ namespace MonoClient
 		
 		public Settings()
 		{
-			this._MusicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + System.IO.Path.DirectorySeparatorChar + "Music";
-			if(!System.IO.Directory.Exists(this._MusicPath))
+			this._musicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + System.IO.Path.DirectorySeparatorChar + "Music";
+			if(!System.IO.Directory.Exists(this._musicPath))
 			{
-				System.IO.Directory.CreateDirectory(this._MusicPath);
+				System.IO.Directory.CreateDirectory(this._musicPath);
 			}
-			this.Manager = new LibLastRip.LastManager(this._MusicPath);
+			this.Manager = new LibLastRip.LastManager(this._musicPath);
 			
 			this.LaunchPreferences();
 		}
@@ -31,7 +31,7 @@ namespace MonoClient
 		{
 			Preferences Pref = new Preferences(this.Manager,this);
 			Pref.Run();
-			this._MusicPath = Pref.MusicFolder;
+			this._musicPath = Pref.MusicFolder;
 			this.Manager.MusicPath = Pref.MusicFolder;
 			
 			this.TopTracks = Pref.TopTracks;
@@ -47,11 +47,11 @@ namespace MonoClient
 			this.SavePassword = Pref.SavePassword;
 			
 			//save proxy settings:
-			this._ProxyAdress = Pref.ProxyServer;
-			this._ProxyUsername = Pref.ProxyUsername;
-			this._ProxyPassword = Pref.ProxyPassword;
+			this._proxyAddress = Pref.ProxyServer;
+			this._proxyUsername = Pref.ProxyUsername;
+			this._proxyPassword = Pref.ProxyPassword;
 			
-			this._UserName = Pref.UserName;
+			this._userName = Pref.UserName;
 			if(!Pref.HasPassword)
 			{
 				this._Password = LibLastRip.LastManager.CalculateHash(Pref.Password);
@@ -108,7 +108,7 @@ namespace MonoClient
 		{
 			get
 			{
-				return this._UserName;
+				return this._userName;
 			}
 		}
 		public System.String Password
@@ -122,7 +122,7 @@ namespace MonoClient
 		{
 			get
 			{
-				return this._MusicPath;
+				return this._musicPath;
 			}
 		}
 	
@@ -130,21 +130,21 @@ namespace MonoClient
 		{
 			get
 			{
-				return this._ProxyAdress;
+				return this._proxyAddress;
 			}
 		}
 		public System.String ProxyUsername
 		{
 			get
 			{
-				return this._ProxyUsername;
+				return this._proxyUsername;
 			}
 		}
 		public System.String ProxyPassword
 		{
 			get
 			{
-				return this._ProxyPassword;
+				return this._proxyPassword;
 			}
 		}		
 		
@@ -155,7 +155,7 @@ namespace MonoClient
 				this._Password = Info.GetString("Password");
 				this.SavePassword = true;
 			}
-			this.Manager = new LibLastRip.LastManager(this._MusicPath);
+			this.Manager = new LibLastRip.LastManager(this._musicPath);
 			
 			this.LaunchPreferences(false);
 		}

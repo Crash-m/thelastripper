@@ -18,7 +18,7 @@ namespace MonoClient {
         private Gtk.Button CloseButton;
         
         protected virtual void Build() {
-            Stetic.Gui.Initialize();
+            Stetic.Gui.Initialize(this);
             // Widget MonoClient.About
             this.Events = ((Gdk.EventMask)(256));
             this.Name = "MonoClient.About";
@@ -55,19 +55,15 @@ namespace MonoClient {
             this.CloseButton.Name = "CloseButton";
             // Container child CloseButton.Gtk.Container+ContainerChild
             Gtk.Alignment w4 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            w4.Name = "GtkAlignment";
             // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w5 = new Gtk.HBox();
-            w5.Name = "GtkHBox";
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image1";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w8 = new Gtk.Label();
-            w8.Name = "GtkLabel";
             w8.LabelProp = Mono.Unix.Catalog.GetString("Close");
             w5.Add(w8);
             w4.Add(w5);

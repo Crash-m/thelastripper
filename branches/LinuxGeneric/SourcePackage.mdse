@@ -1,0 +1,12 @@
+<CombineEntry name="SourcePackage" fileversion="2.0" ctype="PackagingProject">
+  <Packages>
+    <Package name="Tarball">
+      <Builder rootEntry="thelastripper.mds" TargetDirectory="/home/jopsen/Development/thelastripper/branches/LinuxGeneric" DefaultConfiguration="Release" ctype="TarballDeployTarget">
+        <ChildEntries>
+          <Entry>MonoClient/MonoClient.mdp</Entry>
+          <Entry>libLastRip/libLastRip.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+  </Packages>
+</CombineEntry>

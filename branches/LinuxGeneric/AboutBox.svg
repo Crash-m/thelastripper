@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
    height="250"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45"
+   inkscape:version="0.46"
    version="1.0"
    sodipodi:docbase="/home/jopsen/Development/TheLastRipper/trunk"
    sodipodi:docname="AboutBox.svg"
@@ -24,6 +24,13 @@
    sodipodi:modified="true">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 125 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="250 : 125 : 1"
+       inkscape:persp3d-origin="125 : 83.333333 : 1"
+       id="perspective170" />
     <linearGradient
        id="linearGradient3327">
       <stop
@@ -272,9 +279,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="213.60371"
-     inkscape:cy="134.07563"
+     inkscape:zoom="5.6568544"
+     inkscape:cx="177.22153"
+     inkscape:cy="186.4192"
      inkscape:document-units="px"
      inkscape:current-layer="g2380"
      width="250px"
@@ -282,9 +289,10 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-width="925"
-     inkscape:window-height="626"
+     inkscape:window-height="686"
      inkscape:window-x="5"
-     inkscape:window-y="59" />
+     inkscape:window-y="59"
+     showgrid="false" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -905,8 +913,8 @@
              y="1128.173">Linux Port:</tspan><tspan
              sodipodi:role="line"
              x="995.31635"
-             y="2479.2785"
-             id="tspan3343">Version 1.1.1</tspan></text>
+             y="2479.2786"
+             id="tspan3343">Version 1.3.0</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:1080.88439941px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"

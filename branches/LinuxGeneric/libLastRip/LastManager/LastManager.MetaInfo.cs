@@ -27,7 +27,7 @@ namespace LibLastRip
 	*/
 	public partial class LastManager
 	{
-		protected MetaInfo _CurrentSong = MetaInfo.GetEmptyMetaInfo();
+		protected MetaInfo currentSong = MetaInfo.GetEmptyMetaInfo();
 	
 		///<summary>
 		///Gets the meta info about the current song
@@ -36,7 +36,7 @@ namespace LibLastRip
 		{
 			get
 			{
-				return this._CurrentSong;
+				return this.currentSong;
 			}
 		}
 		/// <summary>
@@ -51,79 +51,16 @@ namespace LibLastRip
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler OnProgress;
 
-		///<summary>
-		///Boolean indicating whether or not we are currently updating metadata, since we don't want to drive the system out of resources with multiple requests
-		///</summary>
-		protected System.Boolean IsUpdateing = false;
-		
-		///<summary>
-		///Updates metainfo, and pushes an OnNewSong event if new song is detected.
-		///</summary>
-		public void UpdateMetaInfo()
-		{
-			//Do not update if we're already doing that, and don't request if we're not recording
-			if(!this.IsUpdateing && this.Status == ConnectionStatus.Recording)
-			{
-				//We've commenced downloading of metadata
-				this.IsUpdateing = true;
+		/// <summary>
+		/// Occurs when log messages are written.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
+		public event System.EventHandler OnLog;
 
-				//Create a WebRequest
-				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "np.php?session=" + this.SessionID + "&debug=0");
-				
-				//Begin to optain a response
-				Request.BeginGetResponse(new AsyncCallback(this.MetaInfoDownloaded), Request);
-			}
-		}
-		
-		///<summary>
-		///Handles metadata callback from UpdateMetaInfo
-		///</summary>					
-		protected void MetaInfoDownloaded(System.IAsyncResult Ar)
-		{
-			try
-			{
-				//Get the HttpWebRequest
-				HttpWebRequest Request = (HttpWebRequest)Ar.AsyncState;
-				
-				//Get the response
-				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
-				
-				//Get the stream
-				Stream Stream = Response.GetResponseStream();
-				
-				//Create a StreamReader to warp the stream
-				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
-				
-				//Read all the data from the stream, notice this could be multithreaded with use of Stream.beginRead
-				//But sources on the net suggest that it's not relevant
-				System.String Data = StreamReader.ReadToEnd();
-				
-				//Close the StreamReader, Stream and Response to release system resources
-				StreamReader.Close();
-				Stream.Close();
-				Response.Close();
-				
-				//Parse the newly recived data
-				MetaInfo nSong = new MetaInfo(Data);
-				
-				//Is this a new song?
-				if(!MetaInfo.Equals(nSong,this._CurrentSong))
-				{
-					//Save metadata and raise OnNewSong event
-					this._CurrentSong = nSong;
-					if(this.OnNewSong != null)
-						this.OnNewSong(this, this._CurrentSong);
-				}
-			}
-			catch(System.Exception)
-			{
-				// Nothing to do - metadata request will just be repeated as long as it's missing and if no metadata is fetched until next SYNC song will be skipped
-			}
-			finally 
-			{
-				//We're no longer updating metadata
-				this.IsUpdateing = false;			
-			}
-		}
+		/// <summary>
+		/// Occurs when scanning event occurs.
+		/// </summary>
+		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
+		public event System.EventHandler OnScanning;
 	}
 }

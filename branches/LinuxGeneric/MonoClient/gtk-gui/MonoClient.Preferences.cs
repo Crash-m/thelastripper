@@ -112,7 +112,7 @@ namespace MonoClient {
         private Gtk.Button Closebutton;
         
         protected virtual void Build() {
-            Stetic.Gui.Initialize();
+            Stetic.Gui.Initialize(this);
             // Widget MonoClient.Preferences
             this.Events = ((Gdk.EventMask)(256));
             this.Name = "MonoClient.Preferences";
@@ -139,7 +139,6 @@ namespace MonoClient {
             this.LoginFrame.Sensitive = false;
             this.LoginFrame.Name = "LoginFrame";
             this.LoginFrame.ShadowType = ((Gtk.ShadowType)(0));
-            this.LoginFrame.LabelXalign = 0F;
             // Container child LoginFrame.Gtk.Container+ContainerChild
             this.GtkAlignment14 = new Gtk.Alignment(0F, 0F, 1F, 1F);
             this.GtkAlignment14.Name = "GtkAlignment14";
@@ -175,19 +174,15 @@ namespace MonoClient {
             this.LoginButton.Name = "LoginButton";
             // Container child LoginButton.Gtk.Container+ContainerChild
             Gtk.Alignment w4 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            w4.Name = "GtkAlignment";
             // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w5 = new Gtk.HBox();
-            w5.Name = "GtkHBox";
             w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w6 = new Gtk.Image();
-            w6.Name = "image6";
             w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-apply", Gtk.IconSize.Menu, 16);
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w8 = new Gtk.Label();
-            w8.Name = "GtkLabel1";
             w8.LabelProp = Mono.Unix.Catalog.GetString("Login");
             w5.Add(w8);
             w4.Add(w5);
@@ -269,19 +264,17 @@ namespace MonoClient {
             w20.Position = 1;
             w20.Expand = false;
             this.notebook1.Add(this.vbox4);
-            Gtk.Notebook.NotebookChild w21 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.vbox4]));
-            w21.TabExpand = false;
             // Notebook tab
             this.label3 = new Gtk.Label();
             this.label3.Name = "label3";
             this.label3.LabelProp = "User preferences";
             this.notebook1.SetTabLabel(this.vbox4, this.label3);
+            this.label3.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.ProxyFrame = new Gtk.Frame();
             this.ProxyFrame.Sensitive = false;
             this.ProxyFrame.Name = "ProxyFrame";
             this.ProxyFrame.ShadowType = ((Gtk.ShadowType)(0));
-            this.ProxyFrame.LabelXalign = 0F;
             // Container child ProxyFrame.Gtk.Container+ContainerChild
             this.GtkAlignment16 = new Gtk.Alignment(0F, 0F, 1F, 1F);
             this.GtkAlignment16.Name = "GtkAlignment16";
@@ -370,24 +363,24 @@ namespace MonoClient {
             this.notebook1.Add(this.ProxyFrame);
             Gtk.Notebook.NotebookChild w30 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.ProxyFrame]));
             w30.Position = 1;
-            w30.TabExpand = false;
             // Notebook tab
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Network");
             this.notebook1.SetTabLabel(this.ProxyFrame, this.label1);
+            this.label1.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.MusicPathChooser = new Gtk.FileChooserWidget(((Gtk.FileChooserAction)(2)));
             this.MusicPathChooser.Name = "MusicPathChooser";
             this.notebook1.Add(this.MusicPathChooser);
             Gtk.Notebook.NotebookChild w31 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.MusicPathChooser]));
             w31.Position = 2;
-            w31.TabExpand = false;
             // Notebook tab
             this.label7 = new Gtk.Label();
             this.label7.Name = "label7";
             this.label7.LabelProp = "Music directory";
             this.notebook1.SetTabLabel(this.MusicPathChooser, this.label7);
+            this.label7.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
@@ -395,7 +388,6 @@ namespace MonoClient {
             this.frame5 = new Gtk.Frame();
             this.frame5.Name = "frame5";
             this.frame5.ShadowType = ((Gtk.ShadowType)(0));
-            this.frame5.LabelXalign = 0F;
             // Container child frame5.Gtk.Container+ContainerChild
             this.GtkAlignment15 = new Gtk.Alignment(0F, 0F, 1F, 1F);
             this.GtkAlignment15.Name = "GtkAlignment15";
@@ -494,7 +486,6 @@ namespace MonoClient {
             this.frame4 = new Gtk.Frame();
             this.frame4.Name = "frame4";
             this.frame4.ShadowType = ((Gtk.ShadowType)(0));
-            this.frame4.LabelXalign = 0F;
             // Container child frame4.Gtk.Container+ContainerChild
             this.GtkAlignment13 = new Gtk.Alignment(0F, 0F, 1F, 1F);
             this.GtkAlignment13.Name = "GtkAlignment13";
@@ -550,12 +541,12 @@ namespace MonoClient {
             this.notebook1.Add(this.hbox1);
             Gtk.Notebook.NotebookChild w48 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.hbox1]));
             w48.Position = 3;
-            w48.TabExpand = false;
             // Notebook tab
             this.label2 = new Gtk.Label();
             this.label2.Name = "label2";
             this.label2.LabelProp = "Playlist settings";
             this.notebook1.SetTabLabel(this.hbox1, this.label2);
+            this.label2.ShowAll();
             w1.Add(this.notebook1);
             Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(w1[this.notebook1]));
             w49.Position = 0;
@@ -573,19 +564,15 @@ namespace MonoClient {
             this.Closebutton.Name = "Closebutton";
             // Container child Closebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w51 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            w51.Name = "GtkAlignment8";
             // Container child GtkAlignment8.Gtk.Container+ContainerChild
             Gtk.HBox w52 = new Gtk.HBox();
-            w52.Name = "GtkHBox13";
             w52.Spacing = 2;
             // Container child GtkHBox13.Gtk.Container+ContainerChild
             Gtk.Image w53 = new Gtk.Image();
-            w53.Name = "image7";
             w53.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
             w52.Add(w53);
             // Container child GtkHBox13.Gtk.Container+ContainerChild
             Gtk.Label w55 = new Gtk.Label();
-            w55.Name = "GtkLabel19";
             w55.LabelProp = Mono.Unix.Catalog.GetString("Close");
             w52.Add(w55);
             w51.Add(w52);

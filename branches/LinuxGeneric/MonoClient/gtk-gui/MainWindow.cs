@@ -54,7 +54,7 @@ public partial class MainWindow {
     
     private Gtk.Frame frame6;
     
-    private Gtk.Alignment GtkAlignment2;
+    private Gtk.Alignment GtkAlignment5;
     
     private Gtk.VBox vbox8;
     
@@ -69,7 +69,7 @@ public partial class MainWindow {
     private Gtk.Label GtkLabel5;
     
     protected virtual void Build() {
-        Stetic.Gui.Initialize();
+        Stetic.Gui.Initialize(this);
         // Widget MainWindow
         Gtk.UIManager w1 = new Gtk.UIManager();
         Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
@@ -119,7 +119,6 @@ public partial class MainWindow {
         this.frame5 = new Gtk.Frame();
         this.frame5.Name = "frame5";
         this.frame5.ShadowType = ((Gtk.ShadowType)(0));
-        this.frame5.LabelXalign = 0F;
         // Container child frame5.Gtk.Container+ContainerChild
         this.GtkAlignment1 = new Gtk.Alignment(0F, 0F, 1F, 1F);
         this.GtkAlignment1.Name = "GtkAlignment1";
@@ -155,19 +154,15 @@ public partial class MainWindow {
         this.ConnectButton.Name = "ConnectButton";
         // Container child ConnectButton.Gtk.Container+ContainerChild
         Gtk.Alignment w5 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w5.Name = "GtkAlignment";
         // Container child GtkAlignment.Gtk.Container+ContainerChild
         Gtk.HBox w6 = new Gtk.HBox();
-        w6.Name = "GtkHBox1";
         w6.Spacing = 2;
         // Container child GtkHBox1.Gtk.Container+ContainerChild
         Gtk.Image w7 = new Gtk.Image();
-        w7.Name = "image15";
         w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-play", Gtk.IconSize.Menu, 16);
         w6.Add(w7);
         // Container child GtkHBox1.Gtk.Container+ContainerChild
         Gtk.Label w9 = new Gtk.Label();
-        w9.Name = "GtkLabel";
         w9.LabelProp = Mono.Unix.Catalog.GetString("Tune in");
         w6.Add(w9);
         w5.Add(w6);
@@ -185,19 +180,15 @@ public partial class MainWindow {
         this.SkipButton.UseUnderline = true;
         // Container child SkipButton.Gtk.Container+ContainerChild
         Gtk.Alignment w14 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w14.Name = "GtkAlignment3";
-        // Container child GtkAlignment3.Gtk.Container+ContainerChild
+        // Container child GtkAlignment2.Gtk.Container+ContainerChild
         Gtk.HBox w15 = new Gtk.HBox();
-        w15.Name = "GtkHBox2";
         w15.Spacing = 2;
         // Container child GtkHBox2.Gtk.Container+ContainerChild
         Gtk.Image w16 = new Gtk.Image();
-        w16.Name = "image16";
         w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-next", Gtk.IconSize.Menu, 16);
         w15.Add(w16);
         // Container child GtkHBox2.Gtk.Container+ContainerChild
         Gtk.Label w18 = new Gtk.Label();
-        w18.Name = "GtkLabel1";
         w18.LabelProp = Mono.Unix.Catalog.GetString("Skip");
         w18.UseUnderline = true;
         w15.Add(w18);
@@ -215,19 +206,15 @@ public partial class MainWindow {
         this.LoveButton.Name = "LoveButton";
         // Container child LoveButton.Gtk.Container+ContainerChild
         Gtk.Alignment w23 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w23.Name = "GtkAlignment4";
-        // Container child GtkAlignment4.Gtk.Container+ContainerChild
+        // Container child GtkAlignment3.Gtk.Container+ContainerChild
         Gtk.HBox w24 = new Gtk.HBox();
-        w24.Name = "GtkHBox3";
         w24.Spacing = 2;
         // Container child GtkHBox3.Gtk.Container+ContainerChild
         Gtk.Image w25 = new Gtk.Image();
-        w25.Name = "image17";
         w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_3d-favourites", Gtk.IconSize.Menu, 16);
         w24.Add(w25);
         // Container child GtkHBox3.Gtk.Container+ContainerChild
         Gtk.Label w27 = new Gtk.Label();
-        w27.Name = "GtkLabel2";
         w27.LabelProp = Mono.Unix.Catalog.GetString("Love");
         w24.Add(w27);
         w23.Add(w24);
@@ -244,19 +231,15 @@ public partial class MainWindow {
         this.BanButton.Name = "BanButton";
         // Container child BanButton.Gtk.Container+ContainerChild
         Gtk.Alignment w32 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        w32.Name = "GtkAlignment5";
-        // Container child GtkAlignment5.Gtk.Container+ContainerChild
+        // Container child GtkAlignment4.Gtk.Container+ContainerChild
         Gtk.HBox w33 = new Gtk.HBox();
-        w33.Name = "GtkHBox4";
         w33.Spacing = 2;
         // Container child GtkHBox4.Gtk.Container+ContainerChild
         Gtk.Image w34 = new Gtk.Image();
-        w34.Name = "image18";
         w34.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
         w33.Add(w34);
         // Container child GtkHBox4.Gtk.Container+ContainerChild
         Gtk.Label w36 = new Gtk.Label();
-        w36.Name = "GtkLabel3";
         w36.LabelProp = Mono.Unix.Catalog.GetString("Ban");
         w33.Add(w36);
         w32.Add(w33);
@@ -286,12 +269,11 @@ public partial class MainWindow {
         this.frame6 = new Gtk.Frame();
         this.frame6.Name = "frame6";
         this.frame6.ShadowType = ((Gtk.ShadowType)(0));
-        this.frame6.LabelXalign = 0F;
         // Container child frame6.Gtk.Container+ContainerChild
-        this.GtkAlignment2 = new Gtk.Alignment(0F, 0F, 1F, 1F);
-        this.GtkAlignment2.Name = "GtkAlignment2";
-        this.GtkAlignment2.LeftPadding = ((uint)(12));
-        // Container child GtkAlignment2.Gtk.Container+ContainerChild
+        this.GtkAlignment5 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+        this.GtkAlignment5.Name = "GtkAlignment5";
+        this.GtkAlignment5.LeftPadding = ((uint)(12));
+        // Container child GtkAlignment5.Gtk.Container+ContainerChild
         this.vbox8 = new Gtk.VBox();
         this.vbox8.Name = "vbox8";
         // Container child vbox8.Gtk.Box+BoxChild
@@ -326,8 +308,8 @@ public partial class MainWindow {
         Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.vbox8[this.SongProgressBar]));
         w48.Position = 1;
         w48.Expand = false;
-        this.GtkAlignment2.Add(this.vbox8);
-        this.frame6.Add(this.GtkAlignment2);
+        this.GtkAlignment5.Add(this.vbox8);
+        this.frame6.Add(this.GtkAlignment5);
         this.GtkLabel5 = new Gtk.Label();
         this.GtkLabel5.Name = "GtkLabel5";
         this.GtkLabel5.LabelProp = Mono.Unix.Catalog.GetString("<b>Currently recording</b>");
