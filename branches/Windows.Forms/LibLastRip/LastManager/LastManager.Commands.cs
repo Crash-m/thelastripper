@@ -174,19 +174,23 @@ namespace LibLastRip
 			//Create a result value
 			System.Boolean Result = false;
 			
+			// Don't continue with old playlist
+			this.xspf = XSPF.GetEmptyXSPF();
+
 			//Look at the response to check for success
 			foreach(System.String Line in Data)
 			{
 				System.String []Opts = Line.Split(new System.Char[] {'='});
-				
+			
 				if (Opts.Length > 1) {
+					if (Opts[0].ToLower() == "stationname") {
+						this.xspf.Station = Opts[1];
+					}
+					
 					if(Opts[0].ToLower() == "response") {
 						if (Opts[1].ToLower().StartsWith("ok"))
 						{
 							Result = true;
-
-							// Don't continue with old playlist
-							this.xspf = XSPF.GetEmptyXSPF();
 
 							//If we're already recording then don't save current song
 							if(this.Status == ConnectionStatus.Recording)

@@ -264,6 +264,7 @@ namespace LibLastRip
 		protected ArrayList _xspfList;
 		protected System.String _title;
 		protected System.String _creator;
+		protected System.String _station;
 
 		/// <summary>
         /// Get an empty instance of LastFm, used to represent no song.
@@ -302,6 +303,18 @@ namespace LibLastRip
 			set
 			{
 				this._creator = value;
+			}
+		}		
+		
+		public System.String Station
+		{
+			get
+			{
+				return this._station;
+			}
+			set
+			{
+				this._station = value;
 			}
 		}		
 		
