@@ -120,6 +120,13 @@ namespace WinFormsClient
 			LibLastRip.ScanningEventArgs scanningArgs = (LibLastRip.ScanningEventArgs)args;
 			if (LibLastRip.ScanningEventArgs.SCANNING_STARTED.Equals(scanningArgs.Streamprogress)) {
 				this.TrackLabel.Text = "Scanning started -";
+				this.ArtistLabel.Text = "Artist:";
+				this.AlbumLabel.Text = "Album:";
+				this.RemainingTimeLabel.Text = "Remaining Time:";
+				this.DurationLabel.Text = "Duration:";
+				this.TracknrLabel.Text = "Track Nr.:";
+				this.GenreLabel.Text = "Genre:";
+				this.StationLabel.Text = "Station:";
 				setStopButton(true);
 			} else if (LibLastRip.ScanningEventArgs.SCANNING_STOPPED.Equals(scanningArgs.Streamprogress)) {
 				this.TrackLabel.Text = "Nothing to do...";

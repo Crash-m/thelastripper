@@ -294,6 +294,33 @@ namespace LibLastRip
 				this.OnNewSong(this, this.currentSong);
 		}
 		
+		private void RequestPlaylist() {
+			// Getting Playlist
+			String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
+			WebRequest wReq = WebRequest.Create(url);
+			// setting timeout to 15s
+			wReq.Timeout = 1000 * 15;
+			HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+			
+			Stream Stream = hRes.GetResponseStream();
+			
+			XmlTextReader xmlTextReader = new XmlTextReader(Stream);
+			xmlTextReader.WhitespaceHandling = WhitespaceHandling.None;
+			
+			// load the file into an XmlDocuent
+			XmlDocument xmlDocument = new XmlDocument();
+			xmlDocument.Load(xmlTextReader);
+			
+			// get the document root node
+			XmlNode xmlNode = xmlDocument.DocumentElement;
+			
+			// recursively walk the node tree
+			AddChildren(xmlNode, 0);
+			
+			// close the reader
+			xmlTextReader.Close();
+		}
+		
 		protected void StartRecording(bool newStation) {
 			if (this.OnScanning != null) {
 				// Update Scanning bar
@@ -306,6 +333,7 @@ namespace LibLastRip
 				xspf = XSPF.GetEmptyXSPF();
 				xspf.Station = station;
 				currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
+				RequestPlaylist(); // to avoid delaying the first request
 			}
 			
 			bool started = false;
@@ -313,38 +341,15 @@ namespace LibLastRip
 			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
 			int tryCounter = 5;
 			
-			while (started == false && this.Status == ConnectionStatus.Recording) {
-				if (this.OnScanning != null) {
-					// Update Scanning bar
-					this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_PROGRESS));
-				}
-				
+			while (started == false && this.Status == ConnectionStatus.Recording) {				
 				if (xspf.CountTracks() == 0) {
 					try {
-						// Getting Playlist
-						String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
-						WebRequest wReq = WebRequest.Create(url);
-						// setting timeout to 15s
-						wReq.Timeout = 1000 * 15;
-						HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-						
-						Stream Stream = hRes.GetResponseStream();
-						
-						XmlTextReader xmlTextReader = new XmlTextReader(Stream);
-						xmlTextReader.WhitespaceHandling = WhitespaceHandling.None;
-						
-						// load the file into an XmlDocuent
-						XmlDocument xmlDocument = new XmlDocument();
-						xmlDocument.Load(xmlTextReader);
-						
-						// get the document root node
-						XmlNode xmlNode = xmlDocument.DocumentElement;
-						
-						// recursively walk the node tree
-						AddChildren(xmlNode, 0);
-						
-						// close the reader
-						xmlTextReader.Close();
+						if (this.OnScanning != null) {
+							// Update Scanning bar
+							this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_PROGRESS));
+						}
+						Thread.Sleep(250);
+						RequestPlaylist();
 					} catch (WebException) {
 						writeLogLine("Server request failed.");
 					} catch (Exception) {
@@ -353,6 +358,7 @@ namespace LibLastRip
 					}
 				}
 				if (xspf.CountTracks() > 0) {
+					writeLogLine("Tracks left: " + xspf.CountTracks());
 					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
 					this.StreamURL = this.currentXspfTrack.Location;
 
@@ -372,13 +378,18 @@ namespace LibLastRip
 						RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
 					}
 				} else {
+					// This code will only be executed if RequestPlaylist fails with an exception or if it gets no tracks
 					tryCounter = tryCounter - 1;
+					writeLogLine("Retries left: " + tryCounter);
 
 					if (tryCounter <= 0) {
 						handleError(true, new ErrorEventArgs("No playlist found or no more songs available. Please restart ripping."));
 						
 						// no way to continue...
 						StopRecording();
+					} else {
+						// give last.fm time to send more songs
+						Thread.Sleep(500);
 					}
 				}
 				
@@ -386,7 +397,7 @@ namespace LibLastRip
 					StopRecording();
 				}
 			}
-			if (this.OnScanning != null) {
+			if (started == false && this.OnScanning != null) {
 				// Update Scanning bar
 				this.OnScanning(this, new ScanningEventArgs(ScanningEventArgs.SCANNING_STOPPED));
 			}
@@ -405,13 +416,18 @@ namespace LibLastRip
 		}
 		
 		protected void SaveToFile() {
-			
+			double songHealth = this.Song.Length*100/((double.Parse(this.currentXspfTrack.Duration)*16));
+
 			writeLogLine("Song length in bytes: " + this.Song.Length);
 			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
-			
+			// duration in seconds * 128 kBit/s / 8 bit per byte -> plain data length without header
+			writeLogLine("Song health: " + songHealth.ToString());
+
 			//Should we save this song?
-			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo())
+			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() || songHealth < 100)
 			{
+				writeLogLine("Song skipped (incomplete or user request)");
+
 				//If not, then don't save it
 				this.SkipSave = false;
 				this.Song.Close();
@@ -419,7 +435,7 @@ namespace LibLastRip
 					FileInfo file = new FileInfo(_Filename);
 					file.Delete();
 				}
-			}else{
+			}else{				
 				//If so, then save it but do it on another thread
 				SaveSongCall SSC = new SaveSongCall(this.SaveSong);
 				//Minus one since we don't want the song to end with char 83 = 'S' from SYNC
