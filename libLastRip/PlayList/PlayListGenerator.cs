@@ -6,19 +6,24 @@ namespace LibLastRip
 	[SerializableAttribute]
 	public class PlayListGenerator : System.Runtime.Serialization.ISerializable
 	{
-		protected System.String _MusicPath;
-		protected System.String _UserName;
+		protected System.String _musicPath;
+		protected System.String _quarantinePath;
+		protected System.String _userName;
 		
-		protected System.String _ProxyAdress;
-		protected System.String _ProxyUsername;
-		protected System.String _ProxyPassword;
+		protected System.String _excludeFile;
+		protected System.Boolean _excludeNewMusic = false;
+		protected System.Boolean _excludeExistingMusic = false;
+
+		protected System.String _proxyAddress;
+		protected System.String _proxyUsername;
+		protected System.String _proxyPassword;
 		
 		protected PlayListGenerator(){}
 		
-		public PlayListGenerator(System.String MusicPath, System.String UserName)
+		public PlayListGenerator(System.String musicPath, System.String userName)
 		{
-			this._MusicPath = MusicPath;
-			this._UserName = UserName;
+			this._musicPath = musicPath;
+			this._userName = userName;
 		}
 		
 		public System.Boolean TopTracks = true;
@@ -41,9 +46,9 @@ namespace LibLastRip
 			PlayList List2;
 			PlayList List3;
 			
-			List1 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._UserName+"/toptracks.xml",this.TopTracks,this.TopTracksMixed,"TopTracks");
-			List2 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._UserName+"/recentlovedtracks.xml",this.RecentLovedTracks,this.RecentLovedTracksMixed,"RecentLovedTracks");
-			List3 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._UserName+"/weeklytrackchart.xml",this.WeeklyTrackChart,this.WeeklyTrackChartMixed,"WeeklyTrackChart");
+			List1 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._userName+"/toptracks.xml",this.TopTracks,this.TopTracksMixed,"TopTracks");
+			List2 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._userName+"/recentlovedtracks.xml",this.RecentLovedTracks,this.RecentLovedTracksMixed,"RecentLovedTracks");
+			List3 = this.GeneratePlayList("http://ws.audioscrobbler.com/1.0/user/"+this._userName+"/weeklytrackchart.xml",this.WeeklyTrackChart,this.WeeklyTrackChartMixed,"WeeklyTrackChart");
 			
 			List1.AddRange(List2);
 			List1.AddRange(List3);
@@ -53,21 +58,21 @@ namespace LibLastRip
 		
 		protected virtual PlayList GeneratePlayList(System.String Feed, System.Boolean Clean, System.Boolean Mixed, System.String FileName)
 		{
-			PlayList List = new PlayList(this._MusicPath);
+			PlayList list = new PlayList(this._musicPath);
 			
-			List.DownloadXML(Feed);
+			list.DownloadXML(Feed);
 			
 			if(Clean)
 			{
-				this.SavePlayList(List, FileName);
+				this.SavePlayList(list, FileName);
 			}
 			if(Mixed)
 			{
-				List.Randomize();
-				this.SavePlayList(List, FileName + "Mixed");
+				list.Randomize();
+				this.SavePlayList(list, FileName + "Mixed");
 			}
 			
-			return List;
+			return list;
 		}
 		
 		protected virtual void SavePlayList(PlayList List, System.String FileName)
@@ -106,12 +111,17 @@ namespace LibLastRip
 			this.pls = (System.Boolean)Info.GetValue("pls",typeof(System.Boolean));
 			this.smil = (System.Boolean)Info.GetValue("smil",typeof(System.Boolean));
 			
-			this._MusicPath = (System.String)Info.GetValue("MusicPath",typeof(System.String));
-			this._UserName = (System.String)Info.GetValue("UserName",typeof(System.String));
+			this._musicPath = (System.String)Info.GetValue("MusicPath",typeof(System.String));
+			this._quarantinePath = (System.String)Info.GetValue("QuarantinePath",typeof(System.String));
+			this._userName = (System.String)Info.GetValue("UserName",typeof(System.String));
+			
+			this._excludeFile = (System.String)Info.GetValue("ExcludeFile",typeof(System.String));
+			this._excludeNewMusic = (System.Boolean)Info.GetValue("ExcludeNewMusic",typeof(System.Boolean));
+			this._excludeExistingMusic = (System.Boolean)Info.GetValue("ExcludeExistingMusic",typeof(System.Boolean));
 
-		    this._ProxyAdress = (System.String)Info.GetValue("ProxyAdress",typeof(System.String));
-			this._ProxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
-			this._ProxyPassword = (System.String)Info.GetValue("ProxyPassword",typeof(System.String));
+		    this._proxyAddress = (System.String)Info.GetValue("ProxyAddress",typeof(System.String));
+			this._proxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
+			this._proxyPassword = (System.String)Info.GetValue("ProxyPassword",typeof(System.String));
 		}
 		
 		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
@@ -134,12 +144,17 @@ namespace LibLastRip
 			Info.AddValue("pls",this.pls);
 			Info.AddValue("smil",this.smil);
 			
-			Info.AddValue("MusicPath",this._MusicPath);
-			Info.AddValue("UserName",this._UserName);
+			Info.AddValue("MusicPath",this._musicPath);
+			Info.AddValue("QuarantinePath",this._quarantinePath);
+			Info.AddValue("UserName",this._userName);
 			
-			Info.AddValue("ProxyAdress", this._ProxyAdress);
-			Info.AddValue("ProxyUsername", this._ProxyUsername);
-			Info.AddValue("ProxyPassword", this._ProxyPassword);
+			Info.AddValue("ExcludeFile",this._excludeFile);
+			Info.AddValue("ExcludeNewMusic",this._excludeNewMusic);
+			Info.AddValue("ExcludeExistingMusic",this._excludeExistingMusic);
+
+			Info.AddValue("ProxyAddress", this._proxyAddress);
+			Info.AddValue("ProxyUsername", this._proxyUsername);
+			Info.AddValue("ProxyPassword", this._proxyPassword);
 		}
 	}
 }

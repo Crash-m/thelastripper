@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stetic-interface>
   <configuration>
-    <images-root-path>../</images-root-path>
-    <target-gtk-version>2.10.0</target-gtk-version>
+    <images-root-path>..</images-root-path>
+    <target-gtk-version>2.12.1</target-gtk-version>
   </configuration>
   <widget class="Gtk.Dialog" id="MonoClient.About" design-size="264 322">
     <property name="MemberName" />
@@ -49,7 +49,6 @@
             <property name="Type">TextAndIcon</property>
             <property name="Icon">stock:gtk-close Menu</property>
             <property name="Label">Close</property>
-            <property name="IsDialogButton">True</property>
             <property name="ResponseId">0</property>
             <signal name="Clicked" handler="OnCloseButtonClicked" />
           </widget>
@@ -158,7 +157,6 @@
           <widget class="Gtk.Frame" id="frame5">
             <property name="MemberName" />
             <property name="ShadowType">None</property>
-            <property name="LabelXalign">0</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment1">
                 <property name="MemberName" />
@@ -201,7 +199,6 @@ lastfm://globaltags/classic%20rock</property>
                             <property name="Type">TextAndIcon</property>
                             <property name="Icon">stock:stock_media-play Menu</property>
                             <property name="Label">Tune in</property>
-                            <property name="IsDialogButton">False</property>
                             <signal name="Clicked" handler="OnConnectButtonClicked" />
                           </widget>
                           <packing>
@@ -220,7 +217,6 @@ lastfm://globaltags/classic%20rock</property>
                             <property name="Icon">stock:stock_media-next Menu</property>
                             <property name="Label">Skip</property>
                             <property name="UseUnderline">True</property>
-                            <property name="IsDialogButton">False</property>
                             <signal name="Clicked" handler="OnSkipButtonClicked" />
                           </widget>
                           <packing>
@@ -238,7 +234,6 @@ lastfm://globaltags/classic%20rock</property>
                             <property name="Type">TextAndIcon</property>
                             <property name="Icon">stock:stock_3d-favourites Menu</property>
                             <property name="Label">Love</property>
-                            <property name="IsDialogButton">False</property>
                             <signal name="Clicked" handler="OnLoveButtonClicked" />
                           </widget>
                           <packing>
@@ -256,7 +251,6 @@ lastfm://globaltags/classic%20rock</property>
                             <property name="Type">TextAndIcon</property>
                             <property name="Icon">stock:gtk-remove Menu</property>
                             <property name="Label">Ban</property>
-                            <property name="IsDialogButton">False</property>
                             <signal name="Clicked" handler="OnBanButtonClicked" />
                           </widget>
                           <packing>
@@ -299,9 +293,8 @@ lastfm://globaltags/classic%20rock</property>
           <widget class="Gtk.Frame" id="frame6">
             <property name="MemberName" />
             <property name="ShadowType">None</property>
-            <property name="LabelXalign">0</property>
             <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment2">
+              <widget class="Gtk.Alignment" id="GtkAlignment5">
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
@@ -404,7 +397,6 @@ lastfm://globaltags/classic%20rock</property>
                     <property name="MemberName" />
                     <property name="Sensitive">False</property>
                     <property name="ShadowType">None</property>
-                    <property name="LabelXalign">0</property>
                     <child>
                       <widget class="Gtk.Alignment" id="GtkAlignment14">
                         <property name="MemberName" />
@@ -463,7 +455,6 @@ lastfm://globaltags/classic%20rock</property>
                                 <property name="Type">TextAndIcon</property>
                                 <property name="Icon">stock:gtk-apply Menu</property>
                                 <property name="Label">Login</property>
-                                <property name="IsDialogButton">False</property>
                                 <signal name="Clicked" handler="OnLoginButtonClicked" />
                               </widget>
                               <packing>
@@ -599,9 +590,6 @@ lastfm://globaltags/classic%20rock</property>
                   </packing>
                 </child>
               </widget>
-              <packing>
-                <property name="TabExpand">False</property>
-              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label3">
@@ -617,7 +605,6 @@ lastfm://globaltags/classic%20rock</property>
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
                 <property name="ShadowType">None</property>
-                <property name="LabelXalign">0</property>
                 <child>
                   <widget class="Gtk.Alignment" id="GtkAlignment16">
                     <property name="MemberName" />
@@ -771,7 +758,6 @@ lastfm://globaltags/classic%20rock</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="TabExpand">False</property>
               </packing>
             </child>
             <child>
@@ -790,7 +776,6 @@ lastfm://globaltags/classic%20rock</property>
               </widget>
               <packing>
                 <property name="Position">2</property>
-                <property name="TabExpand">False</property>
               </packing>
             </child>
             <child>
@@ -809,7 +794,6 @@ lastfm://globaltags/classic%20rock</property>
                   <widget class="Gtk.Frame" id="frame5">
                     <property name="MemberName" />
                     <property name="ShadowType">None</property>
-                    <property name="LabelXalign">0</property>
                     <child>
                       <widget class="Gtk.Alignment" id="GtkAlignment15">
                         <property name="MemberName" />
@@ -951,7 +935,6 @@ lastfm://globaltags/classic%20rock</property>
                   <widget class="Gtk.Frame" id="frame4">
                     <property name="MemberName" />
                     <property name="ShadowType">None</property>
-                    <property name="LabelXalign">0</property>
                     <child>
                       <widget class="Gtk.Alignment" id="GtkAlignment13">
                         <property name="MemberName" />
@@ -1031,7 +1014,6 @@ lastfm://globaltags/classic%20rock</property>
               </widget>
               <packing>
                 <property name="Position">3</property>
-                <property name="TabExpand">False</property>
               </packing>
             </child>
             <child>
@@ -1067,7 +1049,6 @@ lastfm://globaltags/classic%20rock</property>
             <property name="Type">TextAndIcon</property>
             <property name="Icon">stock:gtk-close Menu</property>
             <property name="Label">Close</property>
-            <property name="IsDialogButton">True</property>
             <property name="ResponseId">0</property>
           </widget>
           <packing>

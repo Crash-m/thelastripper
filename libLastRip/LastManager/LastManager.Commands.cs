@@ -24,9 +24,9 @@ namespace LibLastRip
 {
 	/*
 	This part of the LastManager class handles and exposes Last.FM commands.
-	*/
+	 */
 	public partial class LastManager
-	{	
+	{
 		///<summary>
 		///Constants for commands
 		///</summary>
@@ -61,16 +61,16 @@ namespace LibLastRip
 				HttpWebResponse Response = (HttpWebResponse)Request.EndGetResponse(Ar);
 				
 				Stream Stream = Response.GetResponseStream();
-				StreamReader StreamReader = new StreamReader(Stream, Encoding.UTF8);
+				StreamReader sr = new StreamReader(Stream, Encoding.UTF8);
 				
-				System.String []Data = StreamReader.ReadToEnd().Split(new System.Char[] {'\n'});
-			
+				System.String []Data = sr.ReadToEnd().Split(new System.Char[] {'\n'});
+				
 				System.Boolean Result = false;
 				foreach(System.String Line in Data)
 				{
 					System.String []Opts = Line.Split(new System.Char[] {'='});
 					
-					if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
+					if("response".Equals(Opts[0].ToLower()) && Opts[1].ToLower().StartsWith("ok"))
 					{
 						Result = true;
 					}
@@ -98,7 +98,7 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand(commandSkip);
+				this.SkipSave = true;
 			}
 		}
 		
@@ -120,10 +120,18 @@ namespace LibLastRip
 		{
 			if(this.Status == ConnectionStatus.Recording)
 			{
-				this.SendCommand(commandBan);	
+				this.SendCommand(commandBan);
 			}
 		}
 		
+		///<summary>
+		///Stops all actions
+		///</summary>
+		public void Stop()
+		{
+			this.stopRecording = true;
+		}
+
 		///<summary>Occurs when a ChangeStation is returned</summary>
 		/// <remarks>This event may be called on a seperate thread, make sure to invoke any Windows.Forms or GTK# controls modified in EventHandlers</remarks>
 		public event System.EventHandler StationChanged;
@@ -132,12 +140,17 @@ namespace LibLastRip
 		///<remarks>This method may be used to change station during recording, and to initiate recording.</remarks>
 		public void ChangeStation(System.String LastFMStation)
 		{
+			// Reset stop command
+			this.stopRecording = false;
+
 			//Can't do anything if not a least connected
 			if(this.Status == ConnectionStatus.Created)
 			{
-				if(this.StationChanged != null)
+				if(this.StationChanged != null) {
 					this.StationChanged(this, new StationChangedEventArgs(false));
-			}else{
+				}
+			}
+			else{
 				HttpWebRequest Request = (HttpWebRequest)WebRequest.Create(this.ServiceURL + "adjust.php?session="+this.SessionID+"&url="+LastFMStation+"&debug=0");
 				Request.BeginGetResponse(new System.AsyncCallback(this.OnStationChanged), Request);
 			}
@@ -161,30 +174,46 @@ namespace LibLastRip
 			//Create a result value
 			System.Boolean Result = false;
 			
+			// Don't continue with old playlist
+			this.xspf = XSPF.GetEmptyXSPF();
+
 			//Look at the response to check for success
 			foreach(System.String Line in Data)
 			{
 				System.String []Opts = Line.Split(new System.Char[] {'='});
-				
-				if(Opts[0].ToLower() == "response" && Opts[1].ToLower() == "ok")
-				{
-					Result = true;
-					//If we're already recording then don't save current song
-					if(this.Status == ConnectionStatus.Recording)
-					{
-						//Dont save the current song
-						this.SkipSave = true;
-					}else{
-						//If not already recording, then start it and change status
-						this.Status = ConnectionStatus.Recording;
-						this.StartRecording();
+			
+				if (Opts.Length > 1) {
+					if (Opts[0].ToLower() == "stationname") {
+						this.xspf.Station = Opts[1];
 					}
-				}
+					
+					if(Opts[0].ToLower() == "response") {
+						if (Opts[1].ToLower().StartsWith("ok"))
+						{
+							Result = true;
+
+							//If we're already recording then don't save current song
+							if(this.Status == ConnectionStatus.Recording)
+							{
+								// Don't save the current song
+								this.SkipSave = true;
+							}else{
+								//If not already recording, then start it and change status
+								this.Status = ConnectionStatus.Recording;
+								this.StartRecording();
+							}
+						} else {
+							if (this.OnError != null) {
+								this.OnError(this, new ErrorEventArgs("No station found. Please change and restart ripping.", null));
+							}
+						}
+					}}
 			}
 			
 			//Fire an event
-			if(this.StationChanged != null)
+			if(this.StationChanged != null) {
 				this.StationChanged(this, new StationChangedEventArgs(Result));
+			}
 		}
 	}
 	
@@ -234,4 +263,29 @@ namespace LibLastRip
 			}
 		}
 	}
+	
+	///<summary>
+	///EventArgs for Log event
+	///</summary>
+	public class LogEventArgs : System.EventArgs
+	{
+		protected String _log;
+		
+		internal LogEventArgs(String log)
+		{
+			this._log = log;
+		}
+		
+		///<summary>
+		///String containing log message
+		///</summary>
+		public virtual String Log
+		{
+			get
+			{
+				return this._log;
+			}
+		}
+	}
+
 }

@@ -89,8 +89,9 @@ namespace LibLastRip
 		///</summary>
 		protected virtual System.Boolean IsAvailable(ref IMetaTrack Track)
 		{
-			System.String TrackPath = "";
-			System.String ArtistDir = this.MusicPath + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(Track.Artist);
+			//TODO check availability through filename pattern
+			return false;
+/*			System.String ArtistDir = this.MusicPath + System.IO.Path.DirectorySeparatorChar + LastManager.RemoveInvalidPathChars(Track.Artist);
 			if(System.IO.Directory.Exists(ArtistDir))
 			{
 				foreach(System.String Directory in System.IO.Directory.GetDirectories(ArtistDir))
@@ -104,7 +105,7 @@ namespace LibLastRip
 				}
 			}
 			return false;
-		}
+*/		}
 		
 		public virtual void Save(System.String FileName,PlayListType FileType)
 		{
