@@ -95,10 +95,10 @@ namespace LibLastRip
 			{
 				for(;this.Position < End; this.Position++)
 				{
-					if(Buf[this.Position] == 83 &&		//Hex values: 53
-					   Buf[this.Position+1] == 89 &&	//59
-					   Buf[this.Position+2] == 78 &&   // 4e
-					   Buf[this.Position+3] == 67      // 43
+					if(Buf[this.Position] == 83 &&	//Hex values: 53
+					   Buf[this.Position+1] == 89 &&//59
+					   Buf[this.Position+2] == 78 &&// 4e
+					   Buf[this.Position+3] == 67   // 43
 					  )
 					{
 						//Create a new MemoryStream
