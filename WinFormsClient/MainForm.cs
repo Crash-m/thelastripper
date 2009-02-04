@@ -94,6 +94,14 @@ namespace WinFormsClient
 			}
 		}
 		
+		private void setStopButton(bool value) {
+			if (this.manager.stopRecording == true) {
+				  this.StopButton.Enabled = false;
+			} else {
+				this.StopButton.Enabled = value;
+			}
+		}
+		
 		private void OnScanning(System.Object sender, System.EventArgs args)
 		{
 			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
@@ -112,10 +120,10 @@ namespace WinFormsClient
 			LibLastRip.ScanningEventArgs scanningArgs = (LibLastRip.ScanningEventArgs)args;
 			if (LibLastRip.ScanningEventArgs.SCANNING_STARTED.Equals(scanningArgs.Streamprogress)) {
 				this.TrackLabel.Text = "Scanning started -";
-				this.StopButton.Enabled = true;
+				setStopButton(true);
 			} else if (LibLastRip.ScanningEventArgs.SCANNING_STOPPED.Equals(scanningArgs.Streamprogress)) {
 				this.TrackLabel.Text = "Nothing to do...";
-				this.StopButton.Enabled = false;
+				setStopButton(false);				
 			} else if (LibLastRip.ScanningEventArgs.SCANNING_PROGRESS.Equals(scanningArgs.Streamprogress)) {
 				if ("Scanning started -".Equals(this.TrackLabel.Text)) {
 					this.TrackLabel.Text = "Scanning started \\";
@@ -211,6 +219,7 @@ namespace WinFormsClient
 			
 			if (info.isEmpty()) {
 				this.TrackLabel.Text = "Not recording...";
+				setStopButton(false);
 				this.ArtistLabel.Text = "Artist: ";
 				this.TracknrLabel.Text = "Track Nr.:";
 				this.AlbumLabel.Text = "Album: ";
@@ -221,6 +230,7 @@ namespace WinFormsClient
 				this.StatuspictureBox.Image = null;
 			} else {
 				this.TrackLabel.Text = info.Track;
+				setStopButton(true);
 				this.ArtistLabel.Text = "Artist: " + info.Artist;
 				this.TracknrLabel.Text = "Track Nr.: " + info.TrackNum;
 				this.AlbumLabel.Text = "Album: " + info.Album;
@@ -359,6 +369,7 @@ namespace WinFormsClient
 		{
 			// Empty next songs list
 			this.manager.Stop();
+			this.setStopButton(false);
 		}
 
 		void CommandCallback(object sender, EventArgs args)

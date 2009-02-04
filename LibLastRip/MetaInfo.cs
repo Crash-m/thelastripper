@@ -64,8 +64,7 @@ namespace LibLastRip
 			this._Trackduration = (Int32.Parse(xspfTrack.Duration) / 1000).ToString();
 			this._Track = xspfTrack.Title;
 			this._Albumcover = xspfTrack.Image;
-			System.String station = xspf.Title.Replace("+"," ");
-			this._Station = System.Uri.UnescapeDataString(station);
+			this._Station = System.Uri.UnescapeDataString(xspf.Station);
 			
 			//We've got to have something to write as ID3tag's, filename and directories
 			if(String.IsNullOrEmpty(this._Track))
@@ -209,7 +208,7 @@ namespace LibLastRip
 			System.String OutStr = "";
 			
 			OutStr += "Track: " + this._Artist + " - " + this._Album + " - " + this._Track + "\n";
-			OutStr += "From: " + this._Station + "\n";
+			//XXOutStr += "From: " + this._Station + "\n";
 			OutStr += "Duration: " + this._Trackduration;
 			return OutStr;
 		}

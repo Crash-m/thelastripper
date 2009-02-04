@@ -38,7 +38,7 @@ namespace LibLastRip
 		protected Stream Song;
 		protected System.String _Filename;
 		protected System.Boolean SkipSave = false;
-		protected System.Boolean stopRecording = false;
+		public System.Boolean stopRecording = false;
 		protected System.Int32 counter = 0;
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		protected Hashtable excludeFile = null;
@@ -122,15 +122,25 @@ namespace LibLastRip
 			// call recursively on all children of the current node
 			if (xnod.HasChildNodes)
 			{
+				// collect some informations which arent used ;-)
+				if ("link".Equals(xnod.Name)) {
+					// link is "9999" - skips left as attribute; not needed
+					// xspf.Link = xnod.InnerText;
+				} else
 				if ("playlist".Equals(xnod.Name)) {
-				}
+					// empty element, contains tracks as children
+				} else
 				if ("creator".Equals(xnod.Name)) {
+					// creator is "Last.fm"; not needed
 					xspf.Creator = xnod.InnerText;
-				}
+				} else
 				if ("title".Equals(xnod.Name)) {
+					// title is an empty text since some time, so do not use it later; not needed
 					xspf.Title = xnod.InnerText;
 				}
+				
 				if ("track".Equals(xnod.Name)) {
+					// track handling
 					XSPFTrack xspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 
 					xnodWorking = xnod.FirstChild;
@@ -144,6 +154,7 @@ namespace LibLastRip
 						xspf.AddTrack(xspfTrack);
 					}
 				} else {
+					// go through everything whats not a track while searching for tracks
 					xnodWorking = xnod.FirstChild;
 					while (xnodWorking != null)
 					{
@@ -196,11 +207,13 @@ namespace LibLastRip
 					writeLogLine("skipFEc(" + counter.ToString() + ") " + "'" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 					return false;
 				}
-				if ((String.IsNullOrEmpty(this._QuarantinePath)) || (CheckFileInDirectory(this._QuarantinePath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album))) {
-					// File exists - dont process
-					counter++;
-					writeLogLine("skipFEq(" + counter.ToString() + ") " + "'" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
-					return false;
+				if (String.IsNullOrEmpty(this._QuarantinePath) == false) {
+					if ((CheckFileInDirectory(this._QuarantinePath, this.currentXspfTrack.Title, this.currentXspfTrack.Creator, this.currentXspfTrack.Album))) {
+						// File exists - dont process
+						counter++;
+						writeLogLine("skipFEq(" + counter.ToString() + ") " + "'" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
+						return false;
+					}
 				}
 			}
 			return true;
@@ -224,7 +237,7 @@ namespace LibLastRip
 				}
 				
 				if (excludeFile.Contains(this.currentXspfTrack.Creator)) {
-					writeLogLine("skipEF(" + counter.ToString() + ") " + this.currentXspfTrack.Creator);
+					writeLogLine("skipExF(" + counter.ToString() + ") " + this.currentXspfTrack.Creator);
 					return false;
 				}
 			}
@@ -288,7 +301,10 @@ namespace LibLastRip
 			}
 
 			if (newStation) {
+				// new station could be already stored in xspf, so use this
+				String station = xspf.Station;
 				xspf = XSPF.GetEmptyXSPF();
+				xspf.Station = station;
 				currentXspfTrack = XSPFTrack.GetEmptyXSPFTrack();
 			}
 			
