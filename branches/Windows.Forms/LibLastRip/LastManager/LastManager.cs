@@ -43,6 +43,8 @@ namespace LibLastRip
 		public System.String Comment = "Recorded by TheLastRipper from %s";
 		protected System.Boolean _ExcludeNewMusic;
 		protected System.Boolean _ExcludeExistingMusic;
+		protected System.Boolean _HealthEnabled;
+		protected System.String _HealthValue;
 		protected const System.String PathSeparator = "/";
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
@@ -347,7 +349,37 @@ namespace LibLastRip
 				this._ExcludeExistingMusic = value;
 			}
 		}
+		
+		///<summary>
+		///Gets or set the HealthEnabled
+		///</summary>
+		public System.Boolean HealthEnabled
+		{
+			get
+			{
+				return this._HealthEnabled;
+			}
+			set
+			{
+				this._HealthEnabled = value;
+			}
+		}
 
+		///<summary>
+		///Gets or set the HealthValue
+		///</summary>
+		public System.String HealthValue
+		{
+			get
+			{
+				return this._HealthValue;
+			}
+			set
+			{
+				this._HealthValue = value;
+			}
+		}
+		
 		///<summary>
 		///Gets current connection status
 		///</summary>
