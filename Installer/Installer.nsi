@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "TheLastRipper"
-!define PRODUCT_VERSION "1.3.1 b5"
+!define PRODUCT_VERSION "1.3.1 b6"
 !define PRODUCT_PUBLISHER "TheLastRipper developer team"
 !define PRODUCT_WEB_SITE "http://thelastripper.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\TheLastRipper.exe"
