@@ -191,23 +191,27 @@ namespace LibLastRip
 						if (Opts[1].ToLower().StartsWith("ok"))
 						{
 							Result = true;
-
-							//If we're already recording then don't save current song
-							if(this.Status == ConnectionStatus.Recording)
-							{
-								// Don't save the current song
-								this.SkipSave = true;
-							}else{
-								//If not already recording, then start it and change status
-								this.Status = ConnectionStatus.Recording;
-								this.StartRecording();
-							}
 						} else {
 							if (this.OnError != null) {
 								this.OnError(this, new ErrorEventArgs("No station found. Please change and restart ripping.", null));
 							}
 						}
-					}}
+					}
+				}
+			}
+			
+			if (Result == true) {
+				//If we're already recording then don't save current song
+				if(this.Status == ConnectionStatus.Recording)
+				{
+					// Don't save the current song
+					this.SkipSave = true;
+				}else{
+					//If not already recording, then start it and change status
+					this.Status = ConnectionStatus.Recording;
+					this.StartRecording();
+				}
+
 			}
 			
 			//Fire an event
