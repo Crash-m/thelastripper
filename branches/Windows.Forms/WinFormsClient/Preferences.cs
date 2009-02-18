@@ -61,17 +61,23 @@ namespace WinFormsClient
 				this.PasswordTextBox.Text = settings.Password;
 				this.PasswordTextBox.Enabled = false;
 			}
+			
 			this.MusicPathTextBox.Text = settings.MusicPath;
 			/*			this.FilenamePattern.Text = settings.manager.filename_pattern;
 			this.AfterRipTextBox.Text = settings.manager.AfterRipCommand;
 			this.CommentTextBox.Text = settings.manager.Comment;*/
+			
 			this.FilenamePattern.Text = settings.FileNamePattern;
 			this.AfterRipTextBox.Text = settings.AfterRipCommand;
 			this.CommentTextBox.Text = settings.Comment;
-			this.QuarantinePathTextBox.Text = settings.QuarantinePath;
+			
 			this.ExcludeFileTextBox.Text = settings.ExcludeFile;
-			this.ExcludeNewMusicCheckBox.Checked = settings.ExcludeNewMusic;
+			this.QuarantinePathTextBox.Text = settings.QuarantinePath;
 			this.ExcludeExistingMusicCheckBox.Checked = settings.ExcludeExistingMusic;
+			this.ExcludeNewMusicCheckBox.Checked = settings.ExcludeNewMusic;
+			this.HealthCheckBox.Checked = settings.HealthEnabled;
+			this.HealthTextBox.Text = settings.HealthValue;
+			
 			this.NewSongCommandTextBox.Text = settings.NewSongCommand;
 			this.SaveModeCombo.SelectedIndexChanged += new System.EventHandler(ToggleNewSongCommand);
 			this.SaveModeCombo.SelectedIndex = settings.SaveMode ? 0 : 1;
@@ -214,6 +220,16 @@ namespace WinFormsClient
 					ExcludeNewMusicCheckBox.Checked = false;
 				}
 			}
+			
+			if (HealthCheckBox.Checked) {
+				try {
+					double health = Int64.Parse(HealthTextBox.Text);
+				} catch (Exception e) {
+					// Error
+					System.Windows.Forms.MessageBox.Show("Song health value must be a number, please use the recommended value of 46610 (or higher to get less songs detected as defect)!", "Invalid options selected");
+					ExcludeNewMusicCheckBox.Checked = false;
+				}
+			}
 
 		}
 		
@@ -223,6 +239,12 @@ namespace WinFormsClient
 		}
 		
 		void FilenamePatternTextChanged(object sender, EventArgs e)
+		{
+			checkValidValues();
+		}
+		
+		
+		void HealthTextBoxTextChanged(object sender, EventArgs e)
 		{
 			checkValidValues();
 		}
