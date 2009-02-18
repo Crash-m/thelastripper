@@ -267,7 +267,7 @@ namespace LibLastRip
 			// a) reload existing files DEFAULT=false
 			// b) only load existing artists DEFAULT=false
 			
-			if (!processExcludeExisting()) {
+			if (!processExcludeNew()) {
 				return false;
 			}
 
@@ -275,10 +275,10 @@ namespace LibLastRip
 				return false;
 			}
 
-			if (!processExcludeNew()) {
+			if (!processExcludeExisting()) {
 				return false;
 			}
-			
+
 			writeLogLine("get '" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 
 			// Default: Process file
@@ -339,7 +339,7 @@ namespace LibLastRip
 			bool started = false;
 			
 			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
-			int tryCounter = 5;
+			int tryCounter = 8;
 			
 			while (started == false && this.Status == ConnectionStatus.Recording) {				
 				if (xspf.CountTracks() == 0) {
@@ -358,7 +358,6 @@ namespace LibLastRip
 					}
 				}
 				if (xspf.CountTracks() > 0) {
-					writeLogLine("Tracks left: " + xspf.CountTracks());
 					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
 					this.StreamURL = this.currentXspfTrack.Location;
 
@@ -415,16 +414,29 @@ namespace LibLastRip
 			}
 		}
 		
-		protected void SaveToFile() {
-			double songHealth = this.Song.Length*100/((double.Parse(this.currentXspfTrack.Duration)*16));
+		protected double CalculateHealth(Object length, Object duration) {
+			double len = double.Parse(length.ToString())*8;
+			double dur = double.Parse(duration.ToString()) * 128;
+			
+			//writeLogLine("len: " + len.ToString());
+			//writeLogLine("dur: " + dur.ToString());
+			//writeLogLine("DELTA-" + (len-dur).ToString());
+			
+			double factor = Double.Parse(_HealthValue);
+			//writeLogLine("DELTAFACTOR-" + (len+factor-dur).ToString());
 
-			writeLogLine("Song length in bytes: " + this.Song.Length);
-			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
-			// duration in seconds * 128 kBit/s / 8 bit per byte -> plain data length without header
-			writeLogLine("Song health: " + songHealth.ToString());
+			double songHealth = (len+factor)/dur*100;
+			writeLogLine("song health " + (songHealth).ToString());
+
+			return songHealth;
+		}
+		
+		protected void SaveToFile() {
+			//writeLogLine("Song length in bytes: " + this.Song.Length);
+			//writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
 
 			//Should we save this song?
-			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() || songHealth < 100)
+			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo())
 			{
 				writeLogLine("Song skipped (incomplete or user request)");
 
@@ -435,11 +447,17 @@ namespace LibLastRip
 					FileInfo file = new FileInfo(_Filename);
 					file.Delete();
 				}
-			}else{				
+			}else{
+				bool complete = true;
+				if (_HealthEnabled) {
+  					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration);
+					complete = songHealth >= 100;
+				}
+
 				//If so, then save it but do it on another thread
 				SaveSongCall SSC = new SaveSongCall(this.SaveSong);
 				//Minus one since we don't want the song to end with char 83 = 'S' from SYNC
-				SSC.BeginInvoke(this.Song, (int)this.Song.Length, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+				SSC.BeginInvoke(this.Song, (int)this.Song.Length, this.CurrentSong, complete, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 			}
 			
 			//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
@@ -615,17 +633,21 @@ namespace LibLastRip
 			//Close the old song
 		}
 		
-		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo);
+		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo, bool complete);
 		
 		///<summary>Save a song to disk</summary>
 		///<param name="Song">A MemoryStream containing the song.</param>
 		///<param name="Count">Number of bytes from MemoryStream to save.</param>
 		///<param name="SongInfo">MetaInfo about the song to be saved.</param>
-		protected void SaveSong(Stream Song, System.Int32 Count, MetaInfo SongInfo)
+		protected void SaveSong(Stream Song, System.Int32 Count, MetaInfo SongInfo, bool complete)
 		{
 			SongInfo.Comment = this.Comment;
 			try {
 				String Filename = GetFilename(this.filename_pattern, SongInfo);
+				if (!complete) {
+					Filename += ".defect.mp3";
+					writeLogLine("File may be corrupt, stored to " + Filename);
+				}
 				String AlbumPath = GetAlbumPath(this.filename_pattern, SongInfo);
 				
 				if(this.Song is MemoryStream){
@@ -940,10 +962,13 @@ namespace LibLastRip
 				if(compareTagStrings(f.Tag.FirstAlbumArtist, artist, false) || compareTagStrings(f.Tag.FirstPerformer, artist, false)) {
 					if(compareTagStrings(f.Tag.Album, album, true)) {
 						if(compareTagStrings(f.Tag.Title, title, false)) {
+							if (_HealthEnabled) {
+								// Check if calculated health of file is below 100 - then return false and rip file again
+								double fileHealth = CalculateHealth(file.Length, f.Properties.Duration.TotalMilliseconds);
+								return fileHealth > 100;
+							}
 							return true;
 						}
-					} else {
-						compareTagStrings(f.Tag.Album, album, true);
 					}
 				}
 			}catch(Exception e){
