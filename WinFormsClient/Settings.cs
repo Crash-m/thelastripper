@@ -99,6 +99,8 @@ namespace WinFormsClient
 			this.manager.ExcludeFile = this._excludeFile = Pref.ExcludeFileTextBox.Text;
 			this.manager.ExcludeNewMusic = this._excludeNewMusic = Pref.ExcludeNewMusicCheckBox.Checked;
 			this.manager.ExcludeExistingMusic = this._excludeExistingMusic = Pref.ExcludeExistingMusicCheckBox.Checked;
+			this.manager.HealthEnabled = this._healthEnabled = Pref.HealthCheckBox.Checked;
+			this.manager.HealthValue = this._healthValue = Pref.HealthTextBox.Text;
 			
 			this.TopTracks = Pref.TopTracksCheckBox.Checked;
 			this.RecentLovedTracks = Pref.RecentlyLovedCheckBox.Checked;
@@ -219,6 +221,20 @@ namespace WinFormsClient
 			get
 			{
 				return this._excludeExistingMusic;
+			}
+		}
+		public System.Boolean HealthEnabled
+		{
+			get
+			{
+				return this._healthEnabled;
+			}
+		}
+		public System.String HealthValue
+		{
+			get
+			{
+				return this._healthValue;
 			}
 		}
 		public System.String ProxyAddress
