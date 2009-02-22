@@ -635,6 +635,8 @@ namespace LibLastRip
 		
 		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo, bool complete);
 		
+		public event EventHandler<SongCompletedEventArgs> SongCompleted;
+		
 		///<summary>Save a song to disk</summary>
 		///<param name="Song">A MemoryStream containing the song.</param>
 		///<param name="Count">Number of bytes from MemoryStream to save.</param>
@@ -662,6 +664,10 @@ namespace LibLastRip
 				
 				//Write metadata to stream as ID3v1
 				SongInfo.AppendID3(Filename);
+				
+				//Run the SongCompleted event if needed
+				if(this.SongCompleted != null)		//I think this is the right place for this event to be executed...
+					this.SongCompleted(this, new SongCompletedEventArgs(SongInfo, Filename));
 				
 				try {
 					//execute after rip command

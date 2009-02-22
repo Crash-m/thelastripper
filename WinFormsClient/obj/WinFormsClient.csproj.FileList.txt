@@ -1,4 +1,3 @@
-bin\Debug\WinFormsClient.exe
 bin\Debug\LibLastRip.dll
 bin\Debug\taglib-sharp.dll
 bin\Release\WinFormsClient.exe
@@ -11,7 +10,6 @@ obj\Release\WinFormsClient.MainForm.resources
 obj\Release\WinFormsClient.Preferences.resources
 obj\Release\WinFormsClient.csproj.GenerateResource.Cache
 obj\Release\WinFormsClient.exe
-bin\Debug\WinFormsClient.pdb
 bin\Debug\LibLastRip.pdb
 obj\Debug\ResolveAssemblyReference.cache
 obj\Debug\WinFormsClient.About.resources
@@ -19,5 +17,10 @@ obj\Debug\WinFormsClient.FatalExceptionHandler.resources
 obj\Debug\WinFormsClient.MainForm.resources
 obj\Debug\WinFormsClient.Preferences.resources
 obj\Debug\WinFormsClient.csproj.GenerateResource.Cache
-obj\Debug\WinFormsClient.exe
-obj\Debug\WinFormsClient.pdb
+bin\Debug\TheLastRipper.exe
+bin\Debug\TheLastRipper.pdb
+bin\Debug\LockerPut.dll
+bin\Debug\LockerPut.pdb
+obj\Debug\WinFormsClient.CreateLockerDialog.resources
+obj\Debug\TheLastRipper.exe
+obj\Debug\TheLastRipper.pdb

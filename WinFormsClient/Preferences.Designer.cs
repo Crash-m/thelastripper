@@ -101,6 +101,14 @@ namespace WinFormsClient
 			this.NewSongCommandTextBox = new System.Windows.Forms.TextBox();
 			this.AfterRipLabel = new System.Windows.Forms.Label();
 			this.AfterRipTextBox = new System.Windows.Forms.TextBox();
+			this.tabPage7 = new System.Windows.Forms.TabPage();
+			this.LockercheckBox = new System.Windows.Forms.CheckBox();
+			this.groupBoxLocker = new System.Windows.Forms.GroupBox();
+			this.LockerPasswordTextBox = new System.Windows.Forms.MaskedTextBox();
+			this.labelPassword = new System.Windows.Forms.Label();
+			this.emailLabel = new System.Windows.Forms.Label();
+			this.LockerEmailtextBox = new System.Windows.Forms.TextBox();
+			this.CreateLockerbutton = new System.Windows.Forms.Button();
 			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.LoginGroupBox.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -116,6 +124,8 @@ namespace WinFormsClient
 			this.tabPage5.SuspendLayout();
 			this.tabPage6.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.tabPage7.SuspendLayout();
+			this.groupBoxLocker.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FolderBrowserDialog
@@ -415,6 +425,7 @@ namespace WinFormsClient
 			this.tabControl1.Controls.Add(this.tabPage4);
 			this.tabControl1.Controls.Add(this.tabPage5);
 			this.tabControl1.Controls.Add(this.tabPage6);
+			this.tabControl1.Controls.Add(this.tabPage7);
 			this.tabControl1.Location = new System.Drawing.Point(12, 12);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -766,6 +777,94 @@ namespace WinFormsClient
 			this.AfterRipTextBox.Size = new System.Drawing.Size(398, 20);
 			this.AfterRipTextBox.TabIndex = 3;
 			// 
+			// tabPage7
+			// 
+			this.tabPage7.Controls.Add(this.LockercheckBox);
+			this.tabPage7.Controls.Add(this.groupBoxLocker);
+			this.tabPage7.Location = new System.Drawing.Point(4, 22);
+			this.tabPage7.Name = "tabPage7";
+			this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage7.Size = new System.Drawing.Size(422, 183);
+			this.tabPage7.TabIndex = 6;
+			this.tabPage7.Text = "MP3tunes";
+			this.tabPage7.UseVisualStyleBackColor = true;
+			// 
+			// LockercheckBox
+			// 
+			this.LockercheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.LockercheckBox.Location = new System.Drawing.Point(12, 6);
+			this.LockercheckBox.Name = "LockercheckBox";
+			this.LockercheckBox.Size = new System.Drawing.Size(404, 24);
+			this.LockercheckBox.TabIndex = 1;
+			this.LockercheckBox.Text = "Upload recorded tracks to music locker at MP3tunes";
+			this.LockercheckBox.UseVisualStyleBackColor = true;
+			this.LockercheckBox.CheckedChanged += new System.EventHandler(this.LockercheckBoxCheckedChanged);
+			// 
+			// groupBoxLocker
+			// 
+			this.groupBoxLocker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBoxLocker.Controls.Add(this.LockerPasswordTextBox);
+			this.groupBoxLocker.Controls.Add(this.labelPassword);
+			this.groupBoxLocker.Controls.Add(this.emailLabel);
+			this.groupBoxLocker.Controls.Add(this.LockerEmailtextBox);
+			this.groupBoxLocker.Controls.Add(this.CreateLockerbutton);
+			this.groupBoxLocker.Enabled = false;
+			this.groupBoxLocker.Location = new System.Drawing.Point(6, 36);
+			this.groupBoxLocker.Name = "groupBoxLocker";
+			this.groupBoxLocker.Size = new System.Drawing.Size(410, 114);
+			this.groupBoxLocker.TabIndex = 0;
+			this.groupBoxLocker.TabStop = false;
+			this.groupBoxLocker.Text = "MP3tunes login";
+			// 
+			// LockerPasswordTextBox
+			// 
+			this.LockerPasswordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.LockerPasswordTextBox.Location = new System.Drawing.Point(88, 45);
+			this.LockerPasswordTextBox.Name = "LockerPasswordTextBox";
+			this.LockerPasswordTextBox.Size = new System.Drawing.Size(316, 20);
+			this.LockerPasswordTextBox.TabIndex = 5;
+			this.LockerPasswordTextBox.UseSystemPasswordChar = true;
+			// 
+			// labelPassword
+			// 
+			this.labelPassword.Location = new System.Drawing.Point(6, 48);
+			this.labelPassword.Name = "labelPassword";
+			this.labelPassword.Size = new System.Drawing.Size(76, 23);
+			this.labelPassword.TabIndex = 4;
+			this.labelPassword.Text = "Password:";
+			// 
+			// emailLabel
+			// 
+			this.emailLabel.Location = new System.Drawing.Point(6, 22);
+			this.emailLabel.Name = "emailLabel";
+			this.emailLabel.Size = new System.Drawing.Size(76, 17);
+			this.emailLabel.TabIndex = 3;
+			this.emailLabel.Text = "E-mail:";
+			// 
+			// LockerEmailtextBox
+			// 
+			this.LockerEmailtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.LockerEmailtextBox.Location = new System.Drawing.Point(88, 19);
+			this.LockerEmailtextBox.Name = "LockerEmailtextBox";
+			this.LockerEmailtextBox.Size = new System.Drawing.Size(316, 20);
+			this.LockerEmailtextBox.TabIndex = 2;
+			// 
+			// CreateLockerbutton
+			// 
+			this.CreateLockerbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CreateLockerbutton.Location = new System.Drawing.Point(239, 71);
+			this.CreateLockerbutton.Name = "CreateLockerbutton";
+			this.CreateLockerbutton.Size = new System.Drawing.Size(165, 23);
+			this.CreateLockerbutton.TabIndex = 0;
+			this.CreateLockerbutton.Text = "Create new MP3tunes account";
+			this.CreateLockerbutton.UseVisualStyleBackColor = true;
+			this.CreateLockerbutton.Click += new System.EventHandler(this.CreateLockerbuttonClick);
+			// 
 			// OpenFileDialog
 			// 
 			this.OpenFileDialog.FileName = "exclude.txt";
@@ -804,8 +903,19 @@ namespace WinFormsClient
 			this.tabPage6.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.tabPage7.ResumeLayout(false);
+			this.groupBoxLocker.ResumeLayout(false);
+			this.groupBoxLocker.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Button CreateLockerbutton;
+		public System.Windows.Forms.TextBox LockerEmailtextBox;
+		private System.Windows.Forms.Label emailLabel;
+		private System.Windows.Forms.Label labelPassword;
+		public System.Windows.Forms.MaskedTextBox LockerPasswordTextBox;
+		private System.Windows.Forms.GroupBox groupBoxLocker;
+		public System.Windows.Forms.CheckBox LockercheckBox;
+		private System.Windows.Forms.TabPage tabPage7;
 		private System.Windows.Forms.Label label7;
 		public System.Windows.Forms.CheckBox HealthCheckBox;
 		public System.Windows.Forms.TextBox HealthTextBox;

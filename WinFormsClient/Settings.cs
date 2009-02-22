@@ -8,6 +8,7 @@ namespace WinFormsClient
 	{
 		private System.String _password = "";
 		public LibLastRip.LastManager manager;
+		public LockerPut.Locker locker = null;
 		private System.Boolean savePassword;
 		private System.String _Comment;
 		private System.String _FileNamePattern;
@@ -125,6 +126,17 @@ namespace WinFormsClient
 			this._proxyPassword = Pref.ProxyPasswordTextBox.Text;
 			this._proxyUsername = Pref.ProxyUsernameTextBox.Text;
 			
+			//Get locker settings
+			this._UploadToLocker = Pref.LockercheckBox.Checked;
+			if(this.UploadToLocker){
+				this._LockerUsername = Pref.LockerEmailtextBox.Text;
+				this._LockerPassword = Pref.LockerPasswordTextBox.Text;
+			}
+			
+			if(Pref.locker.IsLoggedin){
+				this.locker = Pref.locker;
+			}
+			
 			if(saveSettings)
 			{
 				this.SaveSettings();
@@ -134,7 +146,8 @@ namespace WinFormsClient
 				Pref.NewSongCommandTextBox.Enabled = true;
 			else
 				Pref.NewSongCommandTextBox.Enabled = false;
-			 */		}
+			 */
+		}
 		
 		public static Settings Restore()
 		{
@@ -304,6 +317,38 @@ namespace WinFormsClient
 				return _PortNum;
 			}
 		}
+		
+		private String _LockerUsername = "";
+		private String _LockerPassword = "";
+		private Boolean _UploadToLocker = false;
+		
+		public Boolean UploadToLocker {
+			get{
+				return this._UploadToLocker;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the mp3locker password, String.Empty if none
+		/// </summary>
+		public string LockerPassword {
+			get{
+				if(!this.UploadToLocker)
+					return String.Empty;
+				return this._LockerPassword;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the mp3locker username, String.Empty if none
+		/// </summary>
+		public string LockerUsername {
+			get{
+				if(!this.UploadToLocker)
+					return String.Empty;
+				return this._LockerUsername;
+			}
+		}
 
 		/// <summary>
 		/// Deserializes data from serialization object, used when restoring data saved with serialization.
@@ -334,6 +379,18 @@ namespace WinFormsClient
 				this._NewSongCommand = info.GetString("NewSongCommand");
 			this._SaveMode = info.GetBoolean("SaveMode");
 			this._PortNum = info.GetInt32("PortNumber");
+			
+			//Get locker settings don't complain if they aren't present
+			try{
+				this._UploadToLocker = info.GetBoolean("UploadToLocker");
+			}
+			catch(System.Runtime.Serialization.SerializationException Se){
+				this._UploadToLocker = false;
+			}
+			if(this.UploadToLocker){
+				this._LockerUsername = info.GetString("LockerUsername");
+				this._LockerPassword = info.GetString("LockerPassword");
+			}
 			
 			//Launch preferences without saving, after close since that would give IO problems, cause this method would have returned and serialization object/stream would still be open.
 			this.LaunchPreferences(false);
@@ -366,6 +423,13 @@ namespace WinFormsClient
 			info.AddValue("NewSongCommand",this._NewSongCommand);
 			info.AddValue("SaveMode",this._SaveMode);
 			info.AddValue("PortNumber",this._PortNum);
+			
+			//Save locker settings
+			info.AddValue("UploadToLocker", this.UploadToLocker);
+			if(this.UploadToLocker){
+				info.AddValue("LockerUsername", this._LockerUsername);
+				info.AddValue("LockerPassword", this._LockerPassword);
+			}
 		}
 	}
 }

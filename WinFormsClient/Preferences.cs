@@ -22,8 +22,9 @@ namespace WinFormsClient
 	{
 		public System.Boolean hasPassword = false;
 		private LibLastRip.LastManager manager;
+		public LockerPut.Locker locker = new LockerPut.Locker("1554898388");
 		
-		public Preferences(LibLastRip.LastManager manager,Settings settings)
+		public Preferences(LibLastRip.LastManager manager, Settings settings)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -93,6 +94,11 @@ namespace WinFormsClient
 			
 			//Subscribe to handshake callback event
 			this.manager.HandshakeReturn += new EventHandler(this.LoginCallback);
+			
+			//Setup locker settings
+			this.LockercheckBox.Checked = settings.UploadToLocker;
+			this.LockerEmailtextBox.Text = settings.LockerUsername;
+			this.LockerPasswordTextBox.Text = settings.LockerPassword;
 		}
 		
 		void BrowseButtonClick(object sender, EventArgs e)
@@ -137,6 +143,8 @@ namespace WinFormsClient
 			this.LoginGroupBox.Enabled = value;
 			this.NetworkGroupBox.Enabled = value;
 			this.LoginButton.Enabled = value;
+			this.groupBoxLocker.Enabled = value;
+			this.LockercheckBox.Enabled = value;
 		}
 		
 		/// <summary>
@@ -157,13 +165,49 @@ namespace WinFormsClient
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
-			
 			LibLastRip.HandshakeEventArgs hArgs = (LibLastRip.HandshakeEventArgs)Args;
 			if(hArgs.Success)  {
+				//Check if we need login at locker
+				if(this.LockercheckBox.Checked){		//Our api key for mp3locker
+					if(!this.locker.IsLoggedin){
+						this.locker.OnLogin += new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerLoginCallback);
+						this.locker.Login(this.LockerEmailtextBox.Text, this.LockerPasswordTextBox.Text);
+						return;	//OK button will be enabled when LockerLoginCallback returns
+					}
+				}
+				
+				//Enable ok button
 				this.OKbutton.Enabled = true;
 				this.OKbutton.Focus();
 			} else {
 				setLoginElements(true);
+			}
+		}
+		
+		/// <summary>
+		/// Handle callback from locker login
+		/// </summary>
+		void LockerLoginCallback(Object Sender, LockerPut.LockerLoginEventArgs args){
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerLoginCallback), new System.Object[]{Sender, args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			if(args.Success){
+				//Enable ok button
+				this.OKbutton.Enabled = true;
+				this.OKbutton.Focus();
+			}else{
+				MessageBox.Show(args.Message, "MP3Locker login failed");
+				this.setLoginElements(true);
 			}
 		}
 		
@@ -247,6 +291,25 @@ namespace WinFormsClient
 		void HealthTextBoxTextChanged(object sender, EventArgs e)
 		{
 			checkValidValues();
+		}
+		
+		void LockercheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			//Enable/disable mp3 locker stuff
+			this.groupBoxLocker.Enabled = this.LockercheckBox.Checked;
+		}
+		
+		/// <summary>
+		/// Create a new locker
+		/// </summary>
+		void CreateLockerbuttonClick(object sender, EventArgs e)
+		{
+			CreateLockerDialog dlg = new CreateLockerDialog(this.locker);
+			DialogResult res = dlg.ShowDialog();
+			if(res == DialogResult.OK){
+				this.LockerEmailtextBox.Text = dlg.Username;
+				this.LockerPasswordTextBox.Text = dlg.Password;
+			}
 		}
 	}
 }
