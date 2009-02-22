@@ -47,6 +47,7 @@ namespace WinFormsClient
 		
 		void AbortButtonClick(object sender, EventArgs e)
 		{
+			this.locker.OnLogin -= new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerLoginCallback);
 			this.DialogResult = DialogResult.Cancel;
 		}
 		
