@@ -38,6 +38,7 @@ namespace WinFormsClient
 		
 		private LibLastRip.LastManager manager;
 		private Settings settings;
+		private LockerPut.Locker locker;
 		
 		public MainForm()
 		{
@@ -49,6 +50,7 @@ namespace WinFormsClient
 			//
 			this.settings = Settings.Restore();
 			this.manager = this.settings.manager;
+			this.locker = this.settings.locker;
 			
 			if(this.manager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 			{
@@ -68,6 +70,12 @@ namespace WinFormsClient
 			
 			//Subscribe to OnError
 			this.manager.OnError += new EventHandler(this.OnError);
+			
+			//Subscribe to locker
+			if(this.locker != null && this.locker.IsLoggedin){
+				this.locker.OnPutTrackComplete += new EventHandler<LockerPut.PutTrackCompleteEventArgs>(this.LockerPutSongCallback);
+				this.manager.SongCompleted += new EventHandler<LibLastRip.SongCompletedEventArgs>(this.SongCompleted);
+			}
 		}
 		
 		private void OnError(System.Object sender, System.EventArgs args)
@@ -268,6 +276,41 @@ namespace WinFormsClient
 					}
 					
 				}
+			}
+		}
+		
+		/// <summary>
+		/// Handle song completed event
+		/// </summary>
+		void SongCompleted(Object Sender, LibLastRip.SongCompletedEventArgs args){
+			//Note we're not on the UI thread
+			
+			//Try to upload to locker if this should be done
+			if(this.locker != null && this.locker.IsLoggedin){
+				this.locker.PutTrack(args.Filename);
+			}
+		}
+		
+		/// <summary>
+		/// Handle locker put song callback
+		/// </summary>
+		void LockerPutSongCallback(Object Sender, LockerPut.PutTrackCompleteEventArgs args){
+			//HACK: This should be handled before the events were fired, but .Net doesn't have any methods to do that independant of GUI set.
+			//Check for if we're on the UI-thread, if not invoke this method to run on UI-thread.
+			//This is done since the event launching the method may occur on a different thread.
+			if(this.InvokeRequired)
+			{
+				//Invoke this method and it's arguments to the correct thread.
+				this.Invoke(new EventHandler<LockerPut.PutTrackCompleteEventArgs>(this.LockerPutSongCallback), new System.Object[]{Sender, args});
+				//Return this method to avoid executing the logic on the wrong thread.
+				return;
+			}
+			//Check if we're on the right thread now, we should be!
+			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+			
+			//We should probably log this somewhere else... but terminal is probably good enought for most purposes
+			if(!args.Success){
+				Console.WriteLine("Couldn't upload song to mp3tunes locker: " + args.Message);
 			}
 		}
 		
