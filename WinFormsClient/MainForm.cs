@@ -221,6 +221,9 @@ namespace WinFormsClient
 			}
 			//Check if we're on the right thread now, we should be!
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
+		
+			// enable all command buttons
+			EnableCommands(true);
 			
 			LibLastRip.MetaInfo info = (LibLastRip.MetaInfo)args;
 			this.StatusBar.Value = 0;
@@ -385,7 +388,7 @@ namespace WinFormsClient
 			LibLastRip.StationChangedEventArgs stationChangedEventArgs = (LibLastRip.StationChangedEventArgs)args;
 			this.TuneInButton.Enabled = true;
 			if(stationChangedEventArgs.Success){
-				this.EnableCommands();
+				this.EnableCommands(true);
 			}
 		}
 		
@@ -394,6 +397,7 @@ namespace WinFormsClient
 			// only skip if there is a song to skip
 			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
 				this.manager.SkipSong();
+				this.EnableCommands(true);
 			}
 		}
 		
@@ -401,7 +405,7 @@ namespace WinFormsClient
 		{
 			// only love if there is a song to love
 			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
-				this.DisableCommands();
+				this.DisableCommands(false);
 				this.manager.LoveSong();
 			}
 		}
@@ -410,7 +414,7 @@ namespace WinFormsClient
 		{
 			// only hate if there is a song to hate
 			if (!LibLastRip.MetaInfo.GetEmptyMetaInfo().Equals(this.manager.CurrentSong)) {
-				this.DisableCommands();
+				this.DisableCommands(false);
 				this.manager.BanSong();
 			}
 		}
@@ -439,27 +443,31 @@ namespace WinFormsClient
 			
 			
 			//LibLastRip.CommandEventArgs Args = (LibLastRip.CommandEventArgs)e;
-			this.EnableCommands();
+			this.EnableCommands(true);
 		}
 		
 		/// <summary>
 		/// Disables all commandbuttons
 		/// </summary>
-		void DisableCommands()
+		void DisableCommands(Boolean includeSkip)
 		{
 			this.LoveButton.Enabled = false;
 			this.HateButton.Enabled = false;
-			this.SkipButton.Enabled = false;
+			if (includeSkip) {
+				this.SkipButton.Enabled = false;
+			}
 		}
 		
 		/// <summary>
 		/// Enables all command buttons
 		/// </summary>
-		void EnableCommands()
+		void EnableCommands(Boolean includeSkip)
 		{
 			this.LoveButton.Enabled = true;
 			this.HateButton.Enabled = true;
-			this.SkipButton.Enabled = true;
+			if (includeSkip) {
+				this.SkipButton.Enabled = true;
+			}
 		}
 
 		void TuneInTo(String station) {
