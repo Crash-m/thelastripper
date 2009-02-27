@@ -132,7 +132,7 @@ For more information on the XSPF (XML Sharable Playlist File) format created by 
 == Request ==
 *Example:*
 {{{
-    http://[base_url][base_path]/xspf.php?sk=[SESSIONID]&discovery=0&desktop=1.3.1.1
+    http://[base_url][base_path]/xspf.php?sk=[SESSIONID]&discovery=0&desktop=1.5.1
 }}}
 
 
