@@ -424,7 +424,7 @@ namespace LibLastRip
 			writeLogLine("Song health: " + songHealth.ToString());
 
 			//Should we save this song?
-			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() || songHealth < 100)
+			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() )//|| songHealth < 100)
 			{
 				writeLogLine("Song skipped (incomplete or user request)");
 

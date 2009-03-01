@@ -100,6 +100,8 @@ namespace LibLastRip
 			{
 				this.SkipSave = true;
 			}
+			if(this.CommandReturn != null)
+				this.CommandReturn(this, new CommandEventArgs(this.SkipSave));
 		}
 		
 		///<summary>
