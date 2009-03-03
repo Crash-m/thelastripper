@@ -395,7 +395,7 @@ namespace WinFormsClient
 			try{
 				this._UploadToLocker = info.GetBoolean("UploadToLocker");
 			}
-			catch(System.Runtime.Serialization.SerializationException Se){
+			catch(System.Runtime.Serialization.SerializationException){
 				this._UploadToLocker = false;
 			}
 			if(this.UploadToLocker){
