@@ -561,6 +561,7 @@ namespace WinFormsClient
 			// 
 			// SaveModeCombo
 			// 
+			this.SaveModeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.SaveModeCombo.Items.AddRange(new object[] {
 									"Save directly to disc",
 									"Buffer in memory and after save to disc"});
