@@ -121,11 +121,11 @@ public partial class MainWindow: Gtk.Window
 		if(!Info.isEmpty())
 		{
 			System.String StrText = "";
-			StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track) + "</span>\n";
-			StrText += "<b>By: </b>" + GLib.Markup.EscapeText(Info.Artist) + "\n";
-			StrText += "<b>Album: </b>"+ GLib.Markup.EscapeText(Info.Album) + "\n";
-			StrText += "<b>Length: </b>"+ GLib.Markup.EscapeText(Info.Trackduration) + " seconds\n";
-			StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station) + "</i>";
+			StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track.Replace("&","and")) + "</span>\n";
+			StrText += "<b>By: </b>" + GLib.Markup.EscapeText(Info.Artist.Replace("&","and")) + "\n";
+			StrText += "<b>Album: </b>"+ GLib.Markup.EscapeText(Info.Album.Replace("&","and")) + "\n";
+			StrText += "<b>Length: </b>"+ GLib.Markup.EscapeText(Info.Trackduration.Replace("&","and")) + " seconds\n";
+			StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station.Replace("&","and")) + "</i>";
 			this.StatusLabel.Markup = StrText;
 			
 			if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
