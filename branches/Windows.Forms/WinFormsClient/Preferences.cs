@@ -270,7 +270,7 @@ namespace WinFormsClient
 					double health = Int64.Parse(HealthTextBox.Text);
 				} catch (Exception) {
 					// Error
-					System.Windows.Forms.MessageBox.Show("Song health value must be a number, please use the recommended value of 46610 (or higher to get less songs detected as defect)!", "Invalid options selected");
+					System.Windows.Forms.MessageBox.Show("Song health value must be a number, please use the recommended value of 46690 (or higher to get less songs detected as defect)!", "Invalid options selected");
 					ExcludeNewMusicCheckBox.Checked = false;
 				}
 			}
