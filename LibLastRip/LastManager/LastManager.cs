@@ -40,7 +40,7 @@ namespace LibLastRip
 		protected System.String _MusicPath;
 		protected System.String _QuarantinePath;
 		protected System.String _ExcludeFile;
-		public System.String Comment = "Recorded by TheLastRipper from %s";
+		public System.String Comment = "Recorded from %s";
 		protected System.Boolean _ExcludeNewMusic;
 		protected System.Boolean _ExcludeExistingMusic;
 		protected System.Boolean _HealthEnabled;
@@ -71,6 +71,9 @@ namespace LibLastRip
 			chars.Add('<');
 			chars.Add('>');
 			chars.Add('|');
+			
+			// newly added characters which are probably causing problems - these should be replaced... 
+			// chars.Add('š'); // replace with 's'
 			return chars;
 		}
 		
