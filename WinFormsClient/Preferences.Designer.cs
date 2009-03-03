@@ -633,7 +633,7 @@ namespace WinFormsClient
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(71, 20);
 			this.label7.TabIndex = 16;
-			this.label7.Text = "46610";
+			this.label7.Text = "46690";
 			// 
 			// HealthTextBox
 			// 
@@ -641,7 +641,7 @@ namespace WinFormsClient
 			this.HealthTextBox.Name = "HealthTextBox";
 			this.HealthTextBox.Size = new System.Drawing.Size(67, 20);
 			this.HealthTextBox.TabIndex = 15;
-			this.HealthTextBox.Text = "46610";
+			this.HealthTextBox.Text = "46690";
 			this.HealthTextBox.TextChanged += new System.EventHandler(this.HealthTextBoxTextChanged);
 			// 
 			// HealthCheckBox
