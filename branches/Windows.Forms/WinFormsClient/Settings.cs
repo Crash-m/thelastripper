@@ -17,8 +17,21 @@ namespace WinFormsClient
 		private System.Boolean _SaveMode;
 		private System.Int32 _PortNum;
 		
+		private static System.String TlrDataFile = getTlrDataFile();
+		
+		private static System.String getTlrDataFile() {
+			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+			System.String TlrDataDir = AppData + "\\TheLastRipper";
+			System.String TlrDataFile = TlrDataDir + "\\TheLastRipper.xml";
+
+			if(!System.IO.Directory.Exists(TlrDataDir)) {
+				System.IO.Directory.CreateDirectory(TlrDataDir);
+			}			
+			return TlrDataFile;
+		}
+		
 		public Settings()
-		{
+		{			
 			this._musicPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic);
 			this.manager = new LibLastRip.LastManager(this._musicPath);
 			
@@ -151,12 +164,11 @@ namespace WinFormsClient
 		
 		public static Settings Restore()
 		{
-			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-			if(System.IO.File.Exists(AppData + "\\TheLastRipper.xml"))
+			if(System.IO.File.Exists(TlrDataFile))
 			{
 				Settings Obj;
 				System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-				System.IO.FileStream Stream = System.IO.File.OpenRead(AppData + "\\TheLastRipper.xml");
+				System.IO.FileStream Stream = System.IO.File.OpenRead(TlrDataFile);
 				
 				try
 				{
@@ -176,10 +188,9 @@ namespace WinFormsClient
 		}
 		public virtual void SaveSettings()
 		{
-			System.String AppData = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
 			System.Runtime.Serialization.Formatters.Binary.BinaryFormatter Formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 			
-			System.IO.FileStream Stream = System.IO.File.Create(AppData + "\\TheLastRipper.xml");
+			System.IO.FileStream Stream = System.IO.File.Create(TlrDataFile);
 			
 			Formatter.Serialize(Stream,this);
 			Stream.Flush();
