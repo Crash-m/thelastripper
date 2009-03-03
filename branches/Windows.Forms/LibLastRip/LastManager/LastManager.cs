@@ -1,4 +1,4 @@
-// LibLastRip - A Last.FM ripping library for TheLastRipper
+﻿// LibLastRip - A Last.FM ripping library for TheLastRipper
 // Copyright (C) 2007  Jop... (Jonas F. Jensen).
 // 
 // This program is free software; you can redistribute it and/or
@@ -72,9 +72,19 @@ namespace LibLastRip
 			chars.Add('>');
 			chars.Add('|');
 			
-			// newly added characters which are probably causing problems - these should be replaced... 
-			// chars.Add('�'); // replace with 's'
 			return chars;
+		}
+		
+		public static String replaceUtf8Chars(String value) {
+			if (!String.IsNullOrEmpty(value)) {
+				// beware: this are utf-8 characters, so this file is now stored to utf8
+				return value.
+					// Replace('ï', 'i'). // works in windows, so do not replace at the moment
+					Replace('ř', 'r'). // r with "dach"
+					Replace('š', 's'); // s with "dach"
+				
+			}
+			return value;
 		}
 		
 		///<summary>
@@ -436,7 +446,7 @@ namespace LibLastRip
 		///</summary>
 		///<param name="Input">String from which InvalidChars must be removed.</param>
 		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
-		protected internal static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
+		private static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
 		{
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
@@ -448,7 +458,9 @@ namespace LibLastRip
 					Output += TestChar.ToString();
 				}
 			}
-			return Output;
+			
+			// the utf8-chars must be replaced in any case!
+			return replaceUtf8Chars(Output);
 		}
 	}
 
