@@ -127,14 +127,14 @@ namespace LibLastRip
 					// link is "9999" - skips left as attribute; not needed
 					// xspf.Link = xnod.InnerText;
 				} else
-				if ("playlist".Equals(xnod.Name)) {
+					if ("playlist".Equals(xnod.Name)) {
 					// empty element, contains tracks as children
 				} else
-				if ("creator".Equals(xnod.Name)) {
+					if ("creator".Equals(xnod.Name)) {
 					// creator is "Last.fm"; not needed
 					xspf.Creator = xnod.InnerText;
 				} else
-				if ("title".Equals(xnod.Name)) {
+					if ("title".Equals(xnod.Name)) {
 					// title is an empty text since some time, so do not use it later; not needed
 					xspf.Title = xnod.InnerText;
 				}
@@ -296,7 +296,7 @@ namespace LibLastRip
 		
 		private void RequestPlaylist() {
 			// Getting Playlist
-			String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
+			String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.5.1";
 			WebRequest wReq = WebRequest.Create(url);
 			// setting timeout to 15s
 			wReq.Timeout = 1000 * 15;
@@ -341,7 +341,7 @@ namespace LibLastRip
 			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
 			int tryCounter = 8;
 			
-			while (started == false && this.Status == ConnectionStatus.Recording) {				
+			while (started == false && this.Status == ConnectionStatus.Recording) {
 				if (xspf.CountTracks() == 0) {
 					try {
 						if (this.OnScanning != null) {
@@ -364,17 +364,24 @@ namespace LibLastRip
 					//Check if file exists
 					if(processFile())
 					{
-						started = true;
-						//Getting stream
-						WebRequest wReq = WebRequest.Create(this.StreamURL);
-						HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-						//this._SongUrl = hRes.ResponseUri.AbsoluteUri;
-						//writeLogLine("Response uri: " + hRes.ResponseUri.AbsoluteUri);
-						System.IO.Stream RadioStream = hRes.GetResponseStream();
+						try {
+							started = true;
+							//Getting stream
+							WebRequest wReq = WebRequest.Create(this.StreamURL);
+							HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+							//this._SongUrl = hRes.ResponseUri.AbsoluteUri;
+							//writeLogLine("Response uri: " + hRes.ResponseUri.AbsoluteUri);
+							System.IO.Stream RadioStream = hRes.GetResponseStream();
 
-						//Start reading process
-						// TODO: Lock could be active if response is fast - re-think about stream locking!
-						RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+							//Start reading process
+							// TODO: Lock could be active if response is fast - re-think about stream locking!
+							RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+						} catch (Exception e) {
+							handleError(true, new ErrorEventArgs(e.ToString()));
+							
+							// no way to continue...
+							StopRecording();
+						}
 					}
 				} else {
 					// This code will only be executed if RequestPlaylist fails with an exception or if it gets no tracks
@@ -450,7 +457,7 @@ namespace LibLastRip
 			}else{
 				bool complete = true;
 				if (_HealthEnabled) {
-  					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration);
+					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration);
 					complete = songHealth >= 100;
 				}
 
@@ -676,20 +683,23 @@ namespace LibLastRip
 					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);
 				}
 				
-				//Download covers - don't care for errors because some not exist
-				WebClient Client = new WebClient();
-				
-				// First download larger covers - because small cover fails more often
-				// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
-				Thread.Sleep(5000);
-				try {
-					String cover = AlbumPath + Path.DirectorySeparatorChar + "cover.jpg";
-					if((!File.Exists(cover)) && SongInfo.Albumcover != null) {
-						writeLogLine("download cover " + cover);
-						Client.DownloadFile(SongInfo.Albumcover, cover);
+				if (!String.IsNullOrEmpty(SongInfo.Albumcover)) {
+					//Download covers - don't care for errors because some not exist
+					WebClient Client = new WebClient();
+					
+					// First download larger covers - because small cover fails more often
+					// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
+					Thread.Sleep(5000);
+					try {
+						String cover = AlbumPath + Path.DirectorySeparatorChar + "cover.jpg";
+						if((!File.Exists(cover)) && SongInfo.Albumcover != null) {
+							writeLogLine("download cover " + cover);
+							Client.DownloadFile(SongInfo.Albumcover, cover);
+						}
+					} catch (Exception e) {
+						// no cover, no pain
+						writeLogLine("Exception downloading cover: " + e.ToString());
 					}
-				} catch (System.Net.WebException) {
-					// no cover
 				}
 			} catch (Exception e) {
 				writeLogLine("Exception occured: " + e.ToString());
@@ -918,6 +928,11 @@ namespace LibLastRip
 		///<summary>removes characters from a string to better compare tag values</summary>
 		///<param name="val">Tag value to handle.</param>
 		private String unifyTagString(String val) {
+			if (String.IsNullOrEmpty(val)) {
+				// nothing to do - and Replace throws an exception if used with zero length strings
+				return "";
+			}
+			
 			return val.ToLower().
 				Replace(" ", "").
 				Replace("!", "").
