@@ -70,10 +70,10 @@ namespace LockerPut
 		/// <param name="LastName">Lastname</param>
 		/// <param name="Email">Valid email address</param>
 		public void CreateAccount(String Username, String Password, String FirstName, String LastName, String Email){
-			Uri address = new Uri("https://shop.mp3tunes.com/api/v1/createAccount?output=xml&firstname=" + Uri.EscapeDataString(FirstName) 
-			                      + "&lastname=" + Uri.EscapeDataString(LastName) 
-			                      + "&password=" + Uri.EscapeDataString(Password) 
-			                      + "&email=" + Uri.EscapeDataString(Email) 
+			Uri address = new Uri("https://shop.mp3tunes.com/api/v1/createAccount?output=xml&firstname=" + Uri.EscapeDataString(FirstName)
+			                      + "&lastname=" + Uri.EscapeDataString(LastName)
+			                      + "&password=" + Uri.EscapeDataString(Password)
+			                      + "&email=" + Uri.EscapeDataString(Email)
 			                      + "&partner_token=" + this.PartnerToken);
 			this.worker.DownloadStringAsync(address);
 		}
@@ -188,9 +188,15 @@ namespace LockerPut
 		/// </summary>
 		/// <param name="TrackStream">The track</param>
 		/// <param name="MD5sum">MD5sum of the track</param>
-		public void PutTrack(MemoryStream TrackStream, String MD5sum){
-			Uri Address = new Uri("http://content.mp3tunes.com/storage/lockerPut/" + MD5sum + "?partner_token=" + this.PartnerToken + "&sid=" + this.SessionID);
-			this.worker.UploadDataAsync(Address, "PUT", TrackStream.GetBuffer());
+		public void PutTrack(MemoryStream TrackStream, String MD5sum) {
+			if (this.worker.IsBusy) {
+				// TODO: implement queue
+				if(this.OnPutTrackComplete != null)
+					this.OnPutTrackComplete(this, new PutTrackCompleteEventArgs(false, "Failed to upload track, previous upload blocks!"));
+			} else {
+				Uri Address = new Uri("http://content.mp3tunes.com/storage/lockerPut/" + MD5sum + "?partner_token=" + this.PartnerToken + "&sid=" + this.SessionID);
+				this.worker.UploadDataAsync(Address, "PUT", TrackStream.GetBuffer());
+			}
 		}
 		
 		/// <summary>
