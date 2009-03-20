@@ -49,7 +49,7 @@ namespace LibLastRip
 		private ManualResetEvent allDone = new ManualResetEvent(false);
 		private Socket server;
 		private ArrayList connections;
-		public Int32 PortNum = 8000;
+		public Int32 ListeningPortNumber = 8000;
 		
 		/// <summary>
 		/// Bytes of the stream that have been announced to OnProgress Event
@@ -882,7 +882,7 @@ namespace LibLastRip
 			connections = new ArrayList();
 			server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			IPAddress addr = IPAddress.Parse("127.0.0.1");
-			IPEndPoint ep = new IPEndPoint(addr,8000);
+			IPEndPoint ep = new IPEndPoint(addr, this.ListeningPortNumber);
 			server.Bind(ep);
 			server.Listen(10);
 		}
