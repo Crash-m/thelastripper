@@ -108,7 +108,7 @@ namespace WinFormsClient
 			this.manager.AfterRipCommand = AfterRipCommand;
 			this.manager.Comment = Comment;
 			this.manager.SaveDirectlyToDisc = this._SaveMode;
-			this.manager.PortNum = this._PortNum;
+			this.manager.ListeningPortNumber = this._PortNum;
 			
 			this.manager.ExcludeFile = this._excludeFile = Pref.ExcludeFileTextBox.Text;
 			this.manager.ExcludeNewMusic = this._excludeNewMusic = Pref.ExcludeNewMusicCheckBox.Checked;
@@ -324,7 +324,7 @@ namespace WinFormsClient
 		public Int32 PortNumber {
 			get {
 				if(_PortNum == 0)
-					return manager.PortNum;
+					return manager.ListeningPortNumber;
 				return _PortNum;
 			}
 		}
