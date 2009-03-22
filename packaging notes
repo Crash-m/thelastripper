@@ -1,0 +1,9 @@
+1) Create a new directory for the new version, e.g. Debian/TheLastRipper-x.y.z/
+2) Copy tarball to the created directory
+3) Extract tarball in a subdirectory with the name of the package, e.g. Debian/TheLastRipper-x.y.z/thelastripper-x.y.z/
+4) Copy the /debian/ directory from another source package, update control and changelog
+5) Copy tarball to thelastripper_1.4.0.orig.tar.gz
+6) In terminal cd Debian/TheLastRipper-x.y.z/thelastripper-x.y.z/
+7) In terminal debuild -S	(Source package generated)
+9) Create pbuilder environment: sudo pbuilder create --distribution intrepid (might need mirror too)
+9) In terminal sudo pbuilder build ../*.dsc
