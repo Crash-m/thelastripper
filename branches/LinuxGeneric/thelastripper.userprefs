@@ -1,12 +1,16 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/jopsen/Development/thelastripper/branches/LinuxGeneric/thelastripper.mds">
   <Files>
-    <File name="MonoClient/MainWindow.cs" line="127" column="56" />
+    <File name="Welcome" />
+    <File name="MonoClient/CreateLockerAccount.cs" line="1" column="1" />
+    <File name="MonoClient/Main.cs" line="17" column="2" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
+      <Node expanded="True" selected="True">
+        <Node name="libLastRip" expanded="True" />
+        <Node name="LockerPut" expanded="True" />
         <Node name="MonoClient" expanded="True" />
-        <Node name="SourcePackage" expanded="True" selected="True" />
+        <Node name="SourcePackage" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
@@ -14,7 +18,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/jopsen/Development/thelastripper/branches/LinuxGeneric/MonoClient/MainWindow.cs" />
+    <Property key="ActiveWindow" value="/home/jopsen/Development/thelastripper/branches/LinuxGeneric/MonoClient/Main.cs" />
     <Property key="ActiveConfiguration" value="Release" />
   </Properties>
 </UserCombinePreferences>

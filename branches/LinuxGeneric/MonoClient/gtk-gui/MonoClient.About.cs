@@ -33,11 +33,12 @@ namespace MonoClient {
             Gtk.VBox w1 = this.VBox;
             w1.Events = ((Gdk.EventMask)(256));
             w1.Name = "dialog_VBox";
-            w1.BorderWidth = ((uint)(2));
             // Container child dialog_VBox.Gtk.Box+BoxChild
             this.image15 = new Gtk.Image();
             this.image15.Name = "image15";
-            this.image15.Pixbuf = Gdk.Pixbuf.LoadFromResource("AboutBox.svg");
+            this.image15.Xalign = 0F;
+            this.image15.Yalign = 0F;
+            this.image15.Pixbuf = Gdk.Pixbuf.LoadFromResource("AboutBox.png");
             w1.Add(this.image15);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.image15]));
             w2.Position = 0;
@@ -75,8 +76,8 @@ namespace MonoClient {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 264;
-            this.DefaultHeight = 322;
+            this.DefaultWidth = 510;
+            this.DefaultHeight = 564;
             this.Show();
             this.CloseButton.Clicked += new System.EventHandler(this.OnCloseButtonClicked);
         }

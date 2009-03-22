@@ -1,4 +1,4 @@
-// LibLastRip - A Last.FM ripping library for TheLastRipper
+﻿// LibLastRip - A Last.FM ripping library for TheLastRipper
 // Copyright (C) 2007  Jop... (Jonas F. Jensen).
 // 
 // This program is free software; you can redistribute it and/or
@@ -40,9 +40,11 @@ namespace LibLastRip
 		protected System.String _MusicPath;
 		protected System.String _QuarantinePath;
 		protected System.String _ExcludeFile;
-		public System.String Comment = "Recorded by TheLastRipper from %s";
+		public System.String Comment = "Recorded from %s";
 		protected System.Boolean _ExcludeNewMusic;
 		protected System.Boolean _ExcludeExistingMusic;
+		protected System.Boolean _HealthEnabled;
+		protected System.String _HealthValue;
 		protected const System.String PathSeparator = "/";
 		protected const System.Int32 ProtocolBufferSize = 4096;
 		protected ConnectionStatus Status = ConnectionStatus.Created;
@@ -69,7 +71,20 @@ namespace LibLastRip
 			chars.Add('<');
 			chars.Add('>');
 			chars.Add('|');
+			
 			return chars;
+		}
+		
+		public static String replaceUtf8Chars(String value) {
+			if (!String.IsNullOrEmpty(value)) {
+				// beware: this are utf-8 characters, so this file is now stored to utf8
+				return value.
+					// Replace('ï', 'i'). // works in windows, so do not replace at the moment
+					Replace('ř', 'r'). // r with "dach"
+					Replace('š', 's'); // s with "dach"
+				
+			}
+			return value;
 		}
 		
 		///<summary>
@@ -347,7 +362,37 @@ namespace LibLastRip
 				this._ExcludeExistingMusic = value;
 			}
 		}
+		
+		///<summary>
+		///Gets or set the HealthEnabled
+		///</summary>
+		public System.Boolean HealthEnabled
+		{
+			get
+			{
+				return this._HealthEnabled;
+			}
+			set
+			{
+				this._HealthEnabled = value;
+			}
+		}
 
+		///<summary>
+		///Gets or set the HealthValue
+		///</summary>
+		public System.String HealthValue
+		{
+			get
+			{
+				return this._HealthValue;
+			}
+			set
+			{
+				this._HealthValue = value;
+			}
+		}
+		
 		///<summary>
 		///Gets current connection status
 		///</summary>
@@ -401,7 +446,7 @@ namespace LibLastRip
 		///</summary>
 		///<param name="Input">String from which InvalidChars must be removed.</param>
 		///<param name="InvalidChars">InvalidChars to be removed from Input string.</param>
-		protected internal static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
+		private static System.String RemoveChars(System.String Input, ArrayList InvalidChars)
 		{
 			System.String Output = "";
 			foreach(System.Char TestChar in Input.ToCharArray())
@@ -413,7 +458,9 @@ namespace LibLastRip
 					Output += TestChar.ToString();
 				}
 			}
-			return Output;
+			
+			// the utf8-chars must be replaced in any case!
+			return replaceUtf8Chars(Output);
 		}
 	}
 

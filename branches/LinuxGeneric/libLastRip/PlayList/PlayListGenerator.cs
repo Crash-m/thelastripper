@@ -13,7 +13,9 @@ namespace LibLastRip
 		protected System.String _excludeFile;
 		protected System.Boolean _excludeNewMusic = false;
 		protected System.Boolean _excludeExistingMusic = false;
-
+		protected System.Boolean _healthEnabled = false;
+		protected System.String _healthValue;
+		
 		protected System.String _proxyAddress;
 		protected System.String _proxyUsername;
 		protected System.String _proxyPassword;
@@ -118,6 +120,8 @@ namespace LibLastRip
 			this._excludeFile = (System.String)Info.GetValue("ExcludeFile",typeof(System.String));
 			this._excludeNewMusic = (System.Boolean)Info.GetValue("ExcludeNewMusic",typeof(System.Boolean));
 			this._excludeExistingMusic = (System.Boolean)Info.GetValue("ExcludeExistingMusic",typeof(System.Boolean));
+			this._healthEnabled = (System.Boolean)Info.GetValue("HealthEnabled", typeof(System.Boolean));
+			this._healthValue = (System.String)Info.GetValue("HealthValue", typeof(System.String));
 
 		    this._proxyAddress = (System.String)Info.GetValue("ProxyAddress",typeof(System.String));
 			this._proxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
@@ -151,6 +155,8 @@ namespace LibLastRip
 			Info.AddValue("ExcludeFile",this._excludeFile);
 			Info.AddValue("ExcludeNewMusic",this._excludeNewMusic);
 			Info.AddValue("ExcludeExistingMusic",this._excludeExistingMusic);
+			Info.AddValue("HealthEnabled",this._healthEnabled);
+			Info.AddValue("HealthValue",this._healthValue);
 
 			Info.AddValue("ProxyAddress", this._proxyAddress);
 			Info.AddValue("ProxyUsername", this._proxyUsername);

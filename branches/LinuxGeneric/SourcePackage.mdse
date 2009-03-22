@@ -3,8 +3,9 @@
     <Package name="Tarball">
       <Builder rootEntry="thelastripper.mds" TargetDirectory="/home/jopsen/Development/thelastripper/branches/LinuxGeneric" DefaultConfiguration="Release" ctype="TarballDeployTarget">
         <ChildEntries>
-          <Entry>MonoClient/MonoClient.mdp</Entry>
+          <Entry>LockerPut/LockerPut.mdp</Entry>
           <Entry>libLastRip/libLastRip.mdp</Entry>
+          <Entry>MonoClient/MonoClient.mdp</Entry>
         </ChildEntries>
       </Builder>
     </Package>

@@ -38,9 +38,13 @@ public partial class MainWindow {
     
     private Gtk.VBox vbox6;
     
-    private Gtk.ComboBoxEntry LastFMStationEntry;
+    private Gtk.HBox StationBox;
     
-    private Gtk.HBox hbox1;
+    private Gtk.ComboBox StationType;
+    
+    private Gtk.Entry LastFMStationEntry;
+    
+    private Gtk.HBox hbox2;
     
     private Gtk.Button ConnectButton;
     
@@ -127,133 +131,154 @@ public partial class MainWindow {
         this.vbox6 = new Gtk.VBox();
         this.vbox6.Name = "vbox6";
         // Container child vbox6.Gtk.Box+BoxChild
-        this.LastFMStationEntry = Gtk.ComboBoxEntry.NewText();
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/rock"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/indie"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/alternative"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/seen%20live"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/metal"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/electronic"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/pop"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/punk"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/indie%20rock"));
-        this.LastFMStationEntry.AppendText(Mono.Unix.Catalog.GetString("lastfm://globaltags/classic%20rock"));
-        this.LastFMStationEntry.Sensitive = false;
-        this.LastFMStationEntry.Name = "LastFMStationEntry";
-        this.vbox6.Add(this.LastFMStationEntry);
-        Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox6[this.LastFMStationEntry]));
+        this.StationBox = new Gtk.HBox();
+        this.StationBox.Sensitive = false;
+        this.StationBox.Name = "StationBox";
+        this.StationBox.Spacing = 6;
+        // Container child StationBox.Gtk.Box+BoxChild
+        this.StationType = Gtk.ComboBox.NewText();
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Tag:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Similar artist:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Playlist:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Personal:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Loved:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Recommended:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Neighbours:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("Group:"));
+        this.StationType.AppendText(Mono.Unix.Catalog.GetString("lastfm://"));
+        this.StationType.Name = "StationType";
+        this.StationType.Active = 0;
+        this.StationBox.Add(this.StationType);
+        Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.StationBox[this.StationType]));
         w4.Position = 0;
         w4.Expand = false;
+        w4.Fill = false;
+        // Container child StationBox.Gtk.Box+BoxChild
+        this.LastFMStationEntry = new Gtk.Entry();
+        this.LastFMStationEntry.CanFocus = true;
+        this.LastFMStationEntry.Name = "LastFMStationEntry";
+        this.LastFMStationEntry.Text = Mono.Unix.Catalog.GetString("rock");
+        this.LastFMStationEntry.IsEditable = true;
+        this.LastFMStationEntry.InvisibleChar = '●';
+        this.StationBox.Add(this.LastFMStationEntry);
+        Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.StationBox[this.LastFMStationEntry]));
+        w5.Position = 1;
+        this.vbox6.Add(this.StationBox);
+        Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox6[this.StationBox]));
+        w6.Position = 0;
+        w6.Expand = false;
+        w6.Fill = false;
         // Container child vbox6.Gtk.Box+BoxChild
-        this.hbox1 = new Gtk.HBox();
-        this.hbox1.Name = "hbox1";
-        // Container child hbox1.Gtk.Box+BoxChild
+        this.hbox2 = new Gtk.HBox();
+        this.hbox2.Name = "hbox2";
+        this.hbox2.Spacing = 6;
+        // Container child hbox2.Gtk.Box+BoxChild
         this.ConnectButton = new Gtk.Button();
         this.ConnectButton.Sensitive = false;
         this.ConnectButton.CanFocus = true;
         this.ConnectButton.Name = "ConnectButton";
         // Container child ConnectButton.Gtk.Container+ContainerChild
-        Gtk.Alignment w5 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+        Gtk.Alignment w7 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
         // Container child GtkAlignment.Gtk.Container+ContainerChild
-        Gtk.HBox w6 = new Gtk.HBox();
-        w6.Spacing = 2;
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Image w7 = new Gtk.Image();
-        w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-play", Gtk.IconSize.Menu, 16);
-        w6.Add(w7);
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Label w9 = new Gtk.Label();
-        w9.LabelProp = Mono.Unix.Catalog.GetString("Tune in");
-        w6.Add(w9);
-        w5.Add(w6);
-        this.ConnectButton.Add(w5);
-        this.hbox1.Add(this.ConnectButton);
-        Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox1[this.ConnectButton]));
-        w13.Position = 0;
-        w13.Expand = false;
-        w13.Fill = false;
-        // Container child hbox1.Gtk.Box+BoxChild
+        Gtk.HBox w8 = new Gtk.HBox();
+        w8.Spacing = 2;
+        // Container child GtkHBox1.Gtk.Container+ContainerChild
+        Gtk.Image w9 = new Gtk.Image();
+        w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-play", Gtk.IconSize.Menu, 16);
+        w8.Add(w9);
+        // Container child GtkHBox1.Gtk.Container+ContainerChild
+        Gtk.Label w11 = new Gtk.Label();
+        w11.LabelProp = Mono.Unix.Catalog.GetString("Tune in");
+        w8.Add(w11);
+        w7.Add(w8);
+        this.ConnectButton.Add(w7);
+        this.hbox2.Add(this.ConnectButton);
+        Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox2[this.ConnectButton]));
+        w15.Position = 0;
+        w15.Expand = false;
+        w15.Fill = false;
+        // Container child hbox2.Gtk.Box+BoxChild
         this.SkipButton = new Gtk.Button();
         this.SkipButton.Sensitive = false;
         this.SkipButton.CanFocus = true;
         this.SkipButton.Name = "SkipButton";
         this.SkipButton.UseUnderline = true;
         // Container child SkipButton.Gtk.Container+ContainerChild
-        Gtk.Alignment w14 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        // Container child GtkAlignment.Gtk.Container+ContainerChild
-        Gtk.HBox w15 = new Gtk.HBox();
-        w15.Spacing = 2;
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Image w16 = new Gtk.Image();
-        w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-next", Gtk.IconSize.Menu, 16);
-        w15.Add(w16);
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Label w18 = new Gtk.Label();
-        w18.LabelProp = Mono.Unix.Catalog.GetString("Skip");
-        w18.UseUnderline = true;
-        w15.Add(w18);
-        w14.Add(w15);
-        this.SkipButton.Add(w14);
-        this.hbox1.Add(this.SkipButton);
-        Gtk.Box.BoxChild w22 = ((Gtk.Box.BoxChild)(this.hbox1[this.SkipButton]));
-        w22.Position = 1;
-        w22.Expand = false;
-        w22.Fill = false;
-        // Container child hbox1.Gtk.Box+BoxChild
+        Gtk.Alignment w16 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+        // Container child GtkAlignment2.Gtk.Container+ContainerChild
+        Gtk.HBox w17 = new Gtk.HBox();
+        w17.Spacing = 2;
+        // Container child GtkHBox2.Gtk.Container+ContainerChild
+        Gtk.Image w18 = new Gtk.Image();
+        w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_media-next", Gtk.IconSize.Menu, 16);
+        w17.Add(w18);
+        // Container child GtkHBox2.Gtk.Container+ContainerChild
+        Gtk.Label w20 = new Gtk.Label();
+        w20.LabelProp = Mono.Unix.Catalog.GetString("Skip");
+        w20.UseUnderline = true;
+        w17.Add(w20);
+        w16.Add(w17);
+        this.SkipButton.Add(w16);
+        this.hbox2.Add(this.SkipButton);
+        Gtk.Box.BoxChild w24 = ((Gtk.Box.BoxChild)(this.hbox2[this.SkipButton]));
+        w24.Position = 1;
+        w24.Expand = false;
+        w24.Fill = false;
+        // Container child hbox2.Gtk.Box+BoxChild
         this.LoveButton = new Gtk.Button();
         this.LoveButton.Sensitive = false;
         this.LoveButton.CanFocus = true;
         this.LoveButton.Name = "LoveButton";
         // Container child LoveButton.Gtk.Container+ContainerChild
-        Gtk.Alignment w23 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        // Container child GtkAlignment.Gtk.Container+ContainerChild
-        Gtk.HBox w24 = new Gtk.HBox();
-        w24.Spacing = 2;
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Image w25 = new Gtk.Image();
-        w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_3d-favourites", Gtk.IconSize.Menu, 16);
-        w24.Add(w25);
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Label w27 = new Gtk.Label();
-        w27.LabelProp = Mono.Unix.Catalog.GetString("Love");
-        w24.Add(w27);
-        w23.Add(w24);
-        this.LoveButton.Add(w23);
-        this.hbox1.Add(this.LoveButton);
-        Gtk.Box.BoxChild w31 = ((Gtk.Box.BoxChild)(this.hbox1[this.LoveButton]));
-        w31.Position = 2;
-        w31.Expand = false;
-        w31.Fill = false;
-        // Container child hbox1.Gtk.Box+BoxChild
+        Gtk.Alignment w25 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+        // Container child GtkAlignment3.Gtk.Container+ContainerChild
+        Gtk.HBox w26 = new Gtk.HBox();
+        w26.Spacing = 2;
+        // Container child GtkHBox3.Gtk.Container+ContainerChild
+        Gtk.Image w27 = new Gtk.Image();
+        w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_3d-favourites", Gtk.IconSize.Menu, 16);
+        w26.Add(w27);
+        // Container child GtkHBox3.Gtk.Container+ContainerChild
+        Gtk.Label w29 = new Gtk.Label();
+        w29.LabelProp = Mono.Unix.Catalog.GetString("Love");
+        w26.Add(w29);
+        w25.Add(w26);
+        this.LoveButton.Add(w25);
+        this.hbox2.Add(this.LoveButton);
+        Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox2[this.LoveButton]));
+        w33.Position = 2;
+        w33.Expand = false;
+        w33.Fill = false;
+        // Container child hbox2.Gtk.Box+BoxChild
         this.BanButton = new Gtk.Button();
         this.BanButton.Sensitive = false;
         this.BanButton.CanFocus = true;
         this.BanButton.Name = "BanButton";
         // Container child BanButton.Gtk.Container+ContainerChild
-        Gtk.Alignment w32 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-        // Container child GtkAlignment.Gtk.Container+ContainerChild
-        Gtk.HBox w33 = new Gtk.HBox();
-        w33.Spacing = 2;
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Image w34 = new Gtk.Image();
-        w34.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
-        w33.Add(w34);
-        // Container child GtkHBox.Gtk.Container+ContainerChild
-        Gtk.Label w36 = new Gtk.Label();
-        w36.LabelProp = Mono.Unix.Catalog.GetString("Ban");
-        w33.Add(w36);
-        w32.Add(w33);
-        this.BanButton.Add(w32);
-        this.hbox1.Add(this.BanButton);
-        Gtk.Box.BoxChild w40 = ((Gtk.Box.BoxChild)(this.hbox1[this.BanButton]));
-        w40.Position = 3;
-        w40.Expand = false;
-        w40.Fill = false;
-        this.vbox6.Add(this.hbox1);
-        Gtk.Box.BoxChild w41 = ((Gtk.Box.BoxChild)(this.vbox6[this.hbox1]));
-        w41.PackType = ((Gtk.PackType)(1));
-        w41.Position = 1;
-        w41.Expand = false;
+        Gtk.Alignment w34 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+        // Container child GtkAlignment4.Gtk.Container+ContainerChild
+        Gtk.HBox w35 = new Gtk.HBox();
+        w35.Spacing = 2;
+        // Container child GtkHBox4.Gtk.Container+ContainerChild
+        Gtk.Image w36 = new Gtk.Image();
+        w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
+        w35.Add(w36);
+        // Container child GtkHBox4.Gtk.Container+ContainerChild
+        Gtk.Label w38 = new Gtk.Label();
+        w38.LabelProp = Mono.Unix.Catalog.GetString("Ban");
+        w35.Add(w38);
+        w34.Add(w35);
+        this.BanButton.Add(w34);
+        this.hbox2.Add(this.BanButton);
+        Gtk.Box.BoxChild w42 = ((Gtk.Box.BoxChild)(this.hbox2[this.BanButton]));
+        w42.Position = 3;
+        w42.Expand = false;
+        w42.Fill = false;
+        this.vbox6.Add(this.hbox2);
+        Gtk.Box.BoxChild w43 = ((Gtk.Box.BoxChild)(this.vbox6[this.hbox2]));
+        w43.PackType = ((Gtk.PackType)(1));
+        w43.Position = 1;
+        w43.Expand = false;
         this.GtkAlignment1.Add(this.vbox6);
         this.frame5.Add(this.GtkAlignment1);
         this.GtkLabel6 = new Gtk.Label();
@@ -262,9 +287,9 @@ public partial class MainWindow {
         this.GtkLabel6.UseMarkup = true;
         this.frame5.LabelWidget = this.GtkLabel6;
         this.vbox4.Add(this.frame5);
-        Gtk.Box.BoxChild w44 = ((Gtk.Box.BoxChild)(this.vbox4[this.frame5]));
-        w44.Position = 1;
-        w44.Expand = false;
+        Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.vbox4[this.frame5]));
+        w46.Position = 1;
+        w46.Expand = false;
         // Container child vbox4.Gtk.Box+BoxChild
         this.frame6 = new Gtk.Frame();
         this.frame6.Name = "frame6";
@@ -283,31 +308,32 @@ public partial class MainWindow {
         this.StatusLabel = new Gtk.Label();
         this.StatusLabel.Name = "StatusLabel";
         this.StatusLabel.Xalign = 0F;
+        this.StatusLabel.Yalign = 0F;
         this.StatusLabel.LabelProp = "Not Recording";
         this.StatusLabel.UseMarkup = true;
         this.hbox5.Add(this.StatusLabel);
-        Gtk.Box.BoxChild w45 = ((Gtk.Box.BoxChild)(this.hbox5[this.StatusLabel]));
-        w45.Position = 0;
+        Gtk.Box.BoxChild w47 = ((Gtk.Box.BoxChild)(this.hbox5[this.StatusLabel]));
+        w47.Position = 0;
         // Container child hbox5.Gtk.Box+BoxChild
         this.CoverBox = new Gtk.Image();
         this.CoverBox.Name = "CoverBox";
-        this.CoverBox.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cdrom", Gtk.IconSize.Menu, 16);
+        this.CoverBox.Yalign = 0F;
+        this.CoverBox.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cdrom", Gtk.IconSize.Dialog, 48);
         this.hbox5.Add(this.CoverBox);
-        Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.hbox5[this.CoverBox]));
-        w46.Position = 1;
-        w46.Expand = false;
-        w46.Fill = false;
+        Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.hbox5[this.CoverBox]));
+        w48.Position = 1;
+        w48.Expand = false;
+        w48.Fill = false;
         this.vbox8.Add(this.hbox5);
-        Gtk.Box.BoxChild w47 = ((Gtk.Box.BoxChild)(this.vbox8[this.hbox5]));
-        w47.Position = 0;
-        w47.Expand = false;
+        Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(this.vbox8[this.hbox5]));
+        w49.Position = 0;
         // Container child vbox8.Gtk.Box+BoxChild
         this.SongProgressBar = new Gtk.ProgressBar();
         this.SongProgressBar.Name = "SongProgressBar";
         this.vbox8.Add(this.SongProgressBar);
-        Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.vbox8[this.SongProgressBar]));
-        w48.Position = 1;
-        w48.Expand = false;
+        Gtk.Box.BoxChild w50 = ((Gtk.Box.BoxChild)(this.vbox8[this.SongProgressBar]));
+        w50.Position = 1;
+        w50.Expand = false;
         this.GtkAlignment5.Add(this.vbox8);
         this.frame6.Add(this.GtkAlignment5);
         this.GtkLabel5 = new Gtk.Label();
@@ -316,14 +342,14 @@ public partial class MainWindow {
         this.GtkLabel5.UseMarkup = true;
         this.frame6.LabelWidget = this.GtkLabel5;
         this.vbox4.Add(this.frame6);
-        Gtk.Box.BoxChild w51 = ((Gtk.Box.BoxChild)(this.vbox4[this.frame6]));
-        w51.Position = 2;
+        Gtk.Box.BoxChild w53 = ((Gtk.Box.BoxChild)(this.vbox4[this.frame6]));
+        w53.Position = 2;
         this.Add(this.vbox4);
         if ((this.Child != null)) {
             this.Child.ShowAll();
         }
-        this.DefaultWidth = 272;
-        this.DefaultHeight = 185;
+        this.DefaultWidth = 498;
+        this.DefaultHeight = 349;
         this.Show();
         this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
         this.Preferences.Activated += new System.EventHandler(this.OnPreferencesActivated);
@@ -332,6 +358,7 @@ public partial class MainWindow {
         this.OnlineHelp.Activated += new System.EventHandler(this.OnOnlineHelpActivated);
         this.About.Activated += new System.EventHandler(this.OnAboutActivated);
         this.LegalNotice.Activated += new System.EventHandler(this.OnLegalNoticeActivated);
+        this.StationType.Changed += new System.EventHandler(this.OnStationTypeChanged);
         this.ConnectButton.Clicked += new System.EventHandler(this.OnConnectButtonClicked);
         this.SkipButton.Clicked += new System.EventHandler(this.OnSkipButtonClicked);
         this.LoveButton.Clicked += new System.EventHandler(this.OnLoveButtonClicked);

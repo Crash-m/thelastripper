@@ -11,6 +11,7 @@ namespace MonoClient
 		public LibLastRip.LastManager Manager;
 		protected Settings setting;
 		public System.Boolean HasPassword = false;
+		public LockerPut.Locker locker;
 		
 		public Preferences(LibLastRip.LastManager Manager, Settings setting)
 		{
@@ -23,6 +24,7 @@ namespace MonoClient
 				this.LoginFrame.Sensitive = true;
 				this.Closebutton.Sensitive = false;
 				this.ProxyFrame.Sensitive = true;
+				this.PlayPortNumberSpinButton.Sensitive = true;
 			}
 			this.setting = setting;
 			this.Manager = Manager;
@@ -41,6 +43,30 @@ namespace MonoClient
 			this.ProxyServerEntry.Text = this.setting.ProxyAdress;
 			this.ProxyUserEntry.Text = this.setting.ProxyUsername;
 			this.ProxyPassEntry.Text = this.setting.ProxyPassword;
+			this.PlayPortNumberSpinButton.Value = this.setting.ListeningPort;
+			
+			//Commands
+			this.BeforeRipCmdEntry.Text = this.setting.BeforeRipCmd;
+			this.AfterRipCmdEntry.Text = this.setting.AfterRipCmd;
+			this.ReplayGainCheckButton.Active = this.setting.ApplyRegain;
+			try{//Enable replaygain checkbutton if mp3gain is available on the system
+				System.Diagnostics.Process proc = new System.Diagnostics.Process();
+				proc.StartInfo.FileName = "which";
+				proc.StartInfo.Arguments = "mp3gain";
+				proc.Start();
+				proc.WaitForExit();
+				this.ReplayGainCheckButton.Sensitive = (proc.ExitCode == 0);
+			}
+			catch{
+				this.ReplayGainCheckButton.Sensitive = false;
+			}
+			
+			//Locker settings:
+			this.locker = this.setting.Locker;
+			this.LockerUploadCheckbutton.Active = this.setting.UploadToLocker;
+			this.LockerFrame.Sensitive = this.setting.UploadToLocker;
+			this.LockerMailEntry.Text = this.setting.LockerUsername;
+			this.LockerPwdEntry.Text = this.setting.LockerPassword;
 			
 			this.UserNameEntry.Text = this.setting.UserName;
 			if(this.setting.Password != "")
@@ -52,6 +78,11 @@ namespace MonoClient
 			
 			this.MusicPathChooser.SetCurrentFolder(this.setting.MusicPath);
 			
+			//Advanced
+			this.OverwriteCheckbutton.Active = this.setting.OverwriteExistingMusic;
+			this.CommentEntry.Text = this.setting.ID3Comment;
+			this.FilePatternEntry.Text = this.setting.FilenamePattern;
+						
 			//Register for events
 			this.Manager.HandshakeReturn += new System.EventHandler(this.OnHandshakeReturn);
 		}
@@ -92,15 +123,36 @@ namespace MonoClient
 		protected virtual void OnHandshakeReturn(System.Object Sender, System.EventArgs Args)
 		{
 			Gtk.Application.Invoke( delegate {
-			LibLastRip.HandshakeEventArgs eArgs = (LibLastRip.HandshakeEventArgs)Args;
-			//Handle the response
-			if(eArgs.Success)
-			{
+				LibLastRip.HandshakeEventArgs eArgs = (LibLastRip.HandshakeEventArgs)Args;
+				//Handle the response
+				if(eArgs.Success)
+				{
+					//Locker login if needed
+					if(this.LockerUploadCheckbutton.Active && (!this.locker.IsLoggedin || this.locker.Username != this.LockerMail)){
+						this.locker.OnLogin += new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerLoginCompleted);
+						this.locker.Login(this.LockerMail, this.LockerPwd);
+					}else
+						this.Closebutton.Sensitive = true;
+				}else{
+					this.LoginFrame.Sensitive = true;
+					this.ProxyFrame.Sensitive = true; //reenable proxy frame
+				}
+			});
+		}
+		
+		/// <summary>
+		/// Handle Locker login
+		/// </summary>
+		private void LockerLoginCompleted(Object Sender, LockerPut.LockerLoginEventArgs args){
+			Gtk.Application.Invoke( delegate {			
+				this.locker.OnLogin -= new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerLoginCompleted);
+				if(!args.Success){
+					Console.WriteLine("Failed mp3tunes login: \n" + args.Message);
+					Gtk.MessageDialog dl = new Gtk.MessageDialog(this, Gtk.DialogFlags.Modal, Gtk.MessageType.Error, Gtk.ButtonsType.Ok, false, "Failed to login at MP3Tunes\nRestart the application to try again, consider using the 'Test login credentials' button\nError Message:\n" + args.Message);
+					dl.Run();
+					dl.Destroy();
+				}
 				this.Closebutton.Sensitive = true;
-			}else{
-				this.LoginFrame.Sensitive = true;
-				this.ProxyFrame.Sensitive = true; //reenable proxy frame
-			}
 			});
 		}
 
@@ -112,6 +164,63 @@ namespace MonoClient
 				this.PasswordEntry.Sensitive = true;
 			}
 		}
+
+		/// <summary>
+		/// Updates LockerFrame sensitivity 
+		/// </summary>
+		protected virtual void LockerCheckUpdate (object sender, System.EventArgs e)
+		{
+			this.LockerFrame.Sensitive = this.LockerUploadCheckbutton.Active;
+		}
+
+		/// <summary>
+		/// Test locker credentials
+		/// </summary>
+		protected virtual void TestLockerCredentials (object sender, System.EventArgs e)
+		{
+			this.TestLockerButton.Sensitive = false;
+			this.locker.OnLogin += new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerTestLoginCompleted);
+			this.locker.Login(this.LockerMail, this.LockerPwd);			
+		}
+		
+		/// <summary>
+		/// Login test return
+		/// </summary>
+		private void LockerTestLoginCompleted(Object Sender, LockerPut.LockerLoginEventArgs args){
+			Gtk.Application.Invoke( delegate {			
+				this.locker.OnLogin -= new EventHandler<LockerPut.LockerLoginEventArgs>(this.LockerTestLoginCompleted);
+				if(!args.Success){
+					Console.WriteLine("Failed mp3tunes test login: \n" + args.Message);
+					Gtk.MessageDialog dl = new Gtk.MessageDialog(this, Gtk.DialogFlags.Modal, Gtk.MessageType.Error, Gtk.ButtonsType.Ok, false, "Failed to login at MP3Tunes, verify your credentials.\nError Message:\n" + args.Message);
+					dl.Run();
+					dl.Destroy();
+				}else{
+					Gtk.MessageDialog dl = new Gtk.MessageDialog(this, Gtk.DialogFlags.Modal, Gtk.MessageType.Info, Gtk.ButtonsType.Ok, false, "Login was successful.");
+					dl.Run();
+					dl.Destroy();
+				}
+				this.TestLockerButton.Sensitive = true;
+			});
+		}
+
+		/// <summary>
+		/// Show Create new Locker account dialog
+		/// </summary>
+		protected virtual void CreateNewLockerAccount (object sender, System.EventArgs e)
+		{
+			CreateLockerAccount dl = new CreateLockerAccount(this.locker);
+			Gtk.ResponseType res = (Gtk.ResponseType)dl.Run();
+			
+			//If an account was created
+			if(res == Gtk.ResponseType.Ok){
+				this.LockerUploadCheckbutton.Active = true;
+				this.LockerMailEntry.Text = dl.LockerMail;
+				this.LockerPwdEntry.Text = dl.LockerPwd;
+			}
+			
+			dl.Destroy();
+		}
+		
 
 		///<summary>
 		///Gets proxy server
@@ -294,6 +403,89 @@ namespace MonoClient
 			get
 			{
 				return this.PasswordEntry.Text;
+			}
+		}
+		
+		/// <value>
+		/// Get listening port number for streaming to loopback device
+		/// </value>
+		public int ListeningPort{
+			get{
+				return this.PlayPortNumberSpinButton.ValueAsInt;
+			}
+		}
+		
+		/// <value>
+		/// Gets whether or not to apply replay gain.
+		/// </value>
+		public bool ApplyReplayGain{
+			get{
+				return this.ReplayGainCheckButton.Sensitive && this.ReplayGainCheckButton.Active;
+			}
+		}
+		
+		/// <value>
+		/// Cmd to execute before recording a song
+		/// </value>
+		public string BeforeRipCmd{
+			get{
+				return this.BeforeRipCmdEntry.Text;
+			}
+		}
+
+		/// <value>
+		/// Command to execute after recording a track
+		/// </value>
+		public string AfterRipCmd{
+			get{
+				return this.AfterRipCmdEntry.Text;
+			}
+		}
+		
+		/// <value>
+		/// Gets id3 tag comment
+		/// </value>
+		public string Comment{
+			get{
+				return this.CommentEntry.Text;
+			}
+		}
+		
+		/// <value>
+		/// Get file pattern
+		/// </value>
+		public string FilenamePattern{
+			get{
+				return this.FilePatternEntry.Text;
+			}
+		}
+		
+		/// <value>
+		/// Gets overwrite existing checkbox
+		/// </value>
+		public bool OverwriteExisting{
+			get{
+				return this.OverwriteCheckbutton.Active;
+			}
+		}
+		
+		/// <value>
+		/// Gets if to upload new tracks
+		/// </value>
+		public bool UploadToLocker{
+			get{
+				return this.LockerUploadCheckbutton.Active;
+			}
+		}
+		
+		public String LockerMail{
+			get{
+				return this.LockerMailEntry.Text;
+			}
+		}
+		public String LockerPwd{
+			get{
+				return this.LockerPwdEntry.Text;
 			}
 		}
 	}

@@ -17,8 +17,8 @@ public partial class MainWindow: Gtk.Window
 		this.LastManager = this.settings.Manager;
 		if(this.LastManager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 		{
-			this.LastFMStationEntry.Sensitive = true;
 			this.ConnectButton.Sensitive = true;
+			this.StationBox.Sensitive = true;
 		}
 		
 		this.LastManager.OnNewSong += new System.EventHandler(this.OnNewSong);
@@ -36,6 +36,37 @@ public partial class MainWindow: Gtk.Window
 		
 		//Handle expected exceptions
 		this.LastManager.OnError += new System.EventHandler(this.OnError);
+		
+		//Handle finised recordings
+		this.LastManager.SongCompleted += new EventHandler<LibLastRip.SongCompletedEventArgs>(this.SongCompleted);
+	}
+
+	//Process for applying replaygain
+	private System.Diagnostics.Process replayGain;
+	
+	/// <summary>
+	/// Handles song completed, e.g. initiate upload and applies mp3gain
+	/// </summary>
+	private void SongCompleted(System.Object Sender, LibLastRip.SongCompletedEventArgs args){
+		//Apply mp3gain
+		if(this.settings.ApplyRegain){
+			Console.WriteLine("Applies ReplayGain");
+			//Kill it if still running, as it shouldn't be!
+			if(this.replayGain != null){
+				if(!this.replayGain.HasExited)
+					this.replayGain.Kill();
+				this.replayGain.Close();
+			}
+			this.replayGain = new System.Diagnostics.Process();
+			this.replayGain.StartInfo.FileName = "mp3gain";
+			this.replayGain.StartInfo.Arguments = "-T -f \"" + args.Filename + "\"";
+			this.replayGain.Start();
+		}
+		//Upload to mp3tunes
+		if(this.settings.UploadToLocker && this.settings.Locker.IsLoggedin){
+			Console.WriteLine("Starts uploading");
+			this.settings.Locker.PutTrack(args.Filename);
+		}
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -61,7 +92,42 @@ public partial class MainWindow: Gtk.Window
 	
 	protected virtual void OnConnectButtonClicked(object sender, System.EventArgs e)
 	{
-		this.LastManager.ChangeStation(this.LastFMStationEntry.Entry.Text);
+		String param = System.Uri.UnescapeDataString(this.LastFMStationEntry.Text.Replace(' ', '+'));
+		String uri = "lastfm://";
+		switch(this.StationType.ActiveText){
+		 case "Tag:":
+			uri += "globaltags/" + param;
+			break;
+		 case "Similar artist:":
+			uri += "artist/" + param + "/similarartists";
+			break;
+		case "Playlist:":
+			uri += "user/" + param + "/playlist";
+			break;
+		case "Personal:":
+			uri += "user/" + param + "/personal";
+			break;
+		case "Loved:":
+			uri += "user/" + param + "/loved";
+			break;
+		case "Recommended:":
+			uri += "user/" + param + "/recommended/100";
+			break;
+		case "Neighbours:":
+			uri += "user/" + param + "/neighbours";
+			break;
+		case "Group:":
+				uri += "group/" + param;
+			break;
+		case "lastfm://":
+			if(!this.LastFMStationEntry.Text.StartsWith("lastfm://"))
+				uri += this.LastFMStationEntry.Text;
+			else
+				uri = this.LastFMStationEntry.Text;
+			break;
+		}
+
+		this.LastManager.ChangeStation(uri);
 		
 		//Disable button
 		this.ConnectButton.Sensitive = false;
@@ -105,45 +171,63 @@ public partial class MainWindow: Gtk.Window
 	protected LibLastRip.MetaInfo NewSong;
 	protected System.Boolean IsNewSong = false;
 	
+	private void CoverDownloaded(System.Object Sender, System.Net.DownloadDataCompletedEventArgs args){
+		if(!args.Cancelled && args.Error == null){
+			Gtk.Application.Invoke(delegate {
+				this.CoverBox.FromPixbuf = new Gdk.Pixbuf(args.Result);
+			});
+		}
+		//try{
+			System.Net.WebClient waste = (System.Net.WebClient)args.UserState;
+			waste.Dispose();
+		//}
+		//catch{}
+	}	
+	
+	private System.Net.WebClient CoverClient;
 	protected virtual void OnNewSong(System.Object Sender, System.EventArgs Args)
 	{
 		Gtk.Application.Invoke( delegate {
-		LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
-		
-		//We don't want an error is string is formatet wrong.
-		try{
-			this.TrackDuration = System.Convert.ToInt32(Info.Trackduration);
-		}
-		catch{
-			this.TrackDuration = 250; //Just a wild guess ;)
-		}
-		
-		if(!Info.isEmpty())
-		{
-			System.String StrText = "";
-			StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track.Replace("&","and")) + "</span>\n";
-			StrText += "<b>By: </b>" + GLib.Markup.EscapeText(Info.Artist.Replace("&","and")) + "\n";
-			StrText += "<b>Album: </b>"+ GLib.Markup.EscapeText(Info.Album.Replace("&","and")) + "\n";
-			StrText += "<b>Length: </b>"+ GLib.Markup.EscapeText(Info.Trackduration.Replace("&","and")) + " seconds\n";
-			StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station.Replace("&","and")) + "</i>";
-			this.StatusLabel.Markup = StrText;
+			LibLastRip.MetaInfo Info = (LibLastRip.MetaInfo)Args;
 			
-			if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
-			{
-				try
-				{
-					System.Net.WebClient Client = new System.Net.WebClient();
-					this.CoverBox.FromPixbuf = new Gdk.Pixbuf(Client.DownloadData(Info.Albumcover));
-				}
-				catch
-				{}
+			//We don't want an error is string is formatet wrong.
+			try{
+				this.TrackDuration = System.Convert.ToInt32(Info.Trackduration);
 			}
-		}else{
-			//TODO: do something when we're not steaming... disable some controls etc...
-		}
+			catch{
+				this.TrackDuration = 250; //Just a wild guess ;)
+			}
+			
+			if(!Info.isEmpty())
+			{
+				System.String StrText = "";
+				StrText += "<span size='x-large'>"+ GLib.Markup.EscapeText(Info.Track.Replace("&","and")) + "</span>\n";
+				StrText += "<b>By: </b>" + GLib.Markup.EscapeText(Info.Artist.Replace("&","and")) + "\n";
+				StrText += "<b>Album: </b>"+ GLib.Markup.EscapeText(Info.Album.Replace("&","and")) + "\n";
+				StrText += "<b>Length: </b>"+ GLib.Markup.EscapeText(Info.Trackduration.Replace("&","and")) + " seconds\n";
+				StrText += "<i>From: " + GLib.Markup.EscapeText(Info.Station.Replace("&","and")) + "</i>";
+				this.StatusLabel.Markup = StrText;
+				
+				if(Info.Albumcover != null && Info.Albumcover.StartsWith("http://"))
+				{
+					try
+					{
+						if(this.CoverClient != null && this.CoverClient.IsBusy)
+								this.CoverClient.CancelAsync();
+						this.CoverClient = new System.Net.WebClient();
+						this.CoverClient.DownloadDataCompleted += new System.Net.DownloadDataCompletedEventHandler(this.CoverDownloaded);
+						this.CoverClient.DownloadDataAsync(new System.Uri(Info.Albumcover), this.CoverClient);
+					}
+					catch
+					{}
+				}
+			}else{
+				//TODO: do something when we're not steaming... disable some controls etc...
+			}
 		});
 	}
-	
+
+
 
 	protected virtual void OnSkipButtonClicked(object sender, System.EventArgs e)
 	{
@@ -199,8 +283,8 @@ public partial class MainWindow: Gtk.Window
 		this.settings.LaunchPreferences();
 		if(this.LastManager.ConnectionStatus != LibLastRip.ConnectionStatus.Created)
 		{
-			this.LastFMStationEntry.Sensitive = true;
 			this.ConnectButton.Sensitive = true;
+			this.StationBox.Sensitive = true;
 		}
 	}
 
@@ -232,5 +316,27 @@ public partial class MainWindow: Gtk.Window
 		this.LoveButton.Sensitive = true;
 		this.BanButton.Sensitive = true;
 		this.SkipButton.Sensitive = true;
+	}
+
+	protected virtual void OnStationTypeChanged (object sender, System.EventArgs e)
+	{
+		switch(this.StationType.ActiveText){
+		 case "Playlist:":
+		 case "Personal:":
+		 case "Loved:":
+		 case "Recommended:":
+		 case "Neighbours:":
+			this.LastFMStationEntry.Text = this.LastManager.UserName;
+			break;
+		 case "Tag:":
+			this.LastFMStationEntry.Text = "rock";
+			break;
+		 case "Similar artist:":
+			this.LastFMStationEntry.Text = "Artist...";
+			break;
+		 case "Group:":
+			this.LastFMStationEntry.Text = "Group name...";
+			break;
+		}
 	}
 }
