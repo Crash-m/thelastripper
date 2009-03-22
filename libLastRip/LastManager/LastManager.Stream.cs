@@ -42,14 +42,15 @@ namespace LibLastRip
 		protected System.Int32 counter = 0;
 		protected System.Byte []Buffer = new System.Byte[LastManager.BufferSize];
 		protected Hashtable excludeFile = null;
-		public System.String AfterRipCommand = "";//"\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" /add \"%F\"";
+		public System.String AfterRipCommand = "\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" /add \"%F\"";
 		public System.Boolean SaveDirectlyToDisc = false;
-		public System.String NewSongCommand = "";//"\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" \"%F\"";
+		public System.String NewSongCommand = "\""+System.Environment.GetEnvironmentVariable("PROGRAMFILES")+"\\Winamp\\Winamp.exe\" \"%F\"";
 		private bool _executed;
 		private ManualResetEvent allDone = new ManualResetEvent(false);
 		private Socket server;
 		private ArrayList connections;
-		public Int32 PortNum = 8000;
+		public Int32 ListeningPortNumber = 8000;
+		public bool OverwriteExistingMusic = false;
 		
 		/// <summary>
 		/// Bytes of the stream that have been announced to OnProgress Event
@@ -127,14 +128,14 @@ namespace LibLastRip
 					// link is "9999" - skips left as attribute; not needed
 					// xspf.Link = xnod.InnerText;
 				} else
-				if ("playlist".Equals(xnod.Name)) {
+					if ("playlist".Equals(xnod.Name)) {
 					// empty element, contains tracks as children
 				} else
-				if ("creator".Equals(xnod.Name)) {
+					if ("creator".Equals(xnod.Name)) {
 					// creator is "Last.fm"; not needed
 					xspf.Creator = xnod.InnerText;
 				} else
-				if ("title".Equals(xnod.Name)) {
+					if ("title".Equals(xnod.Name)) {
 					// title is an empty text since some time, so do not use it later; not needed
 					xspf.Title = xnod.InnerText;
 				}
@@ -267,7 +268,7 @@ namespace LibLastRip
 			// a) reload existing files DEFAULT=false
 			// b) only load existing artists DEFAULT=false
 			
-			if (!processExcludeExisting()) {
+			if (!processExcludeNew()) {
 				return false;
 			}
 
@@ -275,10 +276,10 @@ namespace LibLastRip
 				return false;
 			}
 
-			if (!processExcludeNew()) {
+			if (!processExcludeExisting()) {
 				return false;
 			}
-			
+
 			writeLogLine("get '" + this.currentXspfTrack.Title + "' (" + this.currentXspfTrack.Album + ") " + " from '" + this.currentXspfTrack.Creator + "'");
 
 			// Default: Process file
@@ -296,7 +297,7 @@ namespace LibLastRip
 		
 		private void RequestPlaylist() {
 			// Getting Playlist
-			String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.3.1.1";
+			String url = "http://" + this.BaseURL + this.BasePath + "/xspf.php?sk=" + this.SessionID + "&discovery=0&desktop=1.5.1";
 			WebRequest wReq = WebRequest.Create(url);
 			// setting timeout to 15s
 			wReq.Timeout = 1000 * 15;
@@ -339,9 +340,9 @@ namespace LibLastRip
 			bool started = false;
 			
 			// number of times to try access to playlist - the playlist request can fail or contain an empty list.
-			int tryCounter = 5;
+			int tryCounter = 8;
 			
-			while (started == false && this.Status == ConnectionStatus.Recording) {				
+			while (started == false && this.Status == ConnectionStatus.Recording) {
 				if (xspf.CountTracks() == 0) {
 					try {
 						if (this.OnScanning != null) {
@@ -358,24 +359,30 @@ namespace LibLastRip
 					}
 				}
 				if (xspf.CountTracks() > 0) {
-					writeLogLine("Tracks left: " + xspf.CountTracks());
 					this.currentXspfTrack = (XSPFTrack)xspf.getTrack();
 					this.StreamURL = this.currentXspfTrack.Location;
 
 					//Check if file exists
 					if(processFile())
 					{
-						started = true;
-						//Getting stream
-						WebRequest wReq = WebRequest.Create(this.StreamURL);
-						HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
-						//this._SongUrl = hRes.ResponseUri.AbsoluteUri;
-						//writeLogLine("Response uri: " + hRes.ResponseUri.AbsoluteUri);
-						System.IO.Stream RadioStream = hRes.GetResponseStream();
+						try {
+							started = true;
+							//Getting stream
+							WebRequest wReq = WebRequest.Create(this.StreamURL);
+							HttpWebResponse hRes = (HttpWebResponse)wReq.GetResponse();
+							//this._SongUrl = hRes.ResponseUri.AbsoluteUri;
+							//writeLogLine("Response uri: " + hRes.ResponseUri.AbsoluteUri);
+							System.IO.Stream RadioStream = hRes.GetResponseStream();
 
-						//Start reading process
-						// TODO: Lock could be active if response is fast - re-think about stream locking!
-						RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+							//Start reading process
+							// TODO: Lock could be active if response is fast - re-think about stream locking!
+							RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
+						} catch (Exception e) {
+							handleError(true, new ErrorEventArgs(e.ToString()));
+							
+							// no way to continue...
+							StopRecording();
+						}
 					}
 				} else {
 					// This code will only be executed if RequestPlaylist fails with an exception or if it gets no tracks
@@ -415,16 +422,29 @@ namespace LibLastRip
 			}
 		}
 		
-		protected void SaveToFile() {
-			double songHealth = this.Song.Length*100/((double.Parse(this.currentXspfTrack.Duration)*16));
+		protected double CalculateHealth(Object length, Object duration) {
+			double len = double.Parse(length.ToString())*8;
+			double dur = double.Parse(duration.ToString()) * 128;
+			
+			//writeLogLine("len: " + len.ToString());
+			//writeLogLine("dur: " + dur.ToString());
+			//writeLogLine("DELTA-" + (len-dur).ToString());
+			
+			double factor = Double.Parse(_HealthValue);
+			//writeLogLine("DELTAFACTOR-" + (len+factor-dur).ToString());
 
-			writeLogLine("Song length in bytes: " + this.Song.Length);
-			writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
-			// duration in seconds * 128 kBit/s / 8 bit per byte -> plain data length without header
-			writeLogLine("Song health: " + songHealth.ToString());
+			double songHealth = (len+factor)/dur*100;
+			writeLogLine("song health " + (songHealth).ToString());
+
+			return songHealth;
+		}
+		
+		protected void SaveToFile() {
+			//writeLogLine("Song length in bytes: " + this.Song.Length);
+			//writeLogLine("Song length announced: " + this.currentXspfTrack.Duration.ToString());
 
 			//Should we save this song?
-			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo() )//|| songHealth < 100)
+			if(this.SkipSave || this.CurrentSong == MetaInfo.GetEmptyMetaInfo())
 			{
 				writeLogLine("Song skipped (incomplete or user request)");
 
@@ -435,11 +455,17 @@ namespace LibLastRip
 					FileInfo file = new FileInfo(_Filename);
 					file.Delete();
 				}
-			}else{				
+			}else{
+				bool complete = true;
+				if (_HealthEnabled) {
+					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration);
+					complete = songHealth >= 100;
+				}
+
 				//If so, then save it but do it on another thread
 				SaveSongCall SSC = new SaveSongCall(this.SaveSong);
 				//Minus one since we don't want the song to end with char 83 = 'S' from SYNC
-				SSC.BeginInvoke(this.Song, (int)this.Song.Length, this.CurrentSong, new System.AsyncCallback(this.SaveSongCallback), this.Song);
+				SSC.BeginInvoke(this.Song, (int)this.Song.Length, this.CurrentSong, complete, new System.AsyncCallback(this.SaveSongCallback), this.Song);
 			}
 			
 			//Replace this.Song with NewSong, and hope that the asynchronious request keeps the old object.
@@ -615,53 +641,72 @@ namespace LibLastRip
 			//Close the old song
 		}
 		
-		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo);
+		protected delegate void SaveSongCall(Stream Song, System.Int32 Count, MetaInfo SongInfo, bool complete);
+		
+		public event EventHandler<SongCompletedEventArgs> SongCompleted;
 		
 		///<summary>Save a song to disk</summary>
 		///<param name="Song">A MemoryStream containing the song.</param>
 		///<param name="Count">Number of bytes from MemoryStream to save.</param>
 		///<param name="SongInfo">MetaInfo about the song to be saved.</param>
-		protected void SaveSong(Stream Song, System.Int32 Count, MetaInfo SongInfo)
+		protected void SaveSong(Stream Song, System.Int32 Count, MetaInfo SongInfo, bool complete)
 		{
 			SongInfo.Comment = this.Comment;
 			try {
 				String Filename = GetFilename(this.filename_pattern, SongInfo);
+				if (!complete) {
+					Filename += ".defect.mp3";
+					writeLogLine("File may be corrupt, stored to " + Filename);
+				}
 				String AlbumPath = GetAlbumPath(this.filename_pattern, SongInfo);
 				
+				Boolean ignoredSinceWeDontOverwrite = false;
 				if(this.Song is MemoryStream){
-					checkDirectoriesInPath(Filename);
-					FileStream FS = File.Create(Filename);
-					FS.Write(((MemoryStream)Song).GetBuffer(), 0, Count);
-					FS.Flush();
-					FS.Close();
+					if(!File.Exists(Filename) || OverwriteExistingMusic){
+						checkDirectoriesInPath(Filename);
+						FileStream FS = File.Create(Filename);
+						FS.Write(((MemoryStream)Song).GetBuffer(), 0, Count);
+						FS.Flush();
+						FS.Close();
+					}else
+						ignoredSinceWeDontOverwrite = true;
 				}else{
 					this.Song.Close();
 				}
 				
 				//Write metadata to stream as ID3v1
-				SongInfo.AppendID3(Filename);
+				if(!ignoredSinceWeDontOverwrite)
+					SongInfo.AppendID3(Filename);
+				
+				//Run the SongCompleted event if nee
+				if(this.SongCompleted != null && !ignoredSinceWeDontOverwrite)		//I think this is the right place for this event to be executed...
+					this.SongCompleted(this, new SongCompletedEventArgs(SongInfo, Filename));
 				
 				try {
 					//execute after rip command
-					ExecuteCommand(this.AfterRipCommand,SongInfo);
+					if(!ignoredSinceWeDontOverwrite)
+						ExecuteCommand(this.AfterRipCommand,SongInfo);
 				} catch (Exception) {
 					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);
 				}
 				
-				//Download covers - don't care for errors because some not exist
-				WebClient Client = new WebClient();
-				
-				// First download larger covers - because small cover fails more often
-				// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
-				Thread.Sleep(5000);
-				try {
-					String cover = AlbumPath + Path.DirectorySeparatorChar + "cover.jpg";
-					if((!File.Exists(cover)) && SongInfo.Albumcover != null) {
-						writeLogLine("download cover " + cover);
-						Client.DownloadFile(SongInfo.Albumcover, cover);
+				if (!String.IsNullOrEmpty(SongInfo.Albumcover)) {
+					//Download covers - don't care for errors because some not exist
+					WebClient Client = new WebClient();
+					
+					// First download larger covers - because small cover fails more often
+					// TODO: FIRST call to DownloadFile will time out... why? Sleep helps...
+					Thread.Sleep(5000);
+					try {
+						String cover = AlbumPath + Path.DirectorySeparatorChar + "cover.jpg";
+						if((!File.Exists(cover)) && SongInfo.Albumcover != null) {
+							writeLogLine("download cover " + cover);
+							Client.DownloadFile(SongInfo.Albumcover, cover);
+						}
+					} catch (Exception e) {
+						// no cover, no pain
+						writeLogLine("Exception downloading cover: " + e.ToString());
 					}
-				} catch (System.Net.WebException) {
-					// no cover
 				}
 			} catch (Exception e) {
 				writeLogLine("Exception occured: " + e.ToString());
@@ -844,7 +889,7 @@ namespace LibLastRip
 			connections = new ArrayList();
 			server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			IPAddress addr = IPAddress.Parse("127.0.0.1");
-			IPEndPoint ep = new IPEndPoint(addr,8000);
+			IPEndPoint ep = new IPEndPoint(addr, this.ListeningPortNumber);
 			server.Bind(ep);
 			server.Listen(10);
 		}
@@ -890,6 +935,11 @@ namespace LibLastRip
 		///<summary>removes characters from a string to better compare tag values</summary>
 		///<param name="val">Tag value to handle.</param>
 		private String unifyTagString(String val) {
+			if (String.IsNullOrEmpty(val)) {
+				// nothing to do - and Replace throws an exception if used with zero length strings
+				return "";
+			}
+			
 			return val.ToLower().
 				Replace(" ", "").
 				Replace("!", "").
@@ -940,10 +990,13 @@ namespace LibLastRip
 				if(compareTagStrings(f.Tag.FirstAlbumArtist, artist, false) || compareTagStrings(f.Tag.FirstPerformer, artist, false)) {
 					if(compareTagStrings(f.Tag.Album, album, true)) {
 						if(compareTagStrings(f.Tag.Title, title, false)) {
+							if (_HealthEnabled) {
+								// Check if calculated health of file is below 100 - then return false and rip file again
+								double fileHealth = CalculateHealth(file.Length, f.Properties.Duration.TotalMilliseconds);
+								return fileHealth > 100;
+							}
 							return true;
 						}
-					} else {
-						compareTagStrings(f.Tag.Album, album, true);
 					}
 				}
 			}catch(Exception e){

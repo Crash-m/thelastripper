@@ -1,25 +1,29 @@
-<Combine releaseversion="1.3.0" name="thelastripper" fileversion="2.0">
+<Combine releaseversion="1.4.0" name="thelastripper" fileversion="2.0">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Debug" />
       <Entry build="True" name="MonoClient" configuration="Debug" />
       <Entry build="True" name="SourcePackage" configuration="" />
+      <Entry build="True" name="LockerPut" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Release" />
       <Entry build="True" name="MonoClient" configuration="Release" />
       <Entry build="True" name="SourcePackage" configuration="" />
+      <Entry build="True" name="LockerPut" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="MonoClient" single="True">
     <Execute type="None" entry="libLastRip" />
     <Execute type="None" entry="MonoClient" />
     <Execute type="None" entry="SourcePackage" />
+    <Execute type="None" entry="LockerPut" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="libLastRip/libLastRip.mdp" />
     <Entry filename="MonoClient/MonoClient.mdp" />
     <Entry filename="SourcePackage.mdse" />
+    <Entry filename="LockerPut/LockerPut.mdp" />
   </Entries>
 </Combine>
