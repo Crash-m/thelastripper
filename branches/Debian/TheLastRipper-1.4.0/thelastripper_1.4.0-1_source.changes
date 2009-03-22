@@ -1,0 +1,42 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Wed, 04 Feb 2009 21:10:07 +0100
+Source: thelastripper
+Binary: thelastripper
+Architecture: source
+Version: 1.4.0-1
+Distribution: stable
+Urgency: low
+Maintainer: Jonas Finnemann Jensen). <Jopsen@gmail.com>
+Changed-By: Jonas Finnemann Jensen <Jopsen@gmail.com>
+Description: 
+ thelastripper - An audio stream ripper for Last.fm.
+Changes: 
+ thelastripper (1.4.0-1) stable; urgency=low
+ .
+   * Backport liblastrip from windows client, minor improvements
+   * MP3Tunes support
+   * New improved tune in UI
+   * More settings
+Checksums-Sha1: 
+ 164d17bbb125cf4dff3665bc3bf2d7a8262fd95f 1204 thelastripper_1.4.0-1.dsc
+ 88d8d96ad9adf85222c99578b831fd783861000e 329868 thelastripper_1.4.0.orig.tar.gz
+ f5af240be8dbd204774458a94e25d7606a0233af 4092 thelastripper_1.4.0-1.diff.gz
+Checksums-Sha256: 
+ 71776e68c172a4e07403f0f66bb0035528d98ea53599b6ebae6ab91c8c9fda0e 1204 thelastripper_1.4.0-1.dsc
+ a9b4da78a0cc8b87f1f1944823f6e4876348d5f12c0b9878855fbee87821585b 329868 thelastripper_1.4.0.orig.tar.gz
+ b16bd3d399786a708e8d505edbb1e52a70f9f0c7ada92e53f7dacc579fbb79f7 4092 thelastripper_1.4.0-1.diff.gz
+Files: 
+ 4dbe9dc7b88415ac2a4ebdd4c69ff230 1204 sound optional thelastripper_1.4.0-1.dsc
+ 4d44933b23c7e010b011bb9b957df937 329868 sound optional thelastripper_1.4.0.orig.tar.gz
+ c06573886b2489d3c27ed6f8d6a41fcf 4092 sound optional thelastripper_1.4.0-1.diff.gz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknGh0IACgkQJGJlbgC6qODyZACgntcPjyY7Sjwa+Uw1To8gn8w5
+U+0An2GGEwwZMs3zcH/Lfjhplc8aGmbe
+=Kbqh
+-----END PGP SIGNATURE-----
