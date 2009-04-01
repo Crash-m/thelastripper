@@ -586,10 +586,8 @@ namespace WinFormsClient
 		}
 		private System.Windows.Forms.Label TracknrLabel;
 		private System.Windows.Forms.Button StopButton;
-		#if FULL_FUNCTIONALITY
 		private System.Windows.Forms.ListBox LogListBox;
 		private System.Windows.Forms.TabPage tabPage4;
-		#endif
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabControl tabControl2;
 		private System.Windows.Forms.Button RecommendationsButton;
