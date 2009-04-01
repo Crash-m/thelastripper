@@ -62,10 +62,18 @@ namespace LibLastRip
 		/// <remarks>The arguments can be casted to LibLastRip.ErrorEventArgs</remarks>
 		public event System.EventHandler OnError;
 		
+		protected void writeLogLine(String logText, Exception e) {
+			writeLogLine("Exception occured: " + logText);
+			writeLogLine(e.StackTrace);
+		}
+
 		protected void writeLogLine(String logText) {
-			Console.WriteLine(logText);
-			if (this.OnLog != null) {
-				this.OnLog(this, new LogEventArgs(logText));
+			String[] logStrings = System.Text.RegularExpressions.Regex.Split(logText, Environment.NewLine);
+			for (int i = 0; i < logStrings.Length; i++) {
+				Console.WriteLine(logStrings[i]);
+				if (this.OnLog != null) {
+					this.OnLog(this, new LogEventArgs(logStrings[i]));
+				}
 			}
 		}
 
@@ -350,11 +358,11 @@ namespace LibLastRip
 						}
 						Thread.Sleep(250);
 						RequestPlaylist();
-					} catch (WebException) {
-						writeLogLine("Server request failed.");
-					} catch (Exception) {
+					} catch (WebException e) {
+						writeLogLine("Server request failed.", e);
+					} catch (Exception e) {
 						// Web request timeout or other unexpected responses - just continue
-						writeLogLine("Timeout/Server failure occured.");
+						writeLogLine("Timeout/Server failure occured.", e);
 					}
 				}
 				if (xspf.CountTracks() > 0) {
@@ -377,6 +385,7 @@ namespace LibLastRip
 							// TODO: Lock could be active if response is fast - re-think about stream locking!
 							RadioStream.BeginRead(this.Buffer, 0, LastManager.BufferSize,new System.AsyncCallback(this.Save), RadioStream);
 						} catch (Exception e) {
+							writeLogLine("process file", e);
 							handleError(true, new ErrorEventArgs(e.ToString()));
 							
 							// no way to continue...
@@ -553,6 +562,8 @@ namespace LibLastRip
 				}
 				
 			} catch (Exception e) {
+				writeLogLine("Save failed.", e);
+
 				// Catch all exceptions to prevent application from falling into a illegal state
 				// Raise event so client can display a message
 				handleError(true, new ErrorEventArgs("Exception occurred. Please restart ripping.", e));
@@ -633,7 +644,9 @@ namespace LibLastRip
 
 			try{
 				SSC.EndInvoke(Ar);
-			}catch(Exception){}
+			}catch(Exception e){
+				writeLogLine("SaveSongCallback", e);
+			}
 			
 			if(this.Song is MemoryStream)
 				((MemoryStream)Ar.AsyncState).Close();
@@ -679,8 +692,8 @@ namespace LibLastRip
 				try {
 					//execute after rip command
 					ExecuteCommand(this.AfterRipCommand,SongInfo);
-				} catch (Exception) {
-					writeLogLine("Exception occured while running after rip command: " + this.AfterRipCommand);
+				} catch (Exception e) {
+					writeLogLine("while running after rip command " + this.AfterRipCommand, e);
 				}
 				
 				if (!String.IsNullOrEmpty(SongInfo.Albumcover)) {
@@ -698,11 +711,12 @@ namespace LibLastRip
 						}
 					} catch (Exception e) {
 						// no cover, no pain
-						writeLogLine("Exception downloading cover: " + e.ToString());
+						writeLogLine("downloading cover", e);
 					}
 				}
 			} catch (Exception e) {
-				writeLogLine("Exception occured: " + e.ToString());
+				writeLogLine("SaveSong", e);
+
 				// TODO: Sometimes the album path is wrong - could be null or contains illegal characters - no exception throwing because this stops ripping next songs
 				// TODO: Consider launching an OnError event
 			}
@@ -790,7 +804,11 @@ namespace LibLastRip
 		
 		private System.String GetAlbumPath(System.String pattern,MetaInfo SongInfo) {
 			System.String albumPath = ReplacePattern(pattern,SongInfo) + ".mp3";
-			albumPath = Path.DirectorySeparatorChar + albumPath.Substring(0, albumPath.LastIndexOf(Path.DirectorySeparatorChar));
+			if (albumPath.LastIndexOf(Path.DirectorySeparatorChar) > -1) {
+				albumPath = Path.DirectorySeparatorChar + albumPath.Substring(0, albumPath.LastIndexOf(Path.DirectorySeparatorChar));
+			} else {
+				albumPath = "";
+			}
 			if (String.IsNullOrEmpty(_QuarantinePath)) {
 				// write directly to music directory
 				return _MusicPath + albumPath;
@@ -866,14 +884,17 @@ namespace LibLastRip
 		
 		private void checkDirectoriesInPath(String filename){
 			System.String workPath = workingPath();
-			System.String AlbumPath = filename.Substring(workPath.Length+1, filename.LastIndexOf(Path.DirectorySeparatorChar)-workPath.Length-1);
-			String[] folders = AlbumPath.Split(Path.DirectorySeparatorChar);
-			
-			foreach(System.String folder in folders){
-				workPath += Path.DirectorySeparatorChar + folder;
-				if(!Directory.Exists(workPath))
-				{
-					Directory.CreateDirectory(workPath);
+			System.String AlbumPath = filename.Substring(workPath.Length+1);
+			if (AlbumPath.LastIndexOf(Path.DirectorySeparatorChar) > -1) {
+				AlbumPath = AlbumPath.Substring(0, AlbumPath.LastIndexOf(Path.DirectorySeparatorChar));
+				String[] folders = AlbumPath.Split(Path.DirectorySeparatorChar);
+				
+				foreach(System.String folder in folders){
+					workPath += Path.DirectorySeparatorChar + folder;
+					if(!Directory.Exists(workPath))
+					{
+						Directory.CreateDirectory(workPath);
+					}
 				}
 			}
 		}
@@ -894,10 +915,10 @@ namespace LibLastRip
 		}
 		
 		private void AcceptCallback(IAsyncResult ar){
-			allDone.Set();
-			Socket listener = (Socket) ar.AsyncState;
-			Socket handler = server.EndAccept(ar);
 			try{
+				allDone.Set();
+				Socket listener = (Socket) ar.AsyncState;
+				Socket handler = server.EndAccept(ar);
 				if(handler.Receive(new byte[512],512,SocketFlags.None) > 0){
 					char[] str = ("HTTP/1.0 200 OK\r\n" +
 					              "Connection: close\r\n" +
@@ -908,7 +929,9 @@ namespace LibLastRip
 					handler.Send(bytes,bytes.Length,SocketFlags.None);
 				}
 				connections.Add(handler);
-			}catch(Exception){}
+			}catch(Exception e){
+				writeLogLine("AcceptCallback", e);
+			}
 		}
 		
 		private void sendToClients(int size){
@@ -919,8 +942,9 @@ namespace LibLastRip
 						sock.Send(this.Buffer,size,SocketFlags.None);
 					}else
 						connections.RemoveAt(i);
-				}catch(Exception){
+				}catch(Exception e){
 					connections.RemoveAt(i);
+					writeLogLine("sendToClients", e);
 				}
 			}
 		}
@@ -993,7 +1017,7 @@ namespace LibLastRip
 					}
 				}
 			}catch(Exception e){
-				writeLogLine("skipFnA: song not accessible: " + e.ToString());
+				writeLogLine("skipFnA: song not accessible", e);
 				return true;
 			}
 			return false;
