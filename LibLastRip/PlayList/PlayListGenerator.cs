@@ -19,6 +19,7 @@ namespace LibLastRip
 		protected System.String _proxyAddress;
 		protected System.String _proxyUsername;
 		protected System.String _proxyPassword;
+		protected System.Boolean _proxyEnabled;
 		
 		protected PlayListGenerator(){}
 		
@@ -126,6 +127,7 @@ namespace LibLastRip
 		    this._proxyAddress = (System.String)Info.GetValue("ProxyAddress",typeof(System.String));
 			this._proxyUsername = (System.String)Info.GetValue("ProxyUsername",typeof(System.String));
 			this._proxyPassword = (System.String)Info.GetValue("ProxyPassword",typeof(System.String));
+			this._proxyEnabled = (System.Boolean)Info.GetValue("ProxyEnabled",typeof(System.Boolean));
 		}
 		
 		public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo Info, System.Runtime.Serialization.StreamingContext context)
@@ -161,6 +163,7 @@ namespace LibLastRip
 			Info.AddValue("ProxyAddress", this._proxyAddress);
 			Info.AddValue("ProxyUsername", this._proxyUsername);
 			Info.AddValue("ProxyPassword", this._proxyPassword);
+			Info.AddValue("ProxyEnabled", this._proxyEnabled);
 		}
 	}
 }

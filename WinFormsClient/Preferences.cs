@@ -91,6 +91,7 @@ namespace WinFormsClient
 			this.ProxyAddressTextBox.Text = settings.ProxyAddress;
 			this.ProxyUsernameTextBox.Text = settings.ProxyUsername;
 			this.ProxyPasswordTextBox.Text = settings.ProxyPassword;
+			this.ProxyEnabledCheckBox.Checked = settings.ProxyEnabled;
 			
 			//Subscribe to handshake callback event
 			this.manager.HandshakeReturn += new EventHandler(this.LoginCallback);
@@ -114,7 +115,7 @@ namespace WinFormsClient
 		void LoginButtonClick(object sender, EventArgs e)
 		{
 			// Proxy Setting from Settings-Group
-			if (this.ProxyAddressTextBox.Text != null && this.ProxyAddressTextBox.Text.Length > 0) {
+			if (this.ProxyEnabledCheckBox.Checked && this.ProxyAddressTextBox.Text != null && this.ProxyAddressTextBox.Text.Length > 0) {
 				WebProxy iwp = new WebProxy(this.ProxyAddressTextBox.Text);
 				if (this.ProxyUsernameTextBox.Text.Length > 0 || this.ProxyPasswordTextBox.Text.Length > 0) {
 					iwp.Credentials = new NetworkCredential(this.ProxyUsernameTextBox.Text, this.ProxyPasswordTextBox.Text);
@@ -270,7 +271,7 @@ namespace WinFormsClient
 					double health = Int64.Parse(HealthTextBox.Text);
 				} catch (Exception) {
 					// Error
-					System.Windows.Forms.MessageBox.Show("Song health value must be a number, please use the recommended value of 46690 (or higher to get less songs detected as defect)!", "Invalid options selected");
+					System.Windows.Forms.MessageBox.Show("Song health value must be a number, please use the recommended value of 46718 (or higher to get less songs detected as defect)!", "Invalid options selected");
 					ExcludeNewMusicCheckBox.Checked = false;
 				}
 			}

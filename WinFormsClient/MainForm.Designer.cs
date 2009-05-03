@@ -79,6 +79,7 @@ namespace WinFormsClient
 			this.TrackLabel = new System.Windows.Forms.Label();
 			this.SkipButton = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.ButtonClearLog = new System.Windows.Forms.Button();
 			this.LogListBox = new System.Windows.Forms.ListBox();
 			this.MainMenu.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -535,6 +536,7 @@ namespace WinFormsClient
 			// 
 			// tabPage4
 			// 
+			this.tabPage4.Controls.Add(this.ButtonClearLog);
 			this.tabPage4.Controls.Add(this.LogListBox);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
@@ -543,6 +545,17 @@ namespace WinFormsClient
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Log";
 			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// ButtonClearLog
+			// 
+			this.ButtonClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.ButtonClearLog.Location = new System.Drawing.Point(6, 238);
+			this.ButtonClearLog.Name = "ButtonClearLog";
+			this.ButtonClearLog.Size = new System.Drawing.Size(60, 23);
+			this.ButtonClearLog.TabIndex = 2;
+			this.ButtonClearLog.Text = "&Clear Log";
+			this.ButtonClearLog.UseVisualStyleBackColor = true;
+			this.ButtonClearLog.Click += new System.EventHandler(this.ButtonClearLogClick);
 			// 
 			// LogListBox
 			// 
@@ -584,6 +597,7 @@ namespace WinFormsClient
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button ButtonClearLog;
 		private System.Windows.Forms.Label TracknrLabel;
 		private System.Windows.Forms.Button StopButton;
 		private System.Windows.Forms.ListBox LogListBox;
@@ -628,5 +642,10 @@ namespace WinFormsClient
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		
+		
+		void ButtonClearLogClick(object sender, System.EventArgs e)
+		{
+			LogListBox.Items.Clear();
+		}
 	}
 }
