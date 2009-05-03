@@ -430,7 +430,7 @@ namespace LibLastRip
 			}
 		}
 		
-		protected double CalculateHealth(Object length, Object duration) {
+		protected double CalculateHealth(Object length, Object duration, String filename) {
 			double len = double.Parse(length.ToString())*8;
 			double dur = double.Parse(duration.ToString()) * 128;
 			
@@ -442,7 +442,7 @@ namespace LibLastRip
 			//writeLogLine("DELTAFACTOR-" + (len+factor-dur).ToString());
 
 			double songHealth = (len+factor)/dur*100;
-			writeLogLine("song health " + (songHealth).ToString());
+			writeLogLine((songHealth).ToString() + " health for " + filename);
 
 			return songHealth;
 		}
@@ -466,7 +466,7 @@ namespace LibLastRip
 			}else{
 				bool complete = true;
 				if (_HealthEnabled) {
-					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration);
+					double songHealth = CalculateHealth(this.Song.Length, this.currentXspfTrack.Duration, _Filename);
 					complete = songHealth >= 100;
 				}
 
@@ -1009,7 +1009,7 @@ namespace LibLastRip
 						if(compareTagStrings(f.Tag.Title, title, false)) {
 							if (_HealthEnabled) {
 								// Check if calculated health of file is below 100 - then return false and rip file again
-								double fileHealth = CalculateHealth(file.Length, f.Properties.Duration.TotalMilliseconds);
+								double fileHealth = CalculateHealth(file.Length, f.Properties.Duration.TotalMilliseconds, file.FullName);
 								return fileHealth > 100;
 							}
 							return true;

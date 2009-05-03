@@ -138,6 +138,7 @@ namespace WinFormsClient
 			this._proxyAddress = Pref.ProxyAddressTextBox.Text;
 			this._proxyPassword = Pref.ProxyPasswordTextBox.Text;
 			this._proxyUsername = Pref.ProxyUsernameTextBox.Text;
+			this._proxyEnabled = Pref.ProxyEnabledCheckBox.Checked;
 			
 			//Get locker settings
 			this._UploadToLocker = Pref.LockercheckBox.Checked;
@@ -261,6 +262,14 @@ namespace WinFormsClient
 				return this._healthValue;
 			}
 		}
+		public System.Boolean ProxyEnabled
+		{
+			get
+			{
+				return this._proxyEnabled;
+			}
+		}
+		
 		public System.String ProxyAddress
 		{
 			get

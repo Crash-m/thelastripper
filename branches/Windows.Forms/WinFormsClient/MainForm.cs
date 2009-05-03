@@ -199,10 +199,20 @@ namespace WinFormsClient
 			System.Diagnostics.Debug.Assert(!this.InvokeRequired, "Failed to invoke correctly");
 			
 			LibLastRip.LogEventArgs logArgs = (LibLastRip.LogEventArgs)args;
-			if (this.LogListBox.Items.Count > 100) {
+
+			this.LogListBox.BeginUpdate();
+
+			if (this.LogListBox.Items.Count > 250) {
+				int _topIndex = this.LogListBox.TopIndex;
 				this.LogListBox.Items.RemoveAt(0);
+				if (_topIndex > 0) {
+					_topIndex--;
+				}
+				this.LogListBox.TopIndex = _topIndex;
 			}
 			this.LogListBox.Items.Add(logArgs.Log);
+			
+			this.LogListBox.EndUpdate();
 		}
 
 		private void OnNewSong(System.Object sender, System.EventArgs args)

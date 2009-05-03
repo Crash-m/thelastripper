@@ -58,6 +58,7 @@ namespace WinFormsClient
 			this.M3UCheckBox = new System.Windows.Forms.CheckBox();
 			this.OKbutton = new System.Windows.Forms.Button();
 			this.NetworkGroupBox = new System.Windows.Forms.GroupBox();
+			this.ProxyEnabledCheckBox = new System.Windows.Forms.CheckBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.ProxyAddressTextBox = new System.Windows.Forms.TextBox();
 			this.ProxyPasswordTextBox = new System.Windows.Forms.TextBox();
@@ -110,6 +111,7 @@ namespace WinFormsClient
 			this.LockerEmailtextBox = new System.Windows.Forms.TextBox();
 			this.CreateLockerbutton = new System.Windows.Forms.Button();
 			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.label9 = new System.Windows.Forms.Label();
 			this.LoginGroupBox.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -357,6 +359,8 @@ namespace WinFormsClient
 			// 
 			// NetworkGroupBox
 			// 
+			this.NetworkGroupBox.Controls.Add(this.label9);
+			this.NetworkGroupBox.Controls.Add(this.ProxyEnabledCheckBox);
 			this.NetworkGroupBox.Controls.Add(this.label5);
 			this.NetworkGroupBox.Controls.Add(this.ProxyAddressTextBox);
 			this.NetworkGroupBox.Controls.Add(this.ProxyPasswordTextBox);
@@ -366,55 +370,69 @@ namespace WinFormsClient
 			this.NetworkGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
 			this.NetworkGroupBox.Location = new System.Drawing.Point(3, 3);
 			this.NetworkGroupBox.Name = "NetworkGroupBox";
-			this.NetworkGroupBox.Size = new System.Drawing.Size(416, 88);
+			this.NetworkGroupBox.Size = new System.Drawing.Size(416, 120);
 			this.NetworkGroupBox.TabIndex = 5;
 			this.NetworkGroupBox.TabStop = false;
 			this.NetworkGroupBox.Text = "Proxy Settings";
 			// 
+			// ProxyEnabledCheckBox
+			// 
+			this.ProxyEnabledCheckBox.Location = new System.Drawing.Point(94, 19);
+			this.ProxyEnabledCheckBox.Name = "ProxyEnabledCheckBox";
+			this.ProxyEnabledCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.ProxyEnabledCheckBox.Size = new System.Drawing.Size(15, 20);
+			this.ProxyEnabledCheckBox.TabIndex = 13;
+			this.ProxyEnabledCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.ProxyEnabledCheckBox.UseVisualStyleBackColor = true;
+			this.ProxyEnabledCheckBox.CheckedChanged += new System.EventHandler(this.CheckBoxProxyEnabledCheckedChanged);
+			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(6, 16);
+			this.label5.Location = new System.Drawing.Point(6, 40);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(100, 23);
+			this.label5.Size = new System.Drawing.Size(80, 20);
 			this.label5.TabIndex = 12;
-			this.label5.Text = "proxy host:";
+			this.label5.Text = "Proxy host:";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// ProxyAddressTextBox
 			// 
-			this.ProxyAddressTextBox.Location = new System.Drawing.Point(112, 13);
+			this.ProxyAddressTextBox.Location = new System.Drawing.Point(94, 40);
 			this.ProxyAddressTextBox.Name = "ProxyAddressTextBox";
-			this.ProxyAddressTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyAddressTextBox.Size = new System.Drawing.Size(316, 20);
 			this.ProxyAddressTextBox.TabIndex = 7;
 			// 
 			// ProxyPasswordTextBox
 			// 
-			this.ProxyPasswordTextBox.Location = new System.Drawing.Point(112, 59);
+			this.ProxyPasswordTextBox.Location = new System.Drawing.Point(94, 91);
 			this.ProxyPasswordTextBox.Name = "ProxyPasswordTextBox";
 			this.ProxyPasswordTextBox.PasswordChar = '*';
-			this.ProxyPasswordTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyPasswordTextBox.Size = new System.Drawing.Size(316, 20);
 			this.ProxyPasswordTextBox.TabIndex = 9;
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(6, 62);
+			this.label3.Location = new System.Drawing.Point(6, 91);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 23);
+			this.label3.Size = new System.Drawing.Size(80, 20);
 			this.label3.TabIndex = 9;
 			this.label3.Text = "Password:";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(6, 39);
+			this.label4.Location = new System.Drawing.Point(6, 66);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(100, 23);
+			this.label4.Size = new System.Drawing.Size(80, 20);
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Username:";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// ProxyUsernameTextBox
 			// 
-			this.ProxyUsernameTextBox.Location = new System.Drawing.Point(112, 36);
+			this.ProxyUsernameTextBox.Location = new System.Drawing.Point(94, 66);
 			this.ProxyUsernameTextBox.Name = "ProxyUsernameTextBox";
-			this.ProxyUsernameTextBox.Size = new System.Drawing.Size(296, 20);
+			this.ProxyUsernameTextBox.Size = new System.Drawing.Size(316, 20);
 			this.ProxyUsernameTextBox.TabIndex = 8;
 			// 
 			// tabControl1
@@ -461,33 +479,34 @@ namespace WinFormsClient
 			this.ListeningGroupBox.Controls.Add(this.PortTextBox);
 			this.ListeningGroupBox.Controls.Add(this.PortComment);
 			this.ListeningGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.ListeningGroupBox.Location = new System.Drawing.Point(3, 94);
+			this.ListeningGroupBox.Location = new System.Drawing.Point(3, 129);
 			this.ListeningGroupBox.Name = "ListeningGroupBox";
-			this.ListeningGroupBox.Size = new System.Drawing.Size(416, 86);
+			this.ListeningGroupBox.Size = new System.Drawing.Size(416, 51);
 			this.ListeningGroupBox.TabIndex = 9;
 			this.ListeningGroupBox.TabStop = false;
 			this.ListeningGroupBox.Text = "Listening Settings";
 			// 
 			// PortLabel
 			// 
-			this.PortLabel.Location = new System.Drawing.Point(5, 14);
+			this.PortLabel.Location = new System.Drawing.Point(6, 14);
 			this.PortLabel.Name = "PortLabel";
-			this.PortLabel.Size = new System.Drawing.Size(100, 23);
+			this.PortLabel.Size = new System.Drawing.Size(83, 20);
 			this.PortLabel.TabIndex = 11;
 			this.PortLabel.Text = "Port Number:";
+			this.PortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// PortTextBox
 			// 
-			this.PortTextBox.Location = new System.Drawing.Point(111, 14);
+			this.PortTextBox.Location = new System.Drawing.Point(94, 14);
 			this.PortTextBox.Name = "PortTextBox";
 			this.PortTextBox.Size = new System.Drawing.Size(51, 20);
 			this.PortTextBox.TabIndex = 10;
 			// 
 			// PortComment
 			// 
-			this.PortComment.Location = new System.Drawing.Point(168, 8);
+			this.PortComment.Location = new System.Drawing.Point(151, 8);
 			this.PortComment.Name = "PortComment";
-			this.PortComment.Size = new System.Drawing.Size(239, 47);
+			this.PortComment.Size = new System.Drawing.Size(256, 40);
 			this.PortComment.TabIndex = 9;
 			this.PortComment.Text = "Listen to the song you are ripping opening the \"http://127.0.0.1:PortNumber\" addr" +
 			"ess with your favourite music player.";
@@ -633,7 +652,7 @@ namespace WinFormsClient
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(71, 20);
 			this.label7.TabIndex = 16;
-			this.label7.Text = "46690";
+			this.label7.Text = "46718";
 			// 
 			// HealthTextBox
 			// 
@@ -641,7 +660,7 @@ namespace WinFormsClient
 			this.HealthTextBox.Name = "HealthTextBox";
 			this.HealthTextBox.Size = new System.Drawing.Size(67, 20);
 			this.HealthTextBox.TabIndex = 15;
-			this.HealthTextBox.Text = "46690";
+			this.HealthTextBox.Text = "46718";
 			this.HealthTextBox.TextChanged += new System.EventHandler(this.HealthTextBoxTextChanged);
 			// 
 			// HealthCheckBox
@@ -870,6 +889,15 @@ namespace WinFormsClient
 			// 
 			this.OpenFileDialog.FileName = "exclude.txt";
 			// 
+			// label9
+			// 
+			this.label9.Location = new System.Drawing.Point(6, 18);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(80, 20);
+			this.label9.TabIndex = 14;
+			this.label9.Text = "Proxy enabled:";
+			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// Preferences
 			// 
 			this.AcceptButton = this.OKbutton;
@@ -909,6 +937,8 @@ namespace WinFormsClient
 			this.groupBoxLocker.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label label9;
+		public System.Windows.Forms.CheckBox ProxyEnabledCheckBox;
 		private System.Windows.Forms.Button CreateLockerbutton;
 		public System.Windows.Forms.TextBox LockerEmailtextBox;
 		private System.Windows.Forms.Label emailLabel;
@@ -983,5 +1013,10 @@ namespace WinFormsClient
 		private System.Windows.Forms.Label PortLabel;
 		public System.Windows.Forms.TextBox PortTextBox;
 		private System.Windows.Forms.Label PortComment;
+		
+		void CheckBoxProxyEnabledCheckedChanged(object sender, System.EventArgs e)
+		{
+			
+		}
 	}
 }
