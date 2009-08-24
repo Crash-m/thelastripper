@@ -283,13 +283,13 @@
      inkscape:cx="177.22153"
      inkscape:cy="226.4192"
      inkscape:document-units="px"
-     inkscape:current-layer="g2276"
+     inkscape:current-layer="g2380"
      width="250px"
      height="250px"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:window-width="925"
-     inkscape:window-height="686"
+     inkscape:window-height="726"
      inkscape:window-x="5"
      inkscape:window-y="59"
      showgrid="false" />
@@ -914,7 +914,7 @@
              sodipodi:role="line"
              x="995.31635"
              y="2479.2786"
-             id="tspan3343">Version 1.4.0</tspan></text>
+             id="tspan3343">Version 1.4.1</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:1080.88439941px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"

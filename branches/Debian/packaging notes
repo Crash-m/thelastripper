@@ -5,6 +5,6 @@
 5)  Copy tarball to thelastripper_1.4.0.orig.tar.gz
 6)  In terminal cd Debian/TheLastRipper-x.y.z/thelastripper-x.y.z/
 7)  In terminal debuild -S	(Source package generated)
-9)  Create pbuilder environment: sudo pbuilder create --distribution intrepid (might need mirror too)
+9)  Create pbuilder environment: sudo pbuilder create --distribution jaunty --othermirror "deb http://dk.archive.ubuntu.com/ubuntu/ jaunty main restricted multiverse universe"
 10) In terminal sudo pbuilder build ../*.dsc
 11) Result is now in /var/cache/pbuilder/result
