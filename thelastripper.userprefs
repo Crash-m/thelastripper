@@ -1,24 +1,18 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/jopsen/Development/thelastripper/branches/LinuxGeneric/thelastripper.mds">
-  <Files>
-    <File name="Welcome" />
-    <File name="MonoClient/CreateLockerAccount.cs" line="1" column="1" />
-    <File name="MonoClient/Main.cs" line="17" column="2" />
-  </Files>
-  <Views>
-    <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="libLastRip" expanded="True" />
-        <Node name="LockerPut" expanded="True" />
-        <Node name="MonoClient" expanded="True" />
-        <Node name="SourcePackage" expanded="True" />
-      </Node>
-    </ViewMemento>
-    <ViewMemento id="ClassPad">
-      <Node expanded="True" />
-    </ViewMemento>
-  </Views>
-  <Properties>
-    <Property key="ActiveWindow" value="/home/jopsen/Development/thelastripper/branches/LinuxGeneric/MonoClient/Main.cs" />
-    <Property key="ActiveConfiguration" value="Release" />
-  </Properties>
-</UserCombinePreferences>
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ctype="Workbench">
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="MonoClient" expanded="True" />
+          <Node name="SourcePackage" expanded="True">
+            <Node name="Tarball" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ctype="Workspace" />
+</Properties>

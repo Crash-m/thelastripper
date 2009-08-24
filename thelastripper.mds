@@ -1,15 +1,24 @@
-<Combine releaseversion="1.4.0" name="thelastripper" fileversion="2.0">
+<Combine fileversion="2.0" releaseversion="1.4.0" name="thelastripper">
+  <Policies>
+    <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+    <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="False" EolMarker="Native" />
+    <ChangeLogPolicy UpdateMode="None" inheritsSet="Mono">
+      <MessageStyle LineAlign="0" />
+    </ChangeLogPolicy>
+    <StandardHeader Text="" inheritsSet="MITX11License" />
+    <VersionControlPolicy inheritsSet="Mono" />
+  </Policies>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Debug" />
       <Entry build="True" name="MonoClient" configuration="Debug" />
-      <Entry build="True" name="SourcePackage" configuration="" />
+      <Entry build="True" name="SourcePackage" configuration="Debug" />
       <Entry build="True" name="LockerPut" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="libLastRip" configuration="Release" />
       <Entry build="True" name="MonoClient" configuration="Release" />
-      <Entry build="True" name="SourcePackage" configuration="" />
+      <Entry build="True" name="SourcePackage" configuration="Release" />
       <Entry build="True" name="LockerPut" configuration="Release" />
     </Configuration>
   </Configurations>
