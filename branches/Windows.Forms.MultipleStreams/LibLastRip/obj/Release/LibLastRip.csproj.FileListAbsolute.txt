@@ -1,0 +1,8 @@
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\bin\Release\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\bin\Release\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\obj\Release\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\bin\Release\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\bin\Release\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\obj\Release\LibLastRip.dll

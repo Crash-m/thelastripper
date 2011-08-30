@@ -1,0 +1,16 @@
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\bin\Debug\ConsoleClient.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\bin\Debug\ConsoleClient.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\bin\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\bin\Debug\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\bin\Debug\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\obj\Debug\ConsoleClient.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\ConsoleClient\obj\Debug\ConsoleClient.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\bin\Debug\ConsoleClient.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\bin\Debug\ConsoleClient.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\bin\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\bin\Debug\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\bin\Debug\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\obj\Debug\ConsoleClient.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\ConsoleClient\obj\Debug\ConsoleClient.pdb

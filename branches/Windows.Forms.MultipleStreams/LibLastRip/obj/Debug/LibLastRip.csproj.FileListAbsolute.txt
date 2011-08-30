@@ -1,0 +1,12 @@
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\bin\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\bin\Debug\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\bin\Debug\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\obj\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\obj\Debug\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\bin\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\bin\Debug\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\bin\Debug\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\obj\Debug\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LibLastRip\obj\Debug\LibLastRip.pdb

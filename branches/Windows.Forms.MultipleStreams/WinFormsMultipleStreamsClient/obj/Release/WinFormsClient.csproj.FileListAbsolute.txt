@@ -1,0 +1,17 @@
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\TheLastRipper.exe.config
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\TheLastRipper.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\LibLastRip.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\LockerPut.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\taglib-sharp.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\LibLastRip.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\bin\Release\LockerPut.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.About.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.CreateLockerDialog.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.FatalExceptionHandler.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.MainForm.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.Preferences.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.csproj.GenerateResource.Cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\TheLastRipper.exe
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.StreamForm.resources
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\obj\Release\WinFormsClient.Properties.Resources.resources
