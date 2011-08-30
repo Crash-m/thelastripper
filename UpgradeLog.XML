@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TheLastRipper">
+</Property><Property Name="Solution File" Value="C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\TheLastRipper.sln">
+</Property><Property Name="Date" Value="Montag, 22. August 2011">
+</Property><Property Name="Time" Value="15:43">
+</Property></Properties><Event ErrorLevel="0" Project="LibLastRip" Source="LibLastRip\LibLastRip.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="LibLastRip" Source="LibLastRip\LibLastRip.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ConsoleClient" Source="ConsoleClient\ConsoleClient.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="ConsoleClient" Source="ConsoleClient\ConsoleClient.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LockerPut" Source="LockerPut\LockerPut.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="LockerPut" Source="LockerPut\LockerPut.csproj" Description="Converted">
+</Event><Event ErrorLevel="2" Project="LibLastRip" Source="LibLastRip\LibLastRip.csproj" Description="Unable to read the project file 'LibLastRip.csproj'. &#xA;C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LibLastRip\LibLastRip.csproj(39,11): The imported project &quot;C:\SharpDevelop.Build.CSharp.targets&quot; was not found. Confirm that the path in the &lt;Import&gt; declaration is correct, and that the file exists on disk.">
+</Event><Event ErrorLevel="2" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Unable to read the project file 'WinFormsClient.csproj'. &#xA;C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\WinFormsClient\WinFormsClient.csproj(41,11): The imported project &quot;C:\SharpDevelop.Build.CSharp.targets&quot; was not found. Confirm that the path in the &lt;Import&gt; declaration is correct, and that the file exists on disk.">
+</Event><Event ErrorLevel="0" Project="" Source="TheLastRipper.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="TheLastRipper.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ConsoleClient" Source="ConsoleClient\ConsoleClient.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="LockerPut" Source="LockerPut\LockerPut.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TheLastRipper">
+</Property><Property Name="Solution File" Value="C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\TheLastRipper.sln">
+</Property><Property Name="Date" Value="Montag, 22. August 2011">
+</Property><Property Name="Time" Value="16:01">
+</Property><Property Name="Log Number" Value="4">
+</Property></Properties><Event ErrorLevel="0" Project="LibLastRip" Source="LibLastRip\LibLastRip.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="LibLastRip" Source="LibLastRip\LibLastRip.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="ConsoleClient" Source="ConsoleClient\ConsoleClient.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="ConsoleClient" Source="ConsoleClient\ConsoleClient.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LockerPut" Source="LockerPut\LockerPut.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="LockerPut" Source="LockerPut\LockerPut.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="TheLastRipper.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="TheLastRipper.sln" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="WinFormsClient" Source="WinFormsClient\WinFormsClient.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

@@ -1,0 +1,10 @@
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LockerPut\bin\Debug\LockerPut.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LockerPut\bin\Debug\LockerPut.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LockerPut\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LockerPut\obj\Debug\LockerPut.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms\LockerPut\obj\Debug\LockerPut.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LockerPut\bin\Debug\LockerPut.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LockerPut\bin\Debug\LockerPut.pdb
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LockerPut\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LockerPut\obj\Debug\LockerPut.dll
+C:\Documents and Settings\nikolas.crisci\Desktop\Testererer\New Folder (2)\branches\Windows.Forms.MultipleStreams\LockerPut\obj\Debug\LockerPut.pdb
