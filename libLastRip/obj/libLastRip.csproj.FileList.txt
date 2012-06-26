@@ -1,9 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-bin\Debug\libLastRip.dll
-bin\Debug\libLastRip.pdb
-bin\Debug\nScrobbler.dll
-bin\Debug\nSpiff.dll
-bin\Debug\nScrobbler.pdb
-bin\Debug\nSpiff.pdb
-obj\Debug\libLastRip.dll
-obj\Debug\libLastRip.pdb

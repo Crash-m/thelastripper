@@ -1,5 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-bin\Debug\nSpiff.dll
-bin\Debug\nSpiff.pdb
-obj\Debug\nSpiff.dll
-obj\Debug\nSpiff.pdb
