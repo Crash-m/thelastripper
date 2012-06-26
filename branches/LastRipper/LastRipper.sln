@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastRipperLib", "LastRipperLib\LastRipperLib.csproj", "{4AF16459-65B8-4997-BC31-D62833F91360}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Any CPU = Default|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF16459-65B8-4997-BC31-D62833F91360}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = LastRipperLib\LastRipperLib.csproj
+	EndGlobalSection
+EndGlobal
